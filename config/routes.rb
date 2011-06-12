@@ -1,5 +1,7 @@
 Osra::Application.routes.draw do
 
+  resources :papers
+
 #Micropost routes
 resources :microposts, :only => [:create, :destroy]
 

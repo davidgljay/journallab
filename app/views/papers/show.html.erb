@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @paper.title %>
+</p>
+
+<p>
+  <b>Pubmed:</b>
+  <%= @paper.pubmed_id %>
+</p>
+
+<p>
+  <b>Journal:</b>
+  <%= @paper.journal %>
+</p>
+
+<p>
+  <b>Abstract:</b>
+  <%= @paper.abstract %>
+</p>
+
+<p>
+  <b>Summary:</b>
+  <%= @paper.summary %>
+</p>
+
+
+<%= link_to 'Edit', edit_paper_path(@paper) %> |
+<%= link_to 'Back', papers_path %>

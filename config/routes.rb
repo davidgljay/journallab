@@ -1,4 +1,37 @@
-Osra::Application.routes.draw do
+SampleApp::Application.routes.draw do
+
+#Micropost routes
+resources :microposts, :only => [:create, :destroy]
+
+#Static pages
+
+root :to => 'pages#home'
+  match '/contact',  :to => 'pages#contact'
+  match '/about',    :to => 'pages#about'
+  match '/help',     :to => 'pages#help'
+
+
+
+
+#Session routes
+resources :sessions, :only => [:new, :create, :destroy]
+  match '/signin',    :to => 'sessions#new'
+  match '/signout',   :to => 'sessions#destroy'
+
+#Users routes
+
+resources :users do
+   member do
+     get :following, :followers
+   end
+ end
+
+  match '/signup',   :to => 'users#new'
+
+#Relationship routes
+
+resources :relationships, :only => [:create, :destroy]
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -4,7 +4,8 @@ describe "authors/show.html.erb" do
   before(:each) do
     @author = assign(:author, stub_model(Author,
       :firstname => "Firstname",
-      :lastname => "Lastname"
+      :lastname => "Lastname",
+      :paper_id => 1
     ))
   end
 
@@ -14,5 +15,7 @@ describe "authors/show.html.erb" do
     rendered.should match(/Firstname/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/Lastname/)
+    # Run the generator again with the --webrat flag if you want to use webrat matchers
+    rendered.should match(/1/)
   end
 end

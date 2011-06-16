@@ -1,5 +1,7 @@
 Osra::Application.routes.draw do
 
+  resources :authors
+
   resources :papers
 
 #Micropost routes

@@ -10,7 +10,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110612031959) do
+ActiveRecord::Schema.define(:version => 20110612093454) do
+
+  create_table "authors", :force => true do |t|
+    t.string   "firstname"
+    t.string   "lastname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "authorships", :force => true do |t|
+    t.integer  "paper_id"
+    t.integer  "author_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "authorships", ["author_id"], :name => "index_authorships_on_author_id"
+  add_index "authorships", ["paper_id", "author_id"], :name => "index_authorships_on_paper_id_and_author_id", :unique => true
+  add_index "authorships", ["paper_id"], :name => "index_authorships_on_paper_id"
 
   create_table "microposts", :force => true do |t|
     t.string   "content"
@@ -23,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20110612031959) do
 
   create_table "papers", :force => true do |t|
     t.string   "title"
-    t.integer  "pubmed_id"
+    t.string   "pubmed_id"
     t.string   "journal"
     t.string   "abstract"
     t.string   "summary"

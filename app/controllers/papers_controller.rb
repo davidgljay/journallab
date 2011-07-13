@@ -1,4 +1,8 @@
 class PapersController < ApplicationController
+before_filter :authenticate, :except => [:show, :index]
+#before_filter :admin_user,   :only => [:destroy, :edit, :update]
+
+
   # GET /papers
   # GET /papers.xml
   def index
@@ -79,5 +83,11 @@ class PapersController < ApplicationController
       format.html { redirect_to(papers_url) }
       format.xml  { head :ok }
     end
+  end
+
+  private
+
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
   end
 end

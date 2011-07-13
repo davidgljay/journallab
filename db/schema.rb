@@ -10,7 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110612093454) do
+ActiveRecord::Schema.define(:version => 20110713212750) do
+
+  create_table "assertions", :force => true do |t|
+    t.text     "text"
+    t.integer  "user_id"
+    t.integer  "paper_id"
+    t.integer  "fig_id"
+    t.integer  "figsection_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "heatmap"
+  end
 
   create_table "authors", :force => true do |t|
     t.string   "firstname"
@@ -30,6 +41,17 @@ ActiveRecord::Schema.define(:version => 20110612093454) do
   add_index "authorships", ["author_id"], :name => "index_authorships_on_author_id"
   add_index "authorships", ["paper_id", "author_id"], :name => "index_authorships_on_paper_id_and_author_id", :unique => true
   add_index "authorships", ["paper_id"], :name => "index_authorships_on_paper_id"
+
+  create_table "comments", :force => true do |t|
+    t.text     "text"
+    t.integer  "user_id"
+    t.integer  "paper_id"
+    t.integer  "fig_id"
+    t.integer  "figsection_id"
+    t.integer  "comment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "microposts", :force => true do |t|
     t.string   "content"

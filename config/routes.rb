@@ -1,5 +1,9 @@
 Osra::Application.routes.draw do
 
+  resources :comments
+
+  resources :assertions
+
   resources :authors
 
   resources :papers

@@ -48,8 +48,16 @@ describe Paper do
      it "should derive authors" do
          @paper.authors.first.lastname.should == "Karpicke"
      end
-
-     it "should associate with existing authors" do
-     end
   end
+
+ describe "assertions" do
+     it "should find the latest assertion" do
+        @paper = Factory(:paper)
+        asrt1 = @paper.assertions.create!(:text => "I love Nanctucket!")
+        asrt1.created_at = 5.days.ago 
+        @paper.assertions.create!(:text => "I love St. Louis!")
+        @paper.assertions.reverse
+        @paper.latest_assertion.text.should == "I love St. Louis!"
+     end
+ end
 end

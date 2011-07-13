@@ -25,6 +25,9 @@ class User < ActiveRecord::Base
                                :class_name => "Relationship",
                                :dependent => :destroy
         has_many :followers, :through => :reverse_relationships, :source => :follower
+
+        has_many :assertions
+        has_many :comments
                                
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

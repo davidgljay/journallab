@@ -1,0 +1,31 @@
+<h1>Listing assertions</h1>
+
+<table>
+  <tr>
+    <th>Text</th>
+    <th>User</th>
+    <th>Paper</th>
+    <th>Fig</th>
+    <th>Figsection</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @assertions.each do |assertion| %>
+  <tr>
+    <td><%= assertion.text %></td>
+    <td><%= assertion.user_id %></td>
+    <td><%= assertion.paper_id %></td>
+    <td><%= assertion.fig_id %></td>
+    <td><%= assertion.figsection_id %></td>
+    <td><%= link_to 'Show', assertion %></td>
+    <td><%= link_to 'Edit', edit_assertion_path(assertion) %></td>
+    <td><%= link_to 'Destroy', assertion, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Assertion', new_assertion_path %>

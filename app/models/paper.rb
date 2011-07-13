@@ -1,9 +1,12 @@
 class Paper < ActiveRecord::Base
 require 'rexml/document'
 
+#Links
 has_many :authorships, :foreign_key => "paper_id",
                            :dependent => :destroy
 has_many :authors, :through => :authorships, :source => :author
+has_many :assertions
+has_many :comments
 
 #Validations
    validates :pubmed_id, :presence => true,
@@ -37,5 +40,13 @@ def lookup_info
   end
  self.save
  end
+
+#Need to find a way to avoid reproducing this code in Paper, Figs, and Fig sections...
+ def latest_assertion
+     assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
+     assert_list.last
+ end
+
+
 end
 

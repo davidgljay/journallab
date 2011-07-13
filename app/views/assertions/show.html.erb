@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Text:</b>
+  <%= @assertion.text %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @assertion.user_id %>
+</p>
+
+<p>
+  <b>Paper:</b>
+  <%= @assertion.paper_id %>
+</p>
+
+<p>
+  <b>Fig:</b>
+  <%= @assertion.fig_id %>
+</p>
+
+<p>
+  <b>Figsection:</b>
+  <%= @assertion.figsection_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_assertion_path(@assertion) %> |
+<%= link_to 'Back', assertions_path %>

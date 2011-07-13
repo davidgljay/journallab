@@ -85,6 +85,16 @@ before_filter :authenticate, :except => [:show, :index]
     end
   end
 
+#Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
+  def lookup
+    @paper = Paper.find_by_pubmed_id(params[:pubmed_id])
+    if @paper.nil?
+       @paper = Paper.create(:pubmed_id => params[:pubmed_id])
+       @paper.lookup_info
+    end
+    redirect_to @paper
+  end    
+
   private
 
   def admin_user

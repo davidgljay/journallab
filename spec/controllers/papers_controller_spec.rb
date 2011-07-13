@@ -127,5 +127,25 @@ describe PapersController do
           response.should redirect_to(papers_url)
         end
       end
+     
+      describe "pubmed id lookup" do
+   
+        before(:each) do
+           @paper = Paper.create(:pubmed_id => '18276894')
+           @paper.lookup_info
+        end
+
+        it "should look up an existing paper" do
+          get :lookup, :pubmed_id => @paper.pubmed_id
+          response.should redirect_to(@paper)
+        end
+
+        it "should create a new paper if one doesn't exist for that pubmed id" do
+          get :lookup, :pubmed_id => '21748830' 
+          response.should render_template("show")
+        end     
+
+      end
+
     end
 end

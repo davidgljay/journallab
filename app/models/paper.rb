@@ -21,12 +21,21 @@ def lookup_info
   unless article.elements["Abstract"].elements["AbstractText"].nil?
     self.abstract = article.elements["Abstract"].elements["AbstractText"].text
   end
+
+#Derive authors
   if self.authors.empty?
+    all_authors = Author.all.map{|auth| [auth.firstname, auth.lastname, auth.initial, auth.id]} 
     article.elements["AuthorList"].each do |auth|
-      self.authors.create(:firstname => auth.elements["ForeName"].text, :lastname => auth.elements["LastName"].text)
-    end
+       author = [auth.elements["ForeName"].text, auth.elements["LastName"].text, auth.elements["Initials"].text]
+       if all_authors.map{|auth| [auth[0], auth[1], auth[2]]}.include?(author)
+          auth_id = all_authors[all_authors.index{|a| a[0]==author[0] && a[1]==author[1] && a[2]==author[2]}][3]
+          Author.find(auth_id).authorships.create(self)
+        else
+           self.authors.create(:firstname => author[0], :lastname => author[1], :initial => author[2])
+       end
+     end               
   end
-  self.save
+ self.save
+ end
 end
 
-end

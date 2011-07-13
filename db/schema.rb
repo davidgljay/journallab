@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20110612093454) do
     t.string   "lastname"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "initial"
   end
 
   create_table "authorships", :force => true do |t|

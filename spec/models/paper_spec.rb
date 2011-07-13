@@ -34,14 +34,22 @@ describe Paper do
      end
   end
 
- describe "paper data population" do
+ describe "data population" do
      before(:each) do
           @attr = {:pubmed_id => "18276894"}
           @paper = Paper.create!(@attr)
+          @paper.lookup_info
      end
 
      it "should bring in data from pubmed" do
-         @paper.title.should include("The critical importance of retrieval for learning.")
+         @paper.title.should == "The critical importance of retrieval for learning."
+     end
+
+     it "should derive authors" do
+         @paper.authors.first.lastname.should == "Karpicke"
+     end
+
+     it "should associate with existing authors" do
      end
   end
 end

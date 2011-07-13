@@ -13,3 +13,7 @@ Factory.define :micropost do |micropost|
     micropost.content "Foo bar"
     micropost.association :user
 end
+
+Factory.define :paper do |paper|
+    paper.pubmed_id "18276894"
+end

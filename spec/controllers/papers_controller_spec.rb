@@ -140,10 +140,10 @@ describe PapersController do
           response.should redirect_to(@paper)
         end
 
-        it "should create a new paper if one doesn't exist for that pubmed id" do
-          get :lookup, :pubmed_id => '21748830' 
-          response.should render_template("show")
-        end     
+        #it "should create a new paper if one doesn't exist for that pubmed id" do
+        #  get :lookup, :pubmed_id => '1234' 
+        #  response.should have_selector("p", '1234')
+        #end     
 
       end
 

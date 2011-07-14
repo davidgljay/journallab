@@ -92,7 +92,11 @@ before_filter :authenticate, :except => [:show, :index]
        @paper = Paper.create(:pubmed_id => params[:pubmed_id])
        @paper.lookup_info
     end
-    redirect_to @paper
+    if flash[:error].nil?
+      redirect_to @paper
+    else
+      redirect_to 'pages#home'
+    end
   end    
 
   private

@@ -15,11 +15,9 @@ describe Paper do
     no_pubmed_paper.should_not be_valid
   end
 
-  it "should require the pubmed id to be 8 characters" do
-    short_pubmed_paper = Paper.new(@attr.merge(:pubmed_id => "1234567"))
-    short_pubmed_paper2 = Paper.new(@attr.merge(:pubmed_id => "123456789"))
-    short_pubmed_paper.should_not be_valid
-    short_pubmed_paper2.should_not be_valid
+  it "should require the pubmed id to be 12 characters" do
+    long_pubmed_paper = Paper.new(@attr.merge(:pubmed_id => "12345678901234567"))
+    long_pubmed_paper.should_not be_valid
   end
 
   describe "author associations" do

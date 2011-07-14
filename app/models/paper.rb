@@ -10,21 +10,37 @@ has_many :comments
 
 #Validations
    validates :pubmed_id, :presence => true,
-                         :length => { :is => 8 },
+                         :length => { :maximum => 12 },
                          :uniqueness => true
 
 def lookup_info
   url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id + '?report=xml'
   dirty_xml = Net::HTTP.get_response(URI.parse(url)).body
-  clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub!(/>\s*</, "><")
+  clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub!(/>\s*</, "><")  
+  #Check to see if the ID showed up on pubmed, if not return to the homepage.
   data = REXML::Document.new(clean_xml)
-  article = data.root.elements["PubmedArticle"].elements["MedlineCitation"].elements["Article"]
+  if data.root.elements["PubmedArticle"].nil?
+     flash = { :error => "This Pubmed ID is not valid." }
+     self.destroy
+  else
+    article = data.root.elements["PubmedArticle"].elements["MedlineCitation"].elements["Article"]
+    extract_data(article)
+    extract_authors(article)
+  end
+end
+
+
+def extract_data(article)
   self.title = article.elements["ArticleTitle"].text
   self.journal = article.elements["Journal"].elements["Title"].text
-  unless article.elements["Abstract"].elements["AbstractText"].nil?
+  unless article.elements["Abstract"].nil?
     self.abstract = article.elements["Abstract"].elements["AbstractText"].text
   end
+  self.save
+  article
+end
 
+def extract_authors(article)
 #Derive authors
   if self.authors.empty?
     all_authors = Author.all.map{|auth| [auth.firstname, auth.lastname, auth.initial, auth.id]} 
@@ -38,8 +54,7 @@ def lookup_info
        end
      end               
   end
- self.save
- end
+end
 
 #Need to find a way to avoid reproducing this code in Paper, Figs, and Fig sections...
  def latest_assertion

@@ -7,6 +7,7 @@ Osra::Application.routes.draw do
   resources :authors
 
   resources :papers
+    match '/lookup(/:pubmed_id)', :to => 'papers#lookup'
 
 #Micropost routes
 resources :microposts, :only => [:create, :destroy]

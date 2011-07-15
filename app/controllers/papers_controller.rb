@@ -18,7 +18,7 @@ before_filter :authenticate, :except => [:show, :index]
   # GET /papers/1.xml
   def show
     @paper = Paper.find(params[:id])
-
+    @core_assertion = @paper.assertions.build if @paper.assertions.empty?
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @paper }

@@ -57,10 +57,18 @@ def extract_authors(article)
 end
 
 #Need to find a way to avoid reproducing this code in Paper, Figs, and Fig sections...
- def latest_assertion
+def latest_assertion
      assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
      assert_list.last
- end
+end
+
+def short_abstract
+  unless self.abstract.length < 500
+    short_abstract = self.abstract[0..250] + " ... " + self.abstract[-250...-1] + "." 
+  else
+  self.abstract
+  end
+end
 
 
 end

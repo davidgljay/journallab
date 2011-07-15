@@ -89,9 +89,87 @@ a.signup_button {
   color: #fff;
   background: #006400;
   font-size: 150%;
-  font-weight: bold;
   padding: 20px;
 }
+
+/* Homepage Search */
+
+.homepage_search {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 400px;
+  color: #fff;
+  background: #005;
+  font-size: 150%;
+  padding: 20px;
+}
+
+.homepage_search input[type = "text"] {
+  width: 300px;
+  height: 80px;
+  font-size: 150%;
+  text-indent: 10px;
+  padding: 15px;
+}
+
+.homepage_search input[type = "submit"] {
+   width: 100px;
+   height: 40px;
+   font-size: 125%;
+}
+
+/* Signup/signin */
+
+.signin td {
+  vertical-align: top;
+}
+
+/* Heat Map */
+
+.cool {
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 200px;
+  color: #fff;
+  background: #5057ec;
+  font-size: 115%;
+}
+
+.med {
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 200px;
+  color: #fff;
+  background: #373ca2;
+  font-size: 115%;
+}
+
+.hot {
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 200px;
+  color: #fff;
+  background: #1f225b;
+  font-size: 115%;
+}
+
+/* Fig Summary */
+
+td.core_assertion {
+   background: #fff;
+}
+
+td.fig_assertion{
+   background: #fff;
+   padding-left: 20px;
+
+}
+
 
 /* Tables */
 

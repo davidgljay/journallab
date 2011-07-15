@@ -1,3 +1,6 @@
+<table class = "signin">
+<tr>
+<td>
 <h1>Sign In</h1>
 
 <%= form_for(:session, :url=> sessions_path) do |f| %>
@@ -13,4 +16,16 @@
      <%= f.submit "Sign in" %>
   </div>
 <% end %>
-<p>New user? <%= link_to "Sign up now!", signup_path %></p>
+</td>
+<td>
+<h1>Sign Up</h1>
+
+<%= form_for(@user) do |f| %>
+  <%= render '/users/fields', :f => f %>
+  <div class="actions">
+    <%= f.submit "Sign up" %>
+  </div>
+<% end %>
+</td>
+</tr>
+</table>

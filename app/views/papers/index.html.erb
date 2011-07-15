@@ -17,7 +17,7 @@
     <td><%= paper.title %></td>
     <td><%= paper.pubmed_id %></td>
     <td><%= paper.journal %></td>
-    <td><%= paper.abstract %></td>
+    <td><%= paper.short_abstract unless paper.abstract.nil? %></td>
     <td><%= paper.summary %></td>
     <td><%= link_to 'Show', paper %></td>
     <td><%= link_to 'Edit', edit_paper_path(paper) %></td>

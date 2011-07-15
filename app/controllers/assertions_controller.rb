@@ -41,10 +41,11 @@ class AssertionsController < ApplicationController
   # POST /assertions.xml
   def create
     @assertion = Assertion.new(params[:assertion])
-
+    @assertion.user_id = current_user.id
+    @assertion.paper = Paper.find(params[:assertion][:paper_id])
     respond_to do |format|
       if @assertion.save
-        format.html { redirect_to(@assertion, :notice => 'Assertion was successfully created.') }
+        format.html { redirect_to(@assertion.paper, :notice => 'Assertion was successfully created.') }
         format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
       else
         format.html { render :action => "new" }

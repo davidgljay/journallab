@@ -16,15 +16,12 @@
     </tr>
   </table>
 <% else %>
-<h1>Sample App</h1>
-<p>
-<%= form_tag('/lookup', :method => "get") do %>
-<%= label_tag(:pubmed_id, "Search for:") %>
-  <%= text_field_tag(:pubmed_id) %>
+
+<%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
+<%= label_tag(:pubmed_id, "Go ahead, enter a Pubmed ID:") %><br>
+  <%= text_field_tag(:pubmed_id) %><br>
   <%= submit_tag("Submit") %>
 <% end %>
 
 </p>
-
-<%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
 <% end %>

@@ -5,6 +5,7 @@ class CreatePapers < ActiveRecord::Migration
       t.integer :pubmed_id
       t.text :journal
       t.text :abstract, :default => ""
+      t.text :summary
 
       t.timestamps
     end

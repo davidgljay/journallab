@@ -1,4 +1,8 @@
 class AssertionsController < ApplicationController
+before_filter :authenticate
+before_filter :admin_user,   :only => [:destroy, :edit, :update]
+
+
   # GET /assertions
   # GET /assertions.xml
   def index

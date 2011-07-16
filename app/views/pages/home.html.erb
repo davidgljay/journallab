@@ -2,26 +2,16 @@
   <table class="front" summary="For signed-in users">
     <tr>
       <td class="main">
-<%= form_tag('/lookup', :method => "get") do %>
-<%= label_tag(:pubmed_id, "Search for:") %>
-  <%= text_field_tag(:pubmed_id) %>
-  <%= submit_tag("Submit") %>
-<% end %>
-        <%= render 'shared/feed' %>
-      </td>
-      <td class="sidebar round">
-        <%= render 'shared/user_info' %>
-        <%= render 'shared/stats' %>
-      </td>
-    </tr>
-  </table>
-<% else %>
-
 <%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
 <%= label_tag(:pubmed_id, "Go ahead, enter a Pubmed ID:") %><br>
   <%= text_field_tag(:pubmed_id) %><br>
   <%= submit_tag("Submit") %>
 <% end %>
-
-</p>
+      </td>
+      <td class="sidebar round">
+        <%= render 'shared/user_info' %>
+        <em>List of recently viewed papers will go here.</em> 
+      </td>
+    </tr>
+  </table>
 <% end %>

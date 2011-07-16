@@ -1,6 +1,6 @@
 class PapersController < ApplicationController
-before_filter :authenticate, :except => [:show, :index]
-#before_filter :admin_user,   :only => [:destroy, :edit, :update]
+before_filter :authenticate, :except => [:show, :index, :lookup]
+before_filter :admin_user,   :only => [:destroy, :edit, :update]
 
 
   # GET /papers

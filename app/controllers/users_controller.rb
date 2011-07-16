@@ -24,7 +24,7 @@ before_filter :admin_user,   :only => :destroy
    if @user.save
       sign_in @user       
       flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      redirect_back_or root_path
    else
      @title = "Sign up"
      render "new"

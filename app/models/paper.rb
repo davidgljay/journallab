@@ -15,7 +15,7 @@ has_many :figs
                          :uniqueness => true
 
 def lookup_info
-  url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id + '?report=xml'
+  url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s + '?report=xml'
   dirty_xml = Net::HTTP.get_response(URI.parse(url)).body
   clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub!(/>\s*</, "><")  
   #Check to see if the ID showed up on pubmed, if not return to the homepage.

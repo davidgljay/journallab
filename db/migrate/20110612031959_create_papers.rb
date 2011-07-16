@@ -1,11 +1,10 @@
 class CreatePapers < ActiveRecord::Migration
   def self.up
     create_table :papers do |t|
-      t.string :title
-      t.string :pubmed_id
-      t.string :journal
-      t.string :abstract, :default => ""
-      t.string :summary
+      t.text :title
+      t.integer :pubmed_id
+      t.text :journal
+      t.text :abstract, :default => ""
 
       t.timestamps
     end

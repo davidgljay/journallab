@@ -7,6 +7,7 @@ has_many :authorships, :foreign_key => "paper_id",
 has_many :authors, :through => :authorships, :source => :author
 has_many :assertions
 has_many :comments
+has_many :figs
 
 #Validations
    validates :pubmed_id, :presence => true,

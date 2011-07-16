@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110713212750) do
+ActiveRecord::Schema.define(:version => 20110716051010) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -49,6 +49,20 @@ ActiveRecord::Schema.define(:version => 20110713212750) do
     t.integer  "fig_id"
     t.integer  "figsection_id"
     t.integer  "comment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "figs", :force => true do |t|
+    t.integer  "paper_id"
+    t.integer  "num"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "figsections", :force => true do |t|
+    t.integer  "fig_id"
+    t.integer  "num"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

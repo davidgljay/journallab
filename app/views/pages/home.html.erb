@@ -2,11 +2,11 @@
   <table class="front" summary="For signed-in users">
     <tr>
       <td class="main">
-<%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
-<%= label_tag(:pubmed_id, "Go ahead, enter a Pubmed ID:") %><br>
-  <%= text_field_tag(:pubmed_id) %><br>
-  <%= submit_tag("Submit") %>
-<% end %>
+  <%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
+    <%= label_tag(:pubmed_id, "Go ahead, enter a Pubmed ID:") %><br>
+    <%= text_field_tag(:pubmed_id) %><br>
+     <%= submit_tag("Submit") %>
+  <% end %>
       </td>
       <td class="sidebar round">
         <%= render 'shared/user_info' %>
@@ -14,4 +14,11 @@
       </td>
     </tr>
   </table>
+<% else %>
+<%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
+<%= label_tag(:pubmed_id, "Go ahead, enter a Pubmed ID:") %><br>
+  <%= text_field_tag(:pubmed_id) %><br>
+  <%= submit_tag("Submit") %>
 <% end %>
+<% end %>
+

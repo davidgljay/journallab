@@ -71,6 +71,11 @@ def short_abstract
   end
 end
 
+def build_figs(numfigs)
+   numfigs.to_i.times do |i|
+     self.figs.create(:num => (self.figs.count+1))
+   end
+end
 
 end
 

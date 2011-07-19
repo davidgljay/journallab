@@ -1,0 +1,22 @@
+<% fig.figsections.each do |s| %> 
+<tr>
+<td>
+<style class = "med round figsection assertion">Section <%= s.num %>:</style> 
+</td>
+<td>
+<% if s.assertions.empty? %>
+      <% form_for s.assertions.build, :class => "new_assertion"  do |f| %>
+      <%= render 'shared/error_messages', :object => f.object %>
+      <div class="field">
+         <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this section?" %>
+         <%= f.hidden_field :figsection_id %>
+         <%= f.submit "Submit" %>
+      </div>
+      <% end %>
+<% else %>
+<%= s.assertions.last.text %>
+<% end %> 
+</td>
+</tr>
+<% end %>
+

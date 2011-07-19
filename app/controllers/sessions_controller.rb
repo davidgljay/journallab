@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
      if user.nil?
        flash.now[:error] = "Invalid email or password."
        @title = "Sign in"
+       @user = User.new
        render 'new'
      else
       sign_in user

@@ -6,7 +6,6 @@
     <th>Pubmed</th>
     <th>Journal</th>
     <th>Abstract</th>
-    <th>Summary</th>
     <th></th>
     <th></th>
     <th></th>
@@ -18,7 +17,6 @@
     <td><%= paper.pubmed_id %></td>
     <td><%= paper.journal %></td>
     <td><%= paper.short_abstract unless paper.abstract.nil? %></td>
-    <td><%= paper.summary %></td>
     <td><%= link_to 'Show', paper %></td>
     <td><%= link_to 'Edit', edit_paper_path(paper) %></td>
     <td><%= link_to 'Destroy', paper, :confirm => 'Are you sure?', :method => :delete %></td>

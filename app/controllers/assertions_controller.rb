@@ -46,10 +46,28 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
   def create
     @assertion = Assertion.new(params[:assertion])
     @assertion.user_id = current_user.id
-    @assertion.paper = Paper.find(params[:assertion][:paper_id])
+  
+  #Associate the assertion with the proper figure, figsection, or paper.
+    if params[:assertion][:paper_id]
+        @assertion.about = "paper"
+        @assertion.paper = Paper.find(params[:assertion][:paper_id])
+        url = @assertion.paper
+        @assertion.paper.build_figs(params[:numfigs]) 
+    elsif params[:assertion][:fig_id] 
+        @assertion.about = "fig"
+        @assertion.fig = Fig.find(params[:assertion][:fig_id])
+        url = @assertion.fig.paper
+        @assertion.fig.build_figsections(params[:numsections]) 
+    elsif params[:assertion][:figsection_id]
+        @assertion.about = "figsection"
+        @assertion.method = params[:assertion][:method]
+        @assertion.figsection = Figsection.find(params[:assertion][:figsection_id])
+        url = @assertion.figsection.fig.paper 
+    end
+
     respond_to do |format|
       if @assertion.save
-        format.html { redirect_to(@assertion.paper, :notice => 'Assertion was successfully created.') }
+        format.html { redirect_to(url, :notice => 'Assertion was successfully created.') }
         format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
       else
         format.html { render :action => "new" }

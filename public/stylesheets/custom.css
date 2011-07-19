@@ -129,47 +129,51 @@ a.signup_button {
 /* Heat Map */
 
 .cool {
-  margin-right: auto;
-  display: block;
-  text-align: center;
-  width: 200px;
   color: #fff;
   background: #5057ec;
-  font-size: 115%;
 }
 
 .med {
-  margin-right: auto;
-  display: block;
-  text-align: center;
-  width: 200px;
   color: #fff;
   background: #373ca2;
-  font-size: 115%;
 }
 
 .hot {
-  margin-right: auto;
-  display: block;
-  text-align: center;
-  width: 200px;
   color: #fff;
   background: #1f225b;
-  font-size: 115%;
 }
 
 /* Fig Summary */
 
-td.core_assertion {
-   background: #fff;
+.assertion {
+   text-align: right;
+   margin-right: auto;
+   padding-right: 20px;
+   display: block;
+   font-weight: bold;
 }
 
-td.fig_assertion{
-   background: #fff;
-   padding-left: 20px;
+.core {
+   width: 150px;
 
 }
 
+.fig {
+   margin-left: 20px;
+   width: 130px;
+}
+
+.figsection {
+   margin-left: 40px;
+   width: 110px;
+}
+
+/* Assertion form */
+
+form.new_assertion textarea {
+  width: 400px;
+  font-size: 115%;
+}
 
 /* Tables */
 

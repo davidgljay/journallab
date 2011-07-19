@@ -1,0 +1,52 @@
+<% @paper.figs.each do |fig| %> 
+<tr>
+<td>
+<style class = "med round fig assertion">Fig <%= fig.num %>:</style> 
+</td>
+<td>
+<% if fig.assertions.empty? %>
+      <% form_for fig.assertions.build, :class => "new_assertion"  do |f| %>
+      <%= render 'shared/error_messages', :object => f.object %>
+      <div class="field">
+         <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this figure?" %>
+         <br>
+         This figure has 
+         <%= select_tag :numsections, options_for_select(@numfig_select) %>
+         <%= f.hidden_field :fig_id %>
+         section(s).
+         <%= f.submit "Submit" %>
+      </div>
+      <% end %>
+<% else %>
+<%= fig.latest_assertion.text %>
+</td>
+</tr>
+<% fig.figsections.each do |s| %> 
+<tr>
+<td>
+<style class = "med round figsection assertion">Section <%= s.num %>:</style> 
+</td>
+<td>
+<% if s.assertions.empty? %>
+      <% form_for s.assertions.build, :class => "new_assertion"  do |f| %>
+      <%= render 'shared/error_messages', :object => f.object %>
+      <div class="field">
+         <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this section?" %>
+         <br>
+         <%= f.text_field :method, :onfocus => "this.value=''", :value => "What methods are used?" %>
+         <%= f.hidden_field :figsection_id %>
+         <%= f.submit "Submit" %>
+      </div>
+      <% end %>
+<% else %>
+<%= s.assertions.last.text %>
+<br>
+<em> <%= s.assertions.last.method %> </em>
+<% end %> 
+</td>
+</tr>
+<% end %>
+
+<% end %> 
+<% end %>
+

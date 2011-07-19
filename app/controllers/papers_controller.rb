@@ -19,6 +19,13 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
   def show
     @paper = Paper.find(params[:id])
     @core_assertion = @paper.assertions.build if @paper.assertions.empty?
+    
+    #Prep the selection dropdown for selection the # of figs in the paper.  
+    @numfig_select = Array.new
+    30.times do |i| 
+      @numfig_select << [(i+1).to_s, i+1 ]
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @paper }
@@ -31,8 +38,8 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
     @paper = Paper.new
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @paper }
+       format.html # new.html.erb
+       format.xml  { render :xml => @paper }
     end
   end
 

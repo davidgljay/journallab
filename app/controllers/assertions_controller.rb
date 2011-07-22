@@ -69,7 +69,7 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
       if @assertion.save
         format.html { redirect_to(url, :notice => 'Assertion was successfully created.') }
         format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
-      else
+      elsif ur
         format.html { redirect_to(url, :notice => 'Please submit your assertion again.') }
         format.xml  { render :xml => @assertion.errors, :status => :unprocessable_entity }
       end
@@ -103,4 +103,10 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
       format.xml  { head :ok }
     end
   end
+
+  private
+
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
 end

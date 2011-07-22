@@ -18,6 +18,12 @@ Factory.define :paper do |paper|
     paper.pubmed_id "18276894"
 end
 
+Factory.sequence :pubmed do |n|
+   "1827289#{n}"
+end
+ 
 Factory.define :assertion do |assert|
     assert.text "This is grande!"
+    assert.association :user
+    assert.association :paper
 end

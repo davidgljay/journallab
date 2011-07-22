@@ -51,9 +51,15 @@ describe Paper do
  describe "assertions" do
      it "should find the latest assertion" do
         @paper = Factory(:paper)
-        asrt1 = @paper.assertions.create!(:text => "I love Nanctucket!")
-        asrt1.created_at = 5.days.ago 
-        @paper.assertions.create!(:text => "I love St. Louis!")
+        @user = Factory(:user)
+        asrt1 = @paper.assertions.build(:text => "I love Nantucket!")
+        asrt1.user = @user
+        asrt1.save
+        asrt1.created_at = 3.days.ago
+        asrt1.save
+        asrt2 = @paper.assertions.new(:text => "I love St. Louis!")
+        asrt2.user = @user
+        asrt2.save
         @paper.assertions.reverse
         @paper.latest_assertion.text.should == "I love St. Louis!"
      end

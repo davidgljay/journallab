@@ -70,7 +70,7 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
         format.html { redirect_to(url, :notice => 'Assertion was successfully created.') }
         format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to(url, :notice => 'Please submit your assertion again.') }
         format.xml  { render :xml => @assertion.errors, :status => :unprocessable_entity }
       end
     end

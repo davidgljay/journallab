@@ -1,14 +1,13 @@
-  <% unless @paper.assertions.count == 0 %>
-  <tr>
+  <tr class = "paper assertion">
     <td>
       <style class = "cool round core assertion">Core Assertion:</style>
     </td>
+  <% unless @paper.assertions.count == 0 %>
     <td width = "80%">
-      <%= @paper.latest_assertion.text %>
+       <%= @paper.latest_assertion.text %>
     </td>
   </tr>
   <% else %>
-  <tr class = "paper assertion">
     <td>
       <% form_for @core_assertion, :class => "new_assertion"  do |f| %>
       <%= render 'shared/error_messages', :object => f.object %>

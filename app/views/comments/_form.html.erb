@@ -1,41 +1,26 @@
-<%= form_for(@comment) do |f| %>
-  <% if @comment.errors.any? %>
+<%= form_for(comment) do |f| %>
+  <% if comment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
 
       <ul>
-      <% @comment.errors.full_messages.each do |msg| %>
+      <% comment.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
-
   <div class="field">
-    <%= f.label :text %><br />
+    <% if reply_to %>
+      <%= f.label "Leave a reply" %><br />
+    <%= f.hidden_field :reply_to, :value => reply_to.id %>
+    <% else %>
+      <%= f.label "Leave a comment" %><br />
+    <% end %>
     <%= f.text_area :text %>
   </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :paper_id %><br />
-    <%= f.text_field :paper_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fig_id %><br />
-    <%= f.text_field :fig_id %>
-  </div>
-  <div class="field">
-    <%= f.label :figsection_id %><br />
-    <%= f.text_field :figsection_id %>
-  </div>
-  <div class="field">
-    <%= f.label :comment_id %><br />
-    <%= f.text_field :comment_id %>
-  </div>
+    <%= f.hidden_field :assertion_id, :value => @assertion.id if @assertion %>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :value => "Submit" %>
   </div>
 <% end %>

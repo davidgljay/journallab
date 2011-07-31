@@ -1,35 +1,3 @@
-<p id="notice"><%= notice %></p>
+<%= render 'list', :comments => @comments %>
 
-<p>
-  <b>Text:</b>
-  <%= @comment.text %>
-</p>
-
-<p>
-  <b>User:</b>
-  <%= @comment.user_id %>
-</p>
-
-<p>
-  <b>Paper:</b>
-  <%= @comment.paper_id %>
-</p>
-
-<p>
-  <b>Fig:</b>
-  <%= @comment.fig_id %>
-</p>
-
-<p>
-  <b>Figsection:</b>
-  <%= @comment.figsection_id %>
-</p>
-
-<p>
-  <b>Comment:</b>
-  <%= @comment.comment_id %>
-</p>
-
-
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<%= render 'form', :comment => @newcomment, :reply_to => false %>

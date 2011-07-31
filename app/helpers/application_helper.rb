@@ -2,7 +2,7 @@ module ApplicationHelper
 
   #Generate a title on a per-page basis
     def title
-	base_title = "Ruby on Rails Tutorial Sample App"
+	base_title = "Understand Question Contribute"
 	if @title.nil?
 	  base_title
 	else

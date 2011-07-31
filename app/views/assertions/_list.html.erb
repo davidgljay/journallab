@@ -1,0 +1,14 @@
+<table>
+<% @history.each do |assertion| %>
+  <tr>
+    <td>
+      <%= assertion.text %> 
+      <br>
+      <% if assertion.about = 'figsection' %>
+      <em><%= assertion.method %></em>
+      <% end %>
+      <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at %> 
+    </td>
+  </tr>
+<% end %>
+</table>

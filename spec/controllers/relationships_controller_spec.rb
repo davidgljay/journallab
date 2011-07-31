@@ -19,7 +19,7 @@ describe "POST 'create'" do
 
     before(:each) do
       @user = test_sign_in(Factory(:user))
-      @followed = Factory(:user, :email => Factory.next(:email))
+      @followed = Factory(:user, :email => 'unique@email.com')
     end
 
     it "should create a relationship" do
@@ -41,7 +41,7 @@ describe "POST 'create'" do
 
     before(:each) do
       @user = test_sign_in(Factory(:user))
-      @followed = Factory(:user, :email => Factory.next(:email))
+      @followed = Factory(:user, :email => 'unique@email.com')
       @user.follow!(@followed)
       @relationship = @user.relationships.find_by_followed_id(@followed)
     end

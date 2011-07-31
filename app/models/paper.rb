@@ -11,8 +11,10 @@ has_many :figs
 
 #Validations
    validates :pubmed_id, :presence => true,
-                         :length => { :maximum => 12 },
                          :uniqueness => true
+   validates_numericality_of :pubmed_id, :only_integer => true,
+                         :less_than => 9999999999999,
+                         :greater_than => 0
 
 def lookup_info
   url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s + '?report=xml'

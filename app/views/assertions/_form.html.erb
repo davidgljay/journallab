@@ -1,10 +1,10 @@
-<%= form_for(@assertion) do |f| %>
-  <% if @assertion.errors.any? %>
+<%= form_for(asrt) do |f| %>
+  <% if asrt.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@assertion.errors.count, "error") %> prohibited this assertion from being saved:</h2>
+      <h2><%= pluralize(asrt.errors.count, "error") %> prohibited this assertion from being saved:</h2>
 
       <ul>
-      <% @assertion.errors.full_messages.each do |msg| %>
+      <% asrt.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -12,26 +12,21 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :text %><br />
-    <%= f.text_area :text %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
-    <%= f.label :paper_id %><br />
-    <%= f.text_field :paper_id %>
-  </div>
-  <div class="field">
-    <%= f.label :fig_id %><br />
-    <%= f.text_field :fig_id %>
-  </div>
-  <div class="field">
-    <%= f.label :figsection_id %><br />
-    <%= f.text_field :figsection_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <% if asrt.text %>
+    <%= f.text_field :text %>
+    <% else %>
+    <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this " + @about + "?" %>
+    <% end %>
+    <% if asrt.paper %>
+        <%= f.hidden_field :paper_id, :value => asrt.paper.id %>
+    <% elsif asrt.fig %>
+        <%= f.hidden_field :fig_id, :value => asrt.fig.id %>
+    <% elsif asrt.figsection %>
+    <br>
+    <%= f.text_field :method, :onfocus => "this.value=''", :value => "What methods are used?" %>
+        <%= f.hidden_field :figsection_id, :value => asrt.figsection.id %>
+    <% end %>
+    <br>
+    <%= f.submit :value => "Submit" %>
   </div>
 <% end %>

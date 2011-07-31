@@ -1,6 +1,6 @@
 class AssertionsController < ApplicationController
 before_filter :authenticate
-before_filter :admin_user,   :only => [:destroy, :edit, :update]
+before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
 
 
   # GET /assertions
@@ -25,20 +25,56 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
     end
   end
 
-  # GET /assertions/new
-  # GET /assertions/new.xml
-  def new
-    @assertion = Assertion.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @assertion }
+  # GET /assertions/improve/1
+  # A method to improve assertions
+  def improve
+    @title = "Improve Assertion"
+    @oldassertion = Assertion.find(params[:id])
+    if @oldassertion.about == 'paper'
+       @paper = @oldassertion.paper
+       @about = "paper"
+       @history = @paper.assertions.all
+       @assertion = @paper.assertions.build
+    elsif @oldassertion.about == 'fig'
+       @fig = @oldassertion.fig
+       @about = "figure"
+       @history = @fig.assertions.all
+       @assertion = @fig.assertions.build
+    elsif @oldassertion.about == 'figsection'
+       @figsection = @oldassertion.figsection
+       @history = @figsection.assertions.all
+       @about = "section"
+       @assertion = @figsection.assertions.build
     end
   end
+
+  # GET /assertions/new
+  # GET /assertions/new.xml
+  #def new
+  #  @assertion = Assertion.new
+
+  #  respond_to do |format|
+  #    format.html # new.html.erb
+  #    format.xml  { render :xml => @assertion }
+  #  end
+  #end
 
   # GET /assertions/1/edit
   def edit
     @assertion = Assertion.find(params[:id])
+    if @assertion.about == 'paper'
+       @paper = @assertion.paper
+       @about = "paper"
+       @history = @paper.assertions.all
+    elsif @assertion.about == 'fig'
+       @fig = @assertion.fig
+       @about = "figure"
+       @history = @fig.assertions.all
+    elsif @assertion.about == 'figsection'
+       @figsection = @assertion.figsection
+       @history = @figsection.assertions.all
+       @about = "section"
+    end
   end
 
   # POST /assertions
@@ -109,4 +145,9 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
     def admin_user
       redirect_to(root_path) unless current_user.admin?
     end
+
+  def authorized_user_or_admin
+      @assertion = Assertion.find(params[:id])
+      redirect_to root_path unless current_user?(@assertion.user) || current_user.admin?
+  end
 end

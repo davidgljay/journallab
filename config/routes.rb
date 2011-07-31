@@ -1,8 +1,12 @@
-Osra::Application.routes.draw do
+Redcell::Application.routes.draw do
 
   resources :comments
+   match '(/:about)(/:id)/comments', :to => 'comments#show'
+   match '/comments(/:id)/reply',    :to => 'comments#reply'
 
   resources :assertions
+    match '/assertions/improve(/:id)', :to => 'assertions#improve'
+   
 
   resources :authors
 

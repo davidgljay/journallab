@@ -45,6 +45,6 @@ group :test do
   gem 'factory_girl_rails', '1.0'
 end
 
-group :osra do
+group :redcell do
   gem 'feedzirra'
 end

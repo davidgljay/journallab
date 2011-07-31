@@ -1,20 +1,31 @@
 <% fig.figsections.each do |s| %> 
-<tr>
-<td>
+<tr class = "summary">
+<td class = "sumleft">
 <style class = "med round figsection assertion">Section <%= s.num %>:</style> 
 </td>
-<td>
+<td class = "sumright">
 <% if s.assertions.empty? %>
       <% form_for s.assertions.build, :class => "new_assertion"  do |f| %>
       <%= render 'shared/error_messages', :object => f.object %>
       <div class="field">
          <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this section?" %>
+         <br>
+         <%= f.text_field :method, :onfocus => "this.value=''", :value => "What methods are used?" %>
          <%= f.hidden_field :figsection_id %>
          <%= f.submit "Submit" %>
       </div>
       <% end %>
 <% else %>
-<%= s.assertions.last.text %>
+<%= s.latest_assertion.text %>
+<br>
+<style class="method"><%= s.assertions.last.method %> </style>
+<br>
+     <nav>
+       <ul>
+         <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => @paper.latest_assertion.id  %></li>
+         <li><%= link_to 'View Discussion', '/figsections/' + s.id.to_s + '/comments' %></li>
+        </ul>
+        </nav>
 <% end %> 
 </td>
 </tr>

@@ -26,6 +26,10 @@ section h1 {
   font-size: 200%;
 }
 
+style {
+display: inline;
+}
+
 /* Links */
 
 a {
@@ -94,7 +98,7 @@ a.signup_button {
 
 /* Homepage Search */
 
-.homepage_search {
+form.homepage_search {
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -106,6 +110,7 @@ a.signup_button {
   padding: 20px;
 }
 
+
 .homepage_search input[type = "text"] {
   width: 300px;
   height: 80px;
@@ -115,9 +120,6 @@ a.signup_button {
 }
 
 .homepage_search input[type = "submit"] {
-   width: 100px;
-   height: 40px;
-   font-size: 125%;
 }
 
 /* Signup/signin */
@@ -145,36 +147,167 @@ a.signup_button {
 
 /* Fig Summary */
 
-.assertion {
+
+style.assertion {
    text-align: right;
    margin-right: auto;
    padding-right: 20px;
    display: block;
    font-weight: bold;
+   padding-top: 30px;
+   padding-bottom: 30px;
+   position:relative;
 }
 
-.core {
+tbody tr.summary td {
+   background: #fff;
+}
+
+td.sumleft {
+   width:160px;
+   font-size: 115%;
+}
+
+td.sumright {
+  width: 100%;
+  font-size: 115%;
+  font-weight: bold;
+}
+
+style.method {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 90%;
+}
+
+td.sumright nav {
+   float: left;
+   font-size: 80%;
+}
+
+style.core {
    width: 150px;
-
 }
 
-.fig {
+style.fig  {
    margin-left: 20px;
    width: 130px;
 }
 
-.figsection {
+style.figsection {
    margin-left: 40px;
    width: 110px;
 }
 
+.little {
+   font-size: 80%;
+}
+
 /* Assertion form */
 
-form.new_assertion textarea {
+td.sumright input[ type = "text" ] {
   width: 400px;
   font-size: 115%;
 }
+div.field {
+  font-weight: normal;
+}
 
+/* Comments */
+
+table.comment {
+   background: #fff;
+   border: 1px;
+   padding: 10px;
+}
+
+table.comment td {
+   background: #fff;
+   padding-bottom: 30px;
+}
+
+table.comment div.user_info {
+  background: #d8e4f9;
+  margin-left: 0px;
+  padding: 10px; 
+  padding-left: 20px;
+  border-top: solid;
+  border-left: solid;
+  border-right: solid;
+  border-color: #699bf9;
+  -moz-border-top-right-radius:    10px;
+  -webkit-border-top-right-radius: 10px;
+  border-top-right-radius:         10px;
+  -moz-border-top-left-radius:    10px;
+  -webkit-border-top-left-radius: 10px;
+  border-top-left-radius:         10px;
+}
+
+div.comment_body {
+   display: block;
+   background: #fff;
+   padding: 10px;
+   border: solid;
+   border-color: #699bf9;
+  -moz-border-bottom-right-radius:    10px;
+  -webkit-border-bottom-right-radius: 10px;
+  border-bottom-right-radius:         10px;
+  -moz-border-bottom-left-radius:    10px;
+  -webkit-border-bottom-left-radius: 10px;
+  border-bottom-left-radius:         10px;
+
+}
+
+table.comment nav {
+   float: none;
+   text-align: left;
+   font-size: 80%;
+}
+
+/* Replies */
+
+td.reply {
+ padding-left: 80px;
+ padding-top: 0px;
+}
+
+td.reply div.user_info {
+  background: #d8e4f9; 
+  padding-left: 20px;
+  border-top: 0px;
+  border-left: solid;
+  border-right: solid;
+  border-color: #699bf9;
+  -moz-border-top-right-radius:    0px;
+  -webkit-border-top-right-radius: 0px;
+  border-top-right-radius:         0px;
+  -moz-border-top-left-radius:    0px;
+  -webkit-border-top-left-radius: 0px;
+  border-top-left-radius:         0px;
+  }
+
+td.has_reply div {
+  -moz-border-bottom-right-radius:    0px;
+  -webkit-border-bottom-right-radius: 0px;
+  border-bottom-right-radius:         0px;
+}
+
+tbody td.has_reply {
+  padding-bottom: 0px;
+}
+
+td.more_replies div {
+  -moz-border-bottom-right-radius:    0px;
+  -webkit-border-bottom-right-radius: 0px;
+  border-bottom-right-radius:         0px;
+  -moz-border-bottom-left-radius:    0px;
+  -webkit-border-bottom-left-radius: 0px;
+  border-bottom-left-radius:         0px;
+}
+
+tbody td.more_replies {
+  padding-bottom: 0px;
+}
 /* Tables */
 
 table.profile {
@@ -313,8 +446,12 @@ table.microposts tr td.micropost span.timestamp {
   color: #666;
 }
 
+div.user_info {
+  margin-left: 20px;
+}
+
 div.user_info img {
-  padding-right: 0.1em;
+  padding-right: 0.7em;
 }
 
 div.user_info a {

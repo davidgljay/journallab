@@ -1,0 +1,21 @@
+<table class = "comment">
+<% comments.each do |comment| %>
+  <tr>
+    <td <% if comment.comments.count > 0 %> class = "has_reply" <% end %>>
+      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
+      <div class = "comment_body">
+      <%= comment.text %>
+      <br>
+      <nav>
+        <ul>
+         <li>
+         <%= link_to 'Reply', '/comments/' + comment.id.to_s + '/reply'  %>
+         </li>
+        </ul>
+      </nav>
+      </div>
+    </td>
+  </tr>
+    <%= render 'replies', :comment => comment %>
+<% end %>   
+</table>

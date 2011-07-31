@@ -1,13 +1,15 @@
-Factory.define :user do |user|
-   user.name			"David Jay"
-   user.email			"davidgljay@gmail.com"
-   user.password		"testingtesting123"
-   user.password_confirmation 	"testingtesting123"
+Factory.sequence :email do |n|
+  "person-#{n}@example.com"
 end
 
-Factory.sequence :email do |n|
-   "person-#{n}@example.com"
+
+Factory.define :user do |user|
+     user.name			"David Jay"
+     user.password		"testingtesting123"
+     user.password_confirmation 	"testingtesting123"
+     user.email                 "sample@email.com"
 end
+
 
 Factory.define :micropost do |micropost|
     micropost.content "Foo bar"
@@ -15,12 +17,19 @@ Factory.define :micropost do |micropost|
 end
 
 Factory.define :paper do |paper|
-    paper.pubmed_id "18276894"
+    paper.pubmed_id rand(999999999) + 100
 end
 
-Factory.sequence :pubmed do |n|
-   "1827289#{n}"
+Factory.define :comment do |comment|
+    comment.text "Lorem ipsum."
+    comment.association :user, :email => "unique@email.com"
+    comment.association :paper, :pubmed_id => rand(999999999) + 100
+    comment.association :assertion
 end
+
+#Factory.sequence :pubmed do |n|
+#   rand(9999999999) + 100
+#end
  
 Factory.define :assertion do |assert|
     assert.text "This is grande!"

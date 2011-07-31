@@ -1,11 +1,11 @@
 <% @paper.figs.each do |fig| %> 
-<tr>
-<td>
+<tr class = "summary">
+<td class = "sumleft">
 <style class = "med round fig assertion">Fig <%= fig.num %>:</style> 
 </td>
-<td>
-<% if fig.assertions.empty? %>
-      <% form_for fig.assertions.build, :class => "new_assertion"  do |f| %>
+<td class = "sumright">
+  <% if fig.assertions.empty? %>
+      <%= form_for fig.assertions.build, :class => "new_assertion"  do |f| %>
       <%= render 'shared/error_messages', :object => f.object %>
       <div class="field">
          <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this figure?" %>
@@ -17,36 +17,18 @@
          <%= f.submit "Submit" %>
       </div>
       <% end %>
-<% else %>
-<%= fig.latest_assertion.text %>
-</td>
-</tr>
-<% fig.figsections.each do |s| %> 
-<tr>
-<td>
-<style class = "med round figsection assertion">Section <%= s.num %>:</style> 
-</td>
-<td>
-<% if s.assertions.empty? %>
-      <% form_for s.assertions.build, :class => "new_assertion"  do |f| %>
-      <%= render 'shared/error_messages', :object => f.object %>
-      <div class="field">
-         <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this section?" %>
-         <br>
-         <%= f.text_field :method, :onfocus => "this.value=''", :value => "What methods are used?" %>
-         <%= f.hidden_field :figsection_id %>
-         <%= f.submit "Submit" %>
-      </div>
+     <% else %>
+     <%= fig.latest_assertion.text %>
+     <br>
+     <nav>
+       <ul>
+         <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => @paper.latest_assertion.id  %></li>
+         <li><%= link_to 'View Discussion', '/figs/' + fig.id.to_s + '/comments'  %></li>
+        </ul>
+        </nav>
       <% end %>
-<% else %>
-<%= s.assertions.last.text %>
-<br>
-<em> <%= s.assertions.last.method %> </em>
-<% end %> 
-</td>
+  </td>
 </tr>
-<% end %>
-
-<% end %> 
+<%= render 'section_assertion', :fig => fig %>
 <% end %>
 

@@ -3,6 +3,7 @@ class Fig < ActiveRecord::Base
 belongs_to :paper
 has_many :figsections
 has_many :assertions
+has_many :comments
 
 validates :paper_id, :presence => true
 

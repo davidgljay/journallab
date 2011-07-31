@@ -187,7 +187,7 @@ describe User do
 
     it "should not include a different user's microposts" do
         mp3 = Factory(:micropost,
-                      :user => Factory(:user, :email => Factory.next(:email)))
+                      :user => Factory(:user, :email => 'unique@email.com'))
         @user.feed.include?(mp3).should be_false
     end
 
@@ -204,12 +204,12 @@ describe User do
 
       it "should not include a different user's microposts" do
         mp3 = Factory(:micropost,
-                      :user => Factory(:user, :email => Factory.next(:email)))
+                      :user => Factory(:user, :email => 'unique@email.com'))
         @user.feed.should_not include(mp3)
       end
 
       it "should include the microposts of followed users" do
-        followed = Factory(:user, :email => Factory.next(:email))
+        followed = Factory(:user, :email => 'unique2@email.com')
         mp3 = Factory(:micropost, :user => followed)
         @user.follow!(followed)
         @user.feed.should include(mp3)
@@ -222,7 +222,7 @@ describe User do
 
     before(:each) do
       @user = Factory(:user)
-      @followed = Factory(:user, :email => Factory.next(:email))
+      @followed = Factory(:user, :email => 'unique@email.com')
     end
 
     it "should have a relationships method" do

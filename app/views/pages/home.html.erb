@@ -9,7 +9,7 @@
   <% end %>
       </td>
       <td class="sidebar round">
-        <%= render 'shared/user_info' %>
+        <%= render 'shared/user_info', :user => current_user, :date => nil %>
         <em>List of recently viewed papers will go here.</em> 
       </td>
     </tr>

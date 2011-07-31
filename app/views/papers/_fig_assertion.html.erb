@@ -1,7 +1,8 @@
 <% @paper.figs.each do |fig| %> 
 <tr class = "summary">
 <td class = "sumleft">
-<style class = "med round fig assertion">Fig <%= fig.num %>:</style> 
+<style class = "<%= "heat" + @heatmap.select{|h| h[0] == "fig" && h[1] == fig.id}[0][3].to_s %> round fig assertion">Fig <%= fig.num %>:
+</style> 
 </td>
 <td class = "sumright">
   <% if fig.assertions.empty? %>
@@ -24,6 +25,7 @@
        <ul>
          <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => @paper.latest_assertion.id  %></li>
          <li><%= link_to 'View Discussion', '/figs/' + fig.id.to_s + '/comments'  %></li>
+         <li><style class = "little">Comments: <%= @heatmap.select{|h| h[0] == "fig" && h[1] == fig.id}[0][2].to_s %></style></li>
         </ul>
         </nav>
       <% end %>

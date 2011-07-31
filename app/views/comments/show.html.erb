@@ -1,3 +1,29 @@
+<table>
+<tr class = "summary">
+    <td class = "sumleft">
+      <% if @assertion.about == "paper" %>
+      <style class = "<%= "heat" + @assertion.find_paper.heatmap.select{|h| h[0] == "paper" && h[1] == @assertion.paper.id}[0][3].to_s %> round core assertion">Core Assertion:
+</style>
+      <% elsif @assertion.about == "fig" %>
+      <style class = "<%= "heat" + @assertion.find_paper.heatmap.select{|h| h[0] == "fig" && h[1] == @assertion.fig.id}[0][3].to_s %> round core assertion">Fig <%= @assertion.fig.num %>:
+</style>
+      <% elsif @assertion.about == "figsection" %>
+      <style class = "<%= "heat" + @assertion.find_paper.heatmap.select{|h| h[0] == "figsection" && h[1] == @assertion.figsection.id}[0][3].to_s %> round core assertion">Section <%= @assertion.figsection.num %>:
+</style>
+     <% end %>
+    </td>
+    <td class = "sumright">
+     <%= @assertion.text %>
+     <br>
+     <nav>
+       <ul>
+       <li>
+         <%= link_to "Back to paper", @assertion.find_paper %>
+       </li>
+       </ul>
+    </td>
+</tr>
+</table>
 <%= render 'list', :comments => @comments %>
 
 <%= render 'form', :comment => @newcomment, :reply_to => false %>

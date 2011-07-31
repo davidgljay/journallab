@@ -23,6 +23,15 @@ def owner_id
   end
 end
 
+def find_paper
+  if paper_id
+    paper
+  elsif fig_id
+    fig.paper
+  elsif figsection_id
+    figsection.fig.paper
+  end
+end
 
 
 end

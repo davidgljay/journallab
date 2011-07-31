@@ -59,7 +59,40 @@ def extract_authors(article)
   end
 end
 
-#Need to find a way to avoid reproducing this code in Paper, Figs, and Fig sections...
+#Map how much discussion is going on in each part of the paper.
+def heatmap
+    heatmap = []
+    heatmap << ["paper", id, heat]
+    figs.each do |fig|
+      heatmap << ["fig", fig.id, fig.heat]
+      fig.figsections.each do |s|
+         heatmap << ["figsection", s.id, s.heat]
+      end
+    end
+    max = heatmap.map{|h| h[2]}.max
+    if max == 0
+      max += 1
+    end
+    heatmap.each do |h|
+      if h[2] > 0
+         a = 1
+      else
+         a = 0
+      end
+      float = h[2].to_f/max * 9 + a
+      h[3] = float.to_i
+    end       
+    heatmap
+end  
+
+def heat
+   heat = comments.count
+   comments.each do |c|
+     heat += c.comments.count
+   end
+   heat
+end
+
 def latest_assertion
      assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
      assert_list.last

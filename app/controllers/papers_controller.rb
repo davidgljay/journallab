@@ -19,7 +19,7 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
   def show
     @paper = Paper.find(params[:id])
     @core_assertion = @paper.assertions.build if @paper.assertions.empty?
-    
+    @heatmap = @paper.heatmap
     #Prep the selection dropdown for selection the # of figs in the paper.  
     @numfig_select = Array.new
     30.times do |i| 

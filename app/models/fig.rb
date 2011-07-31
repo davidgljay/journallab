@@ -18,4 +18,13 @@ def build_figsections(numsections)
    end
 end
 
+def heat
+   heat = comments.count
+   comments.each do |c|
+     heat += c.comments.count
+   end
+   heat
+end
+
+
 end

@@ -1,6 +1,7 @@
   <tr class = "summary">
     <td class = "sumleft">
-      <style class = "cool round core assertion">Core Assertion:</style>
+      <style class = "<%= "heat" + @heatmap.select{|h| h[0] == "paper" && h[1] == @paper.id}[0][3].to_s %> round core assertion">Core Assertion:
+</style>
     </td>
     <td class = "sumright">
   <% unless @paper.assertions.count == 0 %>
@@ -10,6 +11,7 @@
        <ul>
          <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => @paper.latest_assertion.id  %></li>
          <li><%= link_to 'View Discussion', '/papers/' + @paper.id.to_s + '/comments'  %></li>
+         <li><style class = "little">Comments: <%= @heatmap.select{|h| h[0] == "paper" && h[1] == @paper.id}[0][2].to_s %></style></li>
         </ul>
         </nav>
   <% else %>

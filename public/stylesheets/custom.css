@@ -130,21 +130,60 @@ form.homepage_search {
 
 /* Heat Map */
 
-.cool {
+.heat0 {
   color: #fff;
-  background: #5057ec;
+  background: #b5b5b5;
 }
 
-.med {
+.heat1 {
   color: #fff;
-  background: #373ca2;
+  background: #a3a3b5;
 }
 
-.hot {
+.heat2 {
   color: #fff;
-  background: #1f225b;
+  background: #9191b5;
 }
 
+.heat3 {
+  color: #fff;
+  background: #7f7fb5;
+}
+
+.heat4 {
+  color: #fff;
+  background: #6d6db5;
+}
+
+.heat5 {
+  color: #fff;
+  background: #5b5bb5;
+}
+
+.heat6 {
+  color: #fff;
+  background: #4848b5;
+}
+
+.heat7 {
+  color: #fff;
+  background: #3636b5;
+}
+
+.heat8 {
+  color: #fff;
+  background: #2424b5;
+}
+
+.heat9 {
+  color: #fff;
+  background: #1212b5;
+}
+
+.heat10 {
+  color: #fff;
+  background: #0000b5;
+}
 /* Fig Summary */
 
 

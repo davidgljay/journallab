@@ -1,23 +1,18 @@
-class Comment < ActiveRecord::Base
-
-attr_accessible :text
+class Question < ActiveRecord::Base
 
 belongs_to :user
 belongs_to :paper
 belongs_to :fig
 belongs_to :figsection
 belongs_to :assertion
-belongs_to :comment
 belongs_to :question
 
+#A question owned by another question is an answer.
+has_many :questions
 has_many :comments
 
 #Validations
    validates :text, :presence => true
 
-   #validates_associated :user
 
-   validates_inclusion_of :form, :in => %w( comment reply qcomment )
-
- 
 end

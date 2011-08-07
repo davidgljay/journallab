@@ -1,2 +1,4 @@
-<%= render 'list', :comments => [@comment] %>
-<%= render 'form', :comment => @reply, :reply_to => @comment %>
+<div class="comment">
+<%= render 'list', :comments => [@comment], :format => @comment.form + "_response" %>
+<%= render 'form', :comment => @reply, :reply_to => @comment, :format => 'reply' %>
+</div>

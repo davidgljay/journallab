@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Core Use Cases" do
+describe "Core Use Cases:" do
 
 #Sign in first
   before(:each) do
@@ -25,7 +25,7 @@ describe "Core Use Cases" do
   describe "inputting a core assertion" do
     it "adds an assertion to the paper" do
       visit root_path
-      fill_in "pubmed_id", :with => rand(9999999) + 100
+      fill_in "pubmed_id", :with => '765987'
       click_button
       fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
       fill_in "numfigs", :with => "3"
@@ -41,7 +41,7 @@ describe "Core Use Cases" do
   describe "improving an assertion" do
      before(:each) do
       visit root_path
-      fill_in "pubmed_id", :with => rand(9999999) + 100
+      fill_in "pubmed_id", :with => '765767'
       click_button
       fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
       fill_in "numfigs", :with => "3"
@@ -71,7 +71,7 @@ describe "Core Use Cases" do
   describe "adding a comment" do
      before(:each) do
       visit root_path
-      fill_in "pubmed_id", :with => rand(9999999) + 100
+      fill_in "pubmed_id", :with => '765987'
       click_button
       fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
       fill_in "numfigs", :with => "3"
@@ -92,4 +92,81 @@ describe "Core Use Cases" do
       response.should have_selector('div', :content => "Lorem ipsum tortilla soup.")
      end
   end
+  describe "adding a question" do
+     before(:each) do
+      visit root_path
+      fill_in "pubmed_id", :with => '765987'
+      click_button
+      fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
+      fill_in "numfigs", :with => "3"
+      click_button
+     end
+     
+     it "goes to the view discussion page" do
+       click_link "View Discussion"
+       response.should be_success
+       response.should have_selector('label', :content => "Pose a question")
+     end
+
+     it "shows questions once they are entered" do
+      click_link "View Discussion"
+      fill_in "question_text", :with => "Lorem ipsum tortilla soup?"
+      click_button "question_submit"
+      response.should have_selector('span', :content => @user.name)
+      response.should have_selector('div', :content => "Lorem ipsum tortilla soup?")
+     end
+  end
+
+  describe "commenting on a question" do
+    before(:each) do
+      visit root_path
+      fill_in "pubmed_id", :with => '765987'
+      click_button
+      fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
+      fill_in "numfigs", :with => "3"
+      click_button
+      click_link "View Discussion"
+      fill_in "question_text", :with => "Lorem ipsum tortilla soup?"
+      click_button "question_submit"
+      click_link "Comment"
+     end
+
+    it "should render an entry form" do
+       response.should be_success
+       response.should have_selector('label', :content => "Leave a comment")
+    end
+
+    it "should show the comment once it is entered" do
+      fill_in "comment_text", :with => "Lorem ipsum burritos!"
+      click_button "comment_submit"
+      response.should have_selector('div', :content => "Lorem ipsum burritos!")
+    end
+   end
+
+  describe "answering a question" do
+    before(:each) do
+      visit root_path
+      fill_in "pubmed_id", :with => '765987'
+      click_button
+      fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
+      fill_in "numfigs", :with => "3"
+      click_button
+      click_link "View Discussion"
+      fill_in "question_text", :with => "Lorem ipsum tortilla soup?"
+      click_button "question_submit"
+      click_link "Answer"
+     end
+
+    it "should render an entry form" do
+       response.should be_success
+       response.should have_selector('label', :content => "Provide an answer")
+    end
+
+    it "should show the comment once it is entered" do
+      fill_in "question_text", :with => "Lorem ipsum pizza!"
+      click_button "question_submit"
+      response.should have_selector('div', :content => "Lorem ipsum pizza!")
+    end
+   end
+
 end

@@ -12,18 +12,9 @@ class CommentsController < ApplicationController
 
   # GET /comments/1
   # GET /comments/1.xml
+  # Savign this for when I want to show a comment detail.
   def show
-    if params[:about] == "papers"
-       @owner = Paper.find(params[:id])
-    elsif params[:about] == "figs"
-       @owner = Fig.find(params[:id])
-    elsif params[:about] == "figsections"
-       @owner = Figsection.find(params[:id])
-    end
-    @assertion = @owner.latest_assertion
-    @newcomment = @owner.comments.build
-    @comments = @owner.comments.all
-
+    @comment = Comment.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @comment }
@@ -32,9 +23,9 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   # GET /comments/new.xml
-  #def new
-  #  @comment = Comment.new
-
+  def new
+    @comment = Comment.new
+  end
 #    respond_to do |format|
 #      format.html # new.html.erb
 #      format.xml  { render :xml => @comment }
@@ -50,18 +41,21 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.xml
   def create
-    @comment = Comment.new(params[:comment])
+    @comment = Comment.new(:text => params[:comment][:text])
     @comment.assertion = Assertion.find(params[:comment][:assertion_id])
     assertion = @comment.assertion
     @comment.user = current_user
+    @comment.form = params[:comment][:form]
     # Replies are associated with assertions (for counting purposes), but NOT with figs, papers, etc.
-    url = '/' + assertion.about + 's/' + assertion.owner_id.to_s + '/comments'
-    if params[:comment][:reply_to]
-       @comment.comment = Comment.find(params[:comment][:reply_to]) 
+    url = '/' + assertion.about + 's/' + assertion.owner_id.to_s + '/discussion'
+    if params[:comment][:form] == "reply"
+       @comment.comment = Comment.find(params[:comment][:reply_to])
+    elsif params[:comment][:form] == "qcomment"
+       @comment.question = Question.find(params[:comment][:reply_to])
     elsif @comment.paper = assertion.paper
     elsif @comment.fig = assertion.fig
     elsif @comment.figsection = assertion.figsection
-    end
+  end
 
     respond_to do |format|
       if @comment.save
@@ -80,6 +74,16 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @reply = @comment.comments.build
     @assertion = @comment.assertion
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+  end
+
+  # GET /questions/1/answer
+  def answer
+    @question = Comment.find(params[:id])
+    @answer = @question.comments.build
+    @assertion = @question.assertion
     respond_to do |format|
       format.html # show.html.erb
     end

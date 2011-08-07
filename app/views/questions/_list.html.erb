@@ -1,0 +1,36 @@
+<table class = "question discussion">
+<% questions.each do |question| %>
+  <tr>
+    <td <% if question.questions.count > 0 %> class = "has_answer" <% end %>>
+      <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
+      <div class = "question_body">
+      <%= question.text %>
+      <br>
+      <nav>
+        <ul>
+         <li>
+         <%= link_to 'Comment', '/questions/' + question.id.to_s + '/comment'  %>
+         </li>
+         <li>
+         <%= link_to 'Answer', '/questions/' + question.id.to_s + '/answer'  %>
+         </li>
+        </ul>
+      </nav>
+      <% unless question.comments.empty? %>
+      <div class = "qcomment">
+      <% question.comments.all.each do |c| %>
+      
+             <div>
+             <%= c.text %>
+             <br>
+             -<%= c.user.name %>
+             </div>     
+      <% end %>
+      </div>
+      <% end %>
+      </div>
+    </td>
+  </tr>
+  <%= render 'questions/answers', :question => question %>
+<% end %>   
+</table>

@@ -14,12 +14,14 @@
     <% if reply_to %>
       <%= f.label "Leave a reply" %><br />
     <%= f.hidden_field :reply_to, :value => reply_to.id %>
+    <%= f.hidden_field :form, :value => 'reply' %>
     <% else %>
-      <%= f.label "Leave a comment" %><br />
+      <%= f.label "Leave a Comment" %><br />
+      <%= f.hidden_field :form, :value => 'comment' %>
     <% end %>
     <%= f.text_area :text %>
   </div>
-    <%= f.hidden_field :assertion_id, :value => @assertion.id if @assertion %>
+    <%= f.hidden_field :assertion_id, :value => @assertion.id if @assertion%>
   <div class="actions">
     <%= f.submit :value => "Submit" %>
   </div>

@@ -25,6 +25,7 @@ Factory.define :comment do |comment|
     comment.association :user, :email => "unique@email.com"
     comment.association :paper, :pubmed_id => rand(999999999) + 100
     comment.association :assertion
+    comment.form "comment"
 end
 
 #Factory.sequence :pubmed do |n|

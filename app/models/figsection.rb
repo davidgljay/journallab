@@ -4,6 +4,7 @@ belongs_to :fig
 
 has_many :assertions
 has_many :comments
+has_many :questions
 
 validates :fig_id, :presence => true
 

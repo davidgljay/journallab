@@ -1,17 +1,21 @@
 Redcell::Application.routes.draw do
 
   resources :comments
-   match '(/:about)(/:id)/comments', :to => 'comments#show'
    match '/comments(/:id)/reply',    :to => 'comments#reply'
+
 
   resources :assertions
     match '/assertions/improve(/:id)', :to => 'assertions#improve'
-   
+
+  resources :questions
+   match '/questions(/:id)/answer',    :to => 'questions#answer'
+   match '/questions(/:id)/comment',    :to => 'questions#comment'
 
   resources :authors
 
   resources :papers
-    match '/lookup(/:pubmed_id)', :to => 'papers#lookup'
+   match '/lookup(/:pubmed_id)', :to => 'papers#lookup'
+   match '(/:about)(/:id)/discussion', :to => 'papers#discussion'
 
 #Micropost routes
 resources :microposts, :only => [:create, :destroy]

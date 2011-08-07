@@ -23,8 +23,8 @@
 <br>
      <nav>
        <ul>
-         <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => @paper.latest_assertion.id  %></li>
-         <li><%= link_to 'View Discussion', '/figsections/' + s.id.to_s + '/comments' %></li>
+         <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => s.latest_assertion.id  %></li>
+         <li><%= link_to 'View Discussion', '/figsections/' + s.id.to_s + '/discussion' %></li>
          <li><style class = "little">Comments: <%= @heatmap.select{|h| h[0] == "figsection" && h[1] == s.id}[0][2].to_s %></style></li>
         </ul>
         </nav>

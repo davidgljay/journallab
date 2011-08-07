@@ -14,6 +14,25 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
     end
   end
 
+  def discussion
+    if params[:about] == "papers"
+       @owner = Paper.find(params[:id])
+    elsif params[:about] == "figs"
+       @owner = Fig.find(params[:id])
+    elsif params[:about] == "figsections"
+       @owner = Figsection.find(params[:id])
+    end
+    @assertion = @owner.latest_assertion
+    @newcomment = @owner.comments.build
+    @newquestion = @owner.questions.build
+    @comments = @owner.comments.all
+    @questions = @owner.questions.all
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @comment }
+    end
+  end
+
   # GET /papers/1
   # GET /papers/1.xml
   def show

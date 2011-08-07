@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110719144735) do
+ActiveRecord::Schema.define(:version => 20110807060602) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(:version => 20110719144735) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "assertion_id"
+    t.string   "form"
+    t.integer  "question_id"
   end
 
   create_table "figs", :force => true do |t|
@@ -84,6 +86,19 @@ ActiveRecord::Schema.define(:version => 20110719144735) do
     t.integer  "pubmed_id"
     t.text     "journal"
     t.text     "abstract",   :default => ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "questions", :force => true do |t|
+    t.text     "text"
+    t.integer  "paper_id"
+    t.integer  "fig_id"
+    t.integer  "figsection_id"
+    t.integer  "user_id"
+    t.integer  "assertion_id"
+    t.integer  "question_id"
+    t.integer  "votes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

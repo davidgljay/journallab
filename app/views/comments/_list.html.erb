@@ -1,4 +1,4 @@
-<table class = "comment">
+<table class = "comment discussion">
 <% comments.each do |comment| %>
   <tr>
     <td <% if comment.comments.count > 0 %> class = "has_reply" <% end %>>
@@ -8,14 +8,23 @@
       <br>
       <nav>
         <ul>
+       <% if format == 'comment' %>
          <li>
          <%= link_to 'Reply', '/comments/' + comment.id.to_s + '/reply'  %>
          </li>
+       <% elsif format == 'question' %>
+         <li>
+         <%= link_to 'Comment', '/questions/' + comment.id.to_s + '/comment'  %>
+         </li>
+         <li>
+         <%= link_to 'Answer', '/questions/' + comment.id.to_s + '/answer'  %>
+         </li>
+       <% end %>
         </ul>
       </nav>
       </div>
     </td>
   </tr>
-    <%= render 'replies', :comment => comment %>
+    <%= render 'comments/replies', :comment => comment %>
 <% end %>   
 </table>

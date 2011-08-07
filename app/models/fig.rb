@@ -4,6 +4,7 @@ belongs_to :paper
 has_many :figsections
 has_many :assertions
 has_many :comments
+has_many :questions
 
 validates :paper_id, :presence => true
 

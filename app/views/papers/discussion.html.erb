@@ -29,15 +29,15 @@
 <td>
 <div class = "commentbox">
 <h3>Comments</h3>
-<%= render 'list', :comments => @comments, :format => 'comment' %>
+<%= render 'comments/list', :comments => @comments, :format => 'comment' %>
 
-<%= render 'form', :comment => @newcomment, :reply_to => false, :format => 'comment' %>
+<%= render 'comments/form', :comment => @newcomment, :reply_to => false, :format => 'comment' %>
 </div>
 <div class = "questionbox">
 <h3>Questions</h3>
-<%= render 'list', :comments => @questions, :format => 'question' %>
+<%= render 'questions/list', :questions => @questions %>
 
-<%= render 'form', :comment => @newquestion, :reply_to => false, :format => 'question' %>
+<%= render 'questions/form', :question => @newquestion, :reply_to => false, :format => 'question' %>
 </div>
 </td>
 </tr>

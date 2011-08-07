@@ -1,0 +1,11 @@
+  <% question.questions.all.each do |a| %>
+  <tr>
+    <td class = "answer <% unless a == question.questions.all.last %> more_answers <% end %>">
+      <%= render 'shared/user_info', :user => a.user, :date => a.created_at %>
+      <div class = "question_body">
+      <%= a.text %>
+      </div>
+    </td>
+  </tr>
+  <% end %>
+

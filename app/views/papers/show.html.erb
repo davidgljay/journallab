@@ -3,7 +3,7 @@
 
 <br>
 <% @paper.authors.each do |a| %>
-  <%= a.lastname %>, <%= a.firstname %> <%= a.initial %>
+  <%= a.lastname %>, <%= a.firstname %>
   <% unless a == @paper.authors.last %>
     |
   <% end %> 

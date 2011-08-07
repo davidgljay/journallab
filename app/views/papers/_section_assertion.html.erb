@@ -25,7 +25,7 @@
        <ul>
          <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => s.latest_assertion.id  %></li>
          <li><%= link_to 'View Discussion', '/figsections/' + s.id.to_s + '/discussion' %></li>
-         <li><style class = "little">Comments: <%= @heatmap.select{|h| h[0] == "figsection" && h[1] == s.id}[0][2].to_s %></style></li>
+         <li><style class = "little">Comments: <%= s.comments.count.to_s %> Questions:<%= s.questions.count.to_s %></style></li>
         </ul>
         </nav>
 <% end %> 

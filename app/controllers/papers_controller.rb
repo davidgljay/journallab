@@ -113,9 +113,10 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
 
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
   def lookup
-    @paper = Paper.find_by_pubmed_id(params[:pubmed_id])
+    pubmed = params[:pubmed_id].strip
+    @paper = Paper.find_by_pubmed_id(pubmed)
     if @paper.nil?
-       @paper = Paper.create(:pubmed_id => params[:pubmed_id])
+       @paper = Paper.create(:pubmed_id => pubmed)
        @paper.lookup_info
     end
     if flash[:error].nil?

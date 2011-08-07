@@ -27,11 +27,14 @@ class QuestionsController < ApplicationController
   def create
     if params[:question][:format] == 'question'
        @question = Question.new(:text => params[:question][:text])
+       notice = "Question added."
     elsif params[:question][:format] == 'answer'
        @question = Question.new(:text => params[:question][:text])
        @question.question = Question.find(params[:question][:reply_to])
+       notice = "Thank you for your answer."
     elsif params[:question][:format] == 'comment'
       @question = Comment.new(:text => params[:question][:text])
+      notice = "Your comment has been added."
     end
     @question.assertion = Assertion.find(params[:question][:assertion_id])
     assertion = @question.assertion
@@ -47,7 +50,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to url, :notice => 'Question was successfully created.' }
+        format.html { redirect_to url, :notice => notice }
         format.xml  { render :xml => @comment, :status => :created, :location => @question }
       else
         flash[:error] = "Please enter a comment."

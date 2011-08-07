@@ -11,7 +11,7 @@
        <ul>
          <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => @paper.latest_assertion.id  %></li>
          <li><%= link_to 'View Discussion', '/papers/' + @paper.id.to_s + '/discussion'  %></li>
-         <li><style class = "little">Comments: <%= @heatmap.select{|h| h[0] == "paper" && h[1] == @paper.id}[0][2].to_s %></style></li>
+         <li><style class = "little">Comments: <%= @paper.comments.count.to_s %> Questions: <%= @paper.questions.count.to_s %></style></li>
         </ul>
         </nav>
   <% else %>

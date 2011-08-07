@@ -20,8 +20,8 @@ has_many :questions
 def lookup_info
   url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s + '?report=xml'
   dirty_xml = Net::HTTP.get_response(URI.parse(url)).body
-  clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub(/>\s*</, "><").gsub(/[&amp;]/, "and")
-  clean_xml.gsub!(/[&]/, 'and')  
+  clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub(/>\s*</, "><")
+  clean_xml.gsub!(/[&]/, 'and')
   #Check to see if the ID showed up on pubmed, if not return to the homepage.
   data = REXML::Document.new(clean_xml)
   if data.root.elements["PubmedArticle"].nil?

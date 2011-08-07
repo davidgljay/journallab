@@ -136,7 +136,7 @@ describe PapersController do
         end
 
         it "should look up an existing paper" do
-          get :lookup, :pubmed_id => @paper.pubmed_id
+          get :lookup, :pubmed_id => @paper.pubmed_id.to_s
           response.should redirect_to(@paper)
         end
 

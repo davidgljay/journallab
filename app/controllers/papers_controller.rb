@@ -126,7 +126,7 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
         redirect_to 'pages#home'
       end
     # If the search term is not a pubmed ID, look it up.
-    else
+    elsif search.to_i.to_s != search
       url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + search.gsub(/[' ']/, "+")
       dirty_xml = Net::HTTP.get_response(URI.parse(url)).body
       clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub!(/>\s*</, "><")

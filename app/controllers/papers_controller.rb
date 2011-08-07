@@ -113,17 +113,42 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
 
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
   def lookup
-    pubmed = params[:pubmed_id].strip
-    @paper = Paper.find_by_pubmed_id(pubmed)
-    if @paper.nil?
-       @paper = Paper.create(:pubmed_id => pubmed)
-       @paper.lookup_info
-    end
-    if flash[:error].nil?
-      redirect_to @paper
+    search = params[:pubmed_id].strip
+    if search.to_i.to_s == search
+      @paper = Paper.find_by_pubmed_id(search)
+      if @paper.nil?
+         @paper = Paper.create(:pubmed_id => search)
+         @paper.lookup_info
+      end
+      if flash[:error].nil?
+        redirect_to @paper
+      else
+        redirect_to 'pages#home'
+      end
+    # If the search term is not a pubmed ID, look it up.
     else
-      redirect_to 'pages#home'
-    end
+      url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + search.gsub(/[' ']/, "+")
+      dirty_xml = Net::HTTP.get_response(URI.parse(url)).body
+      clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub!(/>\s*</, "><")
+      clean_xml.gsub!(/[&]/, 'and')
+      data = REXML::Document.new(clean_xml)
+      pids = data.root.elements["IdList"]
+      @search_results = []
+      pids.each do |pid|
+         paper = Paper.find_by_pubmed_id(pid.text)
+         if paper.nil?
+            paper = Paper.create(:pubmed_id => pid.text)
+            paper.lookup_info
+         end
+         unless paper.title.nil?
+            @search_results << paper
+         end
+      end
+      respond_to do |format|
+        format.html
+        format.xml
+      end
+     end
   end    
 
   private

@@ -1,0 +1,9 @@
+<h1>Search Results</h1>
+
+<% @search_results.each do |paper| %>
+<div class = "search_results">
+    <div class = "sr_title"><%= link_to paper.title, paper %></div>
+    <div class = "sr_info">Pubmed ID:<%= paper.pubmed_id %> | <%= paper.journal %></div>
+</div>
+<% end %>
+

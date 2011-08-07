@@ -128,6 +128,24 @@ form.homepage_search {
   vertical-align: top;
 }
 
+/* Search Results */
+
+div.search_results {
+  display: block;
+  margin-bottom: 20px;
+}
+
+div.sr_title {
+  font-size: 110%;
+  font-style: bold;
+}
+
+div.sr_info {
+  font-size: 90%;
+  color: #595959;
+}
+  
+
 /* Heat Map */
 
 .heat0 {

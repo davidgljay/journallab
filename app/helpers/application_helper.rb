@@ -2,7 +2,7 @@ module ApplicationHelper
 
   #Generate a title on a per-page basis
     def title
-	base_title = "Understand Question Contribute"
+	base_title = "The Journal Lab"
 	if @title.nil?
 	  base_title
 	else

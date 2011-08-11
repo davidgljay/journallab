@@ -25,8 +25,8 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
     @assertion = @owner.latest_assertion
     @newcomment = @owner.comments.build
     @newquestion = @owner.questions.build
-    @comments = @owner.comments.all
-    @questions = @owner.questions.all
+    @comments = @owner.comments.all.sort_by{|a| a.votes.count}.reverse
+    @questions = @owner.questions.all.sort_by{|a| a.votes.count}.reverse
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @comment }

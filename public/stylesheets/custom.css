@@ -471,6 +471,13 @@ tbody td.more_answers {
 }
 
 
+/* Votes */
+
+div.vote {
+float: right;
+padding-left: 15px;
+} 
+
 /* Tables */
 
 table.profile {

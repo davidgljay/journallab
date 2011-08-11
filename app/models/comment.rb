@@ -11,6 +11,7 @@ belongs_to :comment
 belongs_to :question
 
 has_many :comments
+has_many :votes
 
 #Validations
    validates :text, :presence => true

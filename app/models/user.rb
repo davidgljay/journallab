@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 
         has_many :assertions
         has_many :comments
+        has_many :votes
                                
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -82,6 +83,28 @@ class User < ActiveRecord::Base
       relationships.find_by_followed_id(followed).destroy
    end
 
+
+#Create a vote command and a command to check for a vote. This is way klunkier than it needs to be, but it works.
+
+  def vote!(candidate)
+      if candidate.class == Comment
+        votes.create!(:comment => candidate)
+      elsif candidate.class == Question
+        votes.create!(:question => candidate)
+      elsif candidate.class == Assertion
+        votes.create!(:assertion => candidate)
+      end
+  end
+
+  def voted_for?(candidate)
+      if candidate.class == Comment
+        votes.find_by_comment_id(candidate.id)
+      elsif candidate.class == Question
+        votes.find_by_question_id(candidate.id)
+      elsif candidate.class == Assertion
+       votes.find_by_assertion_id(candidate.id)
+      end
+  end
 
   private
 

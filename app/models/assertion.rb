@@ -8,6 +8,7 @@ belongs_to :figsection
 
 has_many :comments
 has_many :questions
+has_many :votes
 
 #Validations
    validates :text, :presence => true,

@@ -3,6 +3,7 @@ Redcell::Application.routes.draw do
   resources :comments
    match '/comments(/:id)/reply',    :to => 'comments#reply'
 
+  resources :votes
 
   resources :assertions
     match '/assertions/improve(/:id)', :to => 'assertions#improve'

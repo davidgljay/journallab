@@ -4,6 +4,7 @@
     <td <% if question.questions.count > 0 %> class = "has_answer" <% end %>>
       <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
       <div class = "question_body">
+      <%= render 'votes/vote_form', :candidate => question %>
       <%= question.text %>
       <br>
       <nav>
@@ -14,6 +15,7 @@
          <li>
          <%= link_to 'Answer', '/questions/' + question.id.to_s + '/answer'  %>
          </li>
+         <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/numvotes', :candidate => question %>
         </ul>
       </nav>
       <% unless question.comments.empty? %>

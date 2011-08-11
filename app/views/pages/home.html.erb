@@ -17,7 +17,8 @@
   </table>
 <% else %>
 <%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
-<%= label_tag(:pubmed_id, "Go ahead, enter a Pubmed ID:") %><br>
+    <%= label_tag(:pubmed_id, "Go ahead") %><br>
+    enter a Pubmed ID or search term
   <%= text_field_tag(:pubmed_id) %><br>
   <%= submit_tag("Submit") %>
 <% end %>

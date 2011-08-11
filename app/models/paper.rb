@@ -53,7 +53,7 @@ def extract_authors(article)
        author = [auth.elements["ForeName"].text, auth.elements["LastName"].text, auth.elements["Initials"].text]
        if all_authors.map{|auth| [auth[0], auth[1], auth[2]]}.include?(author)
           auth_id = all_authors[all_authors.index{|a| a[0]==author[0] && a[1]==author[1] && a[2]==author[2]}][3]
-          Author.find(auth_id).authorships.create(self)
+          Author.find(auth_id).authorships.create(:paper => self)
         else
            self.authors.create(:firstname => author[0], :lastname => author[1], :initial => author[2])
        end

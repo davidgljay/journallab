@@ -4,6 +4,7 @@
     <td <% if comment.comments.count > 0 %> class = "has_reply" <% end %>>
       <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
       <div class = "comment_body">
+      <%= render 'votes/vote_form', :candidate => comment %>
       <%= comment.text %>
       <br>
       <nav>
@@ -20,8 +21,9 @@
          <%= link_to 'Answer', '/questions/' + comment.id.to_s + '/answer'  %>
          </li>
        <% end %>
+         <li id = "numvotes_<%= comment.id.to_s %>"><%= render 'votes/numvotes', :candidate => comment %>
         </ul>
-      </nav>
+      </nav> 
       </div>
     </td>
   </tr>

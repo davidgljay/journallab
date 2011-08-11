@@ -1,9 +1,15 @@
-  <% question.questions.all.each do |a| %>
+  <% question.questions.all.sort_by{|a| a.votes.count}.reverse.each do |a| %>
   <tr>
     <td class = "answer <% unless a == question.questions.all.last %> more_answers <% end %>">
       <%= render 'shared/user_info', :user => a.user, :date => a.created_at %>
       <div class = "question_body">
+      <%= render 'votes/vote_form', :candidate => question %>
       <%= a.text %>
+      <nav>
+        <ul>
+         <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/numvotes', :candidate => question %>
+        </ul>
+      </nav>
       </div>
     </td>
   </tr>

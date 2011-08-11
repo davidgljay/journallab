@@ -46,6 +46,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
        @about = "section"
        @assertion = @figsection.assertions.build
     end
+      @history = @history.sort_by{|a| a.votes.count}.reverse
   end
 
   # GET /assertions/new

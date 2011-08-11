@@ -10,6 +10,7 @@ belongs_to :question
 #A question owned by another question is an answer.
 has_many :questions
 has_many :comments
+has_many :votes
 
 #Validations
    validates :text, :presence => true

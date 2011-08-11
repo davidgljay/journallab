@@ -1,0 +1,11 @@
+<div id = "vote_form_<%= candidate.id.to_s %>" class = "vote">
+    <% if current_user.voted_for?(candidate) %>
+    <%= render '/votes/voted' %>
+    <% else %>
+    <%= form_for candidate.votes.create, :remote => true do |f| %>
+      <%= f.hidden_field :id, :value => candidate.id %>
+       <%= f.hidden_field :type, :value => candidate.class.to_s %>
+<%= f.submit "Vote Up" %>
+    <% end %>
+    <% end %>
+</div>

@@ -9,6 +9,10 @@
       <% end %>
       <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at %> 
     </td>
+    <td>
+    <%= render '/votes/vote_form', :candidate => assertion %>
+    <div id = "numvotes_<%=assertion.id%>" style="float:right;"><%= render '/votes/numvotes', :candidate => assertion %></div>
+  </td>
   </tr>
 <% end %>
 </table>

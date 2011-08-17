@@ -478,6 +478,17 @@ float: right;
 padding-left: 15px;
 } 
 
+
+input#vote_submit  {
+	font-size: 1em;
+	text-align: left;
+        color: #09c;
+	background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+}
 /* Tables */
 
 table.profile {

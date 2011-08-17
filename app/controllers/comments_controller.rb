@@ -15,6 +15,9 @@ class CommentsController < ApplicationController
   # Savign this for when I want to show a comment detail.
   def show
     @comment = Comment.find(params[:id])
+    @assertion = @comment.assertion
+    @comments = @comment.comments.all
+    @newcomment = @assertion.comments.build
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @comment }

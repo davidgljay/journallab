@@ -5,7 +5,7 @@
       <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
       <div class = "question_body">
       <%= render 'votes/vote_form', :candidate => question %>
-      <%= question.text %>
+      <%= render 'questions/linktext', :comment => question %>
       <br>
       <nav>
         <ul>
@@ -23,7 +23,7 @@
       <% question.comments.all.each do |c| %>
       
              <div>
-             <%= c.text %>
+             <%= render 'questions/linktext', :comment => c %>
              <br>
              -<%= c.user.name %>
              </div>     

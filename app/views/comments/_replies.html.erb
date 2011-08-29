@@ -3,7 +3,7 @@
     <td class = "reply <% unless r == comment.comments.all.last %> more_replies <% end %>">
       <%= render 'shared/user_info', :user => r.user, :date => r.created_at %>
       <div class = "comment_body">
-      <%= r.text %>
+       <%= render 'comments/linktext', :comment => r %>
       </div>
     </td>
   </tr>

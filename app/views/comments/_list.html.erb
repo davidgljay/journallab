@@ -5,17 +5,7 @@
       <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
       <div class = "comment_body">
       <%= render 'votes/vote_form', :candidate => comment %>
-      <% comment.linktext.each do |w| %>
-          <% if w.class == Paper %>
-             <%= link_to w.title, w %>
-          <% elsif w.class == Fig %>
-             <%= link_to w.paper.title + ", Fig " + w.num.to_s, w.paper %>
-          <% elsif w.class == Figsection %>
-             <%= link_to w.fig.paper.title + ", Fig " + w.fig.num.to_s + " Section " + w.num.to_s, w.fig.paper %>
-          <% else %>
-             <%= w %>
-          <% end %>
-      <% end %>
+      <%= render 'comments/linktext', :comment => comment %>
       <br>
       <nav>
         <ul>

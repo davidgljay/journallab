@@ -105,8 +105,8 @@ def latest_assertion
 end
 
 def short_abstract
-  unless self.abstract.length < 500
-    short_abstract = self.abstract[0..250] + " ... " + self.abstract[-250...-1] + "." 
+  unless self.abstract.length < 300
+    short_abstract = self.abstract[0..150] + " ... " + self.abstract[-150...-1] + "." 
   else
   self.abstract
   end

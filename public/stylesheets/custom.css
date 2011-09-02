@@ -147,6 +147,12 @@ div.sr_info {
 }
   
 
+/* Abstract */
+
+.hideonload {
+display: none;
+}
+
 /* Heat Map */
 
 .heat0 {

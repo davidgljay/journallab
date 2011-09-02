@@ -35,8 +35,10 @@ class User < ActiveRecord::Base
 
 #Validationville
 
-	validates :name,  :presence => true,
-		:length => { :within => 3..50 }
+	validates :firstname,  :presence => true,
+		:length => { :within => 1..50 }
+	validates :lastname,  :presence => true,
+		:length => { :within => 1..50 }
 	validates :email, :presence => true,
 		:format   => { :with => email_regex },
 		:uniqueness => { :case_sensitive => false }
@@ -45,6 +47,11 @@ class User < ActiveRecord::Base
 		:length => { :within => 6..30 }  
 
   before_save :encrypt_password
+
+#Some funcations for calling names
+  def name
+      name = firstname + ' ' + lastname
+  end   
 
 #Set up a test to see if the user's password matches
    def has_password?(submitted_password)

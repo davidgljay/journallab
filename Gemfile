@@ -47,4 +47,5 @@ end
 
 group :redcell do
   gem 'feedzirra'
+  gem 'jrails'
 end

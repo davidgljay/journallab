@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
 
 #Some funcations for calling names
   def name
-      name = firstname + ' ' + lastname
+      name = firstname.to_s + ' ' + lastname.to_s
   end   
 
 #Set up a test to see if the user's password matches

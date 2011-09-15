@@ -9,6 +9,7 @@ has_many :assertions
 has_many :comments
 has_many :figs
 has_many :questions
+has_many :visits
 
 #Validations
    validates :pubmed_id, :presence => true,

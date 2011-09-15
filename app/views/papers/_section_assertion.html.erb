@@ -1,21 +1,14 @@
 <% fig.figsections.each do |s| %> 
 <tr class = "summary">
-<td class = "sumleft">
-<style class = "<%= "heat" + @heatmap.select{|h| h[0] == "figsection" && h[1] == s.id}[0][3].to_s %> round figsection assertion">Section <%= s.num %>: 
-</style> 
+<td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "figsection" && h[1] == s.id}[0][3].to_s %> round figsection assertion">
+Section <%= s.num %>:  
 </td>
 <td class = "sumright">
 <% if s.assertions.empty? %>
-      <% form_for s.assertions.build, :class => "new_assertion"  do |f| %>
-      <%= render 'shared/error_messages', :object => f.object %>
-      <div class="field">
-         <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this section?" %>
-         <br>
-         <%= f.text_field :method, :onfocus => "this.value=''", :value => "What methods are used?" %>
-         <%= f.hidden_field :figsection_id %>
-         <%= f.submit "Submit" %>
+      <div class="enter_assertion">
+      <h5>Enter Summary</h5>
+      <%= render 'assertions/form', :assert => s.assertions.build, :type => "section", :id => :figsection_id %>
       </div>
-      <% end %>
 <% else %>
 <%= s.latest_assertion.text %>
 <br>
@@ -23,11 +16,40 @@
 <br>
      <nav>
        <ul>
-         <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => s.latest_assertion.id  %></li>
-         <li><%= link_to 'View Discussion', '/figsections/' + s.id.to_s + '/discussion' %></li>
-         <li><style class = "little">Comments: <%= s.comments.count.to_s %> Questions:<%= s.questions.count.to_s %></style></li>
+         <li class="improvelink">Improve</li>
+         <li class="commentlink">
+           <% if @paper.comments.count != 0 %>
+             <%= pluralize(s.comments.count.to_s, "Comment") %>
+           <% else %>
+             Add a Comment 
+           <% end %>
+         </li>
+             <li class="questionlink">
+           <% if @paper.questions.count != 0 %>
+             <%= pluralize(s.questions.count.to_s, "Question") %>
+           <% else %>
+             Add a Question 
+           <% end %>
+           </li>
+        </li>
         </ul>
         </nav>
+        <div class="improve">
+          <%= render 'assertions/form', :assert => fig.assertions.build, :type => "figure", :id => :fig_id %>
+          <%= render 'assertions/list', :history => fig.assertions.all %>
+         </div>          
+         <div class = "commentbox">
+          <h4>Comments</h4>
+             <%= render 'comments/list', :comments => s.comments, :format => 'comment' %>
+             <%= render 'comments/form', :comment => s.comments.build, :reply_to => false, :format => 'comment' %>
+         </div>
+         <div class = "questionbox">
+            <h4>Questions</h4>
+            <%= render 'questions/list', :questions => s.questions %>
+            <%= render 'questions/form', :question => s.questions.build, :reply_to => false, :format => 'question' %>
+         </div>
+
+
 <% end %> 
 </td>
 </tr>

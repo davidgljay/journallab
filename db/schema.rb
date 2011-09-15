@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110811023351) do
+ActiveRecord::Schema.define(:version => 20110905102246) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -115,16 +115,24 @@ ActiveRecord::Schema.define(:version => 20110811023351) do
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
 
   create_table "users", :force => true do |t|
-    t.string   "name"
+    t.string   "firstname"
     t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "encrypted_password"
     t.string   "salt"
     t.boolean  "admin",              :default => false
+    t.string   "lastname"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
+  create_table "visits", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "paper_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "votes", :force => true do |t|
     t.integer  "user_id"

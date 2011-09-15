@@ -1,7 +1,6 @@
   <tr class = "summary">
-    <td class = "sumleft">
-      <style class = "<%= "heat" + @heatmap.select{|h| h[0] == "paper" && h[1] == @paper.id}[0][3].to_s %> round core assertion">Core Assertion:
-</style>
+    <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "paper" && h[1] == @paper.id}[0][3].to_s %> round core assertion">
+      <h5>Core Conclusion:</h5>
     </td>
     <td class = "sumright">
   <% unless @paper.assertions.count == 0 %>
@@ -9,24 +8,43 @@
        <br>
        <nav>
        <ul>
-         <li><%= link_to 'Improve', :controller => "assertions", :action => "improve", :id => @paper.latest_assertion.id  %></li>
-         <li><%= link_to 'View Discussion', '/papers/' + @paper.id.to_s + '/discussion'  %></li>
-         <li><style class = "little">Comments: <%= @paper.comments.count.to_s %> Questions: <%= @paper.questions.count.to_s %></style></li>
+         <li class="improvelink">Improve</li>
+         <li class="commentlink">
+           <% if @paper.comments.count != 0 %>
+             <%= pluralize(@paper.comments.count.to_s, "Comment") %>
+           <% else %>
+             Add a Comment 
+           <% end %>
+         </li>
+           <li class="questionlink">
+           <% if @paper.questions.count != 0 %>
+             <%= pluralize(@paper.questions.count.to_s, "Question") %>
+           <% else %>
+             Add a Question 
+           <% end %>
+           </li>
         </ul>
         </nav>
+        <p>
+        <div class="improve">
+           <%= render 'assertions/form', :assert => @paper.assertions.build, :type => "paper", :id => :paper_id %>
+           <%= render 'assertions/list', :history => @paper.assertions.all %>
+         </div>
+         <div class = "commentbox">
+          <h4>Comments</h4>
+             <%= render 'comments/list', :comments => @paper.comments, :format => 'comment' %>
+             <%= render 'comments/form', :comment => @paper.comments.build, :reply_to => false, :format => 'comment' %>
+         </div>
+         <div class = "questionbox">
+            <h4>Questions</h4>
+            <%= render 'questions/list', :questions => @paper.questions %>
+            <%= render 'questions/form', :question => @paper.questions.build, :reply_to => false, :format => 'question' %>
+         </div>
   <% else %>
-      <%= form_for @core_assertion, :class => "new_assertion"  do |f| %>
-      <%= render 'shared/error_messages', :object => f.object %>
-      <div class="field">
-         <%= f.text_field :text, :onfocus => "this.value=''", :value => "What is the core assertion of this paper?" %>
-         <br>
-         This paper has 
-         <%= select_tag :numfigs, options_for_select(@numfig_select) %>
-         figure(s).
-         <%= f.hidden_field :paper_id %>
-         <%= f.submit "Submit" %>
+      <div class="enter_assertion">
+      <h5>Enter Summary</h5>
+      <%= render 'assertions/form', :assert => @core_assertion, :type => "paper", :id => :paper_id %>
       </div>
-      <% end %> 
-   <% end %>
+         <% end %>
     </td>
    </tr>

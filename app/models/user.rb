@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
         has_many :assertions
         has_many :comments
         has_many :votes
+        has_many :visits
                                
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

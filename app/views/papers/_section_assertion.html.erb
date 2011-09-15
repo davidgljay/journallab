@@ -1,4 +1,5 @@
 <% fig.figsections.each do |s| %> 
+<tr height="10"><td></td></tr>
 <tr class = "summary">
 <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "figsection" && h[1] == s.id}[0][3].to_s %> round figsection assertion">
 Section <%= s.num %>:  

@@ -1,17 +1,28 @@
 <% @paper.figs.each do |fig| %> 
 <tr height="10"><td></td></tr>
+<table>
 <tr class = "summary">
-<td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "fig" && h[1] == fig.id}[0][3].to_s %> round fig assertion">
+<% unless fig.figsections.count == 0 %>
+<td class = "figtoggle">
++
+</td>
+<% else %>
+<td width="20">
+</td>
+<% end %>
+<td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "fig" && h[1] == fig.id}[0][3].to_s %> round fig assertion" >
 Fig <%= fig.num %>:
 </td>
 <td class = "sumright">
   <% if fig.assertions.empty? %>
       <div class="enter_assertion">
       <h5>Enter Summary</h5>
-<%= render 'assertions/form', :assert => fig.assertions.build, :type => "figure", :id => :fig_id %>
+         <%= render 'assertions/form', :assert => fig.assertions.build, :type => "figure", :id => :fig_id %>
       </div>
      <% else %>
      <%= fig.latest_assertion.text %>
+     <br>
+      <style class="method"><%= fig.latest_assertion.method %> </style>
      <br>
      <nav>
        <ul>
@@ -51,6 +62,9 @@ Fig <%= fig.num %>:
       <% end %>
   </td>
 </tr>
+</table>
+<div id="<%= "fig_" + fig.num.to_s + "_sections"%>" class = "fig_sections">
 <%= render 'section_assertion', :fig => fig %>
+</div>
 <% end %>
 

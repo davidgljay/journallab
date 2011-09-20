@@ -25,7 +25,7 @@
     <% end %>
     <%= f.text_area :text %>
   </div>
-    <%= f.hidden_field :assertion_id, :value => @assertion.id if @assertion %>
+    <%= f.hidden_field :assertion_id, :value => reply_to.assertion.id if reply_to %>
   <div class="actions">
     <%= f.submit :value => "Submit" %>
   </div>

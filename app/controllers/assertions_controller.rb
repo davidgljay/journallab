@@ -88,11 +88,13 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     if params[:assertion][:paper_id]
         @assertion.about = "paper"
         @assertion.paper = Paper.find(params[:assertion][:paper_id])
+        @assertion.method = params[:assertion][:method]
         url = @assertion.paper
         @assertion.paper.build_figs(params[:numfigs]) 
     elsif params[:assertion][:fig_id] 
         @assertion.about = "fig"
         @assertion.fig = Fig.find(params[:assertion][:fig_id])
+        @assertion.method = params[:assertion][:method]
         url = @assertion.fig.paper
         @assertion.fig.build_figsections(params[:numsections]) 
     elsif params[:assertion][:figsection_id]

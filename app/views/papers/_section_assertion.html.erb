@@ -1,8 +1,10 @@
 <% fig.figsections.each do |s| %> 
+<table>
 <tr height="10"><td></td></tr>
 <tr class = "summary">
+<td width = "40px"></td>
 <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "figsection" && h[1] == s.id}[0][3].to_s %> round figsection assertion">
-Section <%= s.num %>:  
+Section <%= s.letter(s.num) %>:  
 </td>
 <td class = "sumright">
 <% if s.assertions.empty? %>
@@ -13,7 +15,7 @@ Section <%= s.num %>:
 <% else %>
 <%= s.latest_assertion.text %>
 <br>
-<style class="method"><%= s.assertions.last.method %> </style>
+<style class="method"><%= s.latest_assertion.method %> </style>
 <br>
      <nav>
        <ul>
@@ -54,5 +56,6 @@ Section <%= s.num %>:
 <% end %> 
 </td>
 </tr>
+</table>
 <% end %>
 

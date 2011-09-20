@@ -1,10 +1,14 @@
+ <table>
   <tr class = "summary">
+    <td width="1px"></td>
     <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "paper" && h[1] == @paper.id}[0][3].to_s %> round core assertion">
-      <h5>Core Conclusion:</h5>
+      Core Conclusion:
     </td>
     <td class = "sumright">
   <% unless @paper.assertions.count == 0 %>
        <%= @paper.latest_assertion.text %>
+       <br>
+         <style class="method"><%= @paper.latest_assertion.method %> </style>
        <br>
        <nav>
        <ul>
@@ -25,7 +29,6 @@
            </li>
         </ul>
         </nav>
-        <p>
         <div class="improve">
            <%= render 'assertions/form', :assert => @paper.assertions.build, :type => "paper", :id => :paper_id %>
            <%= render 'assertions/list', :history => @paper.assertions.all %>
@@ -48,3 +51,4 @@
          <% end %>
     </td>
    </tr>
+</table>

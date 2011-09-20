@@ -216,7 +216,7 @@ display: none;
 td.sumleft {
    vertical-align: top;
    font-weight: bold;
-   width:160px;
+   width:130px;
    font-size: 115%;
    padding-right: 20px;
    padding-top: 30px;
@@ -230,9 +230,9 @@ td.sumleft h5 {
    color: #fff; 
 }
 td.sumright {
-  width: 100%;
   font-size: 115%;
   font-weight: bold;
+  padding-left: 20px;
 }
 
 style.method {
@@ -242,9 +242,11 @@ style.method {
 }
 
 td.sumright nav {
-   float: left;
+   float: none;
+   text-align: left;
    font-size: 80%;
    color: #09c;
+   font-weight: bold;
 }
 
 td.sumright nav li {
@@ -253,6 +255,7 @@ td.sumright nav li {
 
 td.core {
    padding-left: 10px;
+   width: 150px;
 }
 
 td.fig  {
@@ -282,8 +285,16 @@ div.field {
 
 /* Menus to hide by default */
 
-#new_assertion, div.improve, div.commentbox, div.questionbox {
+#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform {
   display: none;
+}
+
+/* Fig section toggle */
+
+td.figtoggle {
+  width: 20px;
+  font-weight: bold;
+  font-size: 200%;
 }
 
 /* Improve Assertion */

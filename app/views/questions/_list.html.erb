@@ -9,11 +9,11 @@
       <br>
       <nav>
         <ul>
-         <li>
-         <%= link_to 'Comment', '/questions/' + question.id.to_s + '/comment'  %>
+         <li class="replylink">
+         Comment
          </li>
-         <li>
-         <%= link_to 'Answer', '/questions/' + question.id.to_s + '/answer'  %>
+         <li class="answerlink">
+         Answer
          </li>
          <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/numvotes', :candidate => question %>
         </ul>
@@ -30,6 +30,12 @@
       <% end %>
       </div>
       <% end %>
+      <div class = "replyform">
+      <%= render '/questions/form', :question => question.comments.build, :reply_to => question, :format => 'reply' %>
+      </div>
+      <div class = "answerform">
+      <%= render '/questions/form', :question => question.questions.build, :reply_to => question, :format => 'answer' %>
+      </div>
       </div>
     </td>
   </tr>

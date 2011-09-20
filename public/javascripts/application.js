@@ -1,17 +1,21 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+
+//Paper Detail Page
 $(document).ready(function(){
   $("#abstract").click(function(){
     $("#abstract_short").hide();
     $("#abstract_long").slideToggle('medium');
   });
 
+//Enter Assertion
   $("div.enter_assertion").mouseover(function(){
     $("h5", this).hide("med");
     $("form.new_assertion", this).show("med");
   });
 
+//Improve Expansion
   $("nav li.improvelink").click(function(){
     $("div.commentbox").hide("slow");
     $("div.questionbox").hide("slow");
@@ -19,16 +23,49 @@ $(document).ready(function(){
     $(this).parent().parent().parent().find("div.improve").slideToggle();
   });
 
+//Comment Expansion
   $("nav li.commentlink").click(function(){
     $("div.improve").hide("slow");
     $("div.questionbox").hide("slow");
     $(this).parent().parent().parent().find("div.commentbox").slideToggle();
   });
 
+//Question Expansion
   $("nav li.questionlink").click(function(){
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $(this).parent().parent().parent().find("div.questionbox").slideToggle();
   });
+
+//Close when you click colored area on the right
+   $("td.sumleft").click(function(){
+    $("div.improve").hide("slow");
+    $("div.commentbox").hide("slow");
+    $("div.questionbox").hide("slow"); 
+    $("form.new_assertion").hide("slow");
+    $("h5").show("slow");
+    });
+
+//Toggle Figure sections
+   $("td.figtoggle, td.sumleft.fig").toggle(function(){
+     $(this).parent().parent().parent().next().show("slow");
+     $("td.figtoggle", this).text("-");
+     },function(){
+     $(this).parent().parent().parent().next().hide("slow");
+     $("td.figtoggle", this).text("+"); 
+    });
+
+//Reply box expansion
+  $("nav li.replylink").click(function(){
+    $("div.answerform").hide("slow");
+    $(this).parent().parent().parent().find("div.replyform").slideToggle();
+  });
+
+//Answer box expansion
+  $("nav li.answerlink").click(function(){
+    $("div.replyform").hide("slow");
+    $(this).parent().parent().parent().find("div.answerform").slideToggle();
+  });
+
 
 });

@@ -27,5 +27,9 @@ def heat
    heat
 end
 
+def get_paper
+   self.paper
+end
+
 
 end

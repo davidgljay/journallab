@@ -44,12 +44,12 @@ Section <%= s.letter(s.num) %>:
          <div class = "commentbox">
           <h4>Comments</h4>
              <%= render 'comments/list', :comments => s.comments, :format => 'comment' %>
-             <%= render 'comments/form', :comment => s.comments.build, :reply_to => false, :format => 'comment' %>
+             <%= render 'comments/form', :comment => s.comments.build, :owner => s, :reply_to => false, :format => 'comment' %>
          </div>
          <div class = "questionbox">
             <h4>Questions</h4>
             <%= render 'questions/list', :questions => s.questions %>
-            <%= render 'questions/form', :question => s.questions.build, :reply_to => false, :format => 'question' %>
+            <%= render 'questions/form', :owner => @paper, :question => s.questions.build, :reply_to => false, :format => 'question' %>
          </div>
 
 

@@ -105,6 +105,10 @@ def latest_assertion
      assert_list.last
 end
 
+def get_paper
+    self
+end
+
 def short_abstract
   unless self.abstract.length < 300
     short_abstract = self.abstract[0..150] + " ... " + self.abstract[-150...-1] + "." 

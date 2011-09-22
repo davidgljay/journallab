@@ -26,5 +26,8 @@ def heat
    heat
 end
 
+def get_paper
+   self.fig.paper
+end
 
 end

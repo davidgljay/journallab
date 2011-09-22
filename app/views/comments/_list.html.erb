@@ -25,7 +25,7 @@
         </ul>
       </nav> 
       <div class = "replyform">
-      <%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply' %>
+      <%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :a => comment.assertion, :format => 'reply' %>
       </div>
       </div>
     </td>

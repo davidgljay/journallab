@@ -36,12 +36,12 @@
          <div class = "commentbox">
           <h4>Comments</h4>
              <%= render 'comments/list', :comments => @paper.comments, :format => 'comment' %>
-             <%= render 'comments/form', :comment => @paper.comments.build, :reply_to => false, :format => 'comment' %>
+             <%= render 'comments/form', :owner => @paper, :comment => @paper.comments.build,  :reply_to => false, :format => 'comment' %>
          </div>
          <div class = "questionbox">
             <h4>Questions</h4>
             <%= render 'questions/list', :questions => @paper.questions %>
-            <%= render 'questions/form', :question => @paper.questions.build, :reply_to => false, :format => 'question' %>
+            <%= render 'questions/form', :owner => @paper, :question => @paper.questions.build, :reply_to => false, :format => 'question' %>
          </div>
   <% else %>
       <div class="enter_assertion">

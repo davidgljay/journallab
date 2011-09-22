@@ -40,4 +40,15 @@ def linktext
    linktext
 end           
 
+def get_paper
+   if self.paper
+     self.paper
+   elsif self.fig
+     self.fig.paper
+   elsif self.figsection
+     self.figsection.fig.paper
+   end
+end
+
+
 end

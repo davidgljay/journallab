@@ -1,15 +1,16 @@
 class Paper < ActiveRecord::Base
 require 'rexml/document'
+require 'nokogiri'
+require 'open-uri'
 
 #Links
 has_many :authorships, :foreign_key => "paper_id",
                            :dependent => :destroy
 has_many :authors, :through => :authorships, :source => :author
-has_many :assertions
-has_many :comments
-has_many :figs
-has_many :questions
-has_many :visits
+has_many :assertions, :dependent => :destroy
+has_many :comments, :dependent => :destroy
+has_many :figs, :dependent => :destroy
+has_many :questions, :dependent => :destroy
 
 #Validations
    validates :pubmed_id, :presence => true,
@@ -61,6 +62,24 @@ def extract_authors(article)
      end               
   end
 end
+
+#Grab images
+def grab_images
+  url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s
+  doc = Nokogiri::HTML(open(url))
+  imagearray = []
+  doc.css('img').each do |img|
+    if img.attributes.has_key?("src-large")
+      imagearray << img.attributes["src-large"].to_s
+    end
+  end
+  self.build_figs(imagearray.count)
+  imagearray.count.times do |n|
+    i = self.figs[n].images.build
+    i.image_file_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
+    i.save
+  end 
+end  
 
 #Map how much discussion is going on in each part of the paper.
 def heatmap

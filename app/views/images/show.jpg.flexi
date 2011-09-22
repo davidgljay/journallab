@@ -1,0 +1,3 @@
+image.operate do |image|
+  image.resize '100x100', :crop => true
+end

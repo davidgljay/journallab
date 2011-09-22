@@ -209,9 +209,8 @@ display: none;
   color: #fff;
   background: #0000b5;
 }
+
 /* Fig Summary */
-
-
 
 td.sumleft {
    vertical-align: top;
@@ -269,6 +268,11 @@ td.figsection {
 
 .little {
    font-size: 80%;
+}
+
+img.figthumnail {
+  height: 100px;
+  width: 100px;
 }
 
 /* Assertion form */

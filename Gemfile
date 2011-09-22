@@ -21,7 +21,7 @@ gem 'will_paginate', '3.0.pre2'
 
 # Bundle the extra gems:
 # gem 'bj'
-# gem 'nokogiri'
+gem 'nokogiri'
 gem 'sqlite3-ruby', '1.3.2', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 gem 'gravatar_image_tag', '1.0.0.pre2'
@@ -48,4 +48,5 @@ end
 group :redcell do
   gem 'feedzirra'
   gem 'jrails'
+  gem 'fleximage'
 end

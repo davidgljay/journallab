@@ -1,10 +1,11 @@
 class Fig < ActiveRecord::Base
 
 belongs_to :paper
-has_many :figsections
-has_many :assertions
-has_many :comments
-has_many :questions
+has_many :figsections, :dependent => :destroy
+has_many :assertions, :dependent => :destroy
+has_many :comments, :dependent => :destroy
+has_many :questions, :dependent => :destroy
+has_many :images, :dependent => :destroy
 
 validates :paper_id, :presence => true
 

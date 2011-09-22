@@ -12,7 +12,9 @@
 <% end %>
 <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "fig" && h[1] == fig.id}[0][3].to_s %> round fig assertion" >
 Fig <%= fig.num %>:
+<% if fig.images.count > 0 %>
 <%= image_tag fig.images.first.file_path, :class => "figthumgnail" %>
+<% end %>
 </td>
 <td class = "sumright">
   <% if fig.assertions.empty? %>

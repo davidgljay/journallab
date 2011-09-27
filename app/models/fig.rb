@@ -5,7 +5,7 @@ has_many :figsections, :dependent => :destroy
 has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
 has_many :questions, :dependent => :destroy
-has_many :images, :dependent => :destroy
+belongs_to :image, :dependent => :destroy
 
 validates :paper_id, :presence => true
 

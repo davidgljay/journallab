@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110922043955) do
+ActiveRecord::Schema.define(:version => 20110927074633) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -63,17 +63,13 @@ ActiveRecord::Schema.define(:version => 20110922043955) do
     t.integer  "num"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_uid"
+    t.string   "image_name"
   end
 
   create_table "figsections", :force => true do |t|
     t.integer  "fig_id"
     t.integer  "num"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "images", :force => true do |t|
-    t.integer  "fig_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

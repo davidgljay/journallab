@@ -75,7 +75,7 @@ def grab_images
   end
   self.build_figs(imagearray.count)
   imagearray.count.times do |n|
-    i = self.figs[n].image.build
+    i = self.figs[n].images.build
     i.image_file_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
     i.save
   end 

@@ -1,4 +1,5 @@
 <div id = "vote_form_<%= candidate.id.to_s %>" class = "vote">
+    <% if signed_in? %>
     <% if current_user.voted_for?(candidate) %>
     <%= render '/votes/voted' %>
     <% else %>
@@ -6,6 +7,7 @@
       <%= f.hidden_field :id, :value => candidate.id %>
        <%= f.hidden_field :type, :value => candidate.class.to_s %>
 <%= f.submit "Give a Nod" %>
+    <% end %>
     <% end %>
     <% end %>
 </div>

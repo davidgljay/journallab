@@ -289,7 +289,7 @@ div.field {
 
 /* Menus to hide by default */
 
-#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform {
+#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig {
   display: none;
 }
 

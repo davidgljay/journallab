@@ -67,5 +67,13 @@ $(document).ready(function(){
     $(this).parent().parent().parent().find("div.answerform").slideToggle();
   });
 
+//Image expansion
+  
+   $("td.sumleft img").click(function(){
+    $("div.improve").hide("slow");
+    $("div.commentbox").hide("slow");
+    $("div.questionbox").hide("slow");
+    $(this).parent().next().find("img.fullfig").slideToggle();
+    });
 
 });

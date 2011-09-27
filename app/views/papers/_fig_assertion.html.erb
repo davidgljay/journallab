@@ -12,8 +12,8 @@
 <% end %>
 <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "fig" && h[1] == fig.id}[0][3].to_s %> round fig assertion" >
 Fig <%= fig.num %>:
-<% if fig.images.count > 0 %>
-<%= image_tag fig.images.first.file_path, :class => "figthumgnail" %>
+<% unless fig.image.nil? %>
+<%= image_tag fig.image.thumb('80x80>').url, :class => 'thumbnail'%>
 <% end %>
 </td>
 <td class = "sumright">
@@ -22,6 +22,9 @@ Fig <%= fig.num %>:
       <h5>Enter Summary</h5>
          <%= render 'assertions/form', :assert => fig.assertions.build, :type => "figure", :id => :fig_id %>
       </div>
+     <% unless fig.image.nil? %>
+        <%= image_tag fig.image.thumb('600x600>').url, :class => 'fullfig'%>
+     <% end %>
      <% else %>
      <%= fig.latest_assertion.text %>
      <br>
@@ -47,6 +50,9 @@ Fig <%= fig.num %>:
        </ul>
         </nav>
         <p>
+       <% unless fig.image.nil? %>
+        <%= image_tag fig.image.thumb('600x600>').url, :class => 'fullfig'%>
+        <% end %>
         <div class="improve">
           <%= render 'assertions/form', :assert => fig.assertions.build, :type => "figure", :id => :fig_id %>
           <%= render 'assertions/list', :history => fig.assertions.all %>
@@ -59,7 +65,7 @@ Fig <%= fig.num %>:
          <div class = "questionbox">
             <h4>Questions</h4>
             <%= render 'questions/list', :questions => fig.questions.all %>
-            <%= render 'questions/form', :question => fig.questions.build, :owner => @paper, :reply_to => false, :format => 'question' %>
+            <%= render 'questions/form', :question => fig.questions.build, :owner => fig, :reply_to => false, :format => 'question' %>
          </div>
 
       <% end %>

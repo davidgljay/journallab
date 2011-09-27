@@ -1,5 +1,3 @@
-require 'dragonfly/rails/images'
-
 require 'dragonfly'
 app = Dragonfly[:images]
 

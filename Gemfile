@@ -48,5 +48,9 @@ end
 group :redcell do
   gem 'feedzirra'
   gem 'jrails'
-  gem 'fleximage'
+  gem 'rack-cache', :require => 'rack/cache'
+  gem 'dragonfly', '~>0.9.8'
+  gem 'rmagick'
+  gem  'mini_magick'
+  gem 'fog'
 end

@@ -5,9 +5,10 @@ has_many :figsections, :dependent => :destroy
 has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
 has_many :questions, :dependent => :destroy
-has_many :images, :dependent => :destroy
 
 validates :paper_id, :presence => true
+
+image_accessor :image
 
 def latest_assertion
      assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
@@ -31,6 +32,5 @@ end
 def get_paper
    self.paper
 end
-
 
 end

@@ -458,6 +458,11 @@ div.questionbox {
    margin-top: 30px;
 }
 
+div.questionbox textarea, div.commentbox textarea {
+   height: 100px;
+}
+
+
 .question div.user_info {
   background: #fff;
   margin-left: 0px;

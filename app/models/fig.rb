@@ -23,8 +23,12 @@ end
 
 def heat
    heat = comments.count
+   heat += questions.count
    comments.each do |c|
      heat += c.comments.count
+   end
+   questions.each do |q|
+     heat += q.questions.count
    end
    heat
 end

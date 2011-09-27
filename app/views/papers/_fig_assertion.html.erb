@@ -34,14 +34,14 @@ Fig <%= fig.num %>:
        <ul>
          <li class="improvelink">Improve</li>
           <li class="commentlink">
-           <% if @paper.comments.count != 0 %>
+           <% if fig.comments.count != 0 %>
              <%= pluralize(fig.comments.count.to_s, "Comment") %>
            <% else %>
              Add a Comment 
            <% end %>
          </li>
               <li class="questionlink">
-           <% if @paper.questions.count != 0 %>
+           <% if fig.questions.count != 0 %>
              <%= pluralize(fig.questions.count.to_s, "Question") %>
            <% else %>
              Add a Question 

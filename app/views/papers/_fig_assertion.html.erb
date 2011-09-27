@@ -56,12 +56,12 @@ Fig <%= fig.num %>:
         </div>
          <div class = "commentbox">
           <h4>Comments</h4>
-             <%= render 'comments/list', :comments => fig.comments, :format => 'comment' unless fig.comments.empty? %>
+             <%= render 'comments/list', :comments => fig.comments, :format => 'comment' %>
              <%= render 'comments/form', :comment => fig.comments.build, :owner => fig, :reply_to => false, :format => 'comment' %>
          </div>
          <div class = "questionbox">
             <h4>Questions</h4>
-            <%= render 'questions/list', :questions => fig.questions.all unless fig.questions.empty? %>
+            <%= render 'questions/list', :questions => fig.questions.all %>
             <%= render 'questions/form', :question => fig.questions.build, :owner => fig, :reply_to => false, :format => 'question' %>
          </div>
        <% unless fig.image.nil? %>

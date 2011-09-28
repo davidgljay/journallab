@@ -5,7 +5,7 @@ class AddImagesToFigs < ActiveRecord::Migration
   end
 
   def self.down
-    drop_column :figs, :image_uid
-    drop_column :figs, :image_name
+    remove_column :figs, :image_uid
+    remove_column :figs, :image_name
   end
 end

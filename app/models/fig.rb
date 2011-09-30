@@ -16,7 +16,7 @@ def latest_assertion
 end
 
 def build_figsections(numsections)
-   newsections = numsections.to_i - self.figsections.coun
+   newsections = numsections.to_i - self.figsections.count
    numsections.times do |i|
      self.figsections.create(:num => (self.figsections.count+1))
    end

@@ -136,8 +136,8 @@ def short_abstract
 end
 
 def build_figs(numfigs)
-   newfigs = numfigs-self.figs.count
-   newfigs.to_i.times do |i|
+   newfigs = numfigs.to_i-self.figs.count
+   newfigs.times do |i|
      self.figs.create(:num => (self.figs.count+1))
    end
 end

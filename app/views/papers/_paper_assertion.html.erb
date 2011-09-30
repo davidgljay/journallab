@@ -5,7 +5,7 @@
       Core Conclusion:
     </td>
     <td class = "sumright">
-  <% unless @paper.assertions.count == 0 %>
+  <% unless @paper.assertions.count == 0 || @group.let_through_filter?(@paper.latest_assertion) %>
        <%= render 'assertions/display' :assertion => @paper.latest_assertion %>
        <br>
          <style class="method"><%= @paper.latest_assertion.method %> </style>

@@ -10,14 +10,13 @@
          This <%= type %> has 
          <%= select_tag :numsections, options_for_select(@numfig_select) %>
           section(s).
-         </div>
          <% elsif type == "paper" %>
       <br>
          This <%= type %> has 
          <%= select_tag :numfigs, options_for_select(@numfig_select) %>
           figure(s).
-      </div>
-         <% end %>
+        <% end %>
+        </div>
          <br>
          <%= f.hidden_field id %>
          <%= f.submit "Submit" %>

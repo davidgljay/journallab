@@ -89,27 +89,35 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
         @assertion.about = "paper"
         @assertion.paper = Paper.find(params[:assertion][:paper_id])
         @assertion.method = params[:assertion][:method]
-        url = @assertion.paper
+        @paper = @assertion.paper
         @assertion.paper.build_figs(params[:numfigs]) 
     elsif params[:assertion][:fig_id] 
         @assertion.about = "fig"
         @assertion.fig = Fig.find(params[:assertion][:fig_id])
         @assertion.method = params[:assertion][:method]
-        url = @assertion.fig.paper
+        @paper = @assertion.fig.paper
         @assertion.fig.build_figsections(params[:numsections]) 
     elsif params[:assertion][:figsection_id]
         @assertion.about = "figsection"
         @assertion.method = params[:assertion][:method]
         @assertion.figsection = Figsection.find(params[:assertion][:figsection_id])
-        url = @assertion.figsection.fig.paper 
+        @paper = @assertion.figsection.fig.paper 
+    end
+
+    save = @assertion.save
+
+  # Add a privacy setting if the user is part of a class that's reading this paper.
+    @group = @paper.get_group(current_user)
+    if @group.category == "class" && :save
+       @group.make_group(@assertion)
     end
 
     respond_to do |format|
-      if @assertion.save
-        format.html { redirect_to(url, :notice => 'Assertion was successfully created.') }
+      if :save
+        format.html { redirect_to(@paper, :notice => 'Assertion was successfully created.') }
         format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
-      elsif ur
-        format.html { redirect_to(url, :notice => 'Please submit your assertion again.') }
+      elsif url
+        format.html { redirect_to(@paper, :notice => 'Please submit your assertion again.') }
         format.xml  { render :xml => @assertion.errors, :status => :unprocessable_entity }
       end
     end

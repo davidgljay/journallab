@@ -6,7 +6,7 @@
     </td>
     <td class = "sumright">
   <% unless @paper.assertions.count == 0 %>
-       <%= @paper.latest_assertion.text %>
+       <%= render 'assertions/display' :assertion => @paper.latest_assertion %>
        <br>
          <style class="method"><%= @paper.latest_assertion.method %> </style>
        <br>

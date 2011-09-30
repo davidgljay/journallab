@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110902003527) do
+ActiveRecord::Schema.define(:version => 20110929064752) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -63,11 +63,40 @@ ActiveRecord::Schema.define(:version => 20110902003527) do
     t.integer  "num"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "image_uid"
+    t.string   "image_name"
   end
 
   create_table "figsections", :force => true do |t|
     t.integer  "fig_id"
     t.integer  "num"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "filters", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "paper_id"
+    t.integer  "comment_id"
+    t.integer  "question_id"
+    t.integer  "assertion_id"
+    t.integer  "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", :force => true do |t|
+    t.text     "name"
+    t.text     "desc"
+    t.string   "category"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "memberships", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.boolean  "lead"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -126,6 +155,13 @@ ActiveRecord::Schema.define(:version => 20110902003527) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
+  create_table "visits", :force => true do |t|
+    t.integer  "paper_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "votes", :force => true do |t|
     t.integer  "user_id"

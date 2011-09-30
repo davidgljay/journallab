@@ -13,6 +13,11 @@ belongs_to :question
 has_many :comments
 has_many :votes
 
+
+has_many :filters, :foreign_key => "comment_id",
+                           :dependent => :destroy
+has_many :groups, :through => :filters, :source => :group
+
 #Validations
    validates :text, :presence => true
 

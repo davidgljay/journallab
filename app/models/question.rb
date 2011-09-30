@@ -12,6 +12,11 @@ has_many :questions
 has_many :comments
 has_many :votes
 
+has_many :filters, :foreign_key => "question_id",
+                           :dependent => :destroy
+has_many :groups, :through => :filters, :source => :group
+
+
 #Validations
    validates :text, :presence => true
 

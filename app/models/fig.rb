@@ -17,7 +17,7 @@ end
 
 def build_figsections(numsections)
    newsections = numsections.to_i - self.figsections.count
-   numsections.times do |i|
+   newsections.times do |i|
      self.figsections.create(:num => (self.figsections.count+1))
    end
 end

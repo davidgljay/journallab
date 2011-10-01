@@ -12,12 +12,12 @@
     <%= form_for @group.find_filter_by_item(@paper), :class => "change_class_perm" do |f| %>
        <%= f.hidden_field :paper, :value => @paper.id %>
        <%= f.hidden_field :group, :value => @group.id %>
-       <%= label_tag (:perm_private, "Only their own summaries") %>  
-       <%= radio_button_tag (:perm, "private") %><br>
-       <%= label_tag (:perm_group, "Summaries from the class") %>
-       <%= radio_button_tag (:perm, "group") %><br>
-       <%= label_tag (:perm_public, "Public summaries") %>
-       <%= radio_button_tag (:perm, "public") %><br>
+       <%= label_tag :perm_private, "Only their own summaries" %>  
+       <%= radio_button_tag :perm, :value => "private" %><br>
+       <%= label_tag :perm_group, "Summaries from the class" %>
+       <%= radio_button_tag :perm, :value => "group" %><br>
+       <%= label_tag :perm_public, "Public summaries" %>
+       <%= radio_button_tag :perm, :value => "public" %><br>
        <%= f.submit "Change Permissions" %>
     <% end %>
 <% end %>

@@ -1,5 +1,6 @@
-<% if @group.category == "class" %>
-  <div class = "class_options">
+<% if @group && signed_in? %>
+<% if @group.category == "class" && current_user.lead_of?(@group) %>
+  <div class = "round class_options">
   <% unless @group.includes_item?(@paper) %>
     <%= form_for @group.filters.build, :class => "add_to_class" do |f| %>
        <%= f.hidden_field :paper, :value => @paper.id %>
@@ -7,19 +8,19 @@
        <%= f.submit "Add to Class" %>
     <% end %>
   <% else %>
-    <h4>Students can see</h4> 
+    Students can see:
     <%= form_for @group.find_filter_by_item(@paper), :class => "change_class_perm" do |f| %>
        <%= f.hidden_field :paper, :value => @paper.id %>
        <%= f.hidden_field :group, :value => @group.id %>
-       <%= radio_button_tag (:perm, "private") %>
-       <%= label_tag (:perm_private, "Only their own summaries") %>
-       <%= radio_button_tag (:perm, "group") %>
+       <%= label_tag (:perm_private, "Only their own summaries") %>  
+       <%= radio_button_tag (:perm, "private") %><br>
        <%= label_tag (:perm_group, "Summaries from the class") %>
-       <%= radio_button_tag (:perm, "public") %>
+       <%= radio_button_tag (:perm, "group") %><br>
        <%= label_tag (:perm_public, "Public summaries") %>
+       <%= radio_button_tag (:perm, "public") %><br>
        <%= f.submit "Change Permissions" %>
     <% end %>
 <% end %>
 </div>
 <% end %>
-
+<% end %>

@@ -76,4 +76,8 @@ $(document).ready(function(){
     $(this).parent().next().find("img.fullfig").slideToggle();
     });
 
+//Class options expansion
+   $("div.class_options").mouseover(function(){
+     $(this).find("form").show("fast");
+   });
 });

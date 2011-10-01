@@ -5,8 +5,8 @@
       Core Conclusion:
     </td>
     <td class = "sumright">
-  <% unless @paper.assertions.count == 0 || @group.let_through_filter?(@paper.latest_assertion) %>
-       <%= render 'assertions/display' :assertion => @paper.latest_assertion %>
+  <% if @paper.assertions.count != 0 && @group.let_through_filter?(@paper.latest_assertion, current_user) %>
+       <%= @paper.latest_assertion.text %>
        <br>
          <style class="method"><%= @paper.latest_assertion.method %> </style>
        <br>
@@ -46,7 +46,7 @@
   <% else %>
       <div class="enter_assertion">
       <h5>Enter Summary</h5>
-      <%= render 'assertions/form', :assert => @core_assertion, :type => "paper", :id => :paper_id %>
+      <%= render 'assertions/form', :assert => @paper.assertions.build, :type => "paper", :id => :paper_id %>
       </div>
          <% end %>
     </td>

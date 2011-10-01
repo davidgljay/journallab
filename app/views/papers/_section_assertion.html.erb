@@ -38,7 +38,7 @@ Section <%= s.letter(s.num) %>:
         </ul>
         </nav>
         <div class="improve">
-          <%= render 'assertions/form', :assert => s.assertions.build, :type => "figure", :id => :fig_id %>
+          <%= render 'assertions/form', :assert => s.assertions.build, :type => "figsection", :id => :figsection_id %>
           <%= render 'assertions/list', :history => s.assertions.all %>
          </div>          
          <div class = "commentbox">

@@ -56,6 +56,8 @@ def make_public(item)
     f = find_filter_by_item(item)
     f.state = 1
     f.save
+    item.is_public = true
+    item.save
   end
 end    
   
@@ -64,6 +66,10 @@ def make_group(item)
     f = find_filter_by_item(item)
     f.state = 2
     f.save
+    unless otherwise_public?(item)
+      item.is_public = false
+      item.save
+    end
   end
 end
 
@@ -72,7 +78,22 @@ def make_private(item)
     f = find_filter_by_item(item)
     f.state = 3
     f.save
+    unless otherwise_public?(item)
+      item.is_public = false
+      item.save
+    end
   end
+end
+
+# Check to see if an item is public under any other group.
+def otherwise_public?(item)
+    item.groups.each do |g|
+      if g.filter_state(item) == 1
+        return true
+      else
+        return false
+      end
+    end
 end
 
 def make_filter(item, state)
@@ -95,6 +116,8 @@ end
 def filter_state(item)
   unless find_filter_by_item(item).nil? 
     find_filter_by_item(item).state
+  else
+    3
   end
 end
 
@@ -131,13 +154,14 @@ def let_through_filter?(item, user)
         elsif filter_state(item).nil?
           return false
         elsif filter_state(item) >= filter_state(item.find_paper)
-           return true
+          return true
         else
-           return false
+          return false
         end
-     end
+      end
+   else 
+      return item.is_public
    end
 end
-
 
 end

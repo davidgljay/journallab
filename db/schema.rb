@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110929064752) do
+ActiveRecord::Schema.define(:version => 20110930224520) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20110929064752) do
     t.integer  "heatmap"
     t.string   "about"
     t.text     "method"
+    t.boolean  "is_public"
   end
 
   create_table "authors", :force => true do |t|
@@ -56,6 +57,7 @@ ActiveRecord::Schema.define(:version => 20110929064752) do
     t.integer  "assertion_id"
     t.string   "form"
     t.integer  "question_id"
+    t.boolean  "is_public"
   end
 
   create_table "figs", :force => true do |t|
@@ -130,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20110929064752) do
     t.integer  "votes"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_public"
   end
 
   create_table "relationships", :force => true do |t|

@@ -1,3 +1,5 @@
+/* Overall */
+
 container {
   width: 710px;
 }
@@ -289,7 +291,7 @@ div.field {
 
 /* Menus to hide by default */
 
-#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig {
+#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options form.edit_filter {
   display: none;
 }
 
@@ -734,3 +736,22 @@ form.new_micropost textarea {
   height: 4em;
   margin-bottom: 0;
 }
+
+/* Class Options */
+
+div.class_options {
+  float: right;
+  display: block;
+  color: #fff;
+  background: #0000b5;
+  padding: 10px;
+  text-align: right;
+  font-weight: bold;
+}
+
+div.class_options label{
+  font-weight: normal;
+}
+
+
+

@@ -107,11 +107,11 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     save = @assertion.save
 
   # Add a privacy setting if the user is part of a class that's reading this paper.
-    @group = @paper.get_group(current_user)
-    if @group.category == "class" && :save
-       @group.make_group(@assertion)
+    if @group = @paper.get_group(current_user)
+      if @group.category == "class" && :save
+         @group.make_group(@assertion)
+      end
     end
-
     respond_to do |format|
       if :save
         format.html { redirect_to(@paper, :notice => 'Assertion was successfully created.') }

@@ -11,11 +11,13 @@ Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' +
   <% end %> 
 <% end %>
 
+<% unless @paper.abstract.nil? %>
 <div id='abstract'>
   <b>Abstract</b>
   <p id='abstract_short'><%= @paper.short_abstract %></p>
   <p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 </div>
+<% end %>
 
 <p>
 <%= render 'summary' %>

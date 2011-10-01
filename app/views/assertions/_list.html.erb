@@ -1,11 +1,11 @@
 
 <% history.each do |assertion| %>
+<% if @group.let_through_filter?(assertion, current_user) %>
 <div class="improvelist">
       <%= assertion.text %> 
       <br>
-      <% if assertion.about = 'figsection' %>
       <em><%= assertion.method %></em>
-      <% end %>
+      <br>
       <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at %> 
     <div class="vote">
       <%= render '/votes/vote_form', :candidate => assertion %>
@@ -14,4 +14,4 @@
     </div>
    </div>
 <% end %>
-
+<% end %>

@@ -113,8 +113,13 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
       end
     end
     respond_to do |format|
+<<<<<<< HEAD
+      if @assertion.save
+        format.html { redirect_to(url, :notice => 'Summary entered, very insightful.') }
+=======
       if :save
         format.html { redirect_to(@paper, :notice => 'Assertion was successfully created.') }
+>>>>>>> filter
         format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
       elsif url
         format.html { redirect_to(@paper, :notice => 'Please submit your assertion again.') }

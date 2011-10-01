@@ -30,7 +30,10 @@ class User < ActiveRecord::Base
         has_many :comments
         has_many :votes
         has_many :visits
-                               
+        has_many :memberships, :foreign_key => "user_id",
+                           :dependent => :destroy
+        has_many :groups, :through => :memberships, :source => :group
+
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -113,6 +116,20 @@ class User < ActiveRecord::Base
        votes.find_by_assertion_id(candidate.id)
       end
   end
+
+# Functionality related to groups
+
+  def member_of?(group)
+     groups.include?(group)
+  end   
+
+  def lead_of?(group)
+     if groups.include?(group)
+       group.memberships.find_by_user_id(self.id).lead
+     else
+       return false
+     end
+  end   
 
   private
 

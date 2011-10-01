@@ -11,6 +11,12 @@ has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
 has_many :figs, :dependent => :destroy
 has_many :questions, :dependent => :destroy
+has_many :visits, :dependent => :destroy
+
+has_many :filters, :foreign_key => "paper_id",
+                           :dependent => :destroy
+has_many :groups, :through => :filters, :source => :group
+
 
 #Validations
    validates :pubmed_id, :presence => true,
@@ -142,5 +148,17 @@ def build_figs(numfigs)
    end
 end
 
+# Return the highest-ranking group that a user is part of which includes this paper.
+def get_group(user)
+   maxfilter = 0
+   bestgroup = nil
+   self.groups.each do |g|
+     if g.users.include?(user) && g.filter_state(self) > maxfilter
+        maxfilter = g.filter_state(self)
+        bestgroup = g
+     end
+   end
+   bestgroup
 end
 
+end

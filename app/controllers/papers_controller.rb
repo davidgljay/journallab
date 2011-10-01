@@ -37,8 +37,18 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
   # GET /papers/1.xml
   def show
     @paper = Paper.find(params[:id])
-    @core_assertion = @paper.assertions.build if @paper.assertions.empty?
+    if signed_in?
+       @paper.visits.build(:user_id => current_user.id).save
+    end
     @heatmap = @paper.heatmap
+    # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
+    if signed_in?
+      unless @group = current_user.groups.first
+          @group = Group.new
+      end
+    else
+      @group = Group.new
+    end
     #Prep the selection dropdown for selection the # of figs in the paper.  
     @numfig_select = Array.new
     30.times do |i| 

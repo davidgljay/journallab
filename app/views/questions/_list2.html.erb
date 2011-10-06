@@ -1,6 +1,6 @@
 <h4>Questions</h4>
 <table class = "question discussion">
-<% questions.each do |question| %>
+<% @questions.each do |question| %>
   <tr>
     <td <% if question.questions.count > 0 %> class = "has_answer" <% end %>>
       <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
@@ -43,3 +43,4 @@
   <%= render 'questions/answers', :question => question %>
 <% end %>   
 </table>
+<%= render 'questions/form', :question => @parent.questions.build, :owner => @parent, :reply_to => false, :format => 'question' %>

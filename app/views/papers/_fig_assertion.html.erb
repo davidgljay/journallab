@@ -30,39 +30,41 @@ Fig <%= fig.num %>:
      <br>
       <style class="method"><%= fig.latest_assertion.method %> </style>
      <br>
-     <nav>
+       <nav>
        <ul>
          <li class="improvelink">Improve</li>
-          <li class="commentlink">
-           <% if fig.comments.count != 0 %>
-             <%= pluralize(fig.comments.count.to_s, "Comment") %>
-           <% else %>
-             Add a Comment 
-           <% end %>
-         </li>
-              <li class="questionlink">
-           <% if fig.questions.count != 0 %>
-             <%= pluralize(fig.questions.count.to_s, "Question") %>
-           <% else %>
-             Add a Question 
-           <% end %>
+         <li class="commentlink">  
+             <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
+               <%= hidden_field_tag :parent, "Fig" %>
+               <%= hidden_field_tag :id, fig.id %>
+               <% if fig.comments.count > 0 %>
+                 <%= submit_tag(pluralize(fig.comments.count, "Comment")) %>
+               <% else %>
+                 <%= submit_tag("Add a Comment") %>
+               <% end %>
+             <% end %>
           </li>
-       </ul>
+           <li class="questionlink">
+             <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
+               <%= hidden_field_tag :parent, "Fig" %>
+               <%= hidden_field_tag :id, fig.id %>
+               <% if fig.questions.count > 0 %>
+                 <%= submit_tag(pluralize(fig.questions.count, "Question")) %>
+               <% else %>
+                 <%= submit_tag("Add a Question") %>
+               <% end %>
+             <% end %>
+           </li>
+        </ul>
         </nav>
  
         <div class="improve">
           <%= render 'assertions/form', :assert => fig.assertions.build, :type => "figure", :id => :fig_id %>
           <%= render 'assertions/list', :history => fig.assertions.all %>
         </div>
-         <div class = "commentbox">
-          <h4>Comments</h4>
-             <%= render 'comments/list', :comments => fig.comments, :format => 'comment' %>
-             <%= render 'comments/form', :comment => fig.comments.build, :owner => fig, :reply_to => false, :format => 'comment' %>
+         <div class = "commentbox", id = <%= "comments_Fig_" + fig.id.to_s %>>
          </div>
-         <div class = "questionbox">
-            <h4>Questions</h4>
-            <%= render 'questions/list', :questions => fig.questions.all %>
-            <%= render 'questions/form', :question => fig.questions.build, :owner => fig, :reply_to => false, :format => 'question' %>
+         <div class = "questionbox", id = <%= "questions_Fig_" + fig.id.to_s %>>
          </div>
        <% unless fig.image.nil? %>
         <%= image_tag fig.image.thumb('600x600>').url, :class => 'fullfig'%>

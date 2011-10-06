@@ -13,19 +13,27 @@
        <nav>
        <ul>
          <li class="improvelink">Improve</li>
-         <li class="commentlink">
-           <% if @paper.comments.count != 0 %>
-             <%= pluralize(@paper.comments.count.to_s, "Comment") %>
-           <% else %>
-             Add a Comment 
-           <% end %>
-         </li>
+         <li class="commentlink">  
+             <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
+               <%= hidden_field_tag :parent, "Paper" %>
+               <%= hidden_field_tag :id, @paper.id %>
+               <% if @paper.comments.count > 0 %>
+                 <%= submit_tag(pluralize(@paper.comments.count, "Comment")) %>
+               <% else %>
+                 <%= submit_tag("Add a Comment") %>
+               <% end %>
+             <% end %>
+          </li>
            <li class="questionlink">
-           <% if @paper.questions.count != 0 %>
-             <%= pluralize(@paper.questions.count.to_s, "Question") %>
-           <% else %>
-             Add a Question 
-           <% end %>
+             <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
+               <%= hidden_field_tag :parent, "Paper" %>
+               <%= hidden_field_tag :id, @paper.id %>
+               <% if @paper.questions.count > 0 %>
+                 <%= submit_tag(pluralize(@paper.questions.count, "Question")) %>
+               <% else %>
+                 <%= submit_tag("Add a Question") %>
+               <% end %>
+             <% end %>
            </li>
         </ul>
         </nav>
@@ -33,15 +41,9 @@
            <%= render 'assertions/form', :assert => @paper.assertions.build, :type => "paper", :id => :paper_id %>
            <%= render 'assertions/list', :history => @paper.assertions.all %>
          </div>
-         <div class = "commentbox">
-          <h4>Comments</h4>
-             <%= render 'comments/list', :comments => @paper.comments, :format => 'comment' %>
-             <%= render 'comments/form', :owner => @paper, :comment => @paper.comments.build,  :reply_to => false, :format => 'comment' %>
+         <div class = "commentbox", id = <%= "comments_Paper_" + @paper.id.to_s %>>
          </div>
-         <div class = "questionbox">
-            <h4>Questions</h4>
-            <%= render 'questions/list', :questions => @paper.questions %>
-            <%= render 'questions/form', :owner => @paper, :question => @paper.questions.build, :reply_to => false, :format => 'question' %>
+         <div class = "questionbox", id = <%= "questions_Paper_" + @paper.id.to_s %>>
          </div>
   <% else %>
       <div class="enter_assertion">

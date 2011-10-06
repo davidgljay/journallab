@@ -17,39 +17,40 @@ Section <%= s.letter(s.num) %>:
 <br>
 <style class="method"><%= s.latest_assertion.method %> </style>
 <br>
-     <nav>
+       <nav>
        <ul>
          <li class="improvelink">Improve</li>
-         <li class="commentlink">
-           <% if @paper.comments.count != 0 %>
-             <%= pluralize(s.comments.count.to_s, "Comment") %>
-           <% else %>
-             Add a Comment 
-           <% end %>
-         </li>
-             <li class="questionlink">
-           <% if @paper.questions.count != 0 %>
-             <%= pluralize(s.questions.count.to_s, "Question") %>
-           <% else %>
-             Add a Question 
-           <% end %>
+         <li class="commentlink">  
+             <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
+               <%= hidden_field_tag :parent, "Figsection" %>
+               <%= hidden_field_tag :id, s.id %>
+               <% if s.comments.count > 0 %>
+                 <%= submit_tag(pluralize(s.comments.count, "Comment")) %>
+               <% else %>
+                 <%= submit_tag("Add a Comment") %>
+               <% end %>
+             <% end %>
+          </li>
+           <li class="questionlink">
+             <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
+               <%= hidden_field_tag :parent, "Figsection" %>
+               <%= hidden_field_tag :id, s.id %>
+               <% if s.questions.count > 0 %>
+                 <%= submit_tag(pluralize(s.questions.count, "Question")) %>
+               <% else %>
+                 <%= submit_tag("Add a Question") %>
+               <% end %>
+             <% end %>
            </li>
-        </li>
         </ul>
         </nav>
         <div class="improve">
           <%= render 'assertions/form', :assert => s.assertions.build, :type => "figsection", :id => :figsection_id %>
           <%= render 'assertions/list', :history => s.assertions.all %>
          </div>          
-         <div class = "commentbox">
-          <h4>Comments</h4>
-             <%= render 'comments/list', :comments => s.comments, :format => 'comment' %>
-             <%= render 'comments/form', :comment => s.comments.build, :owner => s, :reply_to => false, :format => 'comment' %>
+         <div class = "commentbox", id = <%= "comments_Figsection_" + s.id.to_s %>>
          </div>
-         <div class = "questionbox">
-            <h4>Questions</h4>
-            <%= render 'questions/list', :questions => s.questions %>
-            <%= render 'questions/form', :owner => s, :question => s.questions.build, :reply_to => false, :format => 'question' %>
+         <div class = "questionbox", id = <%= "questions_Figsection_" + s.id.to_s %>>
          </div>
 
 

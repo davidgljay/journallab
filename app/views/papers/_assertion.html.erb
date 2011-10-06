@@ -1,0 +1,15 @@
+  <tr height="10"><td></td></tr>
+    <table> 
+      <tr class = "summary"> 
+    <% if type == 'fig' %>
+        <% unless fig.figsections.count == 0 %>
+          <td class = "figtoggle">
+             +
+          </td>
+        <% else %>
+        <td width="20">
+        </td>
+        <% end %>
+     <% elsif type == 'figsection' %>
+        <td width = "40px"></td>
+     <% end %>

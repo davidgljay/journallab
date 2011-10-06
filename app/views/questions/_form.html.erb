@@ -28,7 +28,7 @@
     <% if reply_to %>
     <%= f.hidden_field :assertion_id, :value => reply_to.assertion.id %>
     <% else %>
-    <%= f.hidden_field :assertion_id, :value => owner.assertions[-2].id %>
+    <%= f.hidden_field :assertion_id, :value => owner.assertions[-1].id %>
     <% end %>
   <div class="actions">
     <%= f.submit :value => "Submit" %>

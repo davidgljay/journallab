@@ -3,6 +3,7 @@ Redcell::Application.routes.draw do
   resources :filters
   resources :comments
    match '/comments(/:id)/reply',    :to => 'comments#reply'
+   match 'comment_list',             :to => 'comments#list'
 
   resources :votes
 
@@ -12,6 +13,7 @@ Redcell::Application.routes.draw do
   resources :questions
    match '/questions(/:id)/answer',    :to => 'questions#answer'
    match '/questions(/:id)/comment',    :to => 'questions#comment'
+   match 'question_list',             :to => 'questions#list'
 
   resources :authors
 

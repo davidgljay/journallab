@@ -24,6 +24,15 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def list
+    @parent = params[:parent].constantize.find(params[:id])
+    @questions = @parent.questions.all
+    @parent_type = params[:parent]
+    respond_to do |format|
+        format.js
+     end
+  end
+
   def create
     if params[:question][:format] == 'question'
        @question = Question.new(:text => params[:question][:text])

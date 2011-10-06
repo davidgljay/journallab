@@ -41,6 +41,17 @@ class CommentsController < ApplicationController
     @assertion = @comment.assertion
   end
 
+
+ #Used to render a list in the papers view.
+  def list
+    @parent = params[:parent].constantize.find(params[:id])
+    @comments = @parent.comments.all
+    @parent_type = params[:parent]
+    respond_to do |format|
+        format.js 
+     end
+  end
+
   # POST /comments
   # POST /comments.xml
   def create
@@ -58,7 +69,7 @@ class CommentsController < ApplicationController
     elsif @comment.paper = assertion.paper
     elsif @comment.fig = assertion.fig
     elsif @comment.figsection = assertion.figsection
-  end
+    end
 
     respond_to do |format|
       if @comment.save

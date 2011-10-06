@@ -248,10 +248,23 @@ td.sumright nav {
    font-size: 80%;
    color: #09c;
    font-weight: bold;
+
 }
 
 td.sumright nav li {
    margin: 10px;
+   cursor: pointer;
+}
+
+td.sumright nav input {
+   font-weight: bold;
+   text-align: left;
+   color: #09c;
+   background: none;
+   margin: 0;
+   padding: 0;
+   border: none;
+   cursor: pointer;
 }
 
 td.core {

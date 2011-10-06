@@ -1,6 +1,11 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+//Submit everything as Javascript
+jQuery.ajaxSetup({
+   'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
+})
+
 
 //Paper Detail Page
 $(document).ready(function(){
@@ -24,18 +29,18 @@ $(document).ready(function(){
   });
 
 //Comment Expansion
-  $("nav li.commentlink").click(function(){
-    $("div.improve").hide("slow");
-    $("div.questionbox").hide("slow");
-    $(this).parent().parent().parent().find("div.commentbox").slideToggle();
-  });
+//  $("nav li.commentlink").click(function(){
+//    $("div.improve").hide("slow");
+//    $("div.questionbox").hide("slow");
+//    $(this).parent().parent().parent().find("div.commentbox").slideToggle();
+//  });
 
 //Question Expansion
-  $("nav li.questionlink").click(function(){
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $(this).parent().parent().parent().find("div.questionbox").slideToggle();
-  });
+//  $("nav li.questionlink").click(function(){
+//    $("div.improve").hide("slow");
+//    $("div.commentbox").hide("slow");
+//    $(this).parent().parent().parent().find("div.questionbox").slideToggle();
+//  });
 
 //Close when you click colored area on the right
    $("td.sumleft").click(function(){
@@ -80,4 +85,20 @@ $(document).ready(function(){
    $("div.class_options").mouseover(function(){
      $(this).find("form").show("fast");
    });
+//
+//Dynamic Loading of Elements
+//
+
+// Vote Button
+   $("form.new_vote").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+// Add Comments Button
+   $("form.commentlist, form.questionlist").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
 });

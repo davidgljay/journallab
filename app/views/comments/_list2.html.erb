@@ -6,7 +6,7 @@
       <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
       <div class = "comment_body">
       <%= render 'votes/vote_form', :candidate => comment %>
-      <%= render 'comments/linktext', :comment => comment %>
+      <%= render 'linktext', :comment => comment %>
       <br>
       <nav>
         <ul>

@@ -4,7 +4,7 @@
 //Submit everything as Javascript
 jQuery.ajaxSetup({
    'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
-})
+});
 
 
 //Paper Detail Page
@@ -61,9 +61,10 @@ $(document).ready(function(){
     });
 
 //Reply box expansion
-  $("nav li.replylink").click(function(){
-    $("div.answerform").hide("slow");
-    $(this).parent().parent().parent().find("div.replyform").slideToggle();
+  $("div.commentbox nav").click(function(){
+    //$("div.answerform").hide("slow");
+    //$(this).parent().parent().parent().find("div.replyform").slideToggle();
+    $(this).html('It works!');
   });
 
 //Answer box expansion
@@ -90,7 +91,7 @@ $(document).ready(function(){
 //
 
 // Vote Button
-   $("form.new_vote").submit(function(){
+   $("form#new_vote").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

@@ -1,5 +1,7 @@
 Redcell::Application.routes.draw do
    
+  resources :groups
+
   resources :filters
   resources :comments
    match '/comments(/:id)/reply',    :to => 'comments#reply'

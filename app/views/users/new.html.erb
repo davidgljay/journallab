@@ -3,6 +3,15 @@
 
 <%= form_for(@user) do |f| %>
   <%= render 'fields', :f => f %>
+  <div class = "groupselect">
+    Are you part of a class? </br>
+    <% @groups.each do |group| %>
+      <% if group.category == "class" %>
+        <%= label_tag :group_id, group.name %>
+        <%= radio_button_tag :group_id, group.id %>
+      <% end %>
+    <% end %>
+  </div>
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

@@ -12,9 +12,15 @@ class SessionsController < ApplicationController
        @title = "Sign in"
        @user = User.new
        render 'new'
+
      else
+     if user.groups.first
+       url = user.groups.first
+     else
+       url = root_path
+     end
       sign_in user
-      redirect_back_or user
+      redirect_back_or url
      end
   end
 

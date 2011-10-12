@@ -1,0 +1,43 @@
+class GroupsController < ApplicationController
+before_filter :authenticate
+
+  def show
+      @group = Group.find(params[:id])
+      if @group.category == "class"
+         @papers = []
+         @instructors = []
+         @classdates = []
+
+         # Create a hash of papers
+         @group.papers.each do |p|
+           @papers[p.id] = p
+         end
+
+         # Create a list of instructors
+         @group.memberships.each do |m|
+           if m.lead
+             @instructors << User.find(m.user_id)
+           end
+         end
+
+         # Create a list of classdates and sort by date.
+         @group.filters.each do |f|
+           unless f.paper_id.nil?
+             @classdates << [f.paper_id, f.date]
+           end
+         end
+         @classdates.sort! {|x,y| x[1] <=> y[1]}
+      end
+      
+      
+      respond_to do |format|
+      format.html
+      end
+  end
+
+private
+    def logged_in
+      redirect_to(signin_path) if not signed_in?
+    end
+
+end

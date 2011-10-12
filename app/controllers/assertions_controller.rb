@@ -103,7 +103,9 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
         @assertion.figsection = Figsection.find(params[:assertion][:figsection_id])
         @paper = @assertion.figsection.fig.paper 
     end
-
+# Later I'll have more complex functionality around assertions. For now it'll automatically be public unless the paper is affiliated with a class group.
+    @assertion.is_public = true
+    
     save = @assertion.save
 
   # Add a privacy setting if the user is part of a class that's reading this paper.

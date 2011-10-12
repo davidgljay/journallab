@@ -43,7 +43,7 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
     @heatmap = @paper.heatmap
     # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
     if signed_in?
-      unless @group = current_user.groups.first
+      unless @group = current_user.groups.last
           @group = Group.new
       end
     else

@@ -4,10 +4,11 @@ end
 
 
 Factory.define :user do |user|
-     user.name			"David Jay"
-     user.password		"testingtesting123"
+     user.firstname			"David"
+     user.lastname                      "Jay"    
+     user.password		        "testingtesting123"
      user.password_confirmation 	"testingtesting123"
-     user.email                 "sample@email.com"
+     user.email                         "sample@email.com"
 end
 
 

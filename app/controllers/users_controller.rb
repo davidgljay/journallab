@@ -17,13 +17,20 @@ before_filter :admin_user,   :only => :destroy
   def new
    @title = "Sign up"
    @user = User.new
+   @groups = Group.all
   end
 
   def create
    @user = User.new(params[:user])
    if @user.save
-      sign_in @user       
-      flash[:success] = "Welcome to the Sample App!"
+      sign_in @user
+      url = root_path
+      if @group = Group.find(params[:group_id])
+        @user.groups << Group.find(params[:group_id])
+        msg = "You've been added to " + @group.name
+        url = @group
+      end
+      flash[:success] = "Welcome to the Journal Lab!" + msg
       redirect_back_or root_path
    else
      @title = "Sign up"

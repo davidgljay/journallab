@@ -1,0 +1,23 @@
+<% @classdates.each do |date| %>
+  <% paper = @papers[date[0]] %>
+  <div class = "classdate <% if Time.now > date[1] %>passed<% end %> round">
+   
+   <%= render 'shared/display_date', :date => date[1] unless date[1].nil? %>
+  </div>
+  <div class = "classpaper <% if current_user.visited?(paper) %> viewed<% end %> <% if Time.now > date[1] %>passed<% end %>">
+    <%= link_to paper.title, paper %></br>
+    Journal: <%= paper.journal %> 
+    | 
+    Pubmed ID: <%= link_to paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + paper.pubmed_id.to_s %>
+    <br>
+     <% paper.authors.each do |a| %>
+     <%= a.lastname %>, <%= a.firstname %>
+     <% unless a == paper.authors.last %>
+     |
+     <% end %> 
+  <% end %>
+
+  </div>
+
+<% end %>
+

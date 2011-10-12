@@ -242,7 +242,6 @@ style.method {
   font-size: 90%;
 }
 
-
 td.sumright nav {
    float: none;
    text-align: left;
@@ -305,7 +304,7 @@ div.field {
 
 /* Menus to hide by default */
 
-#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options form.edit_filter, td.sidebar {
+ div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options form.edit_filter {
   display: none;
 }
 
@@ -767,40 +766,5 @@ div.class_options label{
   font-weight: normal;
 }
 
-
-/* Class Page */
-
-div.classpaper {
-  display: block;
-  padding: 10px;
-  margin-top: 20px;
-  border: solid;
-  border-width: thick;
-  border-color: #000;
-  border-bottom: 0px;
-  border-right: 0px;
-  font-weight: bold;
-}
-
-div.classdate {
-  display: block;
-  float: right;
-  margin-top: 10px;
-  font-style: italic;
-  font-style: bold;
-  background: #9191B5;
-  padding: 5px;
-}
-
-div.viewed, div.passed {
-  background: #fff;
-  font-weight: normal;
-  border-width: thin;
-}
-
-div.passed, div.passed a, div.passed a.visited {
-  background: #fff;
-  color: #494949;
-}  
 
 

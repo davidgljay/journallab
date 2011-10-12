@@ -1,0 +1,12 @@
+<h2><%= @group.name %></h2>
+<div class = "groupdesc"><%= @group.desc %>
+<% if @group.category == 'class' %>
+  <strong>
+  Instructors: 
+  <% @instructors.each do |i| %>
+       <%= i.lastname %>, <%= i.firstname %> 
+  <% end %>
+  </strong>
+</div>
+  <%= render 'class_papers' %>
+<% end %>

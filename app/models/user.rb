@@ -29,7 +29,9 @@ class User < ActiveRecord::Base
         has_many :assertions
         has_many :comments
         has_many :votes
-        has_many :visits
+        has_many :visits, :foreign_key => "user_id",
+                          :dependent => :destroy
+        has_many :visited_papers, :through => :visits, :source => :paper
         has_many :memberships, :foreign_key => "user_id",
                            :dependent => :destroy
         has_many :groups, :through => :memberships, :source => :group
@@ -52,7 +54,7 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
 
-#Some funcations for calling names
+#Some functions for calling names
   def name
       name = firstname.to_s + ' ' + lastname.to_s
   end   
@@ -92,6 +94,12 @@ class User < ActiveRecord::Base
 
    def unfollow!(followed)
       relationships.find_by_followed_id(followed).destroy
+   end
+
+#Check to see if a user has visited a particular paper
+  
+   def visited?(paper)
+       visited_papers.include?(paper)
    end
 
 

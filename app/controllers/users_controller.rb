@@ -22,10 +22,14 @@ before_filter :admin_user,   :only => :destroy
 
   def create
    @user = User.new(params[:user])
+   @user.firstname = params[:user][:firstname]
+   @user.lastname = params[:user][:lastname]
+   msg = ""
    if @user.save
       sign_in @user
       url = root_path
-      if @group = Group.find(params[:group_id])
+      unless params[:group_id].nil? 
+        @group = Group.find(params[:group_id])
         @user.groups << Group.find(params[:group_id])
         msg = "You've been added to " + @group.name
         url = @group
@@ -34,6 +38,7 @@ before_filter :admin_user,   :only => :destroy
       redirect_back_or root_path
    else
      @title = "Sign up"
+     @groups = Group.all
      render "new"
    end
   end

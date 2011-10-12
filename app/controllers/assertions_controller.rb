@@ -116,7 +116,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     end
     respond_to do |format|
       if :save
-        format.html { redirect_to(@paper, :notice => 'Assertion was successfully created.') }
+        format.html { redirect_to(@paper, :success => 'Assertion was successfully created.') }
         format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
       elsif url
         format.html { redirect_to(@paper, :notice => 'Please submit your assertion again.') }
@@ -132,7 +132,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
 
     respond_to do |format|
       if @assertion.update_attributes(params[:assertion])
-        format.html { redirect_to(@assertion, :notice => 'Assertion was successfully updated.') }
+        format.html { redirect_to(@assertion, :success => 'Assertion was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

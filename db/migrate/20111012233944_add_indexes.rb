@@ -1,6 +1,5 @@
 class AddIndexes < ActiveRecord::Migration
   def self.up
-   add_index :authorships, :paper_id
    add_index :votes, :assertion_id
    add_index :assertions, :paper_id
    add_index :assertions, :fig_id

@@ -1,6 +1,6 @@
 class PapersController < ApplicationController
-before_filter :authenticate, :except => [:show, :index, :lookup]
-before_filter :admin_user,   :only => [:destroy, :edit, :update]
+before_filter :authenticate, :except => [:show, :lookup]
+before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 
 
   # GET /papers
@@ -14,24 +14,25 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
     end
   end
 
-  def discussion
-    if params[:about] == "papers"
-       @owner = Paper.find(params[:id])
-    elsif params[:about] == "figs"
-       @owner = Fig.find(params[:id])
-    elsif params[:about] == "figsections"
-       @owner = Figsection.find(params[:id])
-    end
-    @assertion = @owner.latest_assertion
-    @newcomment = @owner.comments.build
-    @newquestion = @owner.questions.build
-    @comments = @owner.comments.all.sort_by{|a| a.votes.count}.reverse
-    @questions = @owner.questions.all.sort_by{|a| a.votes.count}.reverse
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @comment }
-    end
-  end
+# This is legacy code
+#  def discussion
+#    if params[:about] == "papers"
+#       @owner = Paper.find(params[:id])
+#    elsif params[:about] == "figs"
+#       @owner = Fig.find(params[:id])
+#    elsif params[:about] == "figsections"
+#       @owner = Figsection.find(params[:id])
+#    end
+#    @assertion = @owner.latest_assertion
+#    @newcomment = @owner.comments.build
+#    @newquestion = @owner.questions.build
+#    @comments = @owner.comments.all.sort_by{|a| a.votes.count}.reverse
+#    @questions = @owner.questions.all.sort_by{|a| a.votes.count}.reverse
+#    respond_to do |format|
+#      format.html # show.html.erb
+#      format.xml  { render :xml => @comment }
+#    end
+#  end
 
   # GET /papers/1
   # GET /papers/1.xml
@@ -118,6 +119,24 @@ before_filter :admin_user,   :only => [:destroy, :edit, :update]
     respond_to do |format|
       format.html { redirect_to(papers_url) }
       format.xml  { head :ok }
+    end
+  end
+
+ def grab_images
+     @paper = Paper.find(params[:id])
+     allowed_users = Group.find(2).users
+     if allowed_users.include?(current_user)
+        if @paper.grab_images == 0
+           flash[:notice] = "Looked for images on Medline, but this paper doesn't have any. Sorry."
+         else
+             flash[:success] = "Grabbed images from Medline."
+         end
+     else
+         flash[:error] = "You are not authorized to use this function, sorry."
+     end
+
+    respond_to do |format|
+      format.html { redirect_to(@paper) }
     end
   end
 

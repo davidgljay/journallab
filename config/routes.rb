@@ -22,6 +22,7 @@ Redcell::Application.routes.draw do
   resources :papers
    match '/lookup(/:pubmed_id)', :to => 'papers#lookup'
    match '(/:about)(/:id)/discussion', :to => 'papers#discussion'
+   match '/grab_images(/:id)', :to => 'papers#grab_images'
 
 #Micropost routes
 resources :microposts, :only => [:create, :destroy]

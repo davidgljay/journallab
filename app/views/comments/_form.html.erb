@@ -22,7 +22,7 @@
     <%= f.text_area :text %>
   </div>
     <% if reply_to %>
-    <%= f.hidden_field :assertion_id, :value => reply_to.assertion.id %>    
+    <%= f.hidden_field :assertion_id, :value => reply_to.assertion_id %>    
     <% else %>
     <%= f.hidden_field :assertion_id, :value => owner.assertions[-1].id %>    
     <% end %>

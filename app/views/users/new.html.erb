@@ -1,18 +1,27 @@
 
 <h1>Sign Up</h1>
-
+<table>
+<tr>
+<td>
 <%= form_for(@user) do |f| %>
   <%= render 'fields', :f => f %>
-  <div class = "groupselect">
-    Are you part of a class? </br>
+</td>
+<td class = "groupselect">
+    Please select your class if applicable: </br>
     <% @groups.each do |group| %>
       <% if group.category == "class" %>
-        <%= label_tag :group_id, group.name %>
         <%= radio_button_tag :group_id, group.id %>
+        <%= label_tag :group_id, group.name %>
       <% end %>
     <% end %>
-  </div>
+</td>
+</tr>
+<tr>
+<td>
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
+</td>
+</tr>
+</table>
 <% end %>

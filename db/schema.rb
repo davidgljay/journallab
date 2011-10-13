@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111008213303) do
+ActiveRecord::Schema.define(:version => 20111012233944) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -25,6 +25,11 @@ ActiveRecord::Schema.define(:version => 20111008213303) do
     t.text     "method"
     t.boolean  "is_public"
   end
+
+  add_index "assertions", ["fig_id"], :name => "index_assertions_on_fig_id"
+  add_index "assertions", ["figsection_id"], :name => "index_assertions_on_figsection_id"
+  add_index "assertions", ["paper_id"], :name => "index_assertions_on_paper_id"
+  add_index "assertions", ["user_id"], :name => "index_assertions_on_user_id"
 
   create_table "authors", :force => true do |t|
     t.string   "firstname"
@@ -60,6 +65,11 @@ ActiveRecord::Schema.define(:version => 20111008213303) do
     t.boolean  "is_public"
   end
 
+  add_index "comments", ["fig_id"], :name => "index_comments_on_fig_id"
+  add_index "comments", ["figsection_id"], :name => "index_comments_on_figsection_id"
+  add_index "comments", ["paper_id"], :name => "index_comments_on_paper_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
   create_table "figs", :force => true do |t|
     t.integer  "paper_id"
     t.integer  "num"
@@ -69,12 +79,16 @@ ActiveRecord::Schema.define(:version => 20111008213303) do
     t.string   "image_name"
   end
 
+  add_index "figs", ["paper_id"], :name => "index_figs_on_paper_id"
+
   create_table "figsections", :force => true do |t|
     t.integer  "fig_id"
     t.integer  "num"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "figsections", ["fig_id"], :name => "index_figsections_on_fig_id"
 
   create_table "filters", :force => true do |t|
     t.integer  "group_id"
@@ -87,6 +101,11 @@ ActiveRecord::Schema.define(:version => 20111008213303) do
     t.datetime "updated_at"
     t.datetime "date"
   end
+
+  add_index "filters", ["assertion_id"], :name => "index_filters_on_assertion_id"
+  add_index "filters", ["comment_id"], :name => "index_filters_on_comment_id"
+  add_index "filters", ["paper_id"], :name => "index_filters_on_paper_id"
+  add_index "filters", ["question_id"], :name => "index_filters_on_question_id"
 
   create_table "groups", :force => true do |t|
     t.text     "name"
@@ -103,6 +122,8 @@ ActiveRecord::Schema.define(:version => 20111008213303) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
   create_table "microposts", :force => true do |t|
     t.string   "content"
@@ -135,6 +156,11 @@ ActiveRecord::Schema.define(:version => 20111008213303) do
     t.datetime "updated_at"
     t.boolean  "is_public"
   end
+
+  add_index "questions", ["fig_id"], :name => "index_questions_on_fig_id"
+  add_index "questions", ["figsection_id"], :name => "index_questions_on_figsection_id"
+  add_index "questions", ["paper_id"], :name => "index_questions_on_paper_id"
+  add_index "questions", ["user_id"], :name => "index_questions_on_user_id"
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -175,5 +201,7 @@ ActiveRecord::Schema.define(:version => 20111008213303) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "votes", ["assertion_id"], :name => "index_votes_on_assertion_id"
 
 end

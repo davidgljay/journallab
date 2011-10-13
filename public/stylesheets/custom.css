@@ -642,6 +642,14 @@ div.field, div.actions {
   margin-bottom: 10px;
 }
 
+/* User Class Selection */
+
+td.groupselect {
+  display: inline-block;
+  margin: 10px;
+  vertical-align: top;
+}
+
 /* Errors */
 
 .field_with_errors {

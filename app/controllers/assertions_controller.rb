@@ -83,7 +83,8 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
   def create
     @assertion = Assertion.new(params[:assertion])
     @assertion.user_id = current_user.id
-  
+
+   
   #Associate the assertion with the proper figure, figsection, or paper.
     if params[:assertion][:paper_id]
         @assertion.about = "paper"
@@ -103,10 +104,17 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
         @assertion.figsection = Figsection.find(params[:assertion][:figsection_id])
         @paper = @assertion.figsection.fig.paper 
     end
-# Later I'll have more complex functionality around assertions. For now it'll automatically be public unless the paper is affiliated with a class group.
+  #Check to make sure that something was entered.
+   if @assertion.text.include?('What is the core conclusion') || @assertion.text.include?('What principle methods')
+    flash[:error] = "Please enter a conclusion and method."
+    save = false
+   else
+    # Later I'll have more complex functionality around assertions. For now it'll automatically be public unless the paper is affiliated with a class group.
     @assertion.is_public = true
-    
     save = @assertion.save
+    flash[:success] = 'Summary entered, thanks for your contribution.'
+    save = true
+   end
 
   # Add a privacy setting if the user is part of a class that's reading this paper.
     if @group = @paper.get_group(current_user)
@@ -115,13 +123,8 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
       end
     end
     respond_to do |format|
-      if :save
-        format.html { redirect_to(@paper, :success => 'Assertion was successfully created.') }
-        format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
-      elsif url
-        format.html { redirect_to(@paper, :notice => 'Please submit your assertion again.') }
-        format.xml  { render :xml => @assertion.errors, :status => :unprocessable_entity }
-      end
+      format.html { redirect_to(@paper) }
+      format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
     end
   end
 
@@ -132,7 +135,8 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
 
     respond_to do |format|
       if @assertion.update_attributes(params[:assertion])
-        format.html { redirect_to(@assertion, :success => 'Assertion was successfully updated.') }
+        flash[:success] = 'Assertion was successfully updated.'
+        format.html { redirect_to(@assertion)  }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

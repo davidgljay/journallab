@@ -1,5 +1,5 @@
 
-<% if signed_in? %>
+<% if signed_in? && Group.exists?(2) %>
 <% if current_user.groups.include?(Group.find(2)) %>
   <%= link_to 'Extract images from Medline', '/grab_images/' + @paper.id.to_s %>
 <% end %>
@@ -11,7 +11,7 @@ Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' +
 
 <br>
 <% @paper.authors.each do |a| %>
-  <%= a.lastname %>, <%= a.firstname %>
+  <%= link_to a.lastname + ', ' + a.firstname, '/lookup/' + a.firstname + '+' + a.lastname %>
   <% unless a == @paper.authors.last %>
     |
   <% end %> 

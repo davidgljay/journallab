@@ -51,8 +51,8 @@ def remove(user)
 end
 
 # Functions for setting up filters
-def make_public(item)
-  unless make_filter(item, 1)
+def make_public(item, date = nil, supplementary = false)
+  unless make_filter(item, 1, date, supplementary)
     f = find_filter_by_item(item)
     f.state = 1
     f.save
@@ -61,8 +61,8 @@ def make_public(item)
   end
 end    
   
-def make_group(item)
-  unless make_filter(item, 2)
+def make_group(item, date = nil, supplementary = false)
+  unless make_filter(item, 2, date, supplementary)
     f = find_filter_by_item(item)
     f.state = 2
     f.save
@@ -73,14 +73,19 @@ def make_group(item)
   end
 end
 
-def make_private(item)
-  unless make_filter(item, 3)
+def make_private(item, date = nil, supplementary = false)
+  unless make_filter(item, 3, date, supplementary)
     f = find_filter_by_item(item)
     f.state = 3
+    if f.date.nil?
+      f.date = date
+    end
     f.save
-    unless otherwise_public?(item)
+    unless otherwise_public?(item) 
+     if item.class != Paper
       item.is_public = false
       item.save
+     end
     end
   end
 end
@@ -96,10 +101,10 @@ def otherwise_public?(item)
     end
 end
 
-def make_filter(item, state)
+def make_filter(item, state, date = nil, supplementary = false)
   unless find_filter_by_item(item)
     if item.class == Paper
-       self.filters.build(:paper_id => item.id, :state => state).save
+       self.filters.build(:paper_id => item.id, :state => state, :date => date, :supplementary => supplementary).save
     elsif item.class == Comment
        self.filters.build(:comment_id => item.id, :state => state).save
     elsif item.class == Question

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111012233944) do
+ActiveRecord::Schema.define(:version => 20111014080002) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20111012233944) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "date"
+    t.boolean  "supplementary"
   end
 
   add_index "filters", ["assertion_id"], :name => "index_filters_on_assertion_id"
@@ -182,6 +183,9 @@ ActiveRecord::Schema.define(:version => 20111012233944) do
     t.string   "salt"
     t.boolean  "admin",              :default => false
     t.string   "lastname"
+    t.string   "anon_name"
+    t.text     "specialization"
+    t.string   "profile_link"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

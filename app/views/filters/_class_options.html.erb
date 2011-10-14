@@ -1,11 +1,24 @@
 <% if @group && signed_in? %>
 <% if @group.category == "class" && current_user.lead_of?(@group) %>
+  <div id = "instructor_options" class = "round">
+     Instructor Options
+  </div> 
   <div class = "round class_options">
   <% unless @group.includes_item?(@paper) %>
+    Supplemental reading for:
     <%= form_for @group.filters.build, :class => "add_to_class" do |f| %>
        <%= f.hidden_field :paper, :value => @paper.id %>
        <%= f.hidden_field :group, :value => @group.id %>
-       <%= f.submit "Add to Class" %>
+       <%= f.hidden_field :supplementary, :value => true %>
+       <% unless @classdates != [] %>
+         <% @classdates.each do |d| %>
+           <%= f.label :date, d.strftime('%A, %B %d')  %>  
+           <%= f.radio_button :date, :value => d %><br>
+         <% end %>
+       <% end %>
+         <%= f.label :date, 'General Interest'  %>  
+         <%= f.radio_button :date, :value => nil %><br>
+       <%= f.submit "Add Paper" %>
     <% end %>
   <% else %>
     Students can see:
@@ -16,8 +29,6 @@
        <%= radio_button_tag :perm, :value => "private" %><br>
        <%= label_tag :perm_group, "Summaries from the class" %>
        <%= radio_button_tag :perm, :value => "group" %><br>
-       <%= label_tag :perm_public, "Public summaries" %>
-       <%= radio_button_tag :perm, :value => "public" %><br>
        <%= f.submit "Change Permissions" %>
     <% end %>
 <% end %>

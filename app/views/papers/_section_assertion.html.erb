@@ -1,7 +1,7 @@
 <% fig.figsections.each do |s| %> 
 <table>
 <tr height="10"><td></td></tr>
-<tr class = "summary">
+<tr class = "summary" id = "section<%= s.num.to_s %>">
 <td width = "40px"></td>
 <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "figsection" && h[1] == s.id}[0][3].to_s %> round figsection assertion">
 Section <%= s.letter(s.num) %>:  

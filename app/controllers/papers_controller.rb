@@ -50,6 +50,15 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
     else
       @group = Group.new
     end
+
+    @classdates = []
+    @group.filters.each do |f|
+      if f.paper_id
+        @classdates << f.date
+      end
+    end
+    @classdates.uniq!
+  
     #Prep the selection dropdown for selection the # of figs in the paper.  
     @numfig_select = Array.new
     30.times do |i| 
@@ -156,7 +165,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
-      url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + search.gsub(/[' ']/, "+")
+      url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + search.gsub(/[' ']/, "+").gsub(/['.']/, "+")
       dirty_xml = Net::HTTP.get_response(URI.parse(url)).body
       clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub!(/>\s*</, "><")
       clean_xml.gsub!(/[&]/, 'and')

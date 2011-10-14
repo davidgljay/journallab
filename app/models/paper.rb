@@ -161,4 +161,8 @@ def get_group(user)
    bestgroup
 end
 
+def is_public
+   true
+end
+
 end

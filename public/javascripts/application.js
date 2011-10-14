@@ -83,8 +83,9 @@ $(document).ready(function(){
     });
 
 //Class options expansion
-   $("div.class_options").mouseover(function(){
-     $(this).find("form").show("fast");
+   $("div#instructor_options").click(function(){
+     $(this).hide();
+     $('div.class_options').show();
    });
 //
 //Dynamic Loading of Elements

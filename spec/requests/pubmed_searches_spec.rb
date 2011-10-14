@@ -23,19 +23,6 @@ describe "Pubmed Searches:" do
     end
   end
 
-  describe "inputting a core assertion" do
-    it "adds an assertion to the paper" do
-      visit root_path
-      fill_in "pubmed_id", :with => '765987'
-      click_button "Search"
-      fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
-      fill_in "assertion_method", :with => "Aloe juice"
-      click_button "Submit"
-      within('body') { page.should have_content('Assertion was successfully') }
-      within('tr.summary') { page.should have_content('Core Conclusion') }
-      within('body') { page.should have_content('Lorem ipsum cupcakes.') }
-      within('li.improvelink') { page.should have_content('Improve') }
-    end
-  end
+
 
 end

@@ -1,9 +1,11 @@
 class FiltersController < ApplicationController
 
+# This form is specifically for creating filters 
+
   def create
     @group = Group.find(params[:filter][:group])
     @paper = Paper.find(params[:filter][:paper])
-    @group.make_private(@paper)
+    @group.make_private(@paper, params[:filter][:date], params[:filter][:suplementary])
     respond_to do |format|
       format.html { redirect_to @paper, :notice => "Paper added to class list, oh the learning they'll do..." }
       format.js

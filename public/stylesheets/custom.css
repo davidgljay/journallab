@@ -303,11 +303,6 @@ div.field {
   font-weight: normal;
 }
 
-/* Menus to hide by default */
-
-#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options form.edit_filter, td.sidebar {
-  display: none;
-}
 
 /* Fig section toggle */
 
@@ -761,6 +756,15 @@ form.new_micropost textarea {
 
 /* Class Options */
 
+div#instructor_options {
+  float: right;
+  display: block;
+  color: #000;
+  background: #B5B5B5;;
+  padding: 5px;
+  text-align: right;
+}
+
 div.class_options {
   float: right;
   display: block;
@@ -811,4 +815,10 @@ div.passed, div.passed a, div.passed a.visited {
   color: #494949;
 }  
 
+
+/* Menus to hide by default */
+
+#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
+  display: none;
+}
 

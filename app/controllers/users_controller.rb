@@ -22,8 +22,7 @@ before_filter :admin_user,   :only => :destroy
 
   def create
    @user = User.new(params[:user])
-   @user.firstname = params[:user][:firstname]
-   @user.lastname = params[:user][:lastname]
+   @user.generate_anon_name
    msg = ""
    if @user.save
       sign_in @user
@@ -36,6 +35,11 @@ before_filter :admin_user,   :only => :destroy
       end
       flash[:success] = "Welcome to the Journal Lab!" + msg
       redirect_back_or root_path
+   elsif @user.errors[:anon_name] == ["has already been taken"]
+     10.times do 
+      @user.generate_anon_name
+      @user.save
+     end
    else
      @title = "Sign up"
      @groups = Group.all

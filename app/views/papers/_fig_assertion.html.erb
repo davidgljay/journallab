@@ -1,7 +1,7 @@
 <% @paper.figs.each do |fig| %> 
 <tr height="10"><td></td></tr>
 <table>
-<tr class = "summary">
+<tr class = "summary" id = "fig<%= fig.num.to_s %>">
 <% unless fig.figsections.count == 0 %>
 <td class = "figtoggle">
 +

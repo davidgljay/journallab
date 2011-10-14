@@ -1,6 +1,15 @@
+<% anon = false unless anon %>
 <div class="user_info">
+
+<% if anon %>
+    <span class="user_name">
+      <%= user.anon_name %>
+    </span>
+    <% if date %>
+    <em><%= render 'shared/display_date', :date => date %></em>
+    <% end %>
+<% else %>
   <a href="<%= user_path(user) %>">
-    <%= gravatar_for user, :size => 30 %>
     <span class="user_name">
       <%= user.name %>
     </span>
@@ -8,4 +17,5 @@
     <% if date %>
     <em><%= render 'shared/display_date', :date => date %></em>
     <% end %>
+<% end %>
 </div>

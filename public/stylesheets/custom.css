@@ -155,6 +155,10 @@ div.sr_info {
 display: none;
 }
 
+.clickme {
+   cursor: pointer;
+}
+
 /* Heat Map */
 
 .heat0 {
@@ -612,9 +616,9 @@ td.sidebar {
 /* Round corners */
 
 .round {
-  -moz-border-radius:    10px;
-  -webkit-border-radius: 10px;
-  border-radius:         10px;
+  -moz-border-radius:    8px;
+  -webkit-border-radius: 8px;
+  border-radius:         8px;
 }
 
 /* Footer */
@@ -785,12 +789,22 @@ div.class_options label{
 div.classpaper {
   display: block;
   padding: 10px;
-  margin-top: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   border: solid;
   border-width: thick;
   border-color: #000;
   border-bottom: 0px;
   border-right: 0px;
+  font-weight: bold;
+}
+
+div.supp_paper {
+  display: block;
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 40px;
   font-weight: bold;
 }
 

@@ -53,11 +53,11 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 
     @classdates = []
     @group.filters.each do |f|
-      if f.paper_id
+      unless f.date.nil?
         @classdates << f.date
       end
     end
-    @classdates.uniq!
+    @classdates.sort!{|x,y| x <=> y}.uniq! unless @classdates.nil?
   
     #Prep the selection dropdown for selection the # of figs in the paper.  
     @numfig_select = Array.new
@@ -166,16 +166,13 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
       url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + search.gsub(/[' ']/, "+").gsub(/['.']/, "+")
-      dirty_xml = Net::HTTP.get_response(URI.parse(url)).body
-      clean_xml = CGI::unescapeHTML(dirty_xml).gsub(/\n/," ").gsub!(/>\s*</, "><")
-      clean_xml.gsub!(/[&]/, 'and')
-      data = REXML::Document.new(clean_xml)
-      pids = data.root.elements["IdList"]
+      doc = Nokogiri::XML(open(url))
+      pids = doc.xpath("//IdList/Id")
       @search_results = []
       pids.each do |pid|
          paper = Paper.find_by_pubmed_id(pid.text)
          if paper.nil?
-            paper = Paper.create(:pubmed_id => pid.text)
+            paper = Paper.create!(:pubmed_id => pid.text)
             paper.lookup_info
          end
          unless paper.title.nil?

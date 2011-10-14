@@ -87,6 +87,7 @@ $(document).ready(function(){
      $(this).hide();
      $('div.class_options').show();
    });
+
 //
 //Dynamic Loading of Elements
 //

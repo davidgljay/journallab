@@ -30,7 +30,7 @@ def owner_id
   end
 end
 
-def find_paper
+def get_paper
   if paper_id
     paper
   elsif fig_id

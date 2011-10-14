@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
 		:length => { :within => 6..30 }  
 	validates :anon_name,  :uniqueness => true
 
-  before_save :encrypt_password
+  before_save :encrypt_password, :assign_anon_name
 
 #Some functions for calling names
   def name
@@ -158,6 +158,12 @@ class User < ActiveRecord::Base
     def encrypt_password
       self.salt = make_salt if new_record?
       self.encrypted_password = encrypt(password)
+    end
+
+    def assign_anon_name
+      if self.anon_name.nil?
+         self.anon_name = self.generate_anon_name
+      end
     end
 
     def encrypt(string)

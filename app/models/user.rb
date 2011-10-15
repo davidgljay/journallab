@@ -140,7 +140,7 @@ class User < ActiveRecord::Base
      end
   end   
 
-# Semi-anonymous names for users
+# Functionality related to semin-anonymous names for users
   def generate_anon_name
     colors = ["Aqua","Aquamarine","Azure","Beige","Bisque","Black","Blue","Brown","Chartreuse","Chocolate","Coral","Cornflower Blue","Cornsilk","Crimson","Cyan","Forest Green","Fuchsia", "Ghost White","Gold","Goldenrod","Gray","Green","Grey","Hot Pink","Indigo ","Ivory","Khaki","Lavender","Lemon Chiffon","Light Blue","Lime Green","Linen","Magenta","Maroon","Olive","Orange","Orchid","Pink","Plum","Powder Blue","Purple","Red","Royal Blue","Salmon","Sandy Brown","Sea Green","Sienna","Silver","Sky Blue","Snow","Steel Blue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","White Smoke","Yellow"]
 
@@ -149,6 +149,23 @@ class User < ActiveRecord::Base
     self.anon_name = colors[rand(colors.length - 1)] + ' ' + animals[rand(animals.length - 1)]
   end
    
+  def anon?(user)
+    self.groups.each do |g|
+
+       # Users can see their real names if they are part of the same lab 
+       if g.users.include?(user) && g.category == "lab"
+          return false
+       # Instructors can see the names of their students
+       elsif g.users.include?(user) && self.lead_of(g) && g.category == "class"
+          return false
+       # Users can see themselves
+       elsif self == user
+          return false
+       else
+          return true
+       end
+     end
+  end
 
 
 

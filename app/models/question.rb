@@ -1,4 +1,6 @@
 class Question < ActiveRecord::Base
+:attr
+
 
 belongs_to :user
 belongs_to :paper

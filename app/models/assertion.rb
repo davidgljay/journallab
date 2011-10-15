@@ -30,6 +30,16 @@ def owner_id
   end
 end
 
+def owner
+  if paper_id
+    paper
+  elsif fig_id
+    fig
+  elsif figsection_id
+    figsection
+  end
+end
+
 def get_paper
   if paper_id
     paper

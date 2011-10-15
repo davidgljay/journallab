@@ -3,7 +3,7 @@
 <% @questions.each do |question| %>
   <tr>
     <td <% if question.questions.count > 0 %> class = "has_answer" <% end %>>
-      <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
+      <%= render 'shared/user_info', :user => question.user, :date => question.created_at, , :anon => assertion.user.anon?(current_user) %>
       <div class = "question_body">
       <%= render 'votes/vote_form', :candidate => question %>
       <%= render 'questions/linktext', :comment => question %>

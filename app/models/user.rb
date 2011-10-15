@@ -156,15 +156,14 @@ class User < ActiveRecord::Base
        if g.users.include?(user) && g.category == "lab"
           return false
        # Instructors can see the names of their students
-       elsif g.users.include?(user) && self.lead_of(g) && g.category == "class"
+       elsif g.users.include?(user) && user.lead_of?(g) && g.category == "class"
           return false
        # Users can see themselves
        elsif self == user
           return false
-       else
-          return true
        end
      end
+     return true
   end
 
 

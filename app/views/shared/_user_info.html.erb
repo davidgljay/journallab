@@ -1,8 +1,7 @@
-<% anon = false unless anon %>
 <div class="user_info">
 
-<% if anon %>
-    <span class="user_name">
+<% if user.anon?(current_user) %>
+    <span class="anon_name">
       <%= user.anon_name %>
     </span>
     <% if date %>

@@ -15,9 +15,9 @@ $(document).ready(function(){
   });
 
 //Enter Assertion
-  $("div.enter_assertion").mouseover(function(){
-    $("h5", this).hide("med");
-    $("form.new_assertion", this).show("med");
+  $("div.enter_assertion").hover(function(){
+    $("h5", this).slideToggle("med");
+    $("form.new_assertion", this).slideToggle("med");
   });
 
 //Improve Expansion

@@ -6,7 +6,7 @@
       <br>
       <em><%= assertion.method %></em>
       <br>
-      <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at, :anon => !(assertion.user == current_user || assertion.user.lead_of?(@group)) && @group.category == 'class' %> 
+      <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at %> 
     <div class="vote">
       <%= render '/votes/vote_form', :candidate => assertion %>
        <div id = "numvotes_<%=assertion.id%>" style="float:right;"><%= render '/votes/numvotes', :candidate => assertion %>

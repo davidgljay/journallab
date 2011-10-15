@@ -3,7 +3,7 @@
 <% @comments.each do |comment| %>
   <tr>
     <td <% if comment.comments.count > 0 %> class = "has_reply" <% end %>>
-      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anon => comment.user.anon?(current_user) %>
+      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
       <div class = "comment_body">
       <%= render 'votes/vote_form', :candidate => comment %>
       <%= render 'linktext', :comment => comment %>

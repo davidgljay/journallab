@@ -1,6 +1,6 @@
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
-    $('div#questions_<%= @parent_type + '_' + @parent.id.to_s %>').html('<%= escape_javascript(render 'list2') %>');
+    $('div#questions_<%= @parent_type + '_' + @parent.id.to_s %>').html('<%= escape_javascript(render 'list') %>');
     $('div#questions_<%= @parent_type + '_' + @parent.id.to_s %>').slideToggle();
 
 jQuery.ajaxSetup({

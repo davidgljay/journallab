@@ -61,7 +61,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     @comment.form = params[:comment][:form]
     # Replies are associated with assertions (for counting purposes), but NOT with figs, papers, etc.
-    url = '/papers/' + assertion.find_paper.id.to_s
+    url = '/papers/' + assertion.get_paper.id.to_s
     if params[:comment][:form] == "reply"
        @comment.comment = Comment.find(params[:comment][:reply_to])
     elsif params[:comment][:form] == "qcomment"

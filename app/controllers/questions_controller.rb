@@ -49,7 +49,7 @@ class QuestionsController < ApplicationController
     assertion = @question.assertion
     @question.user = current_user
     # Replies and answers are associated with assertions (for counting purposes), but NOT with figs, papers, etc.
-    url = '/papers/' + assertion.find_paper.id.to_s
+    url = '/papers/' + assertion.get_paper.id.to_s
     unless @question.question
       if @question.paper = assertion.paper
       elsif @question.fig = assertion.fig

@@ -149,7 +149,7 @@ div.sr_info {
 }
   
 
-/* Abstract */
+/* Misc Functions */
 
 .hideonload {
 display: none;
@@ -763,7 +763,7 @@ form.new_micropost textarea {
 div#instructor_options {
   float: right;
   display: block;
-  color: #000;
+  color: #fff;
   background: #B5B5B5;;
   padding: 5px;
   text-align: right;
@@ -834,5 +834,11 @@ div.passed, div.passed a, div.passed a.visited {
 
 #new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
   display: none;
+}
+
+/* User info */
+
+span.anon_name {
+   color: #119966;
 }
 

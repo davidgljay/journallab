@@ -1,5 +1,5 @@
 <div id = "vote_form_<%= candidate.id.to_s %>" class = "vote">
-    <% if signed_in? %>
+    <% if signed_in? && current_user != candidate.user %>
     <% if current_user.voted_for?(candidate) %>
     <%= render '/votes/voted' %>
     <% else %>

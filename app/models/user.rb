@@ -13,7 +13,7 @@
 require 'digest'
 
 class User < ActiveRecord::Base
-	attr_accessor :password	
+	#attr_accessor :password	
 	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link
 
         has_many :microposts, :dependent => :destroy

@@ -44,8 +44,8 @@ def lookup_info
   end
 end
 
-def extract_authors(data)
 #Derive authors
+def extract_authors(data)
   if self.authors.empty?
     data.xpath('//AuthorList/Author').each do |auth|
      author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
@@ -135,6 +135,18 @@ def build_figs(numfigs)
      self.figs.create(:num => (self.figs.count+1))
    end
 end
+
+# This is a function for quickly building a paper from the console and for testing purposes.
+def buildout(struct)
+    struct.length.times do |i|
+       if i == 0
+          self.build_figs(struct[i])
+       else
+           self.figs[i-1].build_figsections(struct[i])
+       end
+    end
+end
+
 
 # Return the highest-ranking group that a user is part of which includes this paper.
 def get_group(user)

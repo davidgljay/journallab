@@ -5,7 +5,7 @@
   </div> 
   <div class = "round class_options hideonload">
   <% unless @group.includes_item?(@paper) %>
-    Supplemental reading for:
+    Add to reading list for:
     <%= form_for @group.filters.build, :class => "add_to_class" do |f| %>
        <%= f.hidden_field :paper, :value => @paper.id %>
        <%= f.hidden_field :group, :value => @group.id %>

@@ -49,14 +49,14 @@ def extract_authors(data)
   if self.authors.empty?
     data.xpath('//AuthorList/Author').each do |auth|
      author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
-       unless self.authors.create(:firstname => author[0], :lastname => author[1], :initial => author[2])
-          auth = Author.find(:first, :conditions=> {:firstname => author[0], :lastname => author[1]})
+     a = self.authors.build(:firstname => author[0], :lastname => author[1], :initial => author[2])
+       unless a.save
+          auth = Author.find(:last, :conditions=> {:firstname => author[0], :lastname => author[1]})
           self.authors << auth
         else
        end
      end               
   end
-  self.save
 end
 
 #Grab images

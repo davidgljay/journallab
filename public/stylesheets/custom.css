@@ -805,7 +805,7 @@ div.classpaper {
   display: block;
   padding: 10px;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 45px;
   border: solid;
   border-width: thick;
   border-color: #223322;
@@ -818,7 +818,7 @@ div.supp_paper {
   display: block;
   padding: 10px;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   margin-left: 40px;
   font-weight: bold;
 }
@@ -840,7 +840,6 @@ div.viewed, div.passed {
 }
 
 div.passed, div.passed a, div.passed a.visited {
-  background: #fff;
   color: #494949;
 }  
 

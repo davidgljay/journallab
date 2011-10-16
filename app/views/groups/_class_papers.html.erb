@@ -19,7 +19,7 @@
 
   <% unless paper.pdf_link.nil? %>
   <div class="downloadlink round">
-     <% link_to 'Download PDF', paper.pdf_link, :target => 'blank' %>
+     <%= link_to 'Download PDF', paper.pdf_link, :target => 'blank' %>
   </div>
   <% end %>
   </div>

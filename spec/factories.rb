@@ -18,8 +18,19 @@ Factory.define :micropost do |micropost|
 end
 
 Factory.define :paper do |paper|
+    paper.title     "The Smartest Science Ever"
     paper.pubmed_id rand(999999999) + 100
+    paper.abstract  "Smart smart smartypants"
 end
+
+Factory.define :summarized_paper do |paper|
+    paper.title     "The Smartest Science Ever"
+    paper.pubmed_id rand(999999999) + 100
+    paper.abstract  "Smart smart smartypants"
+    paper.save
+    paper.buildout([3,3,2,1])
+
+end    
 
 Factory.define :comment do |comment|
     comment.text "Lorem ipsum."

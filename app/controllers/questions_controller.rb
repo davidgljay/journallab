@@ -45,9 +45,10 @@ class QuestionsController < ApplicationController
       @question = Comment.new(:text => params[:question][:text])
       notice = "Your comment has been added."
     end
+    @question.user = current_user
+    @question.save
     @question.assertion = Assertion.find(params[:question][:assertion_id])
     assertion = @question.assertion
-    @question.user = current_user
     # Replies and answers are associated with assertions (for counting purposes), but NOT with figs, papers, etc.
     url = '/papers/' + assertion.get_paper.id.to_s
     unless @question.question

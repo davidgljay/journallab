@@ -150,6 +150,10 @@ class User < ActiveRecord::Base
   end
    
   def anon?(user)
+    # Users can see themselves
+    if self == user
+          return false
+    end
     self.groups.each do |g|
 
        # Users can see their real names if they are part of the same lab 
@@ -157,9 +161,6 @@ class User < ActiveRecord::Base
           return false
        # Instructors can see the names of their students
        elsif g.users.include?(user) && user.lead_of?(g) && g.category == "class"
-          return false
-       # Users can see themselves
-       elsif self == user
           return false
        end
      end

@@ -5,6 +5,9 @@
   Instructors: 
   <% @instructors.each do |i| %>
        <%= i.lastname %>, <%= i.firstname %> 
+       <% unless i == @instructors.last %>
+       | 
+       <% end %>
   <% end %>
   </strong>
 </div>

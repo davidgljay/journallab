@@ -50,7 +50,8 @@ def extract_authors(data)
     data.xpath('//AuthorList/Author').each do |auth|
      author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
        unless self.authors.create(:firstname => author[0], :lastname => author[1], :initial => author[2])
-          self.authors << Author.find(auth_id)
+          auth = Author.find(:first, :conditions=> {:firstname => auth[0], :lastname => auth[1]})
+          self.authors << auth
         else
        end
      end               

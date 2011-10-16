@@ -15,13 +15,15 @@
     | 
     Pubmed ID: <%= link_to paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + paper.pubmed_id.to_s %>
     <br>
-     <% paper.authors.each do |a| %>
-     <%= a.lastname %>, <%= a.firstname %>
-     <% unless a == paper.authors.last %>
-     |
-     <% end %> 
+    <%= render '/authors/author_list', :paper => paper %>
+
+  <% unless paper.pdf_link.nil? %>
+  <div class="downloadlink">
+     <% link_to 'Download PDF', paper.pdf_link %>
+  </div>
   <% end %>
   </div>
+
 <% end %>
 
 <% unless @general.empty? %>
@@ -35,11 +37,13 @@
     | 
     Pubmed ID: <%= link_to paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + paper.pubmed_id.to_s %>
     <br>
-     <% paper.authors.each do |a| %>
-     <%= a.lastname %>, <%= a.firstname %>
-     <% unless a == paper.authors.last %>
-     |
-     <% end %> 
+    <%= render '/authors/author_list', :paper => paper %>
+
+
+  <% unless paper.pdf_link.nil? %>
+  <div class="downloadlink">
+     <%= link_to 'Download PDF', paper.pdf_link %>
+  </div>
   <% end %>
   </div>
 <% end %>

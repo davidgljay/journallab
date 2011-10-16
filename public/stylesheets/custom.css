@@ -36,17 +36,17 @@ display: inline;
 /* Links */
 
 a {
-  color: #09c;
+  color: #119966;       
   text-decoration: none;
 }
 
 a:hover {
-  color: #069;
-  text-decoration: underline;
+  color: #223322;
+  text-decoration: none;
 }
 
 a:visited {
-  color: #069;
+  color: #223322;
 }
 
 /* Navigation */
@@ -78,7 +78,7 @@ nav ul li a {
 }
 
 nav ul li a:visited {
-  color: #09c;
+/*  color: #09c; */
 }
 
 nav ul li a:hover {
@@ -157,6 +157,18 @@ display: none;
 
 .clickme {
    cursor: pointer;
+}
+
+.floatright {
+   float:right;
+}
+
+.pad10 {
+   padding: 10px;
+}
+
+.margin10 {
+   margin: 10px;
 }
 
 /* Heat Map */
@@ -764,17 +776,20 @@ div#instructor_options {
   float: right;
   display: block;
   color: #fff;
-  background: #B5B5B5;;
+  background: #223322;
   padding: 5px;
+  margin: 10px;
   text-align: right;
+  font-weight: bold;
 }
 
 div.class_options {
   float: right;
   display: block;
   color: #fff;
-  background: #0000b5;
+  background: #223322;
   padding: 10px;
+  margin: 10px;
   text-align: right;
   font-weight: bold;
 }
@@ -793,7 +808,7 @@ div.classpaper {
   margin-bottom: 15px;
   border: solid;
   border-width: thick;
-  border-color: #000;
+  border-color: #223322;
   border-bottom: 0px;
   border-right: 0px;
   font-weight: bold;
@@ -814,7 +829,7 @@ div.classdate {
   margin-top: 10px;
   font-style: italic;
   font-style: bold;
-  background: #9191B5;
+  background: #119966;
   padding: 5px;
 }
 
@@ -829,16 +844,24 @@ div.passed, div.passed a, div.passed a.visited {
   color: #494949;
 }  
 
-
-/* Menus to hide by default */
-
-#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
-  display: none;
+div.downloadlink {
+  float: right;
+  background: #00ccaa;
+  padding: 5px;
+  margin: 10px;
+  font-weight: bold;
 }
 
 /* User info */
 
 span.anon_name {
    color: #119966;
+}
+
+
+/* Menus to hide by default */
+
+#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
+  display: none;
 }
 

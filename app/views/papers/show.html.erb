@@ -10,12 +10,7 @@
 Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + @paper.pubmed_id.to_s %>
 
 <br>
-<% @paper.authors.each do |a| %>
-  <%= link_to a.lastname + ', ' + a.firstname, '/lookup/' + a.firstname + '+' + a.lastname %>
-  <% unless a == @paper.authors.last %>
-    |
-  <% end %> 
-<% end %>
+<%= render '/authors/author_list', :paper => @paper %>
 
 <% unless @paper.abstract.nil? %>
 <div id='abstract' class = "clickme">
@@ -24,6 +19,14 @@ Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' +
   <p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 </div>
 <% end %>
+
+  <% if @group.papers.include?(@paper) && @paper.pdf_link != nil %>
+  <div class="downloadlink round">
+     <%= link_to 'Download PDF', @paper.pdf_link %>
+  </div>
+  <% end %>
+
+<%= render 'filters/class_options' %>
 
 <p>
 <%= render 'summary' %>

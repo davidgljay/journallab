@@ -47,7 +47,7 @@ describe "Comments:" do
      it "adds a comment to a figure and lets you reply", :js => true do
        find('#fig1').click_button "Add a Comment"
        fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
-       click_button 'Submit' 
+       find('#fig1').click_button 'Submit' 
        click_button "1 Comment"
        find('li.replylink').click
        fill_in 'comment_text', :with => "That's so smart I'm replying."

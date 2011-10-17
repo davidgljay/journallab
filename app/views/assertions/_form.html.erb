@@ -10,23 +10,9 @@
            <br>
            <%= f.text_field :method, :value => assert.owner.latest_assertion.method %>
          <% end %>
-      <div class="numfigs">
-      <% if type == "figure" %>
-       <br>
-         This <%= type %> has 
-         <%= select_tag :numsections, options_for_select(@numfig_select) %>
-          section(s).
-         <% elsif type == "paper" %>
-      <br>
-         This <%= type %> has 
-         <%= select_tag :numfigs, options_for_select(@numfig_select) %>
-          figure(s).
-        <% end %>
         </div>
          <br>
          <%= f.hidden_field id %>
          <%= f.submit "Submit" %>
-
-      </div>
       <% end %>
 

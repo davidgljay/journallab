@@ -123,6 +123,10 @@ def get_paper
     self
 end
 
+def num
+    nil
+end
+
 def short_abstract
   unless self.abstract.length < 300
     short_abstract = self.abstract[0..150] + " ... " + self.abstract[-150...-1] + "." 

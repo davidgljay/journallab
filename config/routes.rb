@@ -1,5 +1,7 @@
 Redcell::Application.routes.draw do
    
+  get "figs/build_sections"
+
   resources :groups
 
   resources :filters
@@ -23,6 +25,9 @@ Redcell::Application.routes.draw do
    match '/lookup(/:pubmed_id)', :to => 'papers#lookup'
    match '(/:about)(/:id)/discussion', :to => 'papers#discussion'
    match '/grab_images(/:id)', :to => 'papers#grab_images'
+   match '/papers(/:id)/build_figs(/:num)', :to => 'papers#build_figs'
+
+   match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
 
 #Micropost routes
 resources :microposts, :only => [:create, :destroy]

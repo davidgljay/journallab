@@ -1,3 +1,28 @@
+
+/* Misc Functions */
+
+.hideonload {
+display: none;
+}
+
+.clickme {
+   cursor: pointer;
+}
+
+.floatright {
+   float:right;
+}
+
+.pad10 {
+   padding: 10px;
+}
+
+.margin10 {
+   margin: 10px;
+}
+
+
+
 /* Overall */
 
 container {
@@ -149,28 +174,6 @@ div.sr_info {
 }
   
 
-/* Misc Functions */
-
-.hideonload {
-display: none;
-}
-
-.clickme {
-   cursor: pointer;
-}
-
-.floatright {
-   float:right;
-}
-
-.pad10 {
-   padding: 10px;
-}
-
-.margin10 {
-   margin: 10px;
-}
-
 /* Heat Map */
 
 .heat0 {
@@ -319,6 +322,33 @@ div.field {
   font-weight: normal;
 }
 
+/* Build figs and sections */
+
+div.add_figs_and_sections {
+   color: #000;
+   text-align: right;
+   font-size: 18px;
+   cursor: pointer; 
+}
+
+div.numselect {
+   font-size: 14px;
+   text-align: center;
+   
+}
+
+div.fig_numselect {
+   display: inline;
+   font-size: 16px;
+   padding: 2px;
+   text-align: center;
+}
+
+div.figsection_numselect {
+   display: block; 
+   margin-top: 5px;
+}
+
 
 /* Fig section toggle */
 
@@ -342,7 +372,6 @@ div.improve div.numfigs {
 div.improvelist {
   width: 600px;
   font-size: 80%;
-  display:block;
   border: solid;
   border-width: 1px;
   border-color: #000;
@@ -863,4 +892,5 @@ span.anon_name {
 #new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
   display: none;
 }
+
 

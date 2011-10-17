@@ -145,7 +145,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
      end
 
     respond_to do |format|
-      format.html { redirect_to(@paper) }
+      redirect_to(@paper)
     end
   end
 
@@ -185,6 +185,13 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
       end
      end
   end    
+
+  def build_figs
+      @paper = Paper.find(params[:id])
+      @paper.build_figs(params[:num]) 
+      redirect_to @paper
+  end
+     
 
   private
 

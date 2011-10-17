@@ -15,9 +15,9 @@ $(document).ready(function(){
   });
 
 //Enter Assertion
-  $("div.enter_assertion").hover(function(){
-    $("h5", this).slideToggle("med");
-    $("form.new_assertion", this).slideToggle("med");
+  $("div.enter_assertion").mouseover(function(){
+    $("h5", this).hide("med");
+    $("form.new_assertion", this).show("med");
   });
 
 //Improve Expansion
@@ -88,6 +88,11 @@ $(document).ready(function(){
      $('div.class_options').show();
    });
 
+//Select # of figures and figsections expansion
+    $("div.add_figs_and_sections h3").click(function(){
+      $(this).parent().find('div.numselect').slideToggle();
+     });
+
 //
 //Dynamic Loading of Elements
 //
@@ -104,4 +109,16 @@ $(document).ready(function(){
       return false;
     });
 
+
+//
+//Styling
+//
+
+  $("div.fig_numselect, div.figsection_numselect").hover(function(){
+      $(this).css('background', '#fff')},
+      function(){
+      $(this).css('background', 'none')
+    });
+
 });
+

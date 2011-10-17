@@ -1,0 +1,2 @@
+module FigsHelper
+end

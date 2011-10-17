@@ -334,7 +334,7 @@ div.add_figs_and_sections {
 div.numselect {
    font-size: 14px;
    text-align: center;
-   
+   cursor: auto;   
 }
 
 div.fig_numselect {
@@ -347,6 +347,7 @@ div.fig_numselect {
 div.figsection_numselect {
    display: block; 
    margin-top: 5px;
+
 }
 
 
@@ -356,6 +357,7 @@ td.figtoggle {
   width: 20px;
   font-weight: bold;
   font-size: 200%;
+  cursor: pointer;
 }
 
 /* Improve Assertion */

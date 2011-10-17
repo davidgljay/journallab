@@ -7,16 +7,22 @@ describe "Comments:" do
      @paper = Factory(:paper)
      @paper.buildout([3,3,2,1])
      @user2 = Factory(:user, :email => Factory.next(:email))  
+     a = @paper.assertions.build(:text => "Test", :method => "Test test")
+     a.is_public = true
+     a.user = @user
+     a.save
      @paper.figs.each do |f|
-       a = f.assertions.build(:text => "Test", :method => "Test test", :ispublic => true)
+       a = f.assertions.build(:text => "Test", :method => "Test test")
+       a.is_public = true
        a.user = @user
        a.save
        f.figsections.each do |s|
-          a = s.assertions.build(:text => "Test", :method => "Test test", :ispublic => true)
+          a = s.assertions.build(:text => "Test", :method => "Test test")
+          a.is_public = true
           a.user = @user2
           a.save
        end
-    end  
+    end      
      visit '/signin'
      fill_in "session_email", :with => @user.email
      fill_in "session_password", :with => @user.password
@@ -42,12 +48,11 @@ describe "Comments:" do
        click_button '1 Comment'
        page.should have_content(@user.anon_name)
       end
-   end
 
      it "adds a comment to a figure and lets you reply", :js => true do
        find('#fig1').click_button "Add a Comment"
        fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
-       find('#fig1').click_button 'Submit' 
+       click_button 'Submit' 
        click_button "1 Comment"
        find('li.replylink').click
        fill_in 'comment_text', :with => "That's so smart I'm replying."
@@ -59,18 +64,18 @@ describe "Comments:" do
 
      it "adds a comment to a figure section and lets you reply", :js => true do
        find('td.figtoggle').click
-       find('#section1').click_button "Add a Comment"
+       find('#figsection1').click_button "Add a Comment"
        fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 
        find('td.figtoggle').click
-       find('#section1').click_button "1 Comment"
+       find('#figsection1').click_button "1 Comment"
        find('li.replylink').click
        fill_in 'comment_text', :with => "That's so smart I'm replying."
        click_button 'Submit' 
        find('td.figtoggle').click
-       find('#section1').click_button '1 Comment'
+       find('#figsection1').click_button '1 Comment'
        page.should have_content("I have an incredibly intelligent thing to say.")
        page.should have_content("That's so smart I'm replying.")
      end
-
+  end
 end

@@ -34,7 +34,7 @@ describe "Assertions" do
   end
      
   describe "inputting a core assertion for the figure" do
-    it "adds an assertion to the paper" do
+    it "adds an assertion to the figure" do
       visit '/papers/' + @paper.id.to_s
       find('#fig1').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
       find('#fig1').fill_in 'assertion_method', :with => "Aloe juice"
@@ -53,19 +53,19 @@ describe "Assertions" do
   end 
  
   describe "inputting a core assertion for the section" do
-    it "adds an assertion to the paper" do
+    it "adds an assertion to the section" do
       visit '/papers/' + @paper.id.to_s
-      find('#section1').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
-      find('#section1').fill_in 'assertion_method', :with => "Aloe juice"
-      find('#section1').click_button "Submit"
+      find('#figsection1').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
+      find('#figsection1').fill_in 'assertion_method', :with => "Aloe juice"
+      find('#figsection1').click_button "Submit"
       within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
-      within('tr#section1') { page.should have_content('Lorem ipsum cupcakes.') }
+      within('tr#figsection1') { page.should have_content('Lorem ipsum cupcakes.') }
       within('li.improvelink') { page.should have_content('Improve') }
     end
 
     it "fails if nothing is entered" do
       visit '/papers/' + @paper.id.to_s
-      find('#section1').click_button "Submit"
+      find('#figsection1').click_button "Submit"
       within('body') { page.should have_content('Please enter a conclusion and method') }
     end
 
@@ -106,13 +106,13 @@ describe "Assertions" do
     end
 
 
-    it "works for a paper" do
+    it "works for a figsection" do
       visit '/papers/' + @paper.id.to_s
-      find('#section1').find('#new_assertion').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
-      find('#section1').find('#new_assertion').fill_in 'assertion_method', :with => "Aloe juice"
-      find('#section1').find('#new_assertion').click_button "Submit"
+      find('#figsection1').find('#new_assertion').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
+      find('#figsection1').find('#new_assertion').fill_in 'assertion_method', :with => "Aloe juice"
+      find('#figsection1').find('#new_assertion').click_button "Submit"
       within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
-      within('#section1') { page.should have_content('Lorem ipsum cupcakes.') }
+      within('#figsection1') { page.should have_content('Lorem ipsum cupcakes.') }
       within('li.improvelink') { page.should have_content('Improve') }
     end
    end

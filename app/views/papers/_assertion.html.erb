@@ -1,5 +1,5 @@
     <table>
-    <tr class = "summary" id = about.class.to_s.downcase + about.num.to_s >
+    <tr class = "summary" id = <%= about.class.to_s.downcase + about.num.to_s %> >
     <% if about.class == Paper %>
       <td width="1px"></td>
     <td class  = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "paper" && h[1] == about.id}[0][3].to_s %> round core assertion">
@@ -67,9 +67,9 @@
            <%= render 'assertions/form', :assert => about.assertions.build, :type => about.class.to_s.downcase, :id => about %>
            <%= render 'assertions/list', :history => about.assertions.all %>
          </div>
-         <div class = "commentbox", id = <%= 'comments_' + about.class.to_s + about.id.to_s %>>
+         <div class = "commentbox", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
-         <div class = "questionbox", id = <%= 'questions_' + about.class.to_s + about.id.to_s %>>
+         <div class = "questionbox", id = <%= 'questions_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
   <% else %>
       <div class="enter_assertion">

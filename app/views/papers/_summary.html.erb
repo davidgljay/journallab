@@ -1,6 +1,8 @@
 <h3>Summary</h3>
 <table>
-<%= render 'paper_assertion' %>
-<%= render 'fig_assertion' %>
+<%= render 'assertion', :about => @paper %>
+<% @paper.figs.each do |fig| %>
+   <%= render 'assertion', :about => fig %>
+<% end %>
 </table>
 

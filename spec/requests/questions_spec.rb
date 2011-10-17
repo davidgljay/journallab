@@ -7,12 +7,18 @@ describe "Questions:" do
      @paper = Factory(:paper)
      @paper.buildout([3,3,2,1])
      @user2 = Factory(:user, :email => Factory.next(:email))  
+     a = @paper.assertions.build(:text => "Test", :method => "Test test")
+     a.is_public = true
+     a.user = @user
+     a.save
      @paper.figs.each do |f|
-       a = f.assertions.build(:text => "Test", :method => "Test test", :ispublic => true)
+       a = f.assertions.build(:text => "Test", :method => "Test test")
+       a.is_public = true
        a.user = @user
        a.save
        f.figsections.each do |s|
-          a = s.assertions.build(:text => "Test", :method => "Test test", :ispublic => true)
+          a = s.assertions.build(:text => "Test", :method => "Test test")
+          a.is_public = true
           a.user = @user2
           a.save
        end
@@ -75,21 +81,21 @@ describe "Questions:" do
 
      it "adds a Question to a figure section and lets you reply", :js => true do
        find('td.figtoggle').click
-       find('#section1').click_button "Add a Question"
+       find('#figsection1').click_button "Add a Question"
        fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 
        find('td.figtoggle').click
-       find('#section1').click_button "1 Question"
+       find('#figsection1').click_button "1 Question"
        find('li.replylink').click
        fill_in 'comment_text', :with => "That's so smart I'm commenting."
        click_button 'Submit' 
        find('td.figtoggle').click
-       find('#section1').click_button '1 Question'
+       find('#figsection1').click_button '1 Question'
        find('li.answerlink').click
        fill_in 'question_text', :with => "Here's an answer to your question."
        click_button 'Submit' 
        find('td.figtoggle').click
-       find('#section1').click_button '1 Question'
+       find('#figsection1').click_button '1 Question'
        page.should have_content("I have an incredibly intelligent thing to say.")
        page.should have_content("That's so smart I'm commenting.")
        page.should have_content("Here's an answer to your question.")

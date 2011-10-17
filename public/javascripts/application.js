@@ -52,7 +52,7 @@ $(document).ready(function(){
     });
 
 //Toggle Figure sections
-   $("td.figtoggle, td.sumleft.fig").toggle(function(){
+   $("td.figtoggle").toggle(function(){
      $(this).parent().parent().parent().next().show("slow");
      $("td.figtoggle", this).text("-");
      },function(){

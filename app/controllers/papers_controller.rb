@@ -143,10 +143,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
      else
          flash[:error] = "You are not authorized to use this function, sorry."
      end
-
-    respond_to do |format|
-      redirect_to(@paper)
-    end
+     redirect_to(@paper)
   end
 
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.

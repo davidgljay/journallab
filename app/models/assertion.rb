@@ -1,5 +1,5 @@
 class Assertion < ActiveRecord::Base
-attr_accessible :text
+attr_accessible :text, :method, :about
 
 belongs_to :paper
 belongs_to :user

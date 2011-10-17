@@ -83,27 +83,17 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
   def create
     @assertion = Assertion.new(params[:assertion])
     @assertion.user_id = current_user.id
-
-   
-  #Associate the assertion with the proper figure, figsection, or paper.
-    if params[:assertion][:paper_id]
-        @assertion.about = "paper"
-        @assertion.paper = Paper.find(params[:assertion][:paper_id])
-        @assertion.method = params[:assertion][:method]
+    if @assertion.about == "paper"
+        @assertion.paper = Paper.find(params[:assertion][:owner_id])
         @paper = @assertion.paper
-       # @assertion.paper.build_figs(params[:numfigs]) 
-    elsif params[:assertion][:fig_id] 
-        @assertion.about = "fig"
-        @assertion.fig = Fig.find(params[:assertion][:fig_id])
-        @assertion.method = params[:assertion][:method]
+    elsif @assertion.about == "fig"
+        @assertion.fig = Fig.find(params[:assertion][:owner_id])
         @paper = @assertion.fig.paper
-       # @assertion.fig.build_figsections(params[:numsections]) 
-    elsif params[:assertion][:figsection_id]
-        @assertion.about = "figsection"
-        @assertion.method = params[:assertion][:method]
-        @assertion.figsection = Figsection.find(params[:assertion][:figsection_id])
-        @paper = @assertion.figsection.fig.paper 
+    elsif @assertion.about == "figsection"
+        @assertion.figsection = Figsection.find(params[:assertion][:owner_id])
+        @paper = @assertion.figsection.fig.paper
     end
+   
   #Check to make sure that something was entered.
    if @assertion.text.include?('What is the core conclusion') || @assertion.text.include?('What principle methods')
     flash[:error] = "Please enter a conclusion and method."

@@ -73,7 +73,8 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to url, :notice => 'Comment was successfully created.' }
+        flash[:success] => 'Comment added!'
+        format.html { redirect_to url }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
       else
         flash[:error] = "Please enter a comment."

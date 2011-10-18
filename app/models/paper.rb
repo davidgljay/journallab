@@ -49,10 +49,10 @@ def extract_authors(data)
   if self.authors.empty?
     data.xpath('//AuthorList/Author').each do |auth|
      author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
-     a = self.authors.build(:firstname => author[0], :lastname => author[1], :initial => author[2])
-       unless a.save
+       a = self.authors.build(:firstname => author[0], :lastname => author[1], :initial => author[2])
+       unless a.save ||
           auth = Author.find(:last, :conditions=> {:firstname => author[0], :lastname => author[1]})
-          self.authors << auth
+          self.authors << auth unless self.authors.includ?(auth)
         else
        end
      end               

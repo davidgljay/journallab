@@ -1,11 +1,12 @@
+<p><%= image_tag 'jlablogo.png', :id => 'mainlogo' %></p>
+
 <% if signed_in? %>
   <table class="front" summary="For signed-in users">
     <tr>
       <td class="main">
   <%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
-    <%= label_tag(:pubmed_id, "Go ahead") %><br>
-    enter a Pubmed ID or search term
-    <%= text_field_tag(:pubmed_id) %><br>
+     <%= label_tag :pubmed_id, 'Find a paper...' %>
+           <%= text_field_tag :pubmed_id %></br>
      <%= submit_tag("Search") %>
   <% end %>
       </td>
@@ -16,12 +17,10 @@
     </tr>
   </table>
 <% else %>
-<%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
-    <%= label_tag(:pubmed_id, "Go ahead") %><br>
-    enter a Pubmed ID or search term
-  <%= text_field_tag(:pubmed_id) %><br>
-  <%= submit_tag("Search") %>
+ <%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
+     <%= label_tag :pubmed_id, 'Find a paper...' %>
+           <%= text_field_tag :pubmed_id %></br>
+     <%= submit_tag("Search") %>
 <% end %>
 <% end %>
-<%= link_to 'Test', 'http://localhost:3000/figs/52/build_figsections/4' %>
 

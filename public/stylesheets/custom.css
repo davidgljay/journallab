@@ -37,10 +37,6 @@ header {
   padding-top: 20px;
 }
 
-header img {
-  padding: 1em;
-  background: #fff;
-}
 
 section {
   font-size: 120%;
@@ -83,7 +79,7 @@ nav {
 nav {
   background-color: white;
   padding: 0 0.7em;
-  white-space: nowrap;
+  margin-top: 5px;
 }
 
 nav ul {
@@ -131,20 +127,38 @@ form.homepage_search {
   margin-right: auto;
   display: block;
   text-align: center;
-  width: 400px;
-  color: #fff;
-  background: #005;
-  font-size: 150%;
-  padding: 20px;
+  width: 610px;
+  color: #000;
+  background: #bbdddd;
+  font-size: 100%;
+  padding: 10px;
 }
 
+img#mainlogo {
+  display: block;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+img#small_logo {
+  display: inline;
+  padding-top: 0px;
+  padding-bottom: 30px;
+}
+
+form.topsearch {
+   display: block;
+   float: right;
+   float: top;
+}
 
 .homepage_search input[type = "text"] {
-  width: 300px;
-  height: 80px;
-  font-size: 150%;
-  text-indent: 10px;
-  padding: 15px;
+  width: 590px;
+  font-size: 100%;
+  text-indent: 2px;
+  padding: 5px;
 }
 
 .homepage_search input[type = "submit"] {

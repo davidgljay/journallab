@@ -1,4 +1,6 @@
 class VotesController < ApplicationController
+before_filter :authenticate
+
   def create
     @candidate = params[:vote][:type].constantize.find(params[:vote][:id])
     current_user.vote!(@candidate)

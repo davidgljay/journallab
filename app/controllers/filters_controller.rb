@@ -1,5 +1,5 @@
 class FiltersController < ApplicationController
-
+before_filter :authenticate
 # This form is specifically for creating filters 
 
   def create

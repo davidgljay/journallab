@@ -43,11 +43,7 @@ describe "Comments:" do
        page.should have_content("I have an incredibly intelligent thing to say.")
        page.should have_content("That's so smart I'm replying.")
        page.should have_content(@user.firstname)
-       click_link 'Sign out'    
-       visit '/papers/' + @paper.id.to_s
-       click_button '1 Comment'
-       page.should have_content(@user.anon_name)
-      end
+       end
 
      it "adds a comment to a figure and lets you reply", :js => true do
        find('#fig1').click_button "Add a Comment"

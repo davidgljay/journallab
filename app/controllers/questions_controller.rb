@@ -1,28 +1,5 @@
 class QuestionsController < ApplicationController
-  def show
-  end
-
-  def answer
-    @question = Question.find(params[:id])
-    @answer = @question.questions.build
-    @assertion = @question.assertion
-    respond_to do |format|
-      format.html # show.html.erb
-    end
-  end
-
-  def new
-    @question = Question.new
-  end
-
-  def comment
-    @question = Question.find(params[:id])
-    @comment = @question.comments.build
-    @assertion = @question.assertion
-    respond_to do |format|
-      format.html # show.html.erb
-    end
-  end
+before_filter :authenticate
 
   def list
     @parent = params[:parent].constantize.find(params[:id])

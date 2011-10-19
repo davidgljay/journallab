@@ -155,6 +155,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
          @paper = Paper.create(:pubmed_id => search)
          @paper.lookup_info
       end
+      @paper.extract_authors
       if flash[:error].nil?
         redirect_to @paper
       else

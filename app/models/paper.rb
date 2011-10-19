@@ -40,19 +40,23 @@ def lookup_info
       self.abstract = data.xpath('//Abstract/AbstractText').text
     end
     self.save
-    extract_authors(data)
   end
 end
 
 #Derive authors
-def extract_authors(data)
+def extract_authors
   if self.authors.empty?
+    url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s + '?report=xml'
+    doc = Nokogiri::XML(open(url))
+    data = Nokogiri::XML(doc.children[1].children.text)
     data.xpath('//AuthorList/Author').each do |auth|
      author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
-       a = self.authors.build(:firstname => author[0], :lastname => author[1], :initial => author[2])
-       unless a.save ||
-          auth = Author.find(:last, :conditions=> {:firstname => author[0], :lastname => author[1]})
-          self.authors << auth unless self.authors.includ?(auth)
+       a = Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
+       unless a.save 
+          auth = Author.find(:last, :conditions=> {:firstname => author[0], :lastname => author[1]})  
+          if !self.authors.include?(auth) 
+            self.authors << auth
+          end
         else
        end
      end               

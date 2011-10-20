@@ -11,7 +11,7 @@
 
   <div class = "<% if paper.supplementary?(@group) %>supp_paper<% else %>classpaper<% end %> <% if current_user.visited?(paper) %> viewed<% end %> <% if Time.now > date[1] %>passed<% end %>">
     <% if paper.supplementary?(@group) %><strong>Supplemental: </strong><% end %> <%= link_to paper.title, paper %></br>
-    Journal: <%= paper.journal %> 
+    Journal: <%= paper.journal %>, <%= @paper.pubdate.year unless @paper.pubdate == nil %>
     | 
     Pubmed ID: <%= link_to paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + paper.pubmed_id.to_s %>
     <br>

@@ -1,11 +1,12 @@
-<div align="center"><%= image_tag 'jlablogo.png', :id => 'mainlogo' %></div>
+
+<%= image_tag 'jlablogo.png', :id => 'mainlogo' %>
 
 <% if signed_in? %>
   <table class="front" summary="For signed-in users">
     <tr>
       <td class="main">
   <%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
-     <%= label_tag :pubmed_id, 'Find a paper...' %>
+     <%= label_tag :pubmed_id, 'Find a paper, discuss it with your lab or with the world.' %>
            <%= text_field_tag :pubmed_id %></br>
      <%= submit_tag("Search") %>
   <% end %>

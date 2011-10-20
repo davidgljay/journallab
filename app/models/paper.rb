@@ -36,6 +36,8 @@ def lookup_info
   else
     self.title = data.xpath('//Article/ArticleTitle').text
     self.journal = data.xpath('//Journal/Title').text
+    day = data.xpath('//PubDate/Day').text.to_i == 0 ? nil : data.xpath('//PubDate/Day').text.to_i
+    self.pubdate = Time.local(data.xpath('//PubDate/Year').text.to_i, self.monthhash[data.xpath('//PubDate/Month').text], day )
     unless data.xpath('//Abstract/AbstractText').empty?
       self.abstract = data.xpath('//Abstract/AbstractText').text
     end
@@ -45,22 +47,21 @@ end
 
 #Derive authors
 def extract_authors
-  if self.authors.empty?
     url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s + '?report=xml'
     doc = Nokogiri::XML(open(url))
     data = Nokogiri::XML(doc.children[1].children.text)
     data.xpath('//AuthorList/Author').each do |auth|
      author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
        a = Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
-       unless a.save 
+       if a.save
+          self.authors << a
+       else 
           auth = Author.find(:last, :conditions=> {:firstname => author[0], :lastname => author[1]})  
           if !self.authors.include?(auth) 
             self.authors << auth
           end
-        else
        end
      end               
-  end
 end
 
 #Grab images
@@ -129,6 +130,23 @@ end
 
 def num
     nil
+end
+
+def monthhash
+   monthhash = {
+      'Jan' => 1,
+      'Feb' => 2,
+      'Mar' => 3,
+      'Apr' => 4,
+      'May' => 5,
+      'Jun' => 6,
+      'July' => 7,
+      'Aug' => 8,
+      'Sep' => 9,
+      'Oct' => 10,
+      'Nov' => 11,
+      'Dec' => 12
+      }
 end
 
 def short_abstract

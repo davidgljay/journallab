@@ -2,10 +2,19 @@
   <nav class="round">
     <ul>
       <li><%= link_to "About", about_path %></li>
-      <li><%= link_to "Contact", contact_path %></li>
+      <li><%= link_to "Feedback", 'http://jlab.uservoice.com' %></li>
     </ul>
   </nav>
 
-
+<% if signed_in? %>
+<script type="text/javascript">
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/sRkfPpl2KABtPcCrux29w.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
+</script>
+<% end %>
 
 </footer>

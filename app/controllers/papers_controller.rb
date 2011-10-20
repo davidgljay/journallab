@@ -41,6 +41,10 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
     if signed_in?
        @paper.visits.build(:user_id => current_user.id).save
     end
+    if @paper.authors.empty? || @paper.authors.nil?
+       @paper.extract_authors
+    end
+
     @heatmap = @paper.heatmap
     # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
     if signed_in?
@@ -155,7 +159,6 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
          @paper = Paper.create(:pubmed_id => search)
          @paper.lookup_info
       end
-      @paper.extract_authors
       if flash[:error].nil?
         redirect_to @paper
       else

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Pubmed Searches:" do
+describe "Searches:" do
 
 #Sign in first
   before(:each) do
@@ -23,6 +23,15 @@ describe "Pubmed Searches:" do
     end
   end
 
-
+  describe "entering text into the homepage" do
+    it "loads search results" do
+     visit root_path
+     fill_in "pubmed_id", :with => "judson"
+     click_button "Search"
+     within('body') { page.should have_content('Search Results') }
+     click_link 'Efficacy and Safety of Apremilast in Chronic Cutaneous Sarcoidosis.'
+     page.should have_content('Judson')
+   end
+  end
 
 end

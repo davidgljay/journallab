@@ -19,7 +19,7 @@
            <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "fig" && h[1] == about.id}[0][3].to_s %> round fig assertion" >
            Fig <%= about.num.to_s %>:
              <% unless about.image.nil? %>
-               <%= image_tag about.image.thumb('80x80>').url, :class => 'thumbnail'%>
+               <%= image_tag about.image.thumb('80x80>').url, :class => 'thumbnail clickme'%>
              <% end %>
            <%= render 'add_figs_and_sections', :about => about unless about.figsections.count > 0%>
            </td>

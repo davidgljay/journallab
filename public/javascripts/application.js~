@@ -79,7 +79,7 @@ $(document).ready(function(){
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.questionbox").hide("slow");
-    $(this).parent().next().find("img.fullfig").slideToggle();
+    $(this).parent().parent().next().find("img.fullfig").slideToggle();
     });
 
 //Class options expansion

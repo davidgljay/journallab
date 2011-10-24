@@ -1,3 +1,59 @@
+
+/* Misc Functions */
+
+.hideonload {
+display: none;
+}
+
+.clickme {
+   cursor: pointer;
+}
+
+.floatright {
+   float:right;
+}
+
+.pad10 {
+   padding: 10px;
+}
+
+.margin10 {
+   margin: 10px;
+}
+
+.drop-shadow {
+   position:relative;
+   width:90%;
+}
+
+.drop-shadow:before,
+.drop-shadow:after {
+   content:"";
+   position:absolute;
+   z-index:-1;
+   bottom:15px;
+   left:10px;
+   width:50%;
+   height:20%;
+   max-width:300px;
+   -webkit-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   -moz-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   -webkit-transform:rotate(-3deg);
+   -moz-transform:rotate(-3deg);
+   -o-transform:rotate(-3deg);
+   transform:rotate(-3deg);
+}
+
+.drop-shadow:after{
+   right:10px;
+   left:auto;
+   -webkit-transform:rotate(3deg);
+   -moz-transform:rotate(3deg);
+   -o-transform:rotate(3deg);
+   transform:rotate(3deg);
+ }
+
 /* Overall */
 
 container {
@@ -9,13 +65,15 @@ body {
 }
 
 header {
-  padding-top: 20px;
+  display: block;
+  background-color: #bbdddd;
+  border-bottom: solid;
+  padding-bottom: 10px;
+  border-width: 1px;
+  border-color: #223322;
+  margin-bottom: 10px;
 }
 
-header img {
-  padding: 1em;
-  background: #fff;
-}
 
 section {
   font-size: 120%;
@@ -36,17 +94,17 @@ display: inline;
 /* Links */
 
 a {
-  color: #09c;
+  color: #119966;       
   text-decoration: none;
 }
 
 a:hover {
-  color: #069;
-  text-decoration: underline;
+  color: #223322;
+  text-decoration: none;
 }
 
 a:visited {
-  color: #069;
+  color: #223322;
 }
 
 /* Navigation */
@@ -56,9 +114,10 @@ nav {
 }
 
 nav {
-  background-color: white;
+
   padding: 0 0.7em;
-  white-space: nowrap;
+  margin-top: 5px;
+  margin-right: 5px;
 }
 
 nav ul {
@@ -78,26 +137,14 @@ nav ul li a {
 }
 
 nav ul li a:visited {
-  color: #09c;
+/*  color: #09c; */
 }
 
 nav ul li a:hover {
   text-decoration: underline;
 }
 
-/* Signup Button */
 
-a.signup_button {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  text-align: center;
-  width: 190px;
-  color: #fff;
-  background: #006400;
-  font-size: 150%;
-  padding: 20px;
-}
 
 /* Homepage Search */
 
@@ -106,20 +153,44 @@ form.homepage_search {
   margin-right: auto;
   display: block;
   text-align: center;
-  width: 400px;
-  color: #fff;
-  background: #005;
-  font-size: 150%;
-  padding: 20px;
+  width: 610px;
+  color: #000;
+  background: #bbdddd;
+  font-size: 100%;
+  padding: 10px;
 }
 
+img#mainlogo {
+  display: block;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+img#small_logo {
+  display: inline;
+  padding-top: 0px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+
+form.topsearch {
+   display: block;
+   float: right;
+   margin-top: 10px;
+   
+}
+
+form.topsearch input[type = "text"] {
+   width: 300px;
+}
 
 .homepage_search input[type = "text"] {
-  width: 300px;
-  height: 80px;
-  font-size: 150%;
-  text-indent: 10px;
-  padding: 15px;
+  width: 590px;
+  font-size: 100%;
+  text-indent: 2px;
+  padding: 5px;
 }
 
 .homepage_search input[type = "submit"] {
@@ -148,12 +219,6 @@ div.sr_info {
   color: #595959;
 }
   
-
-/* Abstract */
-
-.hideonload {
-display: none;
-}
 
 /* Heat Map */
 
@@ -242,6 +307,7 @@ style.method {
   font-size: 90%;
 }
 
+
 td.sumright nav {
    float: none;
    text-align: left;
@@ -302,11 +368,34 @@ div.field {
   font-weight: normal;
 }
 
-/* Menus to hide by default */
+/* Build figs and sections */
 
- div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options form.edit_filter {
-  display: none;
+div.add_figs_and_sections {
+   color: #000;
+   text-align: right;
+   font-size: 18px;
+   cursor: pointer; 
 }
+
+div.numselect {
+   font-size: 14px;
+   text-align: center;
+   cursor: auto;   
+}
+
+div.fig_numselect {
+   display: inline;
+   font-size: 16px;
+   padding: 2px;
+   text-align: center;
+}
+
+div.figsection_numselect {
+   display: block; 
+   margin-top: 5px;
+
+}
+
 
 /* Fig section toggle */
 
@@ -314,6 +403,7 @@ td.figtoggle {
   width: 20px;
   font-weight: bold;
   font-size: 200%;
+  cursor: pointer;
 }
 
 /* Improve Assertion */
@@ -330,7 +420,6 @@ div.improve div.numfigs {
 div.improvelist {
   width: 600px;
   font-size: 80%;
-  display:block;
   border: solid;
   border-width: 1px;
   border-color: #000;
@@ -616,9 +705,9 @@ td.sidebar {
 /* Round corners */
 
 .round {
-  -moz-border-radius:    10px;
-  -webkit-border-radius: 10px;
-  border-radius:         10px;
+  -moz-border-radius:    8px;
+  -webkit-border-radius: 8px;
+  border-radius:         8px;
 }
 
 /* Footer */
@@ -639,6 +728,14 @@ footer nav {
 
 div.field, div.actions {
   margin-bottom: 10px;
+}
+
+/* User Class Selection */
+
+td.groupselect {
+  display: inline-block;
+  margin: 10px;
+  vertical-align: top;
 }
 
 /* Errors */
@@ -752,12 +849,24 @@ form.new_micropost textarea {
 
 /* Class Options */
 
+div#instructor_options {
+  float: right;
+  display: block;
+  color: #fff;
+  background: #223322;
+  padding: 5px;
+  margin: 10px;
+  text-align: right;
+  font-weight: bold;
+}
+
 div.class_options {
   float: right;
   display: block;
   color: #fff;
-  background: #0000b5;
+  background: #223322;
   padding: 10px;
+  margin: 10px;
   text-align: right;
   font-weight: bold;
 }
@@ -766,5 +875,70 @@ div.class_options label{
   font-weight: normal;
 }
 
+
+/* Class Page */
+
+div.classpaper {
+  display: block;
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 45px;
+  border: solid;
+  border-width: thick;
+  border-color: #223322;
+  border-bottom: 0px;
+  border-right: 0px;
+  font-weight: bold;
+}
+
+div.supp_paper {
+  display: block;
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 25px;
+  margin-left: 40px;
+  font-weight: bold;
+}
+
+div.classdate {
+  display: block;
+  float: right;
+  margin-top: 10px;
+  font-style: italic;
+  font-style: bold;
+  background: #119966;
+  padding: 5px;
+}
+
+div.viewed, div.passed {
+  background: #fff;
+  font-weight: normal;
+  border-width: thin;
+}
+
+div.passed, div.passed a, div.passed a.visited {
+  color: #494949;
+}  
+
+div.downloadlink {
+  float: right;
+  background: #00ccaa;
+  padding: 5px;
+  margin: 10px;
+  font-weight: bold;
+}
+
+/* User info */
+
+span.anon_name {
+   color: #119966;
+}
+
+
+/* Menus to hide by default */
+
+#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
+  display: none;
+}
 
 

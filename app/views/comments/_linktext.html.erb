@@ -1,10 +1,10 @@
       <% comment.linktext.each do |w| %>
           <% if w.class == Paper %>
-             <%= link_to "("+ w.authors.first.lastname + ", " + w.journal + ")", w %>
+             <%= link_to "("+ w.authors.first.lastname + ", " + w.journal + ' ' + w.pubdate.year.to_s + ")", w %>
           <% elsif w.class == Fig %>
-             <%= link_to "(" + w.paper.authors.first.lastname + ", " + w.paper.journal + ", Fig " + w.num.to_s + ")", w.paper %>
+             <%= link_to "(" + w.paper.authors.first.lastname + ", " + w.paper.journal + ' ' + w.paper.pubdate.year.to_s + ", Fig " + w.num.to_s + ")", w.paper %>
           <% elsif w.class == Figsection %>
-             <%= link_to "(" + w.fig.paper.authors.first.lastname + ", " + w.fig.paper.journal + ", Fig " + w.num.to_s + " Section " + w.num.to_s + ")", w.fig.paper %>
+             <%= link_to "(" + w.fig.paper.authors.first.lastname + ", " + w.fig.paper.journal + ' ' + w.fig.paper.pubdate.year.to_s + ", Fig " + w.num.to_s + " Section " + w.num.to_s + ")", w.fig.paper %>
           <% else %>
              <%= w %>
           <% end %>

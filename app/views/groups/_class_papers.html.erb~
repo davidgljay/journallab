@@ -1,15 +1,46 @@
-<h4>Class Reading:</h4>
+<h4>Upcoming Reading:</h4>
 <% @classdates.each do |date| %>
+  <% if Time.now < date[1] %>
   <% paper = @papers[date[0]] %>
 
   <% unless paper.supplementary?(@group) %>
-  <div class = "classdate <% if Time.now > date[1] %>passed<% end %> round">
+  <div class = "classdate round">
    
    <%= render 'shared/display_date', :date => date[1] unless date[1].nil? %>
   </div>
   <% end %>
 
-  <div class = "<% if paper.supplementary?(@group) %>supp_paper<% else %>classpaper<% end %> <% if current_user.visited?(paper) %> viewed<% end %> <% if Time.now > date[1] %>passed<% end %>">
+  <div class = "<% if paper.supplementary?(@group) %>supp_paper<% else %>classpaper<% end %> <% if current_user.visited?(paper) %> viewed<% end %>">
+    <% if paper.supplementary?(@group) %><strong>Supplemental: </strong><% end %> <%= link_to paper.title, paper %></br>
+    Journal: <%= paper.journal %><%= ', ' + paper.pubdate.year.to_s unless paper.pubdate == nil %>
+    | 
+    Pubmed ID: <%= link_to paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + paper.pubmed_id.to_s %>
+    <br>
+    <%= render '/authors/author_list', :paper => paper %>
+
+  <% unless paper.pdf_link.nil? %>
+  <div class="downloadlink round">
+     <%= link_to 'Download PDF', paper.pdf_link, :target => 'blank' %>
+  </div>
+  <% end %>
+  </div>
+
+<% end %>
+
+<p>
+<h4>Past Reading:</h4>
+<% @classdates.each do |date| %>
+  <% if Time.now > date[1] %>
+  <% paper = @papers[date[0]] %>
+
+  <% unless paper.supplementary?(@group) %>
+  <div class = "classdate passed round">
+   
+   <%= render 'shared/display_date', :date => date[1] unless date[1].nil? %>
+  </div>
+  <% end %>
+
+  <div class = "<% if paper.supplementary?(@group) %>supp_paper<% else %>classpaper<% end %> <% if current_user.visited?(paper) %> viewed<% end %> passed">
     <% if paper.supplementary?(@group) %><strong>Supplemental: </strong><% end %> <%= link_to paper.title, paper %></br>
     Journal: <%= paper.journal %><%= ', ' + paper.pubdate.year.to_s unless paper.pubdate == nil %>
     | 

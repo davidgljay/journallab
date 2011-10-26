@@ -93,6 +93,12 @@ $(document).ready(function(){
       $(this).parent().find('div.numselect').slideToggle();
      });
 
+//Image upload for admins
+    $(".fig_upload").click(function(){
+      $(this).parent().find('div.upload_form').show();
+     });
+
+
 //
 //Dynamic Loading of Elements
 //

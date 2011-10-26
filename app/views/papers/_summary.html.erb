@@ -1,3 +1,7 @@
+<% if current_user.admin? %>
+ADMIINNN!!!
+<% end %>
+
 <h3>Summary</h3>
 <table>
 <%= render 'assertion', :about => @paper %>

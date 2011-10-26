@@ -1,7 +1,11 @@
+<% if current_user.admin? %>
+ADMIINNN!!!
+<% end %>
+
 <h3>Summary</h3>
 <table>
 <%= render 'assertion', :about => @paper %>
-<% @paper.figs.sort.sort{|x,y| x.num <=> y.num}.each do |fig| %>
+<% @paper.figs.sort{|x,y| x.num <=> y.num}.each do |fig| %>
    <%= render 'assertion', :about => fig %>
 <% end %>
 </table>

@@ -122,7 +122,6 @@ end
 def latest_assertion
      assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
      assert_list.sort!{|x,y| x.votes.count <=> y.votes.count}
-
      assert_list.last
 end
 
@@ -193,6 +192,10 @@ end
 
 def is_public
    true
+end
+
+def jquery_target
+   'paper'
 end
 
 #Check to see if the paper is supplementary reading for a given class

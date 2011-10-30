@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111020082058) do
+ActiveRecord::Schema.define(:version => 20111027090047) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20111020082058) do
     t.string   "about"
     t.text     "method"
     t.boolean  "is_public"
+    t.text     "alt_approach"
   end
 
   add_index "assertions", ["fig_id"], :name => "index_assertions_on_fig_id"

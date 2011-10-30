@@ -25,7 +25,7 @@
              <% else %>
                <%= image_tag about.image.thumb('80x80>').url, :class => 'thumbnail clickme'%>
              <% end %>
-           <%= render 'add_figs_and_sections', :about => about unless about.figsections.count > 0%>
+           <%= render '/papers/add_figs_and_sections', :about => about unless about.figsections.count > 0%>
            </td>
       <% elsif about.class == Figsection %>
        <td width = "40px"></td>
@@ -39,7 +39,11 @@
        <%= about.latest_assertion.text %>
        <br>
          <style class="method"><%= about.latest_assertion.method %> </style>
-       <br>
+       <% unless about.latest_assertion.alt_approach.nil? %>
+       <div class = "alt_approach">
+         <strong>Alternate Approaches: </strong><style class="method"><%= about.latest_assertion.alt_approach %> </style>
+       </div>
+       <% end %>
        <nav>
        <ul>
          <li class="improvelink">Improve</li>
@@ -76,13 +80,18 @@
          <div class = "questionbox", id = <%= 'questions_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
   <% else %>
-      <div class="enter_assertion">
+
       <% if @group.category == 'class' %>
-        <h5>Summarize for your class</h5>
+        <% button = 'Summarize for your class' %>
       <% else %>
-        <h5>Summarize for your lab</h5>
+        <% button = 'Summarize for your class' %>
       <% end %>
-      <%= render 'assertions/form', :assert => about.assertions.build, :type => about.class.to_s.downcase, :id => :about %>
+     <%= form_tag('/assertions/new', :method => "post", :remote => true, :class => 'enter_assertion')  do  %>
+       <%= hidden_field_tag :about, about.class.to_s %>
+       <%= hidden_field_tag :id, about.id %>
+       <%= submit_tag(button) %> 
+     <% end %>
+      <div class="assertion_form">
       </div>
 <% end %>
      <% if about.class == Fig %>
@@ -98,7 +107,7 @@
 <% if about.class == Fig %>
 <div id="<%= "fig_" + about.num.to_s + "_sections"%>" class = "fig_sections">
    <% about.figsections.each do |section| %>
-     <%= render 'assertion', :about => section %>
+     <%= render '/papers/assertion', :about => section %>
    <% end %>
 </div>
 <% end %>

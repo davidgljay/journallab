@@ -27,4 +27,12 @@ $(document).ready(function(){
       return false;
     });
 
+//Comment submit
+
+   $("form.new_comment").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+
 });

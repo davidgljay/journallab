@@ -144,7 +144,13 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
+/* Flash */
 
+div.flash {
+
+ clear: both;
+
+}
 
 /* Homepage Search */
 
@@ -279,6 +285,10 @@ div.sr_info {
 
 /* Fig Summary */
 
+tr.summary {
+   clear: both;
+}
+
 td.sumleft {
    vertical-align: top;
    font-weight: bold;
@@ -301,10 +311,25 @@ td.sumright {
   padding-left: 20px;
 }
 
+form.enter_assertion input[type = "submit"] {
+	font-size: 1.1em;
+        color: #000;
+	background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+}
+
+
 style.method {
   font-weight: normal;
   font-style: italic;
   font-size: 90%;
+}
+
+div.alt_approach {
+  font-size: 75%;
 }
 
 
@@ -360,7 +385,7 @@ img.figthumnail {
 
 td.sumright input[ type = "text" ] {
   width: 600px;
-  font-size: 115%;
+  font-size: 100%;
 }
 
 
@@ -368,6 +393,11 @@ div.field {
   font-weight: normal;
 }
 
+form#new_assertion {
+
+padding: 10px;
+
+}
 /* Build figs and sections */
 
 div.add_figs_and_sections {
@@ -458,6 +488,7 @@ table.comment {
    background: #fff;
    border: 1px;
    padding: 10px;
+   margin-bottom: 0px;
 }
 
 table.comment td {

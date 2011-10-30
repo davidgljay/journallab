@@ -1,7 +1,7 @@
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $('div#questions_<%= @parent_type + '_' + @parent.id.to_s %>').html('<%= escape_javascript(render 'list') %>');
-    $('div#questions_<%= @parent_type + '_' + @parent.id.to_s %>').slideToggle();
+   $('<%= @owner.jquery_target %>').find('div.commentbox').html('<%= escape_javascript(render '/comments/list') %>'); 
+<% if @comment.form == 'qcomment' %> 
+   $('<%= @owner.jquery_target %>').find('div.questionbox').html('<%= escape_javascript(render '/questions/list') %>');  
+<% end %>
 
 jQuery.ajaxSetup({
    'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
@@ -27,9 +27,9 @@ $(document).ready(function(){
       return false;
     });
 
-//Question submit
+//Comment submit
 
-   $("form.new_question").submit(function(){
+   $("form.new_comment").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

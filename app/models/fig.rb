@@ -39,4 +39,8 @@ def get_paper
    self.paper
 end
 
+def jquery_target
+   'tr#fig' + num.to_s
+end
+
 end

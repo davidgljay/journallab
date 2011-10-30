@@ -27,12 +27,4 @@ $(document).ready(function(){
       return false;
     });
 
-//Question submit
-
-   $("form.new_question").submit(function(){
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-
 });

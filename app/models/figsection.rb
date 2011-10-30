@@ -35,4 +35,9 @@ def get_paper
    self.fig.paper
 end
 
+def jquery_target
+   "div#fig_" + fig.num.to_s + "_sections tr#figsection" + num.to_s
+end
+
+
 end

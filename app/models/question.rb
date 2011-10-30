@@ -57,5 +57,16 @@ def get_paper
    end
 end
 
+def owner
+   if self.paper
+     self.paper
+   elsif self.fig
+     self.fig
+   elsif self.figsection
+     self.figsection
+   elsif self.question
+     self.question.owner
+   end
+end
 
 end

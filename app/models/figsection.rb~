@@ -10,6 +10,7 @@ validates :fig_id, :presence => true
 
 def latest_assertion
      assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
+     assert_list.sort!{|x,y| x.votes.count <=> y.votes.count}
      assert_list.last
 end
 
@@ -33,5 +34,10 @@ end
 def get_paper
    self.fig.paper
 end
+
+def jquery_target
+   "div#fig_" + fig.num.to_s + "_sections tr#figsection" + num.to_s
+end
+
 
 end

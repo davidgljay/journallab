@@ -15,6 +15,7 @@
            <%= f.text_field :alt_approach, :value => assert.owner.latest_assertion.alt_approach %>
          <% end %>
         </div>
+         <br>
          <%= f.hidden_field :about, :value => type %>
          <%= f.hidden_field :owner_id, :value => assert.owner.id.to_s %>
          <%= f.submit "Submit" %>

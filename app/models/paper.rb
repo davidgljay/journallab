@@ -194,6 +194,10 @@ def is_public
    true
 end
 
+def jquery_target
+   'tr#paper'
+end
+
 #Check to see if the paper is supplementary reading for a given class
 
 def supplementary?(group)

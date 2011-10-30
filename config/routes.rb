@@ -13,6 +13,7 @@ Redcell::Application.routes.draw do
 
   resources :assertions
     match '/assertions/improve(/:id)', :to => 'assertions#improve'
+    match '/assertions/new',           :to => 'assertions#new'
 
   resources :questions
    match '/questions(/:id)/answer',    :to => 'questions#answer'

@@ -14,11 +14,7 @@ $(document).ready(function(){
     $("#abstract_long").slideToggle('medium');
   });
 
-//Enter Assertion
-  $("div.enter_assertion").mouseover(function(){
-    $("h5", this).hide("med");
-    $("form.new_assertion", this).show("med");
-  });
+
 
 //Improve Expansion
   $("nav li.improvelink").click(function(){
@@ -48,7 +44,7 @@ $(document).ready(function(){
     $("div.commentbox").hide("slow");
     $("div.questionbox").hide("slow"); 
     $("form.new_assertion").hide("slow");
-    $("h5").show("slow");
+    $("form.enter_assertion").show("slow");
     });
 
 //Toggle Figure sections
@@ -62,9 +58,9 @@ $(document).ready(function(){
 
 //Reply box expansion
   $("div.commentbox nav").click(function(){
-    //$("div.answerform").hide("slow");
-    //$(this).parent().parent().parent().find("div.replyform").slideToggle();
-    $(this).html('It works!');
+    $("div.answerform").hide("slow");
+    $(this).parent().parent().parent().find("div.replyform").slideToggle();
+    //$(this).html('It works!');
   });
 
 //Answer box expansion
@@ -95,7 +91,7 @@ $(document).ready(function(){
 
 //Image upload for admins
     $(".fig_upload").click(function(){
-      $(this).parent().find('div.upload_form');
+      $(this).parent().find('div.upload_form').show();
      });
 
 
@@ -103,17 +99,29 @@ $(document).ready(function(){
 //Dynamic Loading of Elements
 //
 
+//Load Summary Form
+  $("form.enter_assertion").mouseover(function(){
+//Redundant code b/c testing can't do mouseover
+//  $("form.enter_assertion").click(function(){
+      $(this).hide();
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+
 // Vote Button
    $("form#new_vote").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
 
-// Add Comments Button
+// Forms to submit through jQuery
    $("form.commentlist, form.questionlist").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
+
+
 
 
 //
@@ -125,6 +133,8 @@ $(document).ready(function(){
       function(){
       $(this).css('background', 'none')
     });
+
+
 
 });
 

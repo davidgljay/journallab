@@ -1,0 +1,2 @@
+   $('<%= @owner.jquery_target %>').html('<%= escape_javascript(render 'papers/assertion', :about => @owner) %>');   
+   $.include('javascripts/application.js');

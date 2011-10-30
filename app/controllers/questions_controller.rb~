@@ -35,7 +35,7 @@ before_filter :authenticate
       end
     end
     @owner = @question.owner
-    @questions = @owner.questions
+    @comments = @owner.comments
     @parent = @owner
 
     respond_to do |format|

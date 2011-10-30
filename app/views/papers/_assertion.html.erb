@@ -4,7 +4,7 @@
       <td width="1px"></td>
     <td class  = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "paper" && h[1] == about.id}[0][3].to_s %> round core assertion">
       Core Conclusion:
-      <%= render 'add_figs_and_sections', :about => about unless about.figs.count > 0%>
+      <%= render '/papers/add_figs_and_sections', :about => about unless about.figs.count > 0%>
     </td>
     <% elsif about.class == Fig %>
         <% unless about.figsections.count == 0 %>

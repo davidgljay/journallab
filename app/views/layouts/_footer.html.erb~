@@ -6,7 +6,7 @@
     </ul>
   </nav>
 
-<% if signed_in? && !Rails.env.test? %>
+<% if signed_in? %>
 <script type="text/javascript">
   var uvOptions = {};
   (function() {

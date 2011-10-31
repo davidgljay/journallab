@@ -1,5 +1,5 @@
 class Assertion < ActiveRecord::Base
-attr_accessible :text, :method, :about
+attr_accessible :text, :method, :about, :alt_approach
 
 belongs_to :paper
 belongs_to :user
@@ -40,7 +40,7 @@ def owner
   end
 end
 
-def get_paper
+def find_paper
   if paper_id
     paper
   elsif fig_id

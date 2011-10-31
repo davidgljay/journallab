@@ -58,7 +58,8 @@ resources :users do
  end
 
   match '/signup',   :to => 'users#new'
-
+  match '/bulksignup', :to => 'users#bulk_new', :via => :get 
+  match '/bulksignup', :to => 'users#bulk_create', :via => :post 
 #Relationship routes
 
 resources :relationships, :only => [:create, :destroy]

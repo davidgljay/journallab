@@ -1,2 +1,66 @@
    $('<%= @owner.jquery_target %>').html('<%= escape_javascript(render 'papers/assertion', :about => @owner) %>');   
-   $.include('javascripts/application.js');
+   //$.include('/javascripts/application.js');
+   <% if @owner.class == Fig %>
+   $('<%= 'div.fig_' + @owner.num.to_s + '_sections' %>').html('')
+   <% end %>
+
+
+//Improve Expansion
+  $("nav li.improvelink").click(function(){
+    $("div.commentbox").hide("slow");
+    $("div.questionbox").hide("slow");
+    $(this).parent().parent().parent().find("form.new_assertion").show();
+    $(this).parent().parent().parent().find("div.improve").slideToggle();
+  });
+
+//Close when you click colored area on the right
+   $("td.sumleft").click(function(){
+    $("div.improve").hide("slow");
+    $("div.commentbox").hide("slow");
+    $("div.questionbox").hide("slow"); 
+    $("form.new_assertion").hide("slow");
+    $("form.enter_assertion").show("slow");
+    });
+
+//Toggle Figure sections
+   $("td.figtoggle").toggle(function(){
+     $(this).parent().parent().parent().next().show("slow");
+     $("td.figtoggle", this).text("-");
+     },function(){
+     $(this).parent().parent().parent().next().hide("slow");
+     $("td.figtoggle", this).text("+"); 
+    });
+
+//Reply box expansion
+  $("div.commentbox nav").click(function(){
+    $("div.answerform").hide("slow");
+    $(this).parent().parent().parent().find("div.replyform").slideToggle();
+    //$(this).html('It works!');
+  });
+
+//Answer box expansion
+  $("nav li.answerlink").click(function(){
+    $("div.replyform").hide("slow");
+    $(this).parent().parent().parent().find("div.answerform").slideToggle();
+  });
+
+//Image expansion
+  
+   $("td.fig img").click(function(){
+    $("div.improve").hide("slow");
+    $("div.commentbox").hide("slow");
+    $("div.questionbox").hide("slow");
+    $(this).parent().next().find("img.fullfig").slideToggle();
+    });
+
+
+//Select # of figures and figsections expansion
+    $("div.add_figs_and_sections h3").click(function(){
+      $(this).parent().find('div.numselect').slideToggle();
+     });
+
+//Image upload for admins
+    $(".fig_upload").click(function(){
+      $(this).parent().find('div.upload_form').show();
+     });
+

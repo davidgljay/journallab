@@ -1,3 +1,4 @@
+   <div class = <%= about.jquery_target %> >
     <table>
     <tr class = "summary" id = <%= about.class.to_s.downcase + about.num.to_s %> >
     <% if about.class == Paper %>
@@ -111,3 +112,4 @@
    <% end %>
 </div>
 <% end %>
+</div>

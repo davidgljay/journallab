@@ -29,7 +29,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
   def new
     @about = params[:about].constantize.find(params[:id])
     @assertion = @about.assertions.build
-
+    
 
     respond_to do |format|
       format.js 
@@ -95,7 +95,7 @@ end
     end
    
   #Check to make sure that something was entered.
-   if @assertion.text.include?('What is the core conclusion') || @assertion.text.include?('What principle methods')
+   if @assertion.text.include?('What is the core conclusion') || @assertion.method.include?('What principle methods')
     flash[:error] = "Please enter a conclusion and method."
     save = false
    else

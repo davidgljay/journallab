@@ -158,7 +158,7 @@ def let_through_filter?(item, user)
            return true
         elsif filter_state(item).nil?
           return false
-        elsif filter_state(item) >= filter_state(item.get_paper)
+        elsif filter_state(item) >= filter_state(item.find_paper)
           return true
         else
           return false

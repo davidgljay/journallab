@@ -1,0 +1,6 @@
+<% @users.length.times do |i| %>
+<%= @users[i].firstname %>
+<%= @users[i].lastname %>
+<%= @users[i].email %>
+<%= @passwords[i] %>
+<% end %>

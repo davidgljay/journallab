@@ -82,46 +82,55 @@ describe "Assertions" do
 
   describe "improving an assertion" do
      before(:each) do 
-       a = []
-       a << @paper.assertions.build(:text => "Test", :method => "Test method")
-       a << @paper.figs.first.assertions.build(:text => "Test", :method => "Test method")
-       a << @paper.figs.first.figsections.first.assertions.build(:text => "Test", :method => "Test method")
-       a.each do |a|
-         a.user = @user
-         a.is_public = true
-         a.save
+     a = @paper.assertions.build(:text => "Test", :method => "Test test")
+     a.is_public = true
+     a.user = @user
+     a.save
+     @paper.figs.each do |f|
+       a = f.assertions.build(:text => "Test", :method => "Test test")
+       a.is_public = true
+       a.user = @user
+       a.save
+       f.figsections.each do |s|
+          a = s.assertions.build(:text => "Test", :method => "Test test")
+          a.is_public = true
+          a.user = @user2
+          a.save
        end
      end
 
     it "works for a paper" do
       visit '/papers/' + @paper.id.to_s
+      click_button "Summarize for your class"
       find('#paper').find('#new_assertion').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
       find('#paper').find('#new_assertion').fill_in 'assertion_method', :with => "Aloe juice"
       find('#paper').find('#new_assertion').click_button "Submit"
-      within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
-      within('#paper') { page.should have_content('Lorem ipsum cupcakes.') }
-      within('#paper') { page.should have_content('Test') }
+     # within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
+      within('tr#paper') { page.should have_content('Lorem ipsum cupcakes.') }
+      within('tr#paper') { page.should have_content('Test') }
       within('li.improvelink') { page.should have_content('Improve') }
     end
 
     it "works for a figure" do
       visit '/papers/' + @paper.id.to_s
+      find('#fig1').click_button "Summarize for your class"
       find('#fig1').find('#new_assertion').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
       find('#fig1').find('#new_assertion').fill_in 'assertion_method', :with => "Aloe juice"
       find('#fig1').find('#new_assertion').click_button "Submit"
-      within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
-      within('#fig1') { page.should have_content('Lorem ipsum cupcakes.') }
+      #within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
+      within('tr#fig1') { page.should have_content('Lorem ipsum cupcakes.') }
       within('li.improvelink') { page.should have_content('Improve') }
     end
 
 
     it "works for a figsection" do
       visit '/papers/' + @paper.id.to_s
+      find('td.figtoggle').click
+      find('#figsection1').click_button "Summarize for your class"
       find('#figsection1').find('#new_assertion').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
       find('#figsection1').find('#new_assertion').fill_in 'assertion_method', :with => "Aloe juice"
       find('#figsection1').find('#new_assertion').click_button "Submit"
-      within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
-      within('#figsection1') { page.should have_content('Lorem ipsum cupcakes.') }
+      within('tr#figsection1') { page.should have_content('Lorem ipsum cupcakes.') }
       within('li.improvelink') { page.should have_content('Improve') }
     end
    end

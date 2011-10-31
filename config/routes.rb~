@@ -13,6 +13,7 @@ Redcell::Application.routes.draw do
 
   resources :assertions
     match '/assertions/improve(/:id)', :to => 'assertions#improve'
+    match '/assertions/new',           :to => 'assertions#new'
 
   resources :questions
    match '/questions(/:id)/answer',    :to => 'questions#answer'
@@ -57,7 +58,8 @@ resources :users do
  end
 
   match '/signup',   :to => 'users#new'
-
+  match '/bulksignup', :to => 'users#bulk_new', :via => :get 
+  match '/bulksignup', :to => 'users#bulk_create', :via => :post 
 #Relationship routes
 
 resources :relationships, :only => [:create, :destroy]

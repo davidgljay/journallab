@@ -123,6 +123,13 @@ $(document).ready(function(){
 
 
 
+// Enter Assertion
+
+   $("form.new_assertion").submit(function(){
+     $.post($(this).attr("action"), $(this).serialize(), null, "script");  
+      return false;
+    });
+
 
 //
 //Styling
@@ -134,6 +141,11 @@ $(document).ready(function(){
       $(this).css('background', 'none')
     });
 
+   $('form.new_assertion').find(':input').click(function(){
+     if( $(this).val().substring(0,27) == "What is the core conclusion" || $(this).val() == "What principal methods are used?" || $(this).val() == "What are alternate approaches?")
+        $(this).val('');
+     end
+     });
 
 
 });

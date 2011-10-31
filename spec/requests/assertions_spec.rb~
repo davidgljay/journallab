@@ -82,14 +82,20 @@ describe "Assertions" do
 
   describe "improving an assertion" do
      before(:each) do 
-       a = []
-       a << @paper.assertions.build(:text => "Test", :method => "Test method")
-       a << @paper.figs.first.assertions.build(:text => "Test", :method => "Test method")
-       a << @paper.figs.first.figsections.first.assertions.build(:text => "Test", :method => "Test method")
-       a.each do |a|
-         a.user = @user
-         a.is_public = true
-         a.save
+     a = @paper.assertions.build(:text => "Test", :method => "Test test")
+     a.is_public = true
+     a.user = @user
+     a.save
+     @paper.figs.each do |f|
+       a = f.assertions.build(:text => "Test", :method => "Test test")
+       a.is_public = true
+       a.user = @user
+       a.save
+       f.figsections.each do |s|
+          a = s.assertions.build(:text => "Test", :method => "Test test")
+          a.is_public = true
+          a.user = @user2
+          a.save
        end
      end
 

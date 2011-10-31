@@ -98,7 +98,8 @@ describe "Assertions" do
           a.save
        end
      end
-
+     end
+  
     it "works for a paper" do
       visit '/papers/' + @paper.id.to_s
       click_button "Summarize for your class"

@@ -135,7 +135,7 @@ end
 
     respond_to do |format|
        format.js
-#      format.html { redirect_to(@paper) }
+       format.html { redirect_to(@paper) }
 #      format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
     end
   end

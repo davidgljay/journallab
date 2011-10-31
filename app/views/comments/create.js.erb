@@ -34,5 +34,10 @@ $(document).ready(function(){
       return false;
     });
 
+   $('<%= @owner.jquery_target %>').find("form.new_question").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
 
 });

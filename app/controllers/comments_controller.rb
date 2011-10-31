@@ -38,8 +38,8 @@ before_filter :authenticate
     respond_to do |format|
       if @comment.save
          format.js
-#        flash[:success] = 'Comment added, excellent point.'
-#        format.html { redirect_to url }
+        flash[:success] = 'Comment added, excellent point.'
+        format.html { redirect_to url }
 #        format.xml  { render :xml => @comment, :status => :created, :location => @comment }
 #      else
 #        flash[:error] = "Please enter a comment."

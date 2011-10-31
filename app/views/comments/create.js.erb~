@@ -10,26 +10,31 @@ jQuery.ajaxSetup({
 $(document).ready(function(){
 
 //Reply box expansion
-  $("nav li.replylink").click(function(){
+  $('<%= @owner.jquery_target %>').find("nav li.replylink").click(function(){
     $("div.answerform").hide("slow");
     $(this).parent().parent().parent().find("div.replyform").slideToggle();
   });
 
 //Answer box expansion
-  $("nav li.answerlink").click(function(){
+  $('<%= @owner.jquery_target %>').find("nav li.answerlink").click(function(){
     $("div.replyform").hide("slow");
     $(this).parent().parent().parent().find("div.answerform").slideToggle();
   });
 
 // Vote Button
-   $("form#new_vote").submit(function(){
+   $('<%= @owner.jquery_target %>').find("form#new_vote").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
 
 //Comment submit
 
-   $("form.new_comment").submit(function(){
+   $('<%= @owner.jquery_target %>').find("form.new_comment").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+   $('<%= @owner.jquery_target %>').find("form.new_question").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

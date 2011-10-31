@@ -35,13 +35,13 @@ before_filter :authenticate
       end
     end
     @owner = @question.owner
-    @comments = @owner.comments
+    @questions = @owner.questions
     @parent = @owner
 
     respond_to do |format|
       if @question.save
          format.js
-#        format.html { redirect_to url }
+        format.html { redirect_to url }
 #        format.xml  { render :xml => @comment, :status => :created, :location => @question }
 #      else
 #        flash[:error] = "Please enter a comment."

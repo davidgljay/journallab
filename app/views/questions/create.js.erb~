@@ -1,5 +1,5 @@
    $('<%= @owner.jquery_target %>').find('div.questionbox').html('<%= escape_javascript(render '/questions/list') %>');   
-   $('<%= @owner.jquery_target %>').find('form.questionlist:input').val('<%= pluralize(@questions.count, 'Question') %>');  
+//   $('<%= @owner.jquery_target %>').find('form.questionlist').val('<%= pluralize(@questions.count, 'Question') %>');  
 
 jQuery.ajaxSetup({
    'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}

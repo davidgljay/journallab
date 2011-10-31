@@ -69,3 +69,22 @@
       $(this).parent().find('div.upload_form').show();
      });
 
+// Enter Assertion
+
+   $('<%= @owner.jquery_target %>').find("form.new_assertion").submit(function(){
+     $.post($(this).attr("action"), $(this).serialize(), null, "script");  
+      return false;
+    });
+
+// Vote Button
+   $('<%= @owner.jquery_target %>').find("form#new_vote").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+// Forms to submit through jQuery
+   $('<%= @owner.jquery_target %>').find("form.commentlist, form.questionlist").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+

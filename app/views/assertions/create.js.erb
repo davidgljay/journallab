@@ -53,11 +53,19 @@
     $(this).parent().next().find("img.fullfig").slideToggle();
     });
 
+//Styling
+
    $('<%= @owner.jquery_target %>').find('form.new_assertion').find(':input').click(function(){
      if( $(this).val().substring(0,27) == "What is the core conclusion" || $(this).val() == "What principal methods are used?" || $(this).val() == "What are alternate approaches?")
         $(this).val('');
      end
      });
+
+  $('<%= @owner.jquery_target %>').find("div.fig_numselect, div.figsection_numselect").hover(function(){
+      $(this).css('background', '#fff')},
+      function(){
+      $(this).css('background', 'none')
+    });
 
 //Select # of figures and figsections expansion
     $('<%= @owner.jquery_target %>').find("div.add_figs_and_sections h3").click(function(){
@@ -75,3 +83,17 @@
      $.post($(this).attr("action"), $(this).serialize(), null, "script");  
       return false;
     });
+
+// Vote Button
+   $('<%= @owner.jquery_target %>').find("form#new_vote").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+// Forms to submit through jQuery
+   $('<%= @owner.jquery_target %>').find("form.commentlist, form.questionlist").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+

@@ -100,9 +100,9 @@ $(document).ready(function(){
 //
 
 //Load Summary Form
-//  $("form.enter_assertion").mouseover(function(){
+  $("form.enter_assertion").mouseover(function(){
 //Redundant code b/c testing can't do mouseover
-  $("form.enter_assertion").click(function(){
+//  $("form.enter_assertion").click(function(){
       $(this).hide();
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;

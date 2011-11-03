@@ -4,7 +4,6 @@ describe "Questions:" do
 
    before(:each) do
      @user = Factory(:user)
-     @paper = Factory(:paper)
      @paper.buildout([3,3,2,1])
      @user2 = Factory(:user, :email => Factory.next(:email))  
      a = @paper.assertions.build(:text => "Test", :method => "Test test")
@@ -73,7 +72,7 @@ describe "Questions:" do
      end
 
      it "adds a Question to a figure section and lets you reply", :js => true do
-       find('td.figtoggle').click
+       find('div.figtoggle').click
        find('#figsection1').click_button "Add a Question"
        fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 

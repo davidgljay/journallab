@@ -4,18 +4,10 @@
       <td width="1px"></td>
     <td class  = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "paper" && h[1] == about.id}[0][3].to_s %> round core assertion">
       Core Conclusion:
-      <%= render '/papers/add_figs_and_sections', :about => about unless about.figs.count > 0%>
     </td>
     <% elsif about.class == Fig %>
-        <% unless about.figsections.count == 0 %>
-          <td class = "figtoggle">
-           + 
-          </td>
-         <% else %>
            <td width="20px">
            </td>
-        <% end %>
-      
            <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "fig" && h[1] == about.id}[0][3].to_s %> round fig assertion" >
            Fig <%= about.num.to_s %>:
              <% if about.image.nil? %>
@@ -25,7 +17,13 @@
              <% else %>
                <%= image_tag about.image.thumb('80x80>').url, :class => 'thumbnail clickme'%>
              <% end %>
-           <%= render '/papers/add_figs_and_sections', :about => about unless about.figsections.count > 0%>
+             <% if about.figsections.empty? %> 
+              <%= render '/papers/add_sections', :about => about %>
+             <% else %>
+              <div class = "figtoggle">
+             <%= about.nosections ? nil:'Sections A-'+ about.figsections.first.letter(about.figsections.count) %>
+             </div>
+             <% end %>
            </td>
       <% elsif about.class == Figsection %>
        <td width = "40px"></td>
@@ -46,10 +44,16 @@
        <% end %>
        <nav>
        <ul>
-         <li class="improvelink">Improve</li>
+         <li class="improvelink">
+            <%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
+               <%= hidden_field_tag :owner, about.class.to_s %>
+               <%= hidden_field_tag :id, about.id %>
+               <%= submit_tag("Improve Summary") %>
+             <% end %>
+         </li>
          <li class="commentlink">  
              <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
-               <%= hidden_field_tag :parent, about.class.to_s %>
+               <%= hidden_field_tag :owner, about.class.to_s %>
                <%= hidden_field_tag :id, about.id %>
                <% if about.comments.count > 0 %>
                  <%= submit_tag(pluralize(about.comments.count, "Comment")) %>
@@ -60,7 +64,7 @@
           </li>
            <li class="questionlink">
              <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
-               <%= hidden_field_tag :parent, about.class.to_s %>
+               <%= hidden_field_tag :owner, about.class.to_s %>
                <%= hidden_field_tag :id, about.id %>
                <% if about.questions.count > 0 %>
                  <%= submit_tag(pluralize(about.questions.count, "Question")) %>
@@ -72,8 +76,6 @@
         </ul>
         </nav>
         <div class="improve">
-           <%= render 'assertions/form', :assert => about.assertions.build, :type => about.class.to_s.downcase, :id => about %>
-           <%= render 'assertions/list', :history => about.assertions.all %>
          </div>
          <div class = "commentbox", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
@@ -84,7 +86,7 @@
       <% if @group.category == 'class' %>
         <% button = 'Summarize for your class' %>
       <% else %>
-        <% button = 'Summarize for your class' %>
+        <% button = 'Summarize for your lab' %>
       <% end %>
      <%= form_tag('/assertions/new', :method => "post", :remote => true, :class => 'enter_assertion')  do  %>
        <%= hidden_field_tag :about, about.class.to_s %>

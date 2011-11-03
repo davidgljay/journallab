@@ -43,4 +43,4 @@
   <%= render 'questions/answers', :question => question %>
 <% end %>   
 </table>
-<%= render 'questions/form', :question => @owner.questions.build, :owner => @owner, :reply_to => false, :format => 'question' %>
+<%= render 'questions/form', :question => @parent.questions.build, :owner => @parent, :reply_to => false, :format => 'question' %>

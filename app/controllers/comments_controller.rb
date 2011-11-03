@@ -4,9 +4,9 @@ before_filter :authenticate
 
  #Used to render a list in the papers view.
   def list
-    @parent = params[:parent].constantize.find(params[:id])
-    @comments = @parent.comments.all
-    @parent_type = params[:parent]
+    @owner = params[:owner].constantize.find(params[:id])
+    @comments = @owner.comments.all
+    @owner_type = params[:owner]
     respond_to do |format|
         format.js 
      end
@@ -31,14 +31,15 @@ before_filter :authenticate
     elsif @comment.fig = assertion.fig
     elsif @comment.figsection = assertion.figsection
     end
+    @comment.save
     @owner = @comment.owner
+    @heatmap = @owner.get_paper.heatmap
     @comments = @owner.comments
-    @parent = @owner
 
     respond_to do |format|
       if @comment.save
          format.js
-        flash[:success] = 'Comment added, excellent point.'
+#        flash[:success] = 'Comment added, excellent point.'
         format.html { redirect_to url }
 #        format.xml  { render :xml => @comment, :status => :created, :location => @comment }
 #      else

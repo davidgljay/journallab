@@ -5,12 +5,24 @@
 <% end %>
 <% end %>
 <p><h3><%= @paper.title %></h3></p>
-<p>Journal: <%= @paper.journal %>, <%= @paper.pubdate.year unless @paper.pubdate == nil %>
-| 
-Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + @paper.pubmed_id.to_s %>
+<table>
+  <tr>
+   <td class="paperinfo">
+   <p>Journal: <%= @paper.journal %>, <%= @paper.pubdate.year unless @paper.pubdate == nil %>
+   | 
+   Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + @paper.pubmed_id.to_s %>
 
-<br>
-<%= render '/authors/author_list', :paper => @paper %>
+  <br>
+  <%= render '/authors/author_list', :paper => @paper %>
+  </td>
+  <td class = "visits">
+  <strong><%= pluralize(@paper.visits.count,"People")%></strong>
+  <br>
+  <span class="tinytext">have viewed this paper.</span>
+  </td>
+ </tr>
+</table>
+
 
 <% unless @paper.abstract.nil? %>
 <div id='abstract' class = "clickme">
@@ -29,8 +41,11 @@ Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' +
 <%= render 'filters/class_options' %>
 
 <p>
-<%= render 'summary' %>
-
+<% if @paper.figs.empty? %>
+  <%= render '/papers/add_figs', :about => @paper unless @paper.figs.count > 0%>
+<% else %>
+  <%= render 'summary' %>
+<% end %>
 </p>
 
 

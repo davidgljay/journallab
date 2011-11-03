@@ -73,7 +73,7 @@ describe "Questions:" do
      end
 
      it "adds a Question to a figure section and lets you reply", :js => true do
-       find('td.figtoggle').click
+       find('div.figtoggle').click
        find('#figsection1').click_button "Add a Question"
        fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 

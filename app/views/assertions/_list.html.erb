@@ -1,5 +1,5 @@
-
-<% history.each do |assertion| %>
+<%= render 'assertions/form', :assert => @owner.assertions.build, :type => @owner.class.to_s.downcase, :id => @owner %>
+<% @assertions.each do |assertion| %>
 <% if @group.let_through_filter?(assertion, current_user) %>
 <div class="improvelist">
       <%= assertion.text %> 

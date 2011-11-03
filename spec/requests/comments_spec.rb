@@ -55,7 +55,7 @@ describe "Comments:" do
      end
 
      it "adds a comment to a figure section and lets you reply", :js => true do
-       find('td.figtoggle').click
+       find('div.figtoggle').click
        find('#figsection1').click_button "Add a Comment"
        fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 

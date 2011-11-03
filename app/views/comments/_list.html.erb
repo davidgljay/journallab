@@ -25,4 +25,4 @@
     <%= render 'comments/replies', :comment => comment %>
 <% end %>   
 </table>
-<%= render 'comments/form', :owner => @parent, :comment => @parent.comments.build,  :reply_to => false, :format => 'comment' %>
+<%= render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment' %>

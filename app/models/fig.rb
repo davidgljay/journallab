@@ -17,9 +17,13 @@ def latest_assertion
 end
 
 def build_figsections(numsections)
-   newsections = numsections.to_i - self.figsections.count
-   newsections.times do |i|
-     self.figsections.create(:num => (self.figsections.count+1))
+   if numsections == 0
+     nosections = true
+   else
+     newsections = numsections.to_i - self.figsections.count
+     newsections.times do |i|
+      self.figsections.create(:num => (self.figsections.count+1))
+     end
    end
 end
 
@@ -31,6 +35,9 @@ def heat
    end
    questions.each do |q|
      heat += q.questions.count
+   end
+   figsections.each do |f|
+     heat += f.heat
    end
    heat
 end

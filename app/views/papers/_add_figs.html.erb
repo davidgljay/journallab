@@ -1,0 +1,17 @@
+<div class = 'bigbox round'>
+    <% if @paper.visits.count == 1 %>
+       <h5>You're the first to view this paper on J.Lab, help out by summarizing it for the research community.</h5>
+    <% else %>
+       <h3> <%= @paper.visits.count.to_s %> people have checked out this paper on J.Lab.</h3>
+       <h5><em>Help them out! Create a summary of this paper for the research community.</em></h5>  
+    <% end %>
+  <div class = "subbox round">
+    <h4>How many figures are in this paper?</h4>
+    <% 20.times do |i| %>
+    <div class = "fig_numselect round">
+      <%= link_to (i+1).to_s, '/papers/' + about.id.to_s + '/build_figs/' + (i+1).to_s %>
+    </div>
+        <% end %>
+  </div>
+</div>
+

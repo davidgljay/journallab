@@ -26,6 +26,10 @@ display: none;
    width:90%;
 }
 
+.tinytext {
+  font-size: 80%;
+}
+
 .drop-shadow:before,
 .drop-shadow:after {
    content:"";
@@ -90,6 +94,32 @@ section h1 {
 style {
 display: inline;
 }
+
+.bigbox {
+  font-size: 120%;
+  text-align: center;
+  padding: 20px;
+  margin: 20px;
+  clear: both;
+  display: block;
+  background: #22bbcc;
+}
+
+.subbox {
+  padding: 20px;
+  margin: 20px;
+  clear: both;
+  display: block;
+  background:  #bbdddd;
+}
+
+.boxsubmessage {
+  font-size: 20px;
+  color: #223322;
+  font-style: italic;
+  font-weight: 1em;
+} 
+
 
 /* Links */
 
@@ -225,6 +255,23 @@ div.sr_info {
   color: #595959;
 }
   
+
+/* Paper info */
+
+.paperinfo {
+  float:left;
+  border-top: solid;
+  border-bottom: solid;
+  border-width: 1px;
+  width: 800px;
+}
+
+.visits{
+  float:right;
+  width: 100px;
+  background: #bbdddd;
+  text-align: right;
+}
 
 /* Heat Map */
 
@@ -401,9 +448,9 @@ padding: 10px;
 /* Build figs and sections */
 
 div.add_figs_and_sections {
-   color: #000;
+   color: #fff;
    text-align: right;
-   font-size: 18px;
+   font-size: 14px;
    cursor: pointer; 
 }
 
@@ -413,11 +460,12 @@ div.numselect {
    cursor: auto;   
 }
 
+
 div.fig_numselect {
    display: inline;
-   font-size: 16px;
+   font-size: 24px;
    padding: 2px;
-   text-align: center;
+   margin:3px;
 }
 
 div.figsection_numselect {
@@ -429,11 +477,10 @@ div.figsection_numselect {
 
 /* Fig section toggle */
 
-td.figtoggle {
-  width: 20px;
-  font-weight: bold;
-  font-size: 200%;
+div.figtoggle {
+  font-size: 14px;
   cursor: pointer;
+  float: right;
 }
 
 
@@ -487,7 +534,8 @@ div.improvelist div.user_info {
 table.comment {
    background: #fff;
    border: 1px;
-   padding: 0px;
+   padding: 10px;
+   margin-bottom: 0px;
 }
 
 table.comment td {

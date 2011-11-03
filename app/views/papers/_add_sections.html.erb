@@ -1,17 +1,7 @@
 <div class = "add_figs_and_sections"> 
-  <h3>+</h3>
+  Sections A-?
   <div class = "numselect hideonload">
-    <% if about.class == Paper %>
-    <p>How many figures are in this paper?</p>
-    <% 15.times do |i| %>
-    <div class = "fig_numselect round">
-      <%= link_to (i+1).to_s, '/papers/' + about.id.to_s + '/build_figs/' + (i+1).to_s %>
-    </div>
-      <% if [4,9].include?(i) %>
-       </br>
-      <% end %> 
-    <% end %>  
-    <% end %>
+
 
     <% if about.class == Fig %>
     This figure has:</br>

@@ -2,9 +2,9 @@ class QuestionsController < ApplicationController
 before_filter :authenticate
 
   def list
-    @parent = params[:parent].constantize.find(params[:id])
-    @questions = @parent.questions.all
-    @parent_type = params[:parent]
+    @owner = params[:owner].constantize.find(params[:id])
+    @questions = @owner.questions.all
+    @owner_type = params[:owner]
     respond_to do |format|
         format.js
      end
@@ -34,9 +34,10 @@ before_filter :authenticate
       elsif @question.figsection = assertion.figsection
       end
     end
+    @question.save
     @owner = @question.owner
     @questions = @owner.questions
-    @parent = @owner
+    @heatmap = @owner.get_paper.heatmap
 
     respond_to do |format|
       if @question.save

@@ -2,27 +2,18 @@ class AssertionsController < ApplicationController
 before_filter :authenticate
 before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
 
-
-  # GET /assertions
-  # GET /assertions.xml
-  def index
-    @assertions = Assertion.all
-
+  def list
+    @owner = params[:owner].constantize.find(params[:id])
+    @assertions = @owner.assertions.all
+    @owner_type = params[:owner]
+    if signed_in? && !current_user.groups.empty? 
+      @group = current_user.groups.last
+    else
+      @group = Group.new
+    end 
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @assertions }
-    end
-  end
-
-  # GET /assertions/1
-  # GET /assertions/1.xml
-  def show
-    @assertion = Assertion.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @assertion }
-    end
+        format.js 
+     end
   end
 
   # POST /assertions/new

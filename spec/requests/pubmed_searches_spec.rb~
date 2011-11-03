@@ -18,7 +18,8 @@ describe "Searches:" do
       visit root_path
       fill_in "pubmed_id", :with => "123456"
       click_button "Search"
-      within('body') { page.should have_content('How many figures') }
+      within('body') { page.should have_content('Summary') }
+      within('tr.summary') { page.should have_content('Core Conclusion') }
     end
   end
 

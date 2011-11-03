@@ -1,4 +1,5 @@
 <h3>Summary</h3>
+
 <table>
 <%= render 'assertion', :about => @paper %>
 <% @paper.figs.sort{|x,y| x.num <=> y.num}.each do |fig| %>

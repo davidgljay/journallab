@@ -17,12 +17,12 @@ $(document).ready(function(){
 
 
 //Improve Expansion
-  $("nav li.improvelink").click(function(){
-    $("div.commentbox").hide("slow");
-    $("div.questionbox").hide("slow");
-    $(this).parent().parent().parent().find("form.new_assertion").show();
-    $(this).parent().parent().parent().find("div.improve").slideToggle();
-  });
+//  $("nav li.improvelink").click(function(){
+//    $("div.commentbox").hide("slow");
+//    $("div.questionbox").hide("slow");
+//    $(this).parent().parent().parent().find("form.new_assertion").show();
+ //   $(this).parent().parent().parent().find("div.improve").slideToggle();
+//  });
 
 //Comment Expansion
 //  $("nav li.commentlink").click(function(){
@@ -38,21 +38,13 @@ $(document).ready(function(){
 //    $(this).parent().parent().parent().find("div.questionbox").slideToggle();
 //  });
 
-//Close when you click colored area on the right
-   $("td.sumleft").click(function(){
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $("div.questionbox").hide("slow"); 
-    $("form.new_assertion").hide("slow");
-    $("form.enter_assertion").show("slow");
-    });
 
 //Toggle Figure sections
-   $("td.figtoggle").toggle(function(){
-     $(this).parent().parent().parent().next().show("slow");
+   $("div.figtoggle").toggle(function(){
+     $(this).parent().parent().parent().parent().next().show("slow");
      $("td.figtoggle", this).text("-");
      },function(){
-     $(this).parent().parent().parent().next().hide("slow");
+     $(this).parent().parent().parent().parent().next().hide("slow");
      $("td.figtoggle", this).text("+"); 
     });
 
@@ -85,7 +77,7 @@ $(document).ready(function(){
    });
 
 //Select # of figures and figsections expansion
-    $("div.add_figs_and_sections h3").click(function(){
+    $("div.add_figs_and_sections").click(function(){
       $(this).parent().find('div.numselect').slideToggle();
      });
 
@@ -94,15 +86,24 @@ $(document).ready(function(){
       $(this).parent().find('div.upload_form').show();
      });
 
+//Close when you click colored area on the right
+   $("td.sumleft").click(function(){
+    $("div.improve").hide("slow");
+    $("div.commentbox").hide("slow");
+    $("div.questionbox").hide("slow"); 
+    $("form.new_assertion").hide("slow");
+    $("form.enter_assertion").show("slow");
+    });
+
 
 //
 //Dynamic Loading of Elements
 //
 
 //Load Summary Form
-  $("form.enter_assertion").mouseover(function(){
+//  $("form.enter_assertion").mouseover(function(){
 //Redundant code b/c testing can't do mouseover
-//  $("form.enter_assertion").click(function(){
+  $("form.enter_assertion").click(function(){
       $(this).hide();
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
@@ -116,7 +117,7 @@ $(document).ready(function(){
     });
 
 // Forms to submit through jQuery
-   $("form.commentlist, form.questionlist").submit(function(){
+   $("form.commentlist, form.questionlist, form.improvelist").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
@@ -141,11 +142,6 @@ $(document).ready(function(){
       $(this).css('background', 'none')
     });
 
-   $('form.new_assertion').find(':input').click(function(){
-     if( $(this).val().substring(0,27) == "What is the core conclusion" || $(this).val() == "What principal methods are used?" || $(this).val() == "What are alternate approaches?")
-        $(this).val('');
-     end
-     });
 
 
 });

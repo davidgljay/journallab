@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111027090047) do
+ActiveRecord::Schema.define(:version => 20111103155623) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20111027090047) do
     t.datetime "updated_at"
     t.string   "image_uid"
     t.string   "image_name"
+    t.boolean  "nosections"
   end
 
   add_index "figs", ["paper_id"], :name => "index_figs_on_paper_id"

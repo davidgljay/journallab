@@ -1,7 +1,7 @@
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
-    $('div#questions_<%= @parent_type + '_' + @parent.id.to_s %>').html('<%= escape_javascript(render 'list') %>');
-    $('div#questions_<%= @parent_type + '_' + @parent.id.to_s %>').slideToggle();
+    $('div#questions_<%= @owner_type + '_' + @owner.id.to_s %>').html('<%= escape_javascript(render 'list') %>');
+    $('div#questions_<%= @owner_type + '_' + @owner.id.to_s %>').slideToggle();
 
 jQuery.ajaxSetup({
    'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
@@ -26,5 +26,13 @@ $(document).ready(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
+
+//Question submit
+
+   $("form.new_question").submit(function(){
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
 
 });

@@ -164,7 +164,8 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
-      url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + search.gsub(/[' ']/, "+").gsub(/['.']/, "+")
+      cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
+      url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch
       doc = Nokogiri::XML(open(url))
       pids = doc.xpath("//IdList/Id")
       @search_results = []

@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 
         has_many :assertions
         has_many :comments
+        has_many :questions
         has_many :votes
         has_many :visits, :foreign_key => "user_id",
                           :dependent => :destroy
@@ -67,7 +68,7 @@ class User < ActiveRecord::Base
 
 #Set up an authentication method
    def self.authenticate(email, submitted_password)
-       user = find_by_email(email)
+       user = find_by_email(email.downcase)
        return nil if user.nil?
        return user if user.has_password?(submitted_password)
    end

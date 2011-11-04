@@ -158,7 +158,7 @@ def let_through_filter?(item, user)
            return true
         elsif filter_state(item).nil?
           return false
-        elsif filter_state(item) >= filter_state(item.find_paper)
+        elsif filter_state(item) >= filter_state(item.get_paper)
           return true
         else
           return false
@@ -167,6 +167,17 @@ def let_through_filter?(item, user)
    else 
       return item.is_public
    end
+end
+
+def feed
+   items = []
+   users.each do |u|
+     items << u.visits
+     items << u.assertions
+     items << u.comments
+     items << u.questions
+   end
+   items.flatten!.sort!{|x,y| x.created_at <=> y.created_at}
 end
 
 end

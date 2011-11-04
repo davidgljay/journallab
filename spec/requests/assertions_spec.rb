@@ -80,7 +80,8 @@ describe "Assertions" do
 
   describe "improving an assertion" do
      before(:each) do 
-     @user2 = Factory(:user, :email => Factory.next(:email))  
+     @user2 = Factory(:user, :email => Factory.next(:email))
+     @user2.save  
      a = @paper.assertions.build(:text => "Test", :method => "Test test")
      a.is_public = true
      a.user = @user

@@ -37,6 +37,7 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
    firstnames.length.times do |i|
      u = User.new({:firstname => firstnames[i], :lastname => params['lastnames'][i], :email => params['emails'][i]})
       password = (u.colors[rand(current_user.colors.length - 1)] + u.colors[rand(current_user.colors.length - 1)] + rand(100).to_s).gsub(/[ ]/, '_')
+      u.email.downcase!
       u.password = password
       u.password_confirmation = password
       u.generate_anon_name
@@ -56,7 +57,7 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
    @user = User.new(params[:user])
    @user.generate_anon_name
    msg = ""
-   @user.email = @user.email.downcase
+   @user.email.downcase!
    if @user.save
       sign_in @user
       url = root_path

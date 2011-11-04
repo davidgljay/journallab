@@ -169,4 +169,15 @@ def let_through_filter?(item, user)
    end
 end
 
+def feed
+   items = []
+   users.each do |u|
+     items << u.visits
+     items << u.assertions
+     items << u.comments
+     items << u.questions
+   end
+   items.flatten!.sort!{|x,y| y.created_at <=> x.created_at}
+end
+
 end

@@ -56,6 +56,7 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
    @user = User.new(params[:user])
    @user.generate_anon_name
    msg = ""
+   @user.email.downcase!
    if @user.save
       sign_in @user
       url = root_path

@@ -101,11 +101,8 @@ $(document).ready(function(){
 //
 
 //Load Summary Form
-<% if Rails.env.test? %>
-$("form.enter_assertion").click(function(){
-<% else %>
+//$("form.enter_assertion").click(function(){
 $("form.enter_assertion").mouseover(function(){
-<% end %>
       $(this).hide();
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;

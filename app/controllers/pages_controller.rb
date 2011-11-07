@@ -26,7 +26,7 @@ class PagesController < ApplicationController
           elsif item.owner.class == Fig
              ofthe = 'Fig ' + item.owner.num.to_s + ' of '
           elsif item.owner.class == Figsection
-             ofthe = 'Fig ' + item.owner.fig.num.to_s + ', Section ' + item.owner.letter + ' of '
+             ofthe = 'Fig ' + item.owner.fig.num.to_s + ', Section ' + item.owner.letter(item.owner.num) + ' of '
           end
           @feed << [item.user, 'summarized ' + ofthe + 'the paper', item.get_paper, item.text.first(100) + elips]
         elsif item.class == Comment || item.class == Question
@@ -35,7 +35,7 @@ class PagesController < ApplicationController
           elsif item.owner.class == Fig
              ofthe = 'Fig ' + item.owner.num.to_s + ' of '
           elsif item.owner.class == Figsection
-             ofthe = 'Fig ' + item.owner.fig.num.to_s + ', Section ' + item.owner.letter + ' of '
+             ofthe = 'Fig ' + item.owner.fig.num.to_s + ', Section ' + item.owner.letter(item.owner.num) + ' of '
           end
           @feed << [item.user, 'discussed ' + ofthe + 'the paper', item.get_paper, item.text.first(100) + elips]
         end

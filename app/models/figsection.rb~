@@ -14,7 +14,7 @@ def latest_assertion
      assert_list.last
 end
 
-def ownletter
+def letter
     letter(num)
 end
 

@@ -4,7 +4,7 @@ class PagesController < ApplicationController
     if signed_in? && !current_user.groups.empty?
       @group = current_user.groups.last
     else
-      @group = nil
+      @group = Group.new
     end
     @feed = []
     if @group.category == "lab"

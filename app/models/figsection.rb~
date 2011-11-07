@@ -14,6 +14,10 @@ def latest_assertion
      assert_list.last
 end
 
+def ownletter
+    letter(num)
+end
+
 def letter(n)
     array = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     array[n-1]

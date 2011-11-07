@@ -1,0 +1,10 @@
+<% @feed.each do |item| %>
+   <div class = "feeditem">
+    <%= item[0].firstname + ' ' + item[0].lastname.first + '.' %> <%= item[1] %> <%= link_to item[2].title, item[2] %>
+    <% unless item[3].nil? %>
+     <div class = "feedquote">
+       <%= link_to item[3], item[2] %>
+     </div>
+    <% end %>
+    </div>
+<% end %>

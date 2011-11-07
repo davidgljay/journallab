@@ -201,6 +201,7 @@ img#mainlogo {
   margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 20px;
 
 }
 
@@ -231,6 +232,33 @@ form.topsearch input[type = "text"] {
 
 .homepage_search input[type = "submit"] {
 }
+
+/* Feed */
+
+.feed {
+  border: solid;
+  border-width: 3px;
+  border-color: #00ccaa;
+  margin: 20px;
+  margin-top: 60px;
+  padding: 20px;
+}
+
+.feeditem {
+  display: block;
+  font-weight: bold;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: solid;
+  border-width: 1px;
+  border-color: #000;
+}
+
+.feedquote {
+  font-style: italic;
+  font-weight: normal;
+}
+ 
 
 /* Signup/signin */
 
@@ -1016,7 +1044,7 @@ span.anon_name {
 
 /* Menus to hide by default */
 
-#new_assertion, div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
+div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
   display: none;
 }
 

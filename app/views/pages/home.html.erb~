@@ -7,7 +7,7 @@
    <%= submit_tag("Search") %>
 <% end %>
 
-<% if signed_in? && @group.id != nil %>
+<% if signed_in? && Group.id != nil %>
 <div class = "feed round">
   <h3><%= @group.name %></h3>
     <% if @group.category == "class" %>

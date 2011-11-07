@@ -103,10 +103,10 @@ end
    end
 
   # Add a privacy setting if the user is part of a class that's reading this paper.
-    if @group = @paper.get_group(current_user)
+    if @group = current_user.groups.last
       if @group.category == "class" && :save
          @group.make_group(@assertion)
-         @assertion.is_public = true
+         @assertion.is_public = false
       end
     end
 

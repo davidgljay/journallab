@@ -56,8 +56,10 @@ def make_public(item, date = nil, supplementary = false)
     f = find_filter_by_item(item)
     f.state = 1
     f.save
-    item.is_public = true
-    item.save
+  end
+  if item.class != Paper
+      item.is_public = true
+      item.save
   end
 end    
   
@@ -66,10 +68,12 @@ def make_group(item, date = nil, supplementary = false)
     f = find_filter_by_item(item)
     f.state = 2
     f.save
-    unless otherwise_public?(item)
-      item.is_public = false
-      item.save
-    end
+  end
+  unless otherwise_public?(item) 
+      if item.class != Paper
+        item.is_public = false
+        item.save
+      end
   end
 end
 
@@ -81,12 +85,12 @@ def make_private(item, date = nil, supplementary = false)
       f.date = date
     end
     f.save
-    unless otherwise_public?(item) 
+  end
+  unless otherwise_public?(item) 
      if item.class != Paper
       item.is_public = false
       item.save
      end
-    end
   end
 end
 
@@ -164,8 +168,13 @@ def let_through_filter?(item, user)
           return false
         end
       end
-   else 
-      return item.is_public
+   elsif category == "lab"
+# Lab members can see one another's comments and questions. All of their assertions are public. They can also see public discussion. 
+      if item.class == Assertion
+        return item.is_public
+      else 
+        (user.member_of?(self) && filter_state(item) <= 2)
+      end         
    end
 end
 
@@ -177,7 +186,7 @@ def feed
      items << u.comments
      items << u.questions
    end
-   items.flatten!.sort!{|x,y| y.created_at <=> x.created_at}
+   items.flatten!.sort!{|x,y| y.created_at <=> x.created_at}.first(20) unless items.empty?
 end
 
 end

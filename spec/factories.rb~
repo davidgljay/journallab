@@ -41,9 +41,9 @@ Factory.define :summarized_paper do |paper|
 end    
 
 Factory.define :group do |group|
-    group.name  "Test Group"
+    group.name  "Test Class"
     group.desc  "This group is awesome"
-    group.category "lab"
+    group.category "class"
 end
 		
 

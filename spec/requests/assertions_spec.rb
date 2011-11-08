@@ -4,6 +4,8 @@ describe "Assertions" do
    before(:each) do
      @user = Factory(:user)
      @paper = Factory(:paper)
+     @group = Factory(:group)
+     @group.add(@user)
      @paper.buildout([3,3,2,1])
      visit '/signin'
      fill_in "session_email", :with => @user.email

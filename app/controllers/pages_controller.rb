@@ -6,6 +6,7 @@ class PagesController < ApplicationController
     else
       @group = Group.new
     end
+
     @feed = []
     if @group.category == "lab"
       @group.feed.each do |item|
@@ -45,6 +46,7 @@ class PagesController < ApplicationController
     if @group.category == "class"
        @classdates = []
        @general = []
+       @instructors = @group.memberships.all.select{|m| m.lead}.map{|m| m.user}
        @group.filters.all.each do |f|
          if f.paper_id != nil && f.date != nil
            @classdates << [f.paper_id, f.date, f.supplementary]

@@ -175,6 +175,8 @@ def let_through_filter?(item, user)
       else 
         (user.member_of?(self) && filter_state(item) <= 2)
       end         
+   elsif category.nil?
+       return item.is_public
    end
 end
 
@@ -186,7 +188,7 @@ def feed
      items << u.comments
      items << u.questions
    end
-   items.flatten!.sort!{|x,y| y.created_at <=> x.created_at} unless items.empty?
+   items.flatten!.sort!{|x,y| y.created_at <=> x.created_at}.first(20) unless items.empty?
 end
 
 end

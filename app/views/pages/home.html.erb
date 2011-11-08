@@ -11,6 +11,15 @@
 <div class = "feed round">
   <h3><%= @group.name %></h3>
     <% if @group.category == "class" %>
+    <strong>
+     Instructors: 
+     <% @instructors.each do |i| %>
+       <%= i.lastname %>, <%= i.firstname %> 
+       <% unless i == @instructors.last %>
+       | 
+       <% end %>
+     <% end %>
+     </strong>
       <%= render '/groups/class_papers' %>
     <% elsif @group.category == "lab" %>
       <%= render '/groups/feed' %>

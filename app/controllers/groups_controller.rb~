@@ -13,7 +13,7 @@ before_filter :authenticate
          end
 
          # Create a list of instructors
-         @instructors = @group.memberships.all.select{|m| m.lead}.map{|m| m.user}
+         @instructors = @group.memberships.all.select{|m| m.lead}
  
          # Create a list of classdates and sort by date.
          @group.filters.all.each do |f|

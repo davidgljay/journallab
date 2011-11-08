@@ -94,7 +94,7 @@ end
     flash[:error] = "Please enter a conclusion and method."
     save = false
    else
-    # Later I'll have more complex functionality around assertions. For now it'll automatically be public unless the paper is affiliated with a class group.
+
     @assertion.is_public = true
     @assertion.alt_approach = @assertion.alt_approach == 'What are alternate approaches?' ? nil : @assertion.alt_approach
     save = @assertion.save

@@ -175,6 +175,8 @@ def let_through_filter?(item, user)
       else 
         (user.member_of?(self) && filter_state(item) <= 2)
       end         
+   elsif category.nil?
+       return item.is_public
    end
 end
 

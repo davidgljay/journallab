@@ -1,4 +1,6 @@
-
+<script type="text/javascript">
+  mpq.track("Paper viewed",{'id':'<%= @paper.id.to_s %>', 'user':'<%= current_user.anon_name %>'});
+</script>
 <% if signed_in? && Group.exists?(2) %>
 <% if current_user.groups.include?(Group.find(2)) %>
   <%= link_to 'Extract images from Medline', '/grab_images/' + @paper.id.to_s %>

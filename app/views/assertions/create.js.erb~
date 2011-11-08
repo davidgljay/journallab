@@ -5,13 +5,7 @@
    <% end %>
 
 
-//Improve Expansion
-  $('<%= @owner.jquery_target %>').find("nav li.improvelink").click(function(){
-    $("div.commentbox").hide("slow");
-    $("div.questionbox").hide("slow");
-    $(this).parent().parent().parent().find("form.new_assertion").show();
-    $(this).parent().parent().parent().find("div.improve").slideToggle();
-  });
+
 
 //Close when you click colored area on the right
    $('<%= @owner.jquery_target %>').find("td.sumleft").click(function(){
@@ -91,7 +85,7 @@
     });
 
 // Forms to submit through jQuery
-   $('<%= @owner.jquery_target %>').find("form.commentlist, form.questionlist").submit(function(){
+   $('<%= @owner.jquery_target %>').find("form.commentlist, form.questionlist, form.improvelist").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

@@ -11,12 +11,14 @@ $(document).ready(function(){
 
 //Reply box expansion
   $("nav li.replylink").click(function(){
+      mpq.track("Reply box opened");
     $("div.answerform").hide("slow");
     $(this).parent().parent().parent().find("div.replyform").slideToggle();
   });
 
 //Answer box expansion
   $("nav li.answerlink").click(function(){
+    mpq.track("Answer box opened");
     $("div.replyform").hide("slow");
     $(this).parent().parent().parent().find("div.answerform").slideToggle();
   });
@@ -30,6 +32,7 @@ $(document).ready(function(){
 //Comment submit
 
    $("form.new_comment, form.new_question, form.new_assertion").submit(function(){
+      mpq.track("Comment submitted");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

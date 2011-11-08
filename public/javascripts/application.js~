@@ -41,6 +41,7 @@ $(document).ready(function(){
 
 //Toggle Figure sections
    $("div.figtoggle").toggle(function(){
+     mpq.track("Sections expanded");
      $(this).parent().parent().parent().parent().next().show("slow");
      $("td.figtoggle", this).text("-");
      },function(){
@@ -50,6 +51,7 @@ $(document).ready(function(){
 
 //Reply box expansion
   $("div.commentbox nav").click(function(){
+      mpq.track("Reply box opened");
     $("div.answerform").hide("slow");
     $(this).parent().parent().parent().find("div.replyform").slideToggle();
     //$(this).html('It works!');
@@ -57,6 +59,7 @@ $(document).ready(function(){
 
 //Answer box expansion
   $("nav li.answerlink").click(function(){
+      mpq.track("Answer box opened");
     $("div.replyform").hide("slow");
     $(this).parent().parent().parent().find("div.answerform").slideToggle();
   });
@@ -64,6 +67,7 @@ $(document).ready(function(){
 //Image expansion
   
    $("td.fig img").click(function(){
+      mpq.track("Image expanded");
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.questionbox").hide("slow");
@@ -72,12 +76,14 @@ $(document).ready(function(){
 
 //Class options expansion
    $("div#instructor_options").click(function(){
+      mpq.track("Instructor options");
      $(this).hide();
      $('div.class_options').show();
    });
 
 //Select # of figures and figsections expansion
     $("div.add_figs_and_sections").click(function(){
+      mpq.track("Section menu expanded");
       $(this).parent().find('div.numselect').slideToggle();
      });
 
@@ -101,10 +107,11 @@ $(document).ready(function(){
 //
 
 //Load Summary Form
-$("form.enter_assertion").click(function(){
+//$("form.enter_assertion").click(function(){
 
-//$("form.enter_assertion").mouseover(function(){
+$("form.enter_assertion").mouseover(function(){
       $(this).hide();
+      mpq.track("Summary form called");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
@@ -117,16 +124,29 @@ $("form.enter_assertion").click(function(){
     });
 
 // Forms to submit through jQuery
-   $("form.commentlist, form.questionlist, form.improvelist").submit(function(){
+   $("form.commentlist").submit(function(){
+      mpq.track("Comments viewed");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+   $("form.questionlist").submit(function(){
+      mpq.track("Questions viewed");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+   $("form.improvelist").submit(function(){
+      mpq.track("Improve viewed");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
 
 
-
 // Enter Assertion
 
    $("form.new_assertion").submit(function(){
+           mpq.track("Assertion entered");
      $.post($(this).attr("action"), $(this).serialize(), null, "script");  
       return false;
     });

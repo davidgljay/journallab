@@ -23,6 +23,7 @@ $(document).ready(function(){
 
 
    $('<%= escape_javascript(@owner.jquery_target) %>').find("form.new_assertion").submit(function(){
+     mpq.track("Improved summary entered");
      $.post($(this).attr("action"), $(this).serialize(), null, "script");  
       return false;
     });

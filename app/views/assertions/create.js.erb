@@ -85,9 +85,23 @@
     });
 
 // Forms to submit through jQuery
-   $('<%= @owner.jquery_target %>').find("form.commentlist, form.questionlist, form.improvelist").submit(function(){
+   $("form.commentlist").submit(function(){
+      mpq.track("Comments viewed");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
+
+   $("form.questionlist").submit(function(){
+      mpq.track("Questions viewed");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+   $("form.improvelist").submit(function(){
+      mpq.track("Improve viewed");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
 
 

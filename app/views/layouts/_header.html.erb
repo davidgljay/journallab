@@ -33,7 +33,6 @@
 <% if signed_in? %>
 mpq.identify('<%= current_user.id %>');
 mpq.name_tag('<%= current_user.anon_name %>');
-mpq.register('<%= current_user.groups.last.name %>');
 <% end %>
 </script><!-- end Mixpanel -->
 

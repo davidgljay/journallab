@@ -46,6 +46,7 @@ class PagesController < ApplicationController
     if @group.category == "class"
        @classdates = []
        @general = []
+       @papers = @group.papers.all
        @instructors = @group.memberships.all.select{|m| m.lead}.map{|m| m.user}
        @group.filters.all.each do |f|
          if f.paper_id != nil && f.date != nil

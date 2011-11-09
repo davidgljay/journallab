@@ -46,6 +46,7 @@ class PagesController < ApplicationController
     if @group.category == "class"
        @classdates = []
        @general = []
+       @papers = []
        @group.papers.each do |p|
            @papers[p.id] = p
        end

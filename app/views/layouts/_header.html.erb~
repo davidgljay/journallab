@@ -28,12 +28,11 @@
                 <% end %>
                 </div>
             <% end %>
-<% unless Rails.env.test? %>
+<% if Rails.env.production? %>
 <!-- start Mixpanel --><script type="text/javascript">var mpq=[];mpq.push(["init","3cb0b675b6f04afdcfe615a5461c5045"]);(function(){var b,a,e,d,c;b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=(document.location.protocol==="https:"?"https:":"http:")+"//api.mixpanel.com/site_media/js/api/mixpanel.js";a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);e=function(f){return function(){mpq.push([f].concat(Array.prototype.slice.call(arguments,0)))}};d=["init","track","track_links","track_forms","register","register_once","identify","name_tag","set_config"];for(c=0;c<d.length;c++){mpq[d[c]]=e(d[c])}})();
 <% if signed_in? %>
 mpq.identify('<%= current_user.id %>');
-mpq.name_tag('<%= current_user.anon_name %>');
-mpq.register('<%= current_user.groups.last.name %>');
+mpq.name_tag('<%= current_user.name %>');
 <% end %>
 </script><!-- end Mixpanel -->
 
@@ -50,6 +49,13 @@ mpq.register('<%= current_user.groups.last.name %>');
   })();
 
 </script>
+<% else %>
+<!-- start Mixpanel --><script type="text/javascript">var mpq=[];mpq.push(["init","bb8a02eccfc6f2c3fa37cec5876cbc07"]);(function(){var b,a,e,d,c;b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=(document.location.protocol==="https:"?"https:":"http:")+"//api.mixpanel.com/site_media/js/api/mixpanel.js";a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);e=function(f){return function(){mpq.push([f].concat(Array.prototype.slice.call(arguments,0)))}};d=["init","track","track_links","track_forms","register","register_once","identify","name_tag","set_config"];for(c=0;c<d.length;c++){mpq[d[c]]=e(d[c])}})();
+<% if signed_in? %>
+mpq.identify('<%= current_user.id %>');
+mpq.name_tag('<%= current_user.name %>');
+<% end %>
+</script><!-- end Mixpanel -->
 <% end %>
 
 

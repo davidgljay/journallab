@@ -38,8 +38,8 @@ def linktext
             p.extract_authors
         end
         linktext << p
-      elsif phrase.split(':')[0].to_i.to_s == phrase.split(':')[0]
-        phr = phrase.split(':')
+      elsif phrase.split(/[;:,.]/)[0].to_i.to_s == phrase.split(/[;:,.]/)[0]
+        phr = phrase.split(/[;:,.]/)
         if p = Paper.find_by_pubmed_id(phr[0])
         elsif p = Paper.create( :pubmed_id => phr[0].to_i )
             p.lookup_info

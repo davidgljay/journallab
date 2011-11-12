@@ -7,13 +7,17 @@ describe "Assertions" do
      @group = Factory(:group)
      @group.add(@user)
      @paper.buildout([3,3,2,1])
-     visit '/signin'
-     fill_in "session_email", :with => @user.email
-     fill_in "session_password", :with => @user.password
-     click_button "Sign in"
    end
 
-  describe "inputting a core assertion for the paper" do
+  describe "inputting a core assertion" do
+     before(:each) do
+       visit '/signin'
+       fill_in "session_email", :with => @user.email
+       fill_in "session_password", :with => @user.password
+       click_button "Sign in"
+     end
+
+  describe "for the paper" do
     it "adds an assertion to the paper", :js => true do
       visit '/papers/' + @paper.id.to_s
       click_button "Summarize for your lab"
@@ -36,7 +40,7 @@ describe "Assertions" do
 
   end
      
-  describe "inputting a core assertion for the figure" do
+  describe "for the figure" do
     it "adds an assertion to the figure", :js => true do
       visit '/papers/' + @paper.id.to_s
       find('#fig1').click_button "Summarize for your lab"
@@ -57,7 +61,7 @@ describe "Assertions" do
 
   end 
  
-  describe "inputting a core assertion for the section" do
+  describe "for the section" do
     it "adds an assertion to the section", :js => true do
       visit '/papers/' + @paper.id.to_s
       find('div.figtoggle').click
@@ -79,6 +83,7 @@ describe "Assertions" do
     end
 
   end 
+  end
 
   describe "improving an assertion" do
      before(:each) do 
@@ -99,24 +104,28 @@ describe "Assertions" do
           a.user = @user2
           a.save
        end
-     end      
+      end
+      visit '/signin'
+      fill_in "session_email", :with => @user.email
+      fill_in "session_password", :with => @user.password
+      click_button "Sign in"      
      end
   
-    it "works for a paper" do
+    it "works for a paper", :js => true do
       visit '/papers/' + @paper.id.to_s
-      click_button "Summarize for your lab"
+      click_button "Improve Summary"
       find('tr#paper').find('#new_assertion').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
       find('tr#paper').find('#new_assertion').fill_in 'assertion_method', :with => "Aloe juice"
       find('tr#paper').find('#new_assertion').click_button "Submit"
      # within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
       within('tr#paper') { page.should have_content('Lorem ipsum cupcakes.') }
-      within('tr#paper') { page.should have_content('Test') }
+      within('tr#paper') { page.should have_content('Aloe juice') }
       #within('li.improvelink') { page.should have_content('Improve') }
     end
 
-    it "works for a figure" do
+    it "works for a figure", :js => true do
       visit '/papers/' + @paper.id.to_s
-      find('tr#fig1').click_button "Summarize for your lab"
+      find('tr#fig1').click_button "Improve Summary"
       find('tr#fig1').find('#new_assertion').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
       find('tr#fig1').find('#new_assertion').fill_in 'assertion_method', :with => "Aloe juice"
       find('tr#fig1').find('#new_assertion').click_button "Submit"
@@ -126,10 +135,10 @@ describe "Assertions" do
     end
 
 
-    it "works for a figsection" do
+    it "works for a figsection", :js => true do
       visit '/papers/' + @paper.id.to_s
       find('div.figtoggle').click
-      find('tr#figsection1').click_button "Summarize for your lab"
+      find('tr#figsection1').click_button "Improve Summary"
       find('tr#figsection1').find('#new_assertion').fill_in 'assertion_text', :with => "Lorem ipsum cupcakes."
       find('tr#figsection1').find('#new_assertion').fill_in 'assertion_method', :with => "Aloe juice"
       find('tr#figsection1').find('#new_assertion').click_button "Submit"

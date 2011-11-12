@@ -38,8 +38,8 @@ def linktext
             p.extract_authors
         end
         linktext << p
-      elsif phrase.split(':')[0].to_i.to_s == phrase.split(':')[0]
-        phr = phrase.split(':')
+      elsif (phrase.split(/[;:,.]/)[0].to_i.to_s == phrase.split(/[;:,.]/)[0])  
+        phr = phrase.split(/[;:,.]/)
         if p = Paper.find_by_pubmed_id(phr[0])
         elsif p = Paper.create( :pubmed_id => phr[0].to_i )
             p.lookup_info
@@ -50,6 +50,9 @@ def linktext
            f = p.figs[(phr[1].to_i - 1)]
         elsif phr.length == 3
            p.build_figs(phr[1].to_i)
+           if phr[2].length == 1 && (phr[2] =~ /[a-zA-Z]/) == 0
+              phr[2] = Figsection.new.number(phr[2])
+           end
            p.figs[(phr[1].to_i - 1)].build_figsections(phr[2].to_i)
            f = p.figs[(phr[1].to_i - 1)].figsections[(phr[2].to_i - 1)]
         end

@@ -246,7 +246,6 @@ form.topsearch input[type = "text"] {
 
 .feeditem {
   display: block;
-  font-weight: bold;
   padding: 10px;
   margin-bottom: 5px;
   border: solid;
@@ -388,7 +387,7 @@ td.sumright {
 
 form.enter_assertion input[type = "submit"] {
 	font-size: 1.1em;
-        color: #000;
+        color: #196;
 	background: none;
 	margin: 0;
 	padding: 0;

@@ -15,9 +15,14 @@ def latest_assertion
 end
 
 def letter(n)
-    array = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-    array[n-1]
+    letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+    letters[n-1]
 end
+
+def number(n)
+    letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+    letters.index(n.upcase)+1
+end     
 
 def heat
    heat = comments.count

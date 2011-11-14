@@ -31,12 +31,14 @@ before_filter :authenticate
     elsif @comment.fig = assertion.fig
     elsif @comment.figsection = assertion.figsection
     end
+    @comment.save
     @owner = @comment.owner
     @heatmap = @owner.get_paper.heatmap
+    @comments = @owner.comments
+    @comment.user.groups.last.make_group(@comment)
 
     respond_to do |format|
       if @comment.save
-         @comments = @owner.comments
          format.js
 #        flash[:success] = 'Comment added, excellent point.'
         format.html { redirect_to url }

@@ -35,6 +35,11 @@ before_filter :authenticate
     @owner = @comment.owner
     @heatmap = @owner.get_paper.heatmap
     @comments = @owner.comments
+    if @comment.user.groups.empty?
+       @comment.is_public = true
+    else
+       @comment.user.groups.last.make_group(@comment)
+    end
 
     respond_to do |format|
       if @comment.save

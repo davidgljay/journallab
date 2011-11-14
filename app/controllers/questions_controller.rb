@@ -38,6 +38,7 @@ before_filter :authenticate
     @owner = @question.owner
     @questions = @owner.questions
     @heatmap = @owner.get_paper.heatmap
+    @question.user.groups.last.make_group(@question)
 
     respond_to do |format|
       if @question.save

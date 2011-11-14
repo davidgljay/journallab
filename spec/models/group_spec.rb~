@@ -53,6 +53,30 @@ describe Group do
        @class.let_through_filter?(@assertion, @student2).should be_true
    end
   end
+
+   describe "comments" do
+     before(:each) do
+       @paper = Factory(:paper)
+       @paper.buildout([3,3,2,1])
+       @class.make_private(@paper)
+       @assertion = @paper.assertions.build(:text => 'So smart!', :method => 'Big brains')
+       @assertion.user = @student1
+       @assertion.save
+       @class.make_group(@assertion)
+       @comment = @assertion.comments.build(:text => 'Big big brains!', :form => 'comment')
+       @comment.paper = @paper
+       @comment.user = @student1
+       @comment.save
+       @class.make_group(@comment) 
+     end
+    it "should be visible to someone from the class" do
+        @class.let_through_filter?(@comment, @student1).should be_true
+        @class.let_through_filter?(@comment, @student2).should be_true
+    end
+
+    it "should not be visible to someone outside of the class" do
+       @class.let_through_filter?(@comment, @outsider).should be_false
+    end 
  end
 
  describe "A lab" do

@@ -17,11 +17,12 @@
     });
 
 //Toggle Figure sections
-   $('<%= @owner.jquery_target %>').find("td.figtoggle").toggle(function(){
-     $(this).parent().parent().parent().next().show("slow");
+   $('<%= @owner.jquery_target %>').find("div.figtoggle").toggle(function(){
+     mpq.track("Sections expanded");
+     $(this).parent().parent().parent().parent().next().show("slow");
      $("td.figtoggle", this).text("-");
      },function(){
-     $(this).parent().parent().parent().next().hide("slow");
+     $(this).parent().parent().parent().parent().next().hide("slow");
      $("td.figtoggle", this).text("+"); 
     });
 
@@ -85,9 +86,23 @@
     });
 
 // Forms to submit through jQuery
-   $('<%= @owner.jquery_target %>').find("form.commentlist, form.questionlist, form.improvelist").submit(function(){
+   $("form.commentlist").submit(function(){
+      mpq.track("Comments viewed");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
+
+   $("form.questionlist").submit(function(){
+      mpq.track("Questions viewed");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+   $("form.improvelist").submit(function(){
+      mpq.track("Improve viewed");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
 
 

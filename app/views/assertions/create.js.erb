@@ -17,13 +17,20 @@
     });
 
 //Toggle Figure sections
-   $('<%= @owner.jquery_target %>').find("td.figtoggle").toggle(function(){
-     $(this).parent().parent().parent().next().show("slow");
+   $('<%= @owner.jquery_target %>').find("div.figtoggle").toggle(function(){
+     mpq.track("Sections expanded");
+     $(this).parent().parent().parent().parent().next().show("slow");
      $("td.figtoggle", this).text("-");
      },function(){
-     $(this).parent().parent().parent().next().hide("slow");
+     $(this).parent().parent().parent().parent().next().hide("slow");
      $("td.figtoggle", this).text("+"); 
     });
+
+//Select # of figures and figsections expansion
+    $("div.add_figs_and_sections").click(function(){
+      mpq.track("Section menu expanded");
+      $(this).parent().find('div.numselect').slideToggle();
+     });
 
 //Reply box expansion
   $('<%= @owner.jquery_target %>').find("div.commentbox nav").click(function(){

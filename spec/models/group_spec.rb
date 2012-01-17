@@ -101,12 +101,12 @@ describe Group do
      end
 
      it "should be visible to the people in the lab" do
-       @lab.let_through_filter?(@assertion, @rat1).should be_true
-       @lab.let_through_filter?(@assertion, @rat2).should be_true
+       @lab.let_through_filter?(@assertion, @rat1,2).should be_true
+       @lab.let_through_filter?(@assertion, @rat2,2).should be_true
      end
 
      it "should be visible to people outside of the lab" do
-       @lab.let_through_filter?(@assertion, @outsider).should be_true
+       @lab.let_through_filter?(@assertion, @outsider,2).should be_true
      end
    end
 
@@ -118,18 +118,49 @@ describe Group do
        @assertion.user = @rat1
        @assertion.save
        @lab.make_public(@assertion)
-       @comment = Factory(:comment, :paper => @paper, :assertion => @assertion, :user => @rat1)
-       @lab.make_group(@comment)
+       @labcomment = Factory(:comment, :paper => @paper, :assertion => @assertion, :user => @rat1)
+       @lab.make_group(@labcomment)
+       @publiccomment = Factory(:comment, :paper => @paper, :assertion => @assertion, :user => @rat1)
+       @lab.make_public(@publiccomment)
+       @mode = 2
+     end
+ 
+    describe "in lab view" do
+
+     it "lab comments should be visible to the people in the lab" do
+       @lab.let_through_filter?(@labcomment, @rat1,@mode).should be_true
+       @lab.let_through_filter?(@labcomment, @rat2,@mode).should be_true
+     end
+ 
+     it "public comments should be invisible to the people in the lab" do
+       @lab.let_through_filter?(@publiccomment, @rat1,@mode).should be_false
+       @lab.let_through_filter?(@publiccomment, @rat2,@mode).should be_false
      end
 
-     it "should be visible to the people in the lab" do
-       @lab.let_through_filter?(@comment, @rat1).should be_true
-       @lab.let_through_filter?(@comment, @rat2).should be_true
+     it "lab comments should be invisible to people outside of the lab" do
+       @lab.let_through_filter?(@labcomment, @outsider,@mode).should be_false
+     end
+    end
+ 
+    describe "in public view" do
+
+     before(:each) do
+       @mode = 3
      end
 
-     it "should be invisible to people outside of the lab" do
-       @lab.let_through_filter?(@comment, @outsider).should be_false
+     it "lab comments should be invisible to everyone" do
+       @lab.let_through_filter?(@labcomment, @rat1,@mode).should be_false
+       @lab.let_through_filter?(@labcomment, @rat2,@mode).should be_false
+       @lab.let_through_filter?(@labcomment, @outsider,@mode).should be_false
      end
+
+
+     it "public comments should be visible to everyone" do
+       @lab.let_through_filter?(@publiccomment, @rat1,@mode).should be_true
+       @lab.let_through_filter?(@publiccomment, @rat2,@mode).should be_true
+       @lab.let_through_filter?(@publiccomment, @outsider,@mode).should be_true
+     end
+    end
    end
   end
 end

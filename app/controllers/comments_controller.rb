@@ -5,7 +5,8 @@ before_filter :authenticate
  #Used to render a list in the papers view.
   def list
     @owner = params[:owner].constantize.find(params[:id])
-    @comments = @owner.comments.all
+    @group = current_user.groups.last
+    @comments = @owner.comments.all.select{|c| @group.let_through_filter?(c,current_user,2)}
     @owner_type = params[:owner]
     respond_to do |format|
         format.js 
@@ -33,14 +34,14 @@ before_filter :authenticate
     end
     @comment.save
     @owner = @comment.owner
+    @group = current_user.groups.last
     @heatmap = @owner.get_paper.heatmap
-    @comments = @owner.comments.all
     if @comment.user.groups.empty?
        @comment.is_public = true
     else
        @comment.user.groups.last.make_group(@comment)
     end
-
+    @comments = @owner.comments.all.select{|c| @group.let_through_filter?(c,current_user,2)}
     respond_to do |format|
       if @comment.save
          format.js

@@ -123,10 +123,12 @@ end
 # Functions for finding info about filters
 
 def filter_state(item)
-  unless find_filter_by_item(item).nil? 
+  if !find_filter_by_item(item).nil? 
     find_filter_by_item(item).state
-  else
+  elsif item.is_public?
     3
+    1
+  else
   end
 end
 
@@ -152,7 +154,7 @@ end
 
 # Filtering Functions
 
-def let_through_filter?(item, user)
+def let_through_filter?(item, user, mode)
 # Classes can see everyone's comments, but only their own assertions until the instructor flips a switch.
    if self.category == "class"
       if item.class == Assertion
@@ -175,7 +177,7 @@ def let_through_filter?(item, user)
       if item.class == Assertion
         return item.is_public
       else 
-        (user.member_of?(self) && filter_state(item) <= 2)
+        (user.member_of?(self) && filter_state(item) == mode)
       end         
    elsif category.nil?
        return item.is_public

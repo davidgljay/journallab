@@ -1,6 +1,6 @@
    $('<%= @owner.jquery_target %>').find('div.questionbox').html('<%= escape_javascript(render '/questions/list') %>');   
    $('<%= @owner.jquery_target %>').find('form.questionlist').find('input[type = "submit"]').val('<%= pluralize(@questions.count, 'Question') %>');  
-   $('<%= @owner.jquery_target %>').find('td.sumleft').addClass('<%= escape_javascript("heat" + @heatmap.select{|h| h[0] == @owner.class.to_s.downcase && h[1] == @owner.id}[0][3].to_s) %>');
+  $('<%= @owner.jquery_target %>').find('td.sumleft').css("background","rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == @owner.class.to_s.downcase && h[1] == @owner.id}[0][3]/100).to_s + ",") * 2 %>181)");
 
 
 jQuery.ajaxSetup({

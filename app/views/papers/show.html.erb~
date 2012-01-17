@@ -30,7 +30,7 @@
 
 <% unless @paper.abstract.nil? %>
 <div id='abstract' class = "clickme">
-  <b>Abstract</b>
+  <b>Abstract</b><%= image_tag 'magnifying_glass.jpg', :class => 'expand_image' %>
   <p id='abstract_short'><%= @paper.short_abstract %></p>
   <p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 </div>
@@ -51,6 +51,3 @@
   <%= render 'summary' %>
 <% end %>
 </p>
-
-
-<%= link_to 'Back', papers_path %>

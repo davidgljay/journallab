@@ -186,11 +186,8 @@ def feed
    items = []
    users.each do |u|
      items << u.visits
-     items << u.assertions
-     items << u.comments
-     items << u.questions
    end
-   items.flatten!.sort!{|x,y| y.created_at <=> x.created_at}.first(20) unless items.empty?
+   items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(10) unless items.empty?
 end
 
 end

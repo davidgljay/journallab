@@ -30,7 +30,7 @@
 
 <% unless @paper.abstract.nil? %>
 <div id='abstract' class = "clickme">
-  <b>Abstract</b>
+  <b>Abstract</b><%= image_tag 'magnifying_glass.png', :class => 'expand_image' %>
   <p id='abstract_short'><%= @paper.short_abstract %></p>
   <p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 </div>

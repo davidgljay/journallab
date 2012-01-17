@@ -1,9 +1,11 @@
 <h4>Comments</h4>
+<%= render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment' %>
+
 <table class = "comment discussion">
 <% @comments.each do |comment| %>
   <tr>
     <td <% if comment.comments.count > 0 %> class = "has_reply" <% end %>>
-      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
+      <%= render 'shared/user_info', :user => @comments.first.user, :date => comment.created_at %>
       <div class = "comment_body">
       <%= render 'votes/vote_form', :candidate => comment %>
       <%= render 'linktext', :comment => comment %>
@@ -25,4 +27,4 @@
     <%= render 'comments/replies', :comment => comment %>
 <% end %>   
 </table>
-<%= render 'comments/form', :owner => @parent, :comment => @parent.comments.build,  :reply_to => false, :format => 'comment' %>
+

@@ -10,36 +10,22 @@ class PagesController < ApplicationController
     @feed = []
     if @group.category == "lab"
       @group.feed.each do |item|
- 
-        unless item.class == Visit
-          if item.text.length > 100
-            elips = '...'
+          discussion = item.user.comments.where("created_at > ?", item.updated_at - 1.day) + item.user.questions.where("created_at > ?", item.updated_at - 1.day)
+          discussed = discussion.select{|d| d.created_at > (item.updated_at - 1.day)}.map{|c| c.get_paper}.include?(item.paper)
+          summarized = item.user.assertions.where("created_at > ?", item.updated_at - 1.day).map{|a| a.get_paper}.include?(item.paper) 
+          if discussed and summarized
+            text = 'viewed, discussed and summarized the paper'
+            bold = true
+          elsif discussed
+            text = 'viewed and discussed the paper'
+            bold = true
+          elsif summarized
+            text = 'viewed and summarized the paper'
+            bold
           else
-            elips = ''
+             text = 'viewed the paper'
           end
-        end 
- 
-        if item.class == Visit
-          @feed << [item.user, 'visited the paper', item.paper]
-        elsif item.class == Assertion
-          if item.owner.class == Paper
-             ofthe = ''
-          elsif item.owner.class == Fig
-             ofthe = 'Fig ' + item.owner.num.to_s + ' of '
-          elsif item.owner.class == Figsection
-             ofthe = 'Fig ' + item.owner.fig.num.to_s + ', Section ' + item.owner.letter(item.owner.num) + ' of '
-          end
-          @feed << [item.user, 'summarized ' + ofthe + 'the paper', item.get_paper, item.text.first(100) + elips]
-        elsif item.class == Comment || item.class == Question
-          if item.owner.class == Paper
-             ofthe = ''
-          elsif item.owner.class == Fig
-             ofthe = 'Fig ' + item.owner.num.to_s + ' of '
-          elsif item.owner.class == Figsection
-             ofthe = 'Fig ' + item.owner.fig.num.to_s + ', Section ' + item.owner.letter(item.owner.num) + ' of '
-          end
-          @feed << [item.user, 'discussed ' + ofthe + 'the paper', item.get_paper, item.text.first(100) + elips]
-        end
+          @feed << [item.user, text, item.paper, item.updated_at, bold]
       end
     end
     # If it's a class

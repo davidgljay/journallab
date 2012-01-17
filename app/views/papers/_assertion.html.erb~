@@ -2,32 +2,35 @@
     <tr class = "summary" id = <%= about.class.to_s.downcase + about.num.to_s %> >
     <% if about.class == Paper %>
       <td width="1px"></td>
-    <td class  = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "paper" && h[1] == about.id}[0][3].to_s %> round core assertion">
+    <td class  = "sumleft round core assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == "paper" && h[1] == about.id}[0][3]/100).to_s + ",") * 2 %>181)">
       Core Conclusion:
     </td>
     <% elsif about.class == Fig %>
            <td width="20px">
            </td>
-           <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "fig" && h[1] == about.id}[0][3].to_s %> round fig assertion" >
+           <td class = "sumleft round fig assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == "fig" && h[1] == about.id}[0][3]/100).to_s + ",") * 2 %>181)">
            Fig <%= about.num.to_s %>:
              <% if about.image.nil? %>
                <% if current_user.admin %>
                   <%= render '/figs/image_upload', :fig => about %>
                <% end %>
              <% else %>
-               <%= image_tag about.image.thumb('80x80>').url, :class => 'thumbnail clickme'%>
+               <%= image_tag about.image.thumb('65x80>').url, :class => 'thumbnail clickme'%>
+               <%= image_tag 'magnifying_glass.png', :class=>'expand_image clickme' %>
              <% end %>
              <% if about.figsections.empty? %> 
               <%= render '/papers/add_sections', :about => about %>
              <% else %>
               <div class = "figtoggle">
              <%= about.nosections ? nil:'Sections A-'+ about.figsections.first.letter(about.figsections.count) %>
+             <%= image_tag 'magnifying_glass.png', :class=>'expand_image clickme' %>
+
              </div>
              <% end %>
            </td>
       <% elsif about.class == Figsection %>
        <td width = "40px"></td>
-       <td class = "sumleft <%= "heat" + @heatmap.select{|h| h[0] == "figsection" && h[1] == about.id}[0][3].to_s %> round figsection assertion">
+       <td class = "sumleft round figsection assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == "figsection" && h[1] == about.id}[0][3]/100).to_s + ",") * 2 %>181)">
          Section <%= about.letter(about.num) %>:  
        </td>
       <% end %>
@@ -98,7 +101,7 @@
 <% end %>
      <% if about.class == Fig %>
        <% unless about.image.nil? %>
-          <%= image_tag about.image.thumb('700x700>').url, :class => 'fullfig'%>
+          <%= image_tag about.image.thumb('800x800>').url, :class => 'fullfig'%>
        <% end %>
      <% end %>
 </td>

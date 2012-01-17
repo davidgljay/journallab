@@ -1,4 +1,5 @@
 <h4>Questions</h4>
+<%= render 'questions/form', :question => @owner.questions.build, :owner => @owner, :reply_to => false, :format => 'question' %>
 <table class = "question discussion">
 <% @questions.each do |question| %>
   <tr>
@@ -43,4 +44,4 @@
   <%= render 'questions/answers', :question => question %>
 <% end %>   
 </table>
-<%= render 'questions/form', :question => @owner.questions.build, :owner => @owner, :reply_to => false, :format => 'question' %>
+

@@ -26,7 +26,7 @@ before_filter :authenticate
        @comment.comment = Comment.find(params[:comment][:reply_to])
     elsif params[:comment][:form] == "qcomment"
        @comment.question = Question.find(params[:comment][:reply_to])
-       @questions = @comment.owner.questions
+       @questions = @comment.owner.questions.all
     elsif @comment.paper = assertion.paper
     elsif @comment.fig = assertion.fig
     elsif @comment.figsection = assertion.figsection
@@ -34,7 +34,7 @@ before_filter :authenticate
     @comment.save
     @owner = @comment.owner
     @heatmap = @owner.get_paper.heatmap
-    @comments = @owner.comments
+    @comments = @owner.comments.all
     if @comment.user.groups.empty?
        @comment.is_public = true
     else

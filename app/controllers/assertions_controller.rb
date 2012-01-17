@@ -20,6 +20,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
   def new
     @about = params[:about].constantize.find(params[:id])
     @assertion = @about.assertions.build
+    @type = {'paper' => 'paper', 'fig' => 'figure', 'figsection' => 'section'}
     if signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
     else

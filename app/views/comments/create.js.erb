@@ -1,6 +1,7 @@
 
    $('<%= @owner.jquery_target %>').find('form.commentlist').find('input[type = "submit"]').val('<%= pluralize(@comments.count, 'Comment') %>');  
-   $('<%= @owner.jquery_target %>').find('td.sumleft').addClass('<%= escape_javascript("heat" + @heatmap.select{|h| h[0] == @owner.class.to_s.downcase && h[1] == @owner.id}[0][3].to_s) %>');
+  $('<%= @owner.jquery_target %>').find('td.sumleft').css("background","rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == @owner.class.to_s.downcase && h[1] == @owner.id}[0][3]/100).to_s + ",") * 2 %>181)");
+
    $('<%= @owner.jquery_target %>').find('div.commentbox').html('<%= escape_javascript(render '/comments/list') %>'); 
 <% if @comment.form == 'qcomment' %> 
    $('<%= @owner.jquery_target %>').find('div.questionbox').html('<%= escape_javascript(render '/questions/list') %>');  
@@ -30,7 +31,7 @@ $(document).ready(function(){
       return false;
     });
 
-//Comment submit
+//Comment owner
 
    $('<%= @owner.jquery_target %>').find("form.new_comment").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");

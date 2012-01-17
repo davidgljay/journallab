@@ -26,6 +26,12 @@
      $("td.figtoggle", this).text("+"); 
     });
 
+//Select # of figures and figsections expansion
+//    $('<%= @owner.jquery_target %>').find("div.add_figs_and_sections").click(function(){
+//      mpq.track("Section menu expanded");
+//      $(this).parent().find('div.numselect').slideToggle();
+//     });
+
 //Reply box expansion
   $('<%= @owner.jquery_target %>').find("div.commentbox nav").click(function(){
     $("div.answerform").hide("slow");
@@ -63,7 +69,7 @@
     });
 
 //Select # of figures and figsections expansion
-    $('<%= @owner.jquery_target %>').find("div.add_figs_and_sections h3").click(function(){
+    $('<%= @owner.jquery_target %>').find("div.add_figs_and_sections").click(function(){
       $(this).parent().find('div.numselect').slideToggle();
      });
 
@@ -86,19 +92,19 @@
     });
 
 // Forms to submit through jQuery
-   $("form.commentlist").submit(function(){
+   $('<%= @owner.jquery_target %>').find("form.commentlist").submit(function(){
       mpq.track("Comments viewed");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
 
-   $("form.questionlist").submit(function(){
+   $('<%= @owner.jquery_target %>').find("form.questionlist").submit(function(){
       mpq.track("Questions viewed");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });
 
-   $("form.improvelist").submit(function(){
+   $('<%= @owner.jquery_target %>').find("form.improvelist").submit(function(){
       mpq.track("Improve viewed");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;

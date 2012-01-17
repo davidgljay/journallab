@@ -101,7 +101,7 @@ def heatmap
       else
          a = 0
       end
-      float = h[2].to_f/max * 9 + a
+      float = h[2].to_f/max * 99 + a
       h[3] = float.to_i
     end       
     heatmap
@@ -110,6 +110,7 @@ end
 def heat
    heat = comments.count
    heat += questions.count
+   heat += assertions.count
    comments.each do |c|
      heat += c.comments.count
    end

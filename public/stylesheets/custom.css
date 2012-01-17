@@ -174,6 +174,11 @@ nav ul li a:hover {
   text-decoration: underline;
 }
 
+img.expand_image {
+  padding-left: 2px;
+  display: inline;
+}
+
 /* Flash */
 
 div.flash {
@@ -372,6 +377,7 @@ td.sumleft {
    padding-top: 30px;
    padding-bottom: 30px;
    height: auto;
+   color: #fff;
 }
 
 td.sumleft h5 {
@@ -458,7 +464,7 @@ img.figthumnail {
 /* Assertion form */
 
 td.sumright input[ type = "text" ] {
-  width: 600px;
+  width: 500px;
   font-size: 100%;
 }
 
@@ -514,7 +520,7 @@ div.figtoggle {
 /* Improve Assertion */
 
 div.improve input[ type = "text" ] {
-  width: 600px;
+  width: 500px;
   font-size: 80%;
 }
 
@@ -669,7 +675,8 @@ div.questionbox {
 }
 
 div.questionbox textarea, div.commentbox textarea {
-   height: 100px;
+   height: 60px;
+   width: 500px;
 }
 
 

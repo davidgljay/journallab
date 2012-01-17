@@ -36,7 +36,7 @@ before_filter :authenticate
     end
     @question.save
     @owner = @question.owner
-    @questions = @owner.questions
+    @questions = @owner.questions.all
     @heatmap = @owner.get_paper.heatmap
     @question.user.groups.last.make_group(@question)
 

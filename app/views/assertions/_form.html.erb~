@@ -5,14 +5,16 @@
            <%= f.text_field :text, :value =>  "What is the core conclusion of this " + type + "?" %>
            <br>
            <%= f.text_field :method, :value => "What principal methods are used?" %>
-           <%= f.text_field :alt_approach, :value => "What are alternate approaches?" %>
+           <%= f.text_field :alt_approach, :value => "What are alternate approaches?" if @group.category == 'class'%>
 
          <% else %>
-           <%= f.text_field :text, :value =>  assert.owner.latest_assertion.text %>
+           Summary:<%= f.text_field :text, :value =>  assert.owner.latest_assertion.text %>
            <br>
-           <%= f.text_field :method, :value => assert.owner.latest_assertion.method %>
-           <br>
-           <%= f.text_field :alt_approach, :value => assert.owner.latest_assertion.alt_approach %>
+           Methods:<%= f.text_field :method, :value => assert.owner.latest_assertion.method %>
+           <% if @group.category == 'class'%>
+            <br>
+            Alternate Approaches:<%= f.text_field :alt_approach, :value => assert.owner.latest_assertion.alt_approach %>
+           <% end %>
          <% end %>
         </div>
          <%= f.hidden_field :about, :value => type %>

@@ -30,6 +30,7 @@ end
 def heat
    heat = comments.count
    heat += questions.count
+   heat += assertions.count
    comments.each do |c|
      heat += c.comments.count
    end

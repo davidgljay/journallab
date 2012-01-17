@@ -6,6 +6,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @owner = params[:owner].constantize.find(params[:id])
     @assertions = @owner.assertions.all
     @owner_type = params[:owner]
+    @type = {'paper' => 'paper', 'fig' => 'figure', 'figsection' => 'section'}
     if signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
     else
@@ -94,7 +95,7 @@ end
     flash[:error] = "Please enter a conclusion and method."
     save = false
    else
-    # Later I'll have more complex functionality around assertions. For now it'll automatically be public unless the paper is affiliated with a class group.
+
     @assertion.is_public = true
     @assertion.alt_approach = @assertion.alt_approach == 'What are alternate approaches?' ? nil : @assertion.alt_approach
     save = @assertion.save

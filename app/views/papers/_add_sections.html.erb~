@@ -1,5 +1,6 @@
 <div class = "add_figs_and_sections"> 
-  <h3>Sections A-?</h3>
+  Sections A-?
+<%= image_tag 'magnifying_glass.gif', :class=>'expand_image clickme' %>
   <div class = "numselect hideonload">
 
 

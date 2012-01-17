@@ -8,8 +8,8 @@
       <% unless assertion.alt_approach.nil? %>
         <br>
         <strong>Alternate Approaches: </strong><em><%= assertion.alt_approach %></em>
-       <br>
       <% end %>
+       <br>
       <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at %> 
     <div class="vote">
       <%= render '/votes/vote_form', :candidate => assertion %>

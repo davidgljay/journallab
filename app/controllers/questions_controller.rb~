@@ -3,7 +3,8 @@ before_filter :authenticate
 
   def list
     @owner = params[:owner].constantize.find(params[:id])
-    @questions = @owner.questions.all
+    @group = current_user.groups.last
+    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user,2)}
     @owner_type = params[:owner]
     respond_to do |format|
         format.js
@@ -36,10 +37,10 @@ before_filter :authenticate
     end
     @question.save
     @owner = @question.owner
-    @questions = @owner.questions.all
+    @group = current_user.groups.last
     @heatmap = @owner.get_paper.heatmap
     @question.user.groups.last.make_group(@question)
-
+    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user,2)}
     respond_to do |format|
       if @question.save
          format.js

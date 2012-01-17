@@ -36,7 +36,7 @@
       <% end %>
     <td class = "sumright">
     
-  <% if about.assertions.count != 0 && @group.let_through_filter?(about.latest_assertion, current_user) %>
+  <% if about.assertions.count != 0 && @group.let_through_filter?(about.latest_assertion, current_user, 2) %>
        <%= about.latest_assertion.text %>
        <br>
          <style class="method"><%= about.latest_assertion.method %> </style>
@@ -58,8 +58,8 @@
              <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
                <%= hidden_field_tag :owner, about.class.to_s %>
                <%= hidden_field_tag :id, about.id %>
-               <% if about.comments.count > 0 %>
-                 <%= submit_tag(pluralize(about.comments.count, "Comment")) %>
+               <% if about.comments.all.select{|c| @group.let_through_filter?(c,current_user,2)}.count > 0 %>
+                 <%= submit_tag(pluralize(about.comments.all.select{|c| @group.let_through_filter?(c,current_user,2)}.count, "Comment")) %>
                <% else %>
                  <%= submit_tag("Add a Comment") %>
                <% end %>
@@ -69,8 +69,8 @@
              <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
                <%= hidden_field_tag :owner, about.class.to_s %>
                <%= hidden_field_tag :id, about.id %>
-               <% if about.questions.count > 0 %>
-                 <%= submit_tag(pluralize(about.questions.count, "Question")) %>
+               <% if about.questions.all.select{|c| @group.let_through_filter?(c,current_user,2)}.count > 0 %>
+                 <%= submit_tag(pluralize(about.questions.all.select{|c| @group.let_through_filter?(c,current_user,2)}.count, "Question")) %>
                <% else %>
                  <%= submit_tag("Add a Question") %>
                <% end %>

@@ -127,8 +127,8 @@ def filter_state(item)
     find_filter_by_item(item).state
   elsif item.is_public?
     3
-  else
     1
+  else
   end
 end
 

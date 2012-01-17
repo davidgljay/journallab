@@ -36,7 +36,7 @@
       <% end %>
     <td class = "sumright">
     
-  <% if about.assertions.count != 0 && @group.let_through_filter?(about.latest_assertion, current_user, 2) %>
+  <% if about.assertions.count != 0 && @group.let_through_filter?(about.latest_assertion, current_user) %>
        <%= about.latest_assertion.text %>
        <br>
          <style class="method"><%= about.latest_assertion.method %> </style>

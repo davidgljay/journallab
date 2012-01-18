@@ -28,6 +28,7 @@
 </table>
 
 
+
 <% unless @paper.abstract.nil? %>
 <div id='abstract' class = "clickme">
   <b>Abstract</b><%= image_tag 'magnifying_glass.png', :class => 'expand_image' %>
@@ -43,6 +44,21 @@
   <% end %>
 
 <%= render 'filters/class_options' %>
+<div class = "view_mode">
+  <%= form_tag(:paper_show, :method => "get", :class => 'view_mode') do  %>
+    <%= hidden_field_tag :id, @paper.id %>
+    <% if @mode == 2 %>
+      <%= hidden_field_tag :mode, "public" %>
+      <%= submit_tag("Lab Discussion") %>
+      <%= image_tag 'testtube.jpg' %>
+
+    <% elsif @mode == 1 %>
+      <%= hidden_field_tag :mode, "group" %>
+      <%= submit_tag("Public Discussion") %>
+      <%= image_tag 'globe.jpg' %>
+    <% end %>    
+  <% end %>
+</div>
 
 <p>
 <% if @paper.figs.empty? %>

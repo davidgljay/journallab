@@ -50,6 +50,9 @@ def remove(user)
     end
 end
 
+# Public = 1
+# Group = 2
+# Private = 3
 # Functions for setting up filters
 def make_public(item, date = nil, supplementary = false)
   unless make_filter(item, 1, date, supplementary)
@@ -126,9 +129,9 @@ def filter_state(item)
   if !find_filter_by_item(item).nil? 
     find_filter_by_item(item).state
   elsif item.is_public?
-    3
     1
   else
+    3
   end
 end
 
@@ -154,7 +157,7 @@ end
 
 # Filtering Functions
 
-def let_through_filter?(item, user, mode)
+def let_through_filter?(item, user, mode = 1)
 # Classes can see everyone's comments, but only their own assertions until the instructor flips a switch.
    if self.category == "class"
       if item.class == Assertion
@@ -176,8 +179,10 @@ def let_through_filter?(item, user, mode)
 # Lab members can see one another's comments and questions. All of their assertions are public. They can also see public discussion. 
       if item.class == Assertion
         return item.is_public
-      else 
-        (user.member_of?(self) && filter_state(item) == mode)
+      elsif mode == 2 
+        return (user.member_of?(self) && filter_state(item) == 2)
+      elsif mode == 1
+        return item.is_public
       end         
    elsif category.nil?
        return item.is_public

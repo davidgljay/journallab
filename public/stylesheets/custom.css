@@ -305,61 +305,29 @@ div.sr_info {
   text-align: right;
 }
 
-/* Heat Map */
+/* View Mode Selector */
 
-.heat0 {
-  color: #fff;
-  background: #b5b5b5;
+div.view_mode {
+   display: block;
+   float: right;
+   padding: 0;
+   margin: 0;
 }
 
-.heat1 {
-  color: #fff;
-  background: #a3a3b5;
+div.view_mode img {
+        padding-left: 5px;
 }
 
-.heat2 {
-  color: #fff;
-  background: #9191b5;
-}
 
-.heat3 {
-  color: #fff;
-  background: #7f7fb5;
-}
-
-.heat4 {
-  color: #fff;
-  background: #6d6db5;
-}
-
-.heat5 {
-  color: #fff;
-  background: #5b5bb5;
-}
-
-.heat6 {
-  color: #fff;
-  background: #4848b5;
-}
-
-.heat7 {
-  color: #fff;
-  background: #3636b5;
-}
-
-.heat8 {
-  color: #fff;
-  background: #2424b5;
-}
-
-.heat9 {
-  color: #fff;
-  background: #1212b5;
-}
-
-.heat10 {
-  color: #fff;
-  background: #0000b5;
+div.view_mode input[type = "submit"] {
+ 	font-size: .8em;
+        font-weight: bold;
+  	background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+        margin-top: 5px;
 }
 
 /* Fig Summary */
@@ -594,6 +562,8 @@ table.comment td {
   border-top-left-radius:         10px;
 }
 
+
+
 div.comment_body {
    display: block;
    padding: 10px;
@@ -607,6 +577,7 @@ div.comment_body {
   -webkit-border-bottom-left-radius: 10px;
   border-bottom-left-radius:         10px;
 }
+
 
 table.discussion nav {
    float: none;
@@ -768,6 +739,18 @@ td.more_answers div {
 
 tbody td.more_answers {
   padding-bottom: 0px;
+}
+
+/* Author responses */
+
+td.author_comment div.user_info {
+  background: #e8e77f;
+  border-color: #e8e61b;
+}   
+
+div.author_comment_body {
+   border-color: #e8e61b;
+   background: #fff;
 }
 
 

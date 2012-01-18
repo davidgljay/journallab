@@ -1,6 +1,6 @@
   <% comment.comments.all.each do |r| %>
-  <tr>
-    <td class = "reply <% unless r == comment.comments.all.last %> more_replies <% end %> <% if r.author %> author_comment <% end %>">
+  <tr <% if r.author %> class = "author_comment" <% end %>>
+    <td class = "reply <% unless r == comment.comments.all.last %> more_replies <% end %>">
       <%= render 'shared/user_info', :user => r.user, :date => r.created_at %>
       <div class = "comment_body <%= 'author_comment_body' if r.author %>">
        <%= render 'comments/linktext', :comment => r %>

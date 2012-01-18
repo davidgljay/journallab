@@ -71,6 +71,13 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
       @numfig_select << [(i+1).to_s, i+1 ]
     end
 
+    #Are you viewing in group or public mode?
+    if params[:mode] == "public"
+       @mode = 1
+    else
+       @mode = 2
+    end
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @paper }

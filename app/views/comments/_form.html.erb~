@@ -11,7 +11,7 @@
     </div>
   <% end %>
   <div class="field">
-    <%= hidden_field_tag :mode, @mode %>
+    <%= f.hidden_field :view_mode, '2' %>
     <% if reply_to %>
       <%= f.label "Leave a reply" %><br />
     <%= f.hidden_field :reply_to, :value => reply_to.id %>

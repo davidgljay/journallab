@@ -6,7 +6,10 @@ describe "Comments:" do
      @user = Factory(:user)
      @paper = Factory(:paper)
      @paper.buildout([3,3,2,1])
-     @user2 = Factory(:user, :email => Factory.next(:email))  
+     @user2 = Factory(:user, :email => Factory.next(:email))
+     @group = Factory(:group)
+     @group.add(@user)
+     @group.add(@user2)  
      a = @paper.assertions.build(:text => "Test", :method => "Test test")
      a.is_public = true
      a.user = @user

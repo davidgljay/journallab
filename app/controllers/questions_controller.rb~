@@ -4,7 +4,7 @@ before_filter :authenticate
   def list
     @owner = params[:owner].constantize.find(params[:id])
     @group = current_user.groups.last
-    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user,2)}
+    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user,params[:mode].to_i)}
     @owner_type = params[:owner]
     respond_to do |format|
         format.js
@@ -23,6 +23,7 @@ before_filter :authenticate
       @question = Comment.new(:text => params[:question][:text])
       flash[:success] = "Your comment has been added."
     end
+    @mode = params[:mode].to_i
     @question.user = current_user
     @question.save
     @question.assertion = Assertion.find(params[:question][:assertion_id])
@@ -39,8 +40,14 @@ before_filter :authenticate
     @owner = @question.owner
     @group = current_user.groups.last
     @heatmap = @owner.get_paper.heatmap
-    @question.user.groups.last.make_group(@question)
-    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user,2)}
+    if @question.user.groups.empty?
+       @question.is_public = true
+    elsif @mode == 2
+       @group.make_group(@question)
+    elsif @mode == 1
+       @group.make_public(@question)
+    end
+    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     respond_to do |format|
       if @question.save
          format.js

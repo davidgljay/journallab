@@ -14,6 +14,8 @@ Redcell::Application.routes.draw do
   resources :assertions
     match '/assertions/improve(/:id)', :to => 'assertions#improve'
     match '/assertions/new',           :to => 'assertions#new'
+    match 'improve_list',             :to => 'assertions#list'
+
 
   resources :questions
    match '/questions(/:id)/answer',    :to => 'questions#answer'
@@ -27,7 +29,7 @@ Redcell::Application.routes.draw do
    match '(/:about)(/:id)/discussion', :to => 'papers#discussion'
    match '/grab_images(/:id)', :to => 'papers#grab_images'
    match '/papers(/:id)/build_figs(/:num)', :to => 'papers#build_figs'
-   match 'improve_list',             :to => 'assertions#list'
+   match 'paper_show',               :to => 'papers#show'
 
    match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'

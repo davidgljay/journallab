@@ -4,6 +4,7 @@ describe "Questions:" do
 
    before(:each) do
      @user = Factory(:user)
+     @paper = Factory(:paper)
      @paper.buildout([3,3,2,1])
      @user2 = Factory(:user, :email => Factory.next(:email))  
      a = @paper.assertions.build(:text => "Test", :method => "Test test")

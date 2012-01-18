@@ -3,10 +3,10 @@
 
 <table class = "comment discussion">
 <% @comments.each do |comment| %>
-  <tr>
-    <td <% if comment.comments.count > 0 %> class = "has_reply" <% end %>>
+  <tr >
+    <td class = "<% if comment.comments.count > 0 %> has_reply <% end %> <% if comment.author %> author_comment <% end %>">
       <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
-      <div class = "comment_body">
+      <div class = "comment_body <%= 'author_comment_body' if comment.author %>">
       <%= render 'votes/vote_form', :candidate => comment %>
       <%= render 'linktext', :comment => comment %>
       <br>

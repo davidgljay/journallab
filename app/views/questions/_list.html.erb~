@@ -3,9 +3,9 @@
 <table class = "question discussion">
 <% @questions.each do |question| %>
   <tr>
-    <td <% if question.questions.count > 0 %> class = "has_answer" <% end %>>
-      <%= render 'shared/user_info', :user => questions.user, :date => question.created_at %>
-      <div class = "question_body">
+    <td class = "<% if question.questions.count > 0 %> has_answer <% end %><% if question.author %> author_comment <% end %>">
+      <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
+      <div class = "question_body <%= 'author_comment_body' if comment.author %>">
       <%= render 'votes/vote_form', :candidate => question %>
       <%= render 'questions/linktext', :comment => question %>
       <br>

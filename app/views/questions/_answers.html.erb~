@@ -2,9 +2,9 @@
   <% last = answers[-1] %>
   <% answers.each do |a| %>
   <tr>
-    <td class = "answer <% unless a == last %> more_answers <% end %><% if a.author %> author_comment <% end %>">
+    <td class = "answer <% unless a == last %> more_answers <% end %><% if comment.author %> author_comment <% end %>">
       <%= render 'shared/user_info', :user => a.user, :date => a.created_at %>
-      <div class = "question_body <%= 'author_comment_body' if a.author %>">
+      <div class = "question_body <%= 'author_comment_body' if comment.author %>">
       <%= render 'votes/vote_form', :candidate => a %>
       <%= render 'questions/linktext', :comment => a %>
       <nav>

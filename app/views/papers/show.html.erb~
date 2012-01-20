@@ -13,6 +13,7 @@
    <p>Journal: <%= @paper.journal %>, <%= @paper.pubdate.year unless @paper.pubdate == nil %>
    | 
    Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + @paper.pubmed_id.to_s %>
+   | <%= link_to image_tag ('pdf.png'), 'http://pubget.com/paper/' + @paper.pubmed_id.to_s %> <em><style class="tinytext">(via pubget)</style></em>
 
   <br>
   <%= render '/authors/author_list', :paper => @paper %>
@@ -55,7 +56,7 @@
 
     <% elsif @mode == 1 %>
       <%= hidden_field_tag :mode, "group" %>
-      <%= submit_tag("Public Discussion, , :class => 'view_mode_label'") %><%= image_tag 'globe.jpg' %><br>
+      <%= submit_tag("Public Discussion" , :class => 'view_mode_label') %><%= image_tag 'globe.jpg' %><br>
       <%= submit_tag("Switch to Lab", :class => 'view_mode_switch') %>
 
     <% end %>    

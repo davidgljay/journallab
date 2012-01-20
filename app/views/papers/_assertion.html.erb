@@ -40,7 +40,7 @@
        <%= about.latest_assertion.text %>
        <br>
          <style class="method"><%= about.latest_assertion.method %> </style>
-       <% if !about.latest_assertion.alt_approach.nil? && group.category == 'class' %>
+       <% if !about.latest_assertion.alt_approach.nil? && @group.category == 'class' %>
        <div class = "alt_approach">
          <strong>Alternate Approaches: </strong><style class="method"><%= about.latest_assertion.alt_approach %> </style>
        </div>

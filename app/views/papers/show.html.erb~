@@ -2,7 +2,7 @@
   mpq.track("Paper viewed",{'id':'<%= @paper.id.to_s %>', 'user':'<%= current_user.anon_name %>'});
 </script>
 <% if signed_in? && Group.exists?(2) %>
-<% if current_user.groups.include?(Group.find(2)) %>
+<% if current_user.groups.include?(Group.new) %>
   <%= link_to 'Extract images from Medline', '/grab_images/' + @paper.id.to_s %>
 <% end %>
 <% end %>
@@ -13,7 +13,7 @@
    <p>Journal: <%= @paper.journal %>, <%= @paper.pubdate.year unless @paper.pubdate == nil %>
    | 
    Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + @paper.pubmed_id.to_s %>
-   | <%= link_to image_tag ('pdf.png'), 'http://pubget.com/paper/' + @paper.pubmed_id.to_s %> <em><style class="tinytext">(via pubget)</style></em>
+   | <%= link_to (image_tag ('pdf.png'), 'http://pubget.com/paper/' + @paper.pubmed_id.to_s) %> <em><style class="tinytext">(via pubget)</style></em>
 
   <br>
   <%= render '/authors/author_list', :paper => @paper %>

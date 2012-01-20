@@ -4,7 +4,8 @@ before_filter :authenticate
   def list
     @owner = params[:owner].constantize.find(params[:id])
     @group = current_user.groups.last
-    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user,params[:mode].to_i)}
+    @mode = params[:mode].to_i
+    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     @owner_type = params[:owner]
     respond_to do |format|
         format.js

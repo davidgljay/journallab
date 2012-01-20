@@ -318,8 +318,20 @@ div.view_mode img {
         padding-left: 5px;
 }
 
+input.view_mode_switch {
+	font-size: .7em;
+	font-style: italic;
+	margin-top: 1px;
+        color: #119966;
+        background: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	cursor: pointer;
+        float: right;
+}
 
-div.view_mode input[type = "submit"] {
+input.view_mode_label {
  	font-size: .8em;
         font-weight: bold;
   	background: none;
@@ -329,6 +341,7 @@ div.view_mode input[type = "submit"] {
 	cursor: pointer;
         margin-top: 5px;
 }
+
 
 /* Fig Summary */
 

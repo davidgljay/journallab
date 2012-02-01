@@ -6,7 +6,14 @@
   <%= link_to 'Extract images from Medline', '/grab_images/' + @paper.id.to_s %>
 <% end %>
 <% end %>
-<p><h3><%= @paper.title %></h3></p>
+<p></p><br>
+<h3><%= @paper.title %></h3>
+<% unless @group.id.nil? %>
+<nav><ul>
+<li><%= render '/shares/share_button' %></li>
+</ul>
+</nav>
+<% end %>
 <table>
   <tr>
    <td class="paperinfo">

@@ -2,9 +2,10 @@ class Figsection < ActiveRecord::Base
 
 belongs_to :fig
 
-has_many :assertions
-has_many :comments
-has_many :questions
+has_many :assertions, :dependent => :destroy
+has_many :comments, :dependent => :destroy
+has_many :questions, :dependent => :destroy
+has_many :shares, :dependent => :destroy
 
 validates :fig_id, :presence => true
 

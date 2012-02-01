@@ -12,7 +12,7 @@ has_many :comments, :dependent => :destroy
 has_many :figs, :dependent => :destroy
 has_many :questions, :dependent => :destroy
 has_many :visits, :dependent => :destroy
-
+has_many :shares, :dependent => :destroy
 has_many :filters, :foreign_key => "paper_id",
                            :dependent => :destroy
 has_many :groups, :through => :filters, :source => :group

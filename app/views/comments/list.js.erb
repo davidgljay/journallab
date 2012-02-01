@@ -1,5 +1,6 @@
     $("div.improve").hide("slow");
     $("div.questionbox").hide("slow");
+    $("div.sharebox").hide("slow");
     $('div#comments_<%= @owner_type + '_' + @owner.id.to_s %>').html('<%= escape_javascript(render 'list') %>');
     $('div#comments_<%= @owner_type + '_' + @owner.id.to_s %>').slideToggle();
 

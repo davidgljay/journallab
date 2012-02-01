@@ -5,6 +5,7 @@ belongs_to :fig
 has_many :assertions
 has_many :comments
 has_many :questions
+has_many :shares, :dependent => :destroy
 
 validates :fig_id, :presence => true
 
@@ -27,6 +28,7 @@ end
 def heat
    heat = comments.count
    heat += questions.count
+   heat += assertions.count
    comments.each do |c|
      heat += c.comments.count
    end

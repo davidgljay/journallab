@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
         has_many :comments
         has_many :questions
         has_many :votes
+        has_many :shares
         has_many :visits, :foreign_key => "user_id",
                           :dependent => :destroy
         has_many :visited_papers, :through => :visits, :source => :paper
@@ -142,6 +143,12 @@ end
       elsif candidate.class == Assertion
        votes.find_by_assertion_id(candidate.id)
       end
+  end
+
+#Command to share something.
+
+  def share!(item, group = get_group, text = '')
+      item.class.find(item.id).shares.create!(:user=> self, :text => text, :meta_paper => item.get_paper)
   end
 
 # Functionality related to groups

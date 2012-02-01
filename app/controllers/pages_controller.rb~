@@ -10,24 +10,41 @@ class PagesController < ApplicationController
     @feed = []
     if @group.category == "lab"
       @group.feed.each do |item|
+        if item.class == Visit
           discussion = item.user.comments.where("created_at > ?", item.updated_at - 1.day) + item.user.questions.where("created_at > ?", item.updated_at - 1.day)
-          discussed = discussion.select{|d| d.created_at > (item.updated_at - 1.day)}.map{|c| c.get_paper}.include?(item.paper)
-#          summarized = item.user.assertions.where("created_at > ?", item.updated_at - 1.day).map{|a| a.get_paper}.include?(item.paper) 
-#          discussed = true
-          summarized = false
+          discussed = discussion.map{|c| c.get_paper}.include?(item.paper)
+          summarized = item.user.assertions.where("created_at > ?", item.updated_at - 1.day).map{|a| a.get_paper}.include?(item.paper) 
           if discussed and summarized
-            text = 'viewed, discussed and summarized the paper'
+            text = 'discussed and summarized the paper'
             bold = true
           elsif discussed
-            text = 'viewed and discussed the paper'
+            text = 'discussed the paper'
             bold = true
           elsif summarized
-            text = 'viewed and summarized the paper'
-            bold
+            text = 'summarized the paper'
+            bold = false
           else
-             text = 'viewed the paper'
+            text = 'viewed the paper'
           end
-          @feed << [item.user, text, item.paper, item.updated_at, bold]
+          paper = item.paper
+          if discussed 
+            sharetext = discussion.select{|d| d.get_paper == item.paper}.last.text
+          else
+            sharetext = nil
+          end
+        elsif item.class == Share
+          if !item.paper.nil?
+            text = 'shared the paper'
+          elsif !item.fig.nil?
+            text = 'shared Figure ' + item.fig.num.to_s + ' of the paper'
+          elsif !item.figsection.nil?
+            text = 'shared Figure ' + item.figsection.fig.num.to_s + ', Section ' + item.figsection.letter(item.figsection.num) + ' of the paper'
+          end
+          sharetext = item.text
+          bold = true
+          paper = item.meta_paper 
+         end
+        @feed << [item.user, text, paper, item.updated_at, bold, sharetext]
       end
     end
     # If it's a class

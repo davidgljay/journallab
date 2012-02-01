@@ -91,6 +91,14 @@
       return false;
     });
 
+//Share Expansion
+  $('<%= @owner.jquery_target %>').find("nav li.sharelink").click(function(){
+    $("div.improve").hide("slow");
+    $("div.commentbox").hide("slow");
+    $("div.question").hide("slow");
+    $(this).parent().parent().parent().find("div.sharebox").slideToggle();
+  });
+
 // Forms to submit through jQuery
    $('<%= @owner.jquery_target %>').find("form.commentlist").submit(function(){
       mpq.track("Comments viewed");

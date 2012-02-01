@@ -40,7 +40,7 @@
        <%= about.latest_assertion.text %>
        <br>
          <style class="method"><%= about.latest_assertion.method %> </style>
-       <% if !about.latest_assertion.alt_approach.nil? && group.category == 'class' %>
+       <% if !about.latest_assertion.alt_approach.nil? && @group.category == 'class' %>
        <div class = "alt_approach">
          <strong>Alternate Approaches: </strong><style class="method"><%= about.latest_assertion.alt_approach %> </style>
        </div>
@@ -59,8 +59,8 @@
                <%= hidden_field_tag :owner, about.class.to_s %>
                <%= hidden_field_tag :id, about.id %>
                <%= hidden_field_tag :mode, @mode %>
-               <% if about.comments.all.select{|c| @group.let_through_filter?(c,current_user,@mode)}.count > 0 %>
-                 <%= submit_tag(pluralize(about.comments.all.select{|c| @group.let_through_filter?(c,current_user,@mode)}.count, "Comment")) %>
+               <% if @group.filter_count(about.comments.all, current_user,@mode) > 0 %>
+                 <%= submit_tag(pluralize(@group.filter_count(about.comments.all, current_user,@mode), "Comment")) %>
                <% else %>
                  <%= submit_tag("Add a Comment") %>
                <% end %>
@@ -71,12 +71,15 @@
                <%= hidden_field_tag :owner, about.class.to_s %>
                <%= hidden_field_tag :id, about.id %>
                <%= hidden_field_tag :mode, @mode %>
-               <% if about.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}.count > 0 %>
-                 <%= submit_tag(pluralize(about.questions.all.select{|c| @group.let_through_filter?(c,current_user,@mode)}.count, "Question")) %>
+               <% if @group.filter_count(about.questions.all, current_user, @mode) > 0 %>
+                 <%= submit_tag(pluralize(@group.filter_count(about.questions.all, current_user, @mode), "Question")) %>
                <% else %>
                  <%= submit_tag("Add a Question") %>
                <% end %>
              <% end %>
+           </li>
+           <li class = "sharelink clickme">
+                Share
            </li>
         </ul>
         </nav>
@@ -85,6 +88,9 @@
          <div class = "commentbox", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
          <div class = "questionbox", id = <%= 'questions_' + about.class.to_s + '_' + about.id.to_s %>>
+         </div>
+         <div class = "sharebox hideonload", id = <%= 'share_' + about.class.to_s + '_' + about.id.to_s %>>
+            <%= render 'shares/share_form', :item => about %>
          </div>
   <% else %>
 

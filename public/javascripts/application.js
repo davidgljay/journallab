@@ -15,29 +15,25 @@ $(document).ready(function(){
   });
 
 
+//Share Expansion
+  $("nav li.sharelink").click(function(){
+    $("div.improve").hide("slow");
+    $("div.commentbox").hide("slow");
+    $("div.question").hide("slow");
+    $(this).parent().parent().parent().find("div.sharebox").slideToggle();
+  });
 
-//Improve Expansion
-//  $("nav li.improvelink").click(function(){
-//    $("div.commentbox").hide("slow");
-//    $("div.questionbox").hide("slow");
-//    $(this).parent().parent().parent().find("form.new_assertion").show();
- //   $(this).parent().parent().parent().find("div.improve").slideToggle();
-//  });
+  $("div.share_button_top").click(function(){
+    $(this).find("div.share_button_text").hide("slow");
+    $(this).find("div.share_button_form").show("slow");
+  });
 
-//Comment Expansion
-//  $("nav li.commentlink").click(function(){
-//    $("div.improve").hide("slow");
-//    $("div.questionbox").hide("slow");
-//    $(this).parent().parent().parent().find("div.commentbox").slideToggle();
-//  });
 
-//Question Expansion
-//  $("nav li.questionlink").click(function(){
-//    $("div.improve").hide("slow");
-//    $("div.commentbox").hide("slow");
-//    $(this).parent().parent().parent().find("div.questionbox").slideToggle();
-//  });
-
+  $('div.share_form').find(':input').click(function(){
+     if( $(this).val() == "Check this out!")
+        $(this).val('');
+     end
+     });
 
 //Toggle Figure sections
    $("div.figtoggle").toggle(function(){
@@ -71,6 +67,7 @@ $(document).ready(function(){
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.questionbox").hide("slow");
+    $("div.sharebox").hide("slow");
     $(this).parent().next().find("img.fullfig").slideToggle();
     });
 
@@ -97,6 +94,7 @@ $(document).ready(function(){
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.questionbox").hide("slow"); 
+    $("div.sharebox").hide("slow");
     $("form.new_assertion").hide("slow");
     $("form.enter_assertion").show("slow");
     });
@@ -107,8 +105,8 @@ $(document).ready(function(){
 //
 
 //Load Summary Form
-$("form.enter_assertion").click(function(){
-//$("form.enter_assertion").mouseover(function(){
+//$("form.enter_assertion").click(function(){
+$("form.enter_assertion").mouseover(function(){
       $(this).hide();
       mpq.track("Summary form called");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
@@ -137,6 +135,12 @@ $("form.enter_assertion").click(function(){
 
    $("form.improvelist").submit(function(){
       mpq.track("Improve viewed");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+   $("div.share_form").find("form").submit(function(){
+      mpq.track("Item shared");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

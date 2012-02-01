@@ -30,6 +30,7 @@ $(document).ready(function(){
 //Question submit
 
    $("form.new_comment, form.new_question, form.new_assertion").submit(function(){
+      mpq.track("Question submitted");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

@@ -157,7 +157,19 @@ end
 
 # Filtering Functions
 
-def let_through_filter?(item, user, mode = 2)
+def filter_count(array, user, mode = 1)
+    items = []
+    array.select{|c| let_through_filter?(c,user, mode)}.each do |item|
+     items << item
+     if item.class == Comment
+       items << item.comments
+     end
+    end
+    items.count
+end
+ 
+
+def let_through_filter?(item, user, mode = 1)
 # Classes can see everyone's comments, but only their own assertions until the instructor flips a switch.
    if self.category == "class"
       if item.class == Assertion
@@ -193,6 +205,7 @@ def feed
    items = []
    users.each do |u|
      items << u.visits
+     items << u.shares
    end
    items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(10) unless items.empty?
 end

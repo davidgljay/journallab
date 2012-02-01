@@ -91,6 +91,12 @@ section h1 {
   font-size: 200%;
 }
 
+h3 {
+  font-size: 1.5em;
+  line-height: 1em;
+  margin-bottom: 3px;
+}
+
 style {
 display: inline;
 }
@@ -308,7 +314,7 @@ div.sr_info {
 /* View Mode Selector */
 
 div.view_mode {
-   display: block;
+   display: none; /* to Re-enable set display to block. */
    float: right;
    padding: 0;
    margin: 0;
@@ -542,6 +548,43 @@ div.improvelist div.user_info {
  display: inline;
 }
 
+/* Sharing */
+
+div.sharebox {
+  font-size: 12px;
+}
+
+div.sharetext {
+  background: #fff;
+  margin: 4px;
+  padding: 2px;
+  padding-left: 15px;
+}
+
+div.share_button_top {
+ padding: 0px;
+ margin: 1px;
+
+}
+
+div.share_confirmation { 
+ background: #119966;
+ font-weight: bold;
+ padding: 3px;
+ color: #fff;
+}
+div.share_button_text {
+ color: #09C;
+ font-weight: bold;
+ font-size: 80%;
+}
+
+div.share_button_top div.share_form textarea {
+ height: 20px;
+ width: 700px;
+}
+
+
 
 /* Comments */
 
@@ -658,7 +701,7 @@ div.questionbox {
    margin-top: 30px;
 }
 
-div.questionbox textarea, div.commentbox textarea {
+div.questionbox textarea, div.commentbox textarea, div.sharebox textarea {
    height: 60px;
    width: 500px;
 }

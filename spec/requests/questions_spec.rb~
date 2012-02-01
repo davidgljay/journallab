@@ -7,6 +7,9 @@ describe "Questions:" do
      @paper = Factory(:paper)
      @paper.buildout([3,3,2,1])
      @user2 = Factory(:user, :email => Factory.next(:email))  
+     @group = Factory(:group)
+     @group.add(@user)
+     @group.add(@user2)  
      a = @paper.assertions.build(:text => "Test", :method => "Test test")
      a.is_public = true
      a.user = @user
@@ -48,7 +51,7 @@ describe "Questions:" do
        click_link 'Sign out'
        visit '/signin'
        fill_in "session_email", :with => @user2.email
-       fill_in "session_password", :with => @user2.password
+       find('answerform').fill_in "session_password", :with => @user2.password
        click_button "Sign in"
        visit '/papers/' + @paper.id.to_s
        click_button 'vote_submit'

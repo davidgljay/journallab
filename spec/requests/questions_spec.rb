@@ -42,7 +42,7 @@ describe "Questions:" do
        fill_in 'comment_text', :with => "That's so smart I'm commenting."
        click_button 'Submit' 
        find('li.answerlink').click
-       fill_in 'question_text', :with => "Here's an answer to your question."
+       find('answerform').fill_in 'question_text', :with => "Here's an answer to your question."
        click_button 'Submit' 
        page.should have_content("I have an incredibly intelligent thing to say.")
        page.should have_content("That's so smart I'm commenting.")

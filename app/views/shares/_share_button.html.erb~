@@ -1,0 +1,6 @@
+<div class='share_button_top round'>
+<div class = 'share_button_text'>Share</div>
+<div class = 'share_button_form hideonload'>
+ <%= render '/shares/share_form', :item => @paper %>
+</div>
+</div>

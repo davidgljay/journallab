@@ -1,4 +1,4 @@
-require 'fastercsv'
+require 'csv'
 
 module GroupsHelper
 
@@ -6,8 +6,7 @@ module GroupsHelper
 
 #Takes a 2D array
 def export_data(array, name = "data")
-  FasterCSV.open("/public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
-
+   CSV.open("public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
     csv << array
   end
 end

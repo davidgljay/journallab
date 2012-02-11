@@ -1,6 +1,7 @@
+require 'csv'
 class Visit < ActiveRecord::Base
 
-   after_initialize :init
+after_initialize :init
 
 belongs_to :user
 belongs_to :paper
@@ -17,11 +18,11 @@ validates_uniqueness_of :user_id, :scope => [:paper_id]
 
 #Takes a 2D array
 def export_data(array, name = "data")
-  FasterCSV.open("/public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
-
+   CSV.open("public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
     csv << array
   end
 end
+
 
 #Takes an array, returns a frequency array by day
 

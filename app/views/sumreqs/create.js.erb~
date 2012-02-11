@@ -1,0 +1,3 @@
+$('<%= @item.jquery_target %>').find('div.sumreq_counter').html('<%= escape_javascript(pluralize(@item.sumreqs.count, "Summary Request"))  %>');
+$('<%= @item.jquery_target %>').find('div.sumreq_button').hide();
+$('<%= @item.jquery_target %>').find('sumreq_confirm').show();

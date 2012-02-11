@@ -1,0 +1,2 @@
+$("#vote_form_<%= @candidate.id.to_s %>").html('<%= escape_javascript(render '/votes/voted')  %>')
+$("#numvotes_<%= @candidate.id.to_s %>").html('<%= pluralize(@numvotes, "Nod")  %>')

@@ -11,7 +11,7 @@ before_filter :authenticate
     @numshares = @item.shares.count
     respond_to do |format|
       format.js
-     # format.html { redirect_to paper }
+      format.html { redirect_to paper }
     end
   end
 

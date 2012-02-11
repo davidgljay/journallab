@@ -30,6 +30,12 @@ describe "Assertions" do
      # within('li.improvelink') { page.should have_content('Improve') }
     end
 
+    it "processes a summary request", :js => true do
+       visit '/papers/' + @paper.id.to_s
+       find('tr.paper').find('.sumreq_button').click
+       within('tr.paper') { page.should have_content('.sumreq_confirm') }
+    end
+
     it "fails if nothing is entered", :js => true do
       visit '/papers/' + @paper.id.to_s
       click_button "Summarize for your lab"
@@ -119,7 +125,7 @@ describe "Assertions" do
       find('tr#paper').find('#new_assertion').click_button "Submit"
      # within('body') { page.should have_content('Summary entered, thanks for your contribution.') }
       within('tr#paper') { page.should have_content('Lorem ipsum cupcakes.') }
-      within('tr#paper') { page.should have_content('Test') }
+      within('tr#paper') { page.should have_content('Aloe juice') }
       #within('li.improvelink') { page.should have_content('Improve') }
     end
 

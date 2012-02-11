@@ -78,9 +78,11 @@
                <% end %>
              <% end %>
            </li>
+           <% unless @group.id.nil? %>
            <li class = "sharelink clickme">
                 Share
            </li>
+           <% end %>
         </ul>
         </nav>
         <div class="improve">
@@ -89,9 +91,11 @@
          </div>
          <div class = "questionbox", id = <%= 'questions_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
+         <% unless @group.id.nil? %>
          <div class = "sharebox hideonload", id = <%= 'share_' + about.class.to_s + '_' + about.id.to_s %>>
             <%= render 'shares/share_form', :item => about %>
          </div>
+         <% end %>
   <% else %>
 
       <% if @group.category == 'class' %>
@@ -104,8 +108,7 @@
        <%= hidden_field_tag :id, about.id %>
        <%= submit_tag(button) %> 
      <% end %>
-      <div class="assertion_form">
-      </div>
+       <%= render 'sumreqs/sumreq_button', :item => about %>
 <% end %>
      <% if about.class == Fig %>
        <% unless about.image.nil? %>

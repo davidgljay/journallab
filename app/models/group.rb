@@ -19,6 +19,8 @@ has_many :papers, :through => :filters, :source => :paper
 has_many :comments, :through => :filters, :source => :comment
 has_many :questions, :through => :filters, :source => :question
 has_many :assertions, :through => :filters, :source => :assertion
+has_many :sumreqs, :dependent => :destroy
+has_many :shares, :dependent => :destroy
 
 
 validates :category, :presence => true
@@ -203,9 +205,9 @@ end
 
 def feed
    items = []
+   items << shares
    users.each do |u|
      items << u.visits
-     items << u.shares
    end
    items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(10) unless items.empty?
 end

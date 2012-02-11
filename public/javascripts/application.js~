@@ -15,30 +15,6 @@ $(document).ready(function(){
   });
 
 
-
-//Improve Expansion
-//  $("nav li.improvelink").click(function(){
-//    $("div.commentbox").hide("slow");
-//    $("div.questionbox").hide("slow");
-//    $(this).parent().parent().parent().find("form.new_assertion").show();
- //   $(this).parent().parent().parent().find("div.improve").slideToggle();
-//  });
-
-//Comment Expansion
-//  $("nav li.commentlink").click(function(){
-//    $("div.improve").hide("slow");
-//    $("div.questionbox").hide("slow");
-//    $(this).parent().parent().parent().find("div.commentbox").slideToggle();
-//  });
-
-//Question Expansion
-//  $("nav li.questionlink").click(function(){
-//    $("div.improve").hide("slow");
-//    $("div.commentbox").hide("slow");
-//    $(this).parent().parent().parent().find("div.questionbox").slideToggle();
-//  });
-
-
 //Share Expansion
   $("nav li.sharelink").click(function(){
     $("div.improve").hide("slow");
@@ -129,8 +105,8 @@ $(document).ready(function(){
 //
 
 //Load Summary Form
-$("form.enter_assertion").click(function(){
-//$("form.enter_assertion").mouseover(function(){
+//$("form.enter_assertion").click(function(){
+$("form.enter_assertion").mouseover(function(){
       $(this).hide();
       mpq.track("Summary form called");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
@@ -139,6 +115,7 @@ $("form.enter_assertion").click(function(){
 
 
 // Vote Button
+
    $("form#new_vote").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
@@ -165,6 +142,12 @@ $("form.enter_assertion").click(function(){
 
    $("div.share_form").find("form").submit(function(){
       mpq.track("Item shared");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+   $("div.sumreq_button").find("form").submit(function(){
+      mpq.track("Summary Requested");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

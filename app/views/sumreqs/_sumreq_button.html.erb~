@@ -1,0 +1,21 @@
+<div class = "sumreq">
+   <div class = "sumreq_counter">
+     <% if item.sumreqs.count == 0 %>
+        Request Summary
+     <% else %>
+        <%= pluralize(item.sumreqs.count, "Summary Request") %>
+     <% end %>
+   <div class = "sumreq_button<% ' hideonload' if !item.sumreqs.select{|s| s.user == current_user}.empty? %>">
+    <%= form_for item.sumreqs.create, :remote => true do |f| %>
+      <%= f.hidden_field :id, :value => item.id %>
+      <%= f.hidden_field :type, :value => item.class.to_s %>
+      <% if signed_in? %>
+         <%= f.hidden_field :group, :value => current_user.get_group.id %>
+      <% end %>
+      <%= f.submit "+" %>
+    <% end %>
+   </div>
+</div>
+<div class = "sumreq_confirm hideonload">
+Got it! We'll give this priority.
+</div>

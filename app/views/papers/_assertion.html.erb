@@ -108,8 +108,9 @@
        <%= hidden_field_tag :id, about.id %>
        <%= submit_tag(button) %> 
      <% end %>
-      <div class="assertion_form">
-      </div>
+     <div class='assertion_form'>
+     </div>
+       <%= render 'sumreqs/sumreq_button', :item => about %>
 <% end %>
      <% if about.class == Fig %>
        <% unless about.image.nil? %>

@@ -54,4 +54,5 @@ group :redcell do
   gem 'rmagick'
   gem  'mini_magick'
   gem 'fog'
+  gem 'fastercsv'
 end

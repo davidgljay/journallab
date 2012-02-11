@@ -14,8 +14,8 @@ end
 
 def graph_by_day(array)
     array.sort!{|x,y| x.created_at <=> y.created_at}
-    finish = array.last.created_at
-    start = array.first.created_at + 1.day
+    finish = array.last.created_at + 1.day
+    start = array.first.created_at -1.day
     days = []
     day = start.midnight
     while day < finish.midnight

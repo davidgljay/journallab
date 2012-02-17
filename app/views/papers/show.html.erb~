@@ -1,16 +1,19 @@
 <script type="text/javascript">
   mpq.track("Paper viewed",{'id':'<%= @paper.id.to_s %>', 'user':'<%= current_user.anon_name %>'});
 </script>
+
 <% if signed_in? && Group.exists?(2) %>
 <% if current_user.groups.include?(Group.new) %>
   <%= link_to 'Extract images from Medline', '/grab_images/' + @paper.id.to_s %>
 <% end %>
 <% end %>
 <p></p><br>
+
 <h3><%= @paper.title %></h3>
-<%= unless @group.id.nil? %>
-<nav><ul>
+<% unless @group.id.nil? %>
+<nav class = 'undertitle'><ul>
 <li><%= render '/shares/share_button' %></li>
+<li><%= render '/sumreqs/sumreq_button', :item => @paper %></li>
 </ul>
 </nav>
 <% end %>

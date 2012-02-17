@@ -115,6 +115,7 @@ $("form.enter_assertion").mouseover(function(){
 
 
 // Vote Button
+
    $("form#new_vote").submit(function(){
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
@@ -141,6 +142,12 @@ $("form.enter_assertion").mouseover(function(){
 
    $("div.share_form").find("form").submit(function(){
       mpq.track("Item shared");
+      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+      return false;
+    });
+
+   $("div.sumreq_button").find("form").submit(function(){
+      mpq.track("Summary Requested");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");
       return false;
     });

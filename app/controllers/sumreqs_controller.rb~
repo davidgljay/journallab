@@ -1,0 +1,14 @@
+class SumreqsController < ApplicationController
+
+  def create
+    @item = params[:sumreq][:type].constantize.find(params[:sumreq][:id])
+    @group = Group.find(params[:sumreq][:group])
+    @item.class.find(@item.id).sumreqs.create!(:user=> current_user, :get_paper => @item.get_paper, :group => @group)
+    paper = @item.get_paper
+    @numreqs = @item.sumreqs.count
+    respond_to do |format|
+      format.js
+      format.html { redirect_to paper }
+    end
+  end
+end

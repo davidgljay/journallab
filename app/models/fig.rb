@@ -6,7 +6,7 @@ has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
 has_many :questions, :dependent => :destroy
 has_many :shares, :dependent => :destroy
-
+has_many :sumreqs, :dependent => :destroy
 validates :paper_id, :presence => true
 
 image_accessor :image

@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
         has_many :memberships, :foreign_key => "user_id",
                            :dependent => :destroy
         has_many :groups, :through => :memberships, :source => :group
+	has_many :sumreqs, :dependent => :destroy
 
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

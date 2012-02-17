@@ -30,12 +30,14 @@ class User < ActiveRecord::Base
         has_many :comments
         has_many :questions
         has_many :votes
+        has_many :shares
         has_many :visits, :foreign_key => "user_id",
                           :dependent => :destroy
         has_many :visited_papers, :through => :visits, :source => :paper
         has_many :memberships, :foreign_key => "user_id",
                            :dependent => :destroy
         has_many :groups, :through => :memberships, :source => :group
+	has_many :sumreqs, :dependent => :destroy
 
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

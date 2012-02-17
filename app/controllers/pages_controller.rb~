@@ -13,6 +13,7 @@ class PagesController < ApplicationController
         if item.class == Visit
           discussion = item.user.comments.where("created_at > ?", item.updated_at - 1.day) + item.user.questions.where("created_at > ?", item.updated_at - 1.day)
           discussed = discussion.map{|c| c.get_paper}.include?(item.paper)
+          last_discussion = discussion.select{|d| d.get_paper == item.paper}.last
           summarized = item.user.assertions.where("created_at > ?", item.updated_at - 1.day).map{|a| a.get_paper}.include?(item.paper) 
           if discussed and summarized
             text = 'discussed and summarized the paper'
@@ -28,18 +29,13 @@ class PagesController < ApplicationController
           end
           paper = item.paper
           if discussed 
-            sharetext = discussion.select{|d| d.get_paper == item.paper}.last.text
+            #text = reftext(discussion) Ok, so right now if someone says multiple things about a paper only the last one shows up. This is counterintuitive and confusing, need to fix. Maybe I ONLY show summaries & discussion w/ a seperate thing for most viewed papers in the past week?
+            sharetext = last_discussion.text
           else
             sharetext = nil
           end
         elsif item.class == Share
-          if !item.paper.nil?
-            text = 'shared the paper'
-          elsif !item.fig.nil?
-            text = 'shared Figure ' + item.fig.num.to_s + ' of the paper'
-          elsif !item.figsection.nil?
-            text = 'shared Figure ' + item.figsection.fig.num.to_s + ', Section ' + item.figsection.letter(item.figsection.num) + ' of the paper'
-          end
+          text = reftext(item)
           sharetext = item.text
           bold = true
           paper = item.meta_paper 
@@ -65,6 +61,16 @@ class PagesController < ApplicationController
        end
        @classdates.sort!{|x,y| x[1] + x[2].object_id.minutes <=> y[1] + y[2].object_id.minutes}
      end
+  end
+  
+  def reftext(item)
+    if !item.paper.nil?
+     text = 'shared the paper'
+    elsif !item.fig.nil?
+     text = 'shared Figure ' + item.fig.num.to_s + ' of the paper'
+    elsif !item.figsection.nil?
+     text = 'shared Figure ' + item.figsection.fig.num.to_s + ', Section ' + item.figsection.letter(item.figsection.num) + ' of the paper'
+    end
   end
 
   def contact

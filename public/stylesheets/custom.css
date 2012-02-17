@@ -1,62 +1,5 @@
 
-/* Misc Functions */
 
-.hideonload {
-display: none;
-}
-
-.clickme {
-   cursor: pointer;
-}
-
-.floatright {
-   float:right;
-}
-
-.pad10 {
-   padding: 10px;
-}
-
-.margin10 {
-   margin: 10px;
-}
-
-.drop-shadow {
-   position:relative;
-   width:90%;
-}
-
-.tinytext {
-  font-size: 80%;
-}
-
-.drop-shadow:before,
-.drop-shadow:after {
-   content:"";
-   position:absolute;
-   z-index:-1;
-   bottom:15px;
-   left:10px;
-   width:50%;
-   height:20%;
-   max-width:300px;
-   -webkit-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
-   -moz-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
-   box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
-   -webkit-transform:rotate(-3deg);
-   -moz-transform:rotate(-3deg);
-   -o-transform:rotate(-3deg);
-   transform:rotate(-3deg);
-}
-
-.drop-shadow:after{
-   right:10px;
-   left:auto;
-   -webkit-transform:rotate(3deg);
-   -moz-transform:rotate(3deg);
-   -o-transform:rotate(3deg);
-   transform:rotate(3deg);
- }
 
 /* Overall */
 
@@ -561,7 +504,7 @@ div.sharetext {
   padding-left: 15px;
 }
 
-div.share_button_top {
+nav.undertitle li {
  padding: 0px;
  margin: 1px;
 
@@ -573,18 +516,43 @@ div.share_confirmation {
  padding: 3px;
  color: #fff;
 }
-div.share_button_text {
+nav.undertitle {
  color: #09C;
  font-weight: bold;
  font-size: 80%;
 }
 
-div.share_button_top div.share_form textarea {
+nav.undertitle textarea {
  height: 20px;
  width: 700px;
 }
 
+/* Summary Requests */
 
+div.sumreq {
+ background: #bbdddd;
+ font-size: 12px;
+ display: block;
+ float: left;
+ padding: 5px;
+ margin-top: 10px;
+}
+
+
+div.sumreq_button input[type = "submit"] {
+ background: #fff;
+ font-size: 12px;
+ border: none;
+}
+
+nav div.sumreq {
+ background: none;
+ font-size: inherit;
+ display: inherit;
+ float: inherit;
+ padding: inherit;
+ margin-top: inherit;
+}
 
 /* Comments */
 
@@ -1092,5 +1060,77 @@ span.anon_name {
 div.improve, div.commentbox, div.questionbox, div.fig_sections, div.replyform, div.answerform, img.fullfig, div.class_options, td.sidebar, div.class_options {
   display: none;
 }
+
+
+/* Misc Functions */
+
+.inline {
+  display: inline;
+}
+
+.block {
+  display: block;
+}
+
+.hideonload {
+display: none;
+}
+
+.clickme {
+   cursor: pointer;
+}
+
+
+
+.floatright {
+   float:right;
+}
+
+.pad10 {
+   padding: 10px;
+}
+
+.margin10 {
+   margin: 10px;
+}
+
+.drop-shadow {
+   position:relative;
+   width:90%;
+}
+
+.tinytext {
+  font-size: 80%;
+}
+
+.drop-shadow:before,
+.drop-shadow:after {
+   content:"";
+   position:absolute;
+   z-index:-1;
+   bottom:15px;
+   left:10px;
+   width:50%;
+   height:20%;
+   max-width:300px;
+   -webkit-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   -moz-box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   box-shadow:0 15px 10px rgba(0, 0, 0, 0.7);
+   -webkit-transform:rotate(-3deg);
+   -moz-transform:rotate(-3deg);
+   -o-transform:rotate(-3deg);
+   transform:rotate(-3deg);
+}
+
+.drop-shadow:after{
+   right:10px;
+   left:auto;
+   -webkit-transform:rotate(3deg);
+   -moz-transform:rotate(3deg);
+   -o-transform:rotate(3deg);
+   transform:rotate(3deg);
+ }
+
+
 
 

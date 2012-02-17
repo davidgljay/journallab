@@ -1,5 +1,7 @@
 Redcell::Application.routes.draw do
    
+  get "sumreq/create"
+
   get "figs/build_sections"
 
   resources :groups
@@ -11,6 +13,8 @@ Redcell::Application.routes.draw do
 
   resources :votes
   resources :shares
+  resources :sumreqs
+
 
   resources :assertions
     match '/assertions/improve(/:id)', :to => 'assertions#improve'

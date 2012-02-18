@@ -15,7 +15,7 @@ has_many :visits, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :meta_shares, :class_name => "Share"
 has_many :sumreqs, :dependent => :destroy
-has_many :meta_sumreqs, :class_name => "Sumreq"
+has_many :meta_sumreqs, :class_name => "Sumreq", :foreign_key => "get_paper_id"
 has_many :filters, :foreign_key => "paper_id",
                            :dependent => :destroy
 has_many :groups, :through => :filters, :source => :group

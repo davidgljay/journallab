@@ -209,7 +209,12 @@ def feed
    users.each do |u|
      items << u.visits
    end
-   items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(10) unless items.empty?
+   items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(20) unless items.empty?
 end
 
+# List of papers by summary requests for the lab 
+def sumreq_feed
+   sumreqs.map{|s| s.get_paper}.uniq.map{|p| [p, p.meta_sumreqs.select{|s| s.group == self}.count]}.sort!{|x,y| y[1] <=> x[1]}.first(10) unless sumreqs.empty?
+end
+   
 end

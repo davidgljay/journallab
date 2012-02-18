@@ -1,0 +1,8 @@
+<div class="sumreq_feed">
+<% @group.sumreq_feed.each do |paper| %>
+  <div class = "feeditem sumreq_feed hideonload">
+   <strong><%= link_to paper[0].title, paper[0] %></strong><%= link_to(image_tag("pdf.png"), "http://pubget.com/paper/" + item[2].pubmed_id.to_s) %><br>
+   <em><%= pluralize(paper[1], "Request") %></em>  
+  </div>
+<% end %>
+</div>

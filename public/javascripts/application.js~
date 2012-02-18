@@ -6,9 +6,29 @@ jQuery.ajaxSetup({
    'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 });
 
+$(document).ready(function(){
+
+//Feed
+
+ 
+ $("div.updates").css('background', '#0CA');
+
+ $("div.updates").click(function(){
+   $("div.update_feed").show();
+   $("div.sumreq_feed").hide();
+   $(this).css('background', '#0CA');
+   $("div.sumreqs").css('background', '#fff');
+  });
+
+ $("div.sumreqs").click(function(){
+   $("div.update_feed").hide();
+   $("div.sumreq_feed").show();
+   $(this).css('background', '#0CA');
+   $("div.updates").css('background', '#fff');
+  });
+
 
 //Paper Detail Page
-$(document).ready(function(){
   $("#abstract").click(function(){
     $("#abstract_short").hide();
     $("#abstract_long").slideToggle('medium');
@@ -105,8 +125,8 @@ $(document).ready(function(){
 //
 
 //Load Summary Form
-$("form.enter_assertion").click(function(){
-//$("form.enter_assertion").mouseover(function(){
+//$("form.enter_assertion").click(function(){
+$("form.enter_assertion").mouseover(function(){
       $(this).hide();
       mpq.track("Summary form called");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");

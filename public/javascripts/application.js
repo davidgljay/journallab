@@ -6,9 +6,29 @@ jQuery.ajaxSetup({
    'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 });
 
+$(document).ready(function(){
+
+//Feed
+
+ 
+ $("div.updates").css('background', '#cdc');
+
+ $("div.updates").click(function(){
+   $("div.update_feed").show();
+   $("div.sumreq_feed").hide();
+   $(this).css('background', '#cdc');
+   $("div.sumreqs").css('background', '#fff');
+  });
+
+ $("div.sumreqs").click(function(){
+   $("div.update_feed").hide();
+   $("div.sumreq_feed").show();
+   $(this).css('background', '#cdc');
+   $("div.updates").css('background', '#fff');
+  });
+
 
 //Paper Detail Page
-$(document).ready(function(){
   $("#abstract").click(function(){
     $("#abstract_short").hide();
     $("#abstract_long").slideToggle('medium');

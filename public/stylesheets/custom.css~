@@ -200,11 +200,12 @@ form.topsearch input[type = "text"] {
 
 .feeditem {
   display: block;
-  padding: 10px;
+  padding: 2px;
   margin-bottom: 5px;
   border: solid;
   border-width: 1px;
   border-color: #000;
+  font-size: 13px;
 }
 
 .feedquote {
@@ -343,7 +344,7 @@ div.alt_approach {
 }
 
 
-td.sumright nav {
+td.sumright nav, .feed nav {
    float: none;
    text-align: left;
    font-size: 80%;
@@ -352,12 +353,12 @@ td.sumright nav {
 
 }
 
-td.sumright nav li {
+td.sumright nav li, .feed nav li {
    margin: 10px;
    cursor: pointer;
 }
 
-td.sumright nav input {
+td.sumright nav input, .feed nav li {
    font-weight: bold;
    text-align: left;
    color: #09c;
@@ -516,7 +517,7 @@ div.share_confirmation {
  padding: 3px;
  color: #fff;
 }
-div.share_button_text {
+nav.undertitle {
  color: #09C;
  font-weight: bold;
  font-size: 80%;

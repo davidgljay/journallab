@@ -14,17 +14,20 @@ end
 
 def graph_by_day(array)
     array.sort!{|x,y| x.created_at <=> y.created_at}
-    finish = array.last.created_at
-    start = array.first.created_at + 1.day
+    days = dayrange(array.first.created_at + 1.day, array.last.created_at)
+    formatted_date = days.map{|day| day.strftime("%D")}
+    values = days.map{|day| array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count}
+    graph = [days,values]
+end
+
+def dayrange(start, finish)
     days = []
     day = start.midnight
     while day < finish.midnight
        days << day
        day += 1.day
     end
-    formatted_date = days.map{|day| day.strftime("%D")}
-    values = days.map{|day| array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count}
-    graph = [formatted_date,values]
+    days
 end
 
 end

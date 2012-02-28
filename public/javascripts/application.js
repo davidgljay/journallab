@@ -16,16 +16,31 @@ $(document).ready(function(){
  $("div.updates").click(function(){
    $("div.update_feed").show();
    $("div.sumreq_feed").hide();
+   $("div.most_viewed_feed").hide();
    $(this).css('background', '#cdc');
    $("div.sumreqs").css('background', '#fff');
+   $("div.most_viewed").css('background', '#fff');
+
   });
 
  $("div.sumreqs").click(function(){
    $("div.update_feed").hide();
    $("div.sumreq_feed").show();
+   $("div.most_viewed_feed").hide();
    $(this).css('background', '#cdc');
    $("div.updates").css('background', '#fff');
+   $("div.most_viewed").css('background', '#fff');
   });
+
+ $("div.most_viewed").click(function(){
+   $("div.update_feed").hide();
+   $("div.sumreq_feed").hide();
+   $("div.most_viewed_feed").show();
+   $(this).css('background', '#cdc');
+   $("div.updates").css('background', '#fff');
+   $("div.sumreqs").css('background', '#fff');
+  });
+
 
 
 //Paper Detail Page

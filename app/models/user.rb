@@ -149,7 +149,7 @@ end
 #Command to share something.
 
   def share!(item, group = get_group, text = '')
-      item.class.find(item.id).shares.create!(:user=> self, :text => text, :meta_paper => item.get_paper)
+      item.class.find(item.id).shares.create!(:user=> self, :text => text, :meta_paper => item.get_paper, :group => group)
   end
 
 # Functionality related to groups

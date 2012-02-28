@@ -111,9 +111,12 @@ end
       end
     end
 
-
-    #Items from papers controller to be able to render assertions. Should be identical to papers controller until I can figure out how to mirror...
     @owner = @assertion.owner
+    #Mark any summary requests on the paper as summarized
+    @owner.sumreqs.each do |s|
+         s.summarized = true
+         s.save
+    end
     @heatmap = @assertion.get_paper.heatmap
     if signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last

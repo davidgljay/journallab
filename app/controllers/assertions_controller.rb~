@@ -6,7 +6,6 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @owner = params[:owner].constantize.find(params[:id])
     @assertions = @owner.assertions.all
     @owner_type = params[:owner]
-    @type = {'paper' => 'paper', 'fig' => 'figure', 'figsection' => 'section'}
     if signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
     else
@@ -21,6 +20,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
   def new
     @about = params[:about].constantize.find(params[:id])
     @assertion = @about.assertions.build
+    @type = {'paper' => 'paper', 'fig' => 'figure', 'figsection' => 'section'}
     if signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
     else
@@ -114,6 +114,10 @@ end
 
     #Items from papers controller to be able to render assertions. Should be identical to papers controller until I can figure out how to mirror...
     @owner = @assertion.owner
+    @owner.sumreqs.each do |s|
+         s.summarized = true
+         s.save
+    end
     @heatmap = @assertion.get_paper.heatmap
     if signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last

@@ -24,7 +24,8 @@
     <% elsif @group.category == "lab" %>
       <%= render '/groups/nav' %>
       <%= render '/groups/feed' %>
-      <%= render '/groups/sumreq_feed' %>
+      <%= render '/groups/most_viewed_feed' %>
+      <%= render '/groups/sumreq_feed' if !@group.sumreq_feed.nil? %>
     <% end %>
 </div>
 <% end %>

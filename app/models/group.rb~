@@ -207,14 +207,40 @@ def feed
    items = []
    items << shares
    users.each do |u|
-     items << u.visits
+     items << u.assertions
+     items << u.comments
+     items << u.questions
    end
-   items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(20) unless items.empty?
+   items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(100) unless items.empty?
+end
+
+def fix_visits
+    Visit.all.each do |v|
+     if v.count.nil?
+        v.count = 0
+        v.save
+     end
+     if v.count == 0
+        v.count = 1
+        v.save
+     end
+    end
+end
+
+#Create a list of the most viewed papers
+
+def most_viewed
+    visits = []
+    users.each do |u|
+      visits << u.visits
+    end
+    papers = visits.flatten!.map{|v| v.paper}.uniq
+    papers.map{|paper| [paper, visits.select{|v| v.paper == paper}.map{|v| v.count}.inject(0){|sum, item| sum + item}]}.sort{|x,y| y[1]<=>x[1]}.first(30)
 end
 
 # List of papers by summary requests for the lab 
 def sumreq_feed
-   sumreqs.map{|s| s.get_paper}.uniq.map{|p| [p, p.meta_sumreqs.select{|s| s.group == self}.count]}.sort!{|x,y| y[1] <=> x[1]}.first(10) unless sumreqs.empty?
+   sumreqs.map{|s| s.get_paper}.uniq.map{|p| [p, p.meta_sumreqs.select{|s| s.group == self && !s.summarized}.count]}.sort!{|x,y| y[1] <=> x[1]} unless sumreqs.empty?
 end
    
 end

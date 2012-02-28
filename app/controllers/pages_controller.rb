@@ -1,4 +1,7 @@
 class PagesController < ApplicationController
+
+before_filter :admin_user,   :only => [:dashboard]
+
   def home
     @title = "Home"
     if signed_in? && !current_user.groups.empty?
@@ -10,34 +13,25 @@ class PagesController < ApplicationController
     @feed = []
     if @group.category == "lab"
       @group.feed.each do |item|
-        if item.class == Visit
-          discussion = item.user.comments.where("created_at > ?", item.updated_at - 1.day) + item.user.questions.where("created_at > ?", item.updated_at - 1.day)
-          discussed = discussion.map{|c| c.get_paper}.include?(item.paper)
-          last_discussion = discussion.select{|d| d.get_paper == item.paper}.last
-          summarized = item.user.assertions.where("created_at > ?", item.updated_at - 1.day).map{|a| a.get_paper}.include?(item.paper) 
-          if discussed and summarized
-            text = 'discussed and summarized the paper'
-            bold = true
-          elsif discussed
+        if item.class == Comment || item.class == Question
+    #      discussion = item.user.comments.where("created_at > ?", item.updated_at - 1.day) + item.user.questions.where("created_at > ?", item.updated_at - 1.day)
+    #      discussed = discussion.map{|c| c.get_paper}.include?(item.paper)
+    #      last_discussion = discussion.select{|d| d.get_paper == item.paper}.last
+    #      summarized = item.user.assertions.where("created_at > ?", item.updated_at - 1.day).map{|a| a.get_paper}.include?(item.paper) 
             text = 'discussed the paper'
-            bold = true
-          elsif summarized
+            bold = false
+            sharetext = item.text
+            paper = item.get_paper
+         elsif item.class == Assertion
             text = 'summarized the paper'
             bold = false
-          else
-            text = 'viewed the paper'
-          end
-          paper = item.paper
-          if discussed 
-            sharetext = last_discussion.text
-          else
-            sharetext = nil
-          end
-        elsif item.class == Share
-          text = reftext(item)
-          sharetext = item.text
-          bold = true
-          paper = item.meta_paper 
+            sharetext = item.text
+            paper = item.get_paper
+         elsif item.class == Share
+            text = reftext(item)
+            sharetext = item.text
+            bold = false
+            paper = item.meta_paper 
          end
         @feed << [item.user, text, paper, item.updated_at, bold, sharetext]
       end
@@ -82,6 +76,13 @@ class PagesController < ApplicationController
 
   def help
     @title = "Help"
+  end
+
+  def dashboard
+    require 'groups_helper'
+    @title = "Dashboard"
+    @vanity= [["Comments",graph_by_day(Comment.where('created_at > ?', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ?', Time.now - 1.month))],["Views", graph_by_day(Visit.where('created_at > ?', Time.now - 1.month))]]
+    #@ratios= [["Comments per Visit", graph_by_day(
   end
 
 end

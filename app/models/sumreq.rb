@@ -9,4 +9,14 @@ belongs_to :group
 
 validates :user_id, :presence => true, :uniqueness => {:scope => [:paper_id, :fig_id, :figsection_id] } 
 
+def owner
+   if !paper.nil?
+     paper
+   elsif !fig.nil?
+     fig
+   elsif !figsection.nil?
+     figsection
+   end
+end
+
 end

@@ -39,8 +39,6 @@ Redcell::Application.routes.draw do
    match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
 
-#Micropost routes
-resources :microposts, :only => [:create, :destroy]
 
 #Static pages
 
@@ -48,6 +46,7 @@ root :to => 'pages#home'
   match '/contact',  :to => 'pages#contact'
   match '/about',    :to => 'pages#about'
   match '/help',     :to => 'pages#help'
+  match '/dashboard',    :to => 'pages#dashboard'
 
 
 

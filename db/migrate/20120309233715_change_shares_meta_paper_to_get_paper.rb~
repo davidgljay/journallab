@@ -1,0 +1,9 @@
+class ChangeSharesMetaPaperToGetPaper < ActiveRecord::Migration
+  def self.up
+     rename_column :shares, :meta_paper, :get_paper
+  end
+
+  def self.down
+     rename_column :shares, :get_paper, :meta_paper
+  end
+end

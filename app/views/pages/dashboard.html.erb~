@@ -1,0 +1,5 @@
+<h1>Vanity Metrics</h1>
+
+<%= day_line_graph(@vanity) %></br>
+<%= day_line_graph([["Peanuts",[[Time.now - 1.day, 0.5],[Time.now,10],[Time.now + 1.day,101]]]]) %>
+

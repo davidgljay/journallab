@@ -2,9 +2,9 @@
           <% if w.class == Paper %>
              <%= link_to "("+ w.authors.first.lastname + ", " + w.journal + ' ' + w.pubdate.year.to_s + ")", w %>
           <% elsif w.class == Fig %>
-             <%= link_to "(" + w.paper.authors.first.lastname + ", " + w.paper.journal + ' ' + w.paper.pubdate.year.to_s + ", Fig " + (w.num+1).to_s + ")", w.paper %>
+             <%= link_to "(" + w.paper.authors.first.lastname + ", " + w.paper.journal + ' ' + w.paper.pubdate.year.to_s + ", Fig " + (w.num).to_s + ")", w.paper %>
           <% elsif w.class == Figsection %>
-             <%= link_to "(" + w.fig.paper.authors.first.lastname + ", " + w.fig.paper.journal + ' ' + w.fig.paper.pubdate.year.to_s + ", Fig " + (w.num+1).to_s + " Section " + w.letter(w.num) + ")", w.fig.paper %>
+             <%= link_to "(" + w.fig.paper.authors.first.lastname + ", " + w.fig.paper.journal + ' ' + w.fig.paper.pubdate.year.to_s + ", Fig " + w.fig.num.to_s + " Section " + w.letter(w.num) + ")", w.fig.paper %>
           <% else %>
              <%= w %>
           <% end %>

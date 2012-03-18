@@ -89,6 +89,7 @@ end
         @assertion.figsection = Figsection.find(params[:assertion][:owner_id])
         @paper = @assertion.figsection.fig.paper
     end
+    @mode = params[:mode].to_i
    
   #Check to make sure that something was entered.
    if @assertion.text.include?('What is the core conclusion') || @assertion.method.include?('What principle methods')

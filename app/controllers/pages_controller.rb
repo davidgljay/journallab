@@ -31,7 +31,7 @@ before_filter :admin_user,   :only => [:dashboard]
             text = reftext(item)
             sharetext = item.text
             bold = false
-            paper = item.meta_paper 
+            paper = item.get_paper 
          end
         @feed << [item.user, text, paper, item.updated_at, bold, sharetext]
       end
@@ -81,8 +81,82 @@ before_filter :admin_user,   :only => [:dashboard]
   def dashboard
     require 'groups_helper'
     @title = "Dashboard"
-    @vanity= [["Comments",graph_by_day(Comment.where('created_at > ?', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ?', Time.now - 1.month))],["Views", graph_by_day(Visit.where('created_at > ?', Time.now - 1.month))]]
-    #@ratios= [["Comments per Visit", graph_by_day(
+    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ?', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ?', Time.now - 1.month))],["Unique Views", graph_by_day(Visit.where('created_at > ?', Time.now - 1.month))]]
+    start = @vanity.map{|a| a[1].map{|coord| coord[0]}.min}.min
+    finish = @vanity.map{|a| a[1].map{|coord| coord[0]}.max}.max
+    # First, get the full range of days covered by the graph
+    @range = dayrange(start, finish) 
+  end
+
+#
+# Analytics functions for the dashboard (and eventually for other places.)
+#
+
+   # Creates an array of days from "start" to "finish"
+   def dayrange(start, finish)
+     if start > finish
+      s = start
+      start = finish
+      finish = s
+     end
+     days = [start]
+     day = start + 1.day
+     while day <= finish
+      days << day
+      day += 1.day
+     end
+     days
+   end
+
+   # Creates a graph of ratios
+   # Turns [[[day1,x1], [day2,x2]],[[day1,y1]]] into [[day1, x1/y1],[day2,0]]
+
+   def make_ratio_graph(array1, array2)
+     days = dayrange([array1[0][0] + 1.day, array2[0][0] + 1.day].min,[array1[0][-1], array2[0][-1]].max)
+     ratio = [days,[]]
+     days.each do |day|
+     # This may need to change due to change in array structure
+      x = array1[0].map{|a| a.midnight}.include?(day) ? array1[1][array1[0].index(day)] : 0
+      y = array2[0].map{|a| a.midnight}.include?(day) ? array2[1][array2[0].index(day)] : 0
+      float = y == 0 ? 0 : (x.to_f/y.to_f)
+      ratio[1] << [float]
+     end
+     ratio
+   end
+
+   #Accepts two arrays of integers and spits back a float ratio
+
+   def make_ratio(array1, array2)
+     array1.inject(0){|sum, item| sum + item}.to_f/array2.inject(0){|sum, item| sum + item}.to_f
+   end
+
+   #Takes a 2D array
+   def export_data(array, name = "data")
+     CSV.open("public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
+      csv << array
+     end
+   end
+
+   #Takes an array, returns a frequency array by day
+   def graph_by_day(array)
+     array.sort!{|x,y| x.created_at <=> y.created_at}
+     finish = array.last.created_at + 1.day
+     start = array.first.created_at -1.day
+     days = []
+     day = start.midnight
+      while day < finish.midnight
+       days << day
+       day += 1.day
+      end
+     graph = days.map{|day| [day, array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count]}
+     end
+
+  private
+
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
   end
 
 end
+
+

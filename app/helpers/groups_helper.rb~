@@ -6,7 +6,6 @@ module GroupsHelper
 
 #Takes a 2D array
 def export_data(array, name = "data")
-   file = File.open("public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w")
    CSV.open("public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
     csv << array
   end

@@ -1,6 +1,5 @@
 
    $('<%= @owner.jquery_target %>').find('form.commentlist').find('input[type = "submit"]').val('<%= pluralize(@comments.count, 'Comment') %>');  
-//   $('<%= @owner.jquery_target %>').find('td.sumleft').css('background,rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == @owner.class.to_s.downcase && h[1] == @owner.id}[0][3]/100).to_s + ",") * 2 %>181)');
   $('<%= @owner.jquery_target %>').find('td.sumleft').css("background","rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == @owner.class.to_s.downcase && h[1] == @owner.id}[0][3]/100).to_s + ",") * 2 %>181)");
 
    $('<%= @owner.jquery_target %>').find('div.commentbox').html('<%= escape_javascript(render '/comments/list') %>'); 

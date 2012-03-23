@@ -1,7 +1,8 @@
 <div class = "update_feed">
+<% unless @feed.empty? %>
 <% @feed.each do |item| %>
    <div class = "feeditem update_feed floatleft" <%= "style = 'background:#BDD;'" if item[4]%>>
-    <strong><%= item[0].firstname + ' ' + item[0].lastname.first + '.' %></strong> <%= item[1] %> <strong><%= link_to item[2].nil?, item[2] %><%= link_to(image_tag("pdf.png"), "http://pubget.com/paper/") %></strong>
+    <strong><%= item[0].firstname + ' ' + item[0].lastname.first + '.' %></strong> <%= item[1] %> <strong><%= link_to item[2].title, item[2] %><%= link_to(image_tag("pdf.png"), "http://pubget.com/paper/" + item[2].pubmed_id.to_s) %></strong>
      <br>
      <% if !item[5].nil? %>
       <div class = "sharetext">
@@ -10,5 +11,6 @@
      <% end %>
      <em><%= item[3].strftime('%B %d, %Y') %></em>
     </div>
+<% end %>
 <% end %>
 </div>

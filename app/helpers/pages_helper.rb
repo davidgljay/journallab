@@ -61,14 +61,49 @@ def day_line_graph(array)
      " // Create and draw the visualization.
        new google.visualization.LineChart(document.getElementById('" + name + "')).
          draw(data, {curveType: \"none\",
-                  width: 500, height: 500,
+                  width: 700, height: 500,
                   vAxis: {maxValue: 1}}
          );
        }
 
       google.setOnLoadCallback(drawVisualization);
     </script>
-    <div id=\"" + name + "\" style=\"width: 500px; height: 500px;\"></div>"
+    <div id=\"" + name + "\" style=\"width: 700px; height: 500px;\"></div>"
     output.html_safe
 end
+
+#Creates a bar graph of a histogram. For now the graph only supports one variable.
+
+def bar_graph(array, unit_name)
+    name = unit_name.gsub(' ', '_')
+    output =     "<script type=\"text/javascript\" src=\"http://www.google.com/jsapi\"></script>
+    <script type=\"text/javascript\">
+      google.load('visualization', '1', {packages: ['corechart']});
+    </script>
+    <script type=\"text/javascript\">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = new google.visualization.DataTable();
+         data.addColumn('string', 'numbers');
+         data.addColumn('number', '" + unit_name + "');\n"
+     array.each do |coord|
+       output << "data.addRow(['" + coord[0].to_s + "'," + coord[1].to_s + "]);\n"
+      end
+    output << 
+     " // Create and draw the visualization.
+        new google.visualization.ColumnChart(document.getElementById('" + name + "')).
+            draw(data,
+                 {title:\"" + unit_name + "\", 
+                  width:500, height:400,
+                  legend: 'none'}
+            );
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+    <div id=\"" + name + "\" style=\"width: 500px; height: 400px;\"></div>"
+    output.html_safe
+end
+
 end

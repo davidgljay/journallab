@@ -2,6 +2,6 @@
 <ul>
 <li><div class="updates round pad10">Updates</div></li>
 <li><div class="most_viewed round pad10">Most Viewed</div></li>
-<li><div class="sumreqs round pad10"><%= pluralize(@group.sumreq_feed.count, "Summary Request")%></div></li>
+<li><div class="sumreqs round pad10"><%= pluralize(@group.sumreq_feed.map{|s| s[1]}.inject{|sum, n| sum + n}, "Summary Request")%></div></li>
 </ul>
 </nav>

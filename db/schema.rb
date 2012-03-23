@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120224085651) do
+ActiveRecord::Schema.define(:version => 20120309233715) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -184,7 +184,7 @@ ActiveRecord::Schema.define(:version => 20120224085651) do
     t.integer  "paper_id"
     t.integer  "fig_id"
     t.integer  "figsection_id"
-    t.integer  "meta_paper_id"
+    t.integer  "get_paper_id"
     t.integer  "user_id"
     t.integer  "group_id"
     t.text     "text"

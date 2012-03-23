@@ -9,7 +9,8 @@
             <% if signed_in? %>
               <% if current_user.admin? %>
               <li><%= link_to "Add Users", bulksignup_path %></li>
-              <li><%= link_to "Reset Passwords", reset_password_path %>
+              <li><%= link_to "Reset Passwords", reset_password_path %></li>
+              <li><%= link_to "Dashboard", dashboard_path %></li>
               <% end %>
             <li><%= link_to "Profile", current_user %></li>
             <li><%= link_to "Settings", edit_user_path(current_user) %></li>

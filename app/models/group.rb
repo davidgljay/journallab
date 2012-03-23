@@ -240,7 +240,7 @@ end
 
 # List of papers by summary requests for the lab 
 def sumreq_feed
-   sumreqs.map{|s| s.get_paper}.uniq.map{|p| [p, p.meta_sumreqs.select{|s| s.group == self && !s.summarized}.count]}.sort!{|x,y| y[1] <=> x[1]} unless sumreqs.empty?
+   sumreqs.map{|s| s.get_paper}.uniq.map{|p| [p, p.meta_sumreqs.select{|s| s.group == self && !s.summarized}.count]}.sort!{|x,y| y[1] <=> x[1]}.delete_if{|x| x[1] == 0} unless sumreqs.empty?
 end
    
 end

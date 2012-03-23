@@ -85,7 +85,12 @@ before_filter :admin_user,   :only => [:dashboard]
     start = @vanity.map{|a| a[1].map{|coord| coord[0]}.min}.min
     finish = @vanity.map{|a| a[1].map{|coord| coord[0]}.max}.max
     # First, get the full range of days covered by the graph
-    @range = dayrange(start, finish) 
+    @range = dayrange(start, finish)
+    @nods_per_discussion = histogram(Comment.where('created_at > ? AND form == ?', Time.now - 1.month, 'comment').map{|c| c.votes.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.votes.count})
+    @replies_per_discussion =  histogram(Comment.where('created_at > ? AND form == ?', Time.now - 1.month, 'comment').map{|c| c.comments.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.comments.count + q.questions.count})
+    @nod_discussion_ratio = make_ratio([Vote.where('created_at > ?', Time.now - 1.month).count],[Comment.where('created_at > ? AND form == ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ?', Time.now - 1.month).count])
+    @reply_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form == ?', Time.now - 1.month, 'reply').count, Question.where('created_at > ? AND question_id IS NOT NULL', Time.now - 1.month).count],[Comment.where('created_at > ? AND form == ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).count])
+    @action_pageview__ratio = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('updated_at > ?', Time.now - 1.month).map{|v| v.count}.inject{|sum, n| sum + n}])
   end
 
 #
@@ -150,6 +155,11 @@ before_filter :admin_user,   :only => [:dashboard]
       end
      graph = days.map{|day| [day, array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count]}
      end
+
+    #Histogram
+    def histogram(array)
+     histo = array.uniq.map{|unit| [unit, array.count{|x| x == unit}]}.sort{|x,y| x[0]<=>y[0]}
+    end
 
   private
 

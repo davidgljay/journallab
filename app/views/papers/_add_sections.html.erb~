@@ -1,6 +1,6 @@
 <div class = "add_figs_and_sections"> 
   Sections A-?
-<%= image_tag 'magnifying_glass.gif', :class=>'expand_image clickme' %>
+<%= image_tag 'magnifying_glass.png', :class=>'expand_image clickme' %>
   <div class = "numselect hideonload">
 
 
@@ -9,7 +9,7 @@
      <div class = "figsection_numselect round">
       <%= link_to 'No Sections', '/figs/' + about.id.to_s + '/build_figsections/0' %>
      </div>
-     <% 14.times do |i| %>
+     <% 24.times do |i| %>
      <div class = "figsection_numselect round">
       <%= link_to 'Sections A-'+ about.figsections.new.letter(i+2), '/figs/' + about.id.to_s + '/build_figsections/' + (i+2).to_s %>
      </div>

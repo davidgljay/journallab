@@ -3,7 +3,7 @@
 <% @search_results.each do |paper| %>
 <div class = "search_results">
     <div class = "sr_title"><%= link_to paper.title, paper %></div>
-    <div class = "sr_info">Pubmed ID:<%= paper.pubmed_id %> | <%= paper.journal %></div>
+    <div class = "sr_info">Pubmed ID:<%= paper.pubmed_id %> | <%= paper.journal %>, <%= paper.pubdate.year unless paper.pubdate == nil %> | <%= link_to(image_tag("pdf.png"), "http://pubget.com/paper/" + paper.pubmed_id.to_s) %> <em><style class="tinytext">(via pubget)</style></em></div>
 </div>
 <% end %>
 

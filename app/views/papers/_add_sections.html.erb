@@ -9,7 +9,7 @@
      <div class = "figsection_numselect round">
       <%= link_to 'No Sections', '/figs/' + about.id.to_s + '/build_figsections/0' %>
      </div>
-     <% 14.times do |i| %>
+     <% 25.times do |i| %>
      <div class = "figsection_numselect round">
       <%= link_to 'Sections A-'+ about.figsections.new.letter(i+2), '/figs/' + about.id.to_s + '/build_figsections/' + (i+2).to_s %>
      </div>

@@ -106,6 +106,7 @@
      <%= form_tag('/assertions/new', :method => "post", :remote => true, :class => 'enter_assertion')  do  %>
        <%= hidden_field_tag :about, about.class.to_s %>
        <%= hidden_field_tag :id, about.id %>
+       <%= hidden_field_tag :mode, @mode %>
        <%= submit_tag(button) %> 
      <% end %>
      <div class='assertion_form'>

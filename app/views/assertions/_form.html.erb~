@@ -1,6 +1,5 @@
  <%= form_for assert, :class => "new_assertion"  do |f| %>
       <%= render 'shared/error_messages', :object => f.object %>
-      <%= hidden_field_tag :mode, @mode %>
       <div class="field">
          <% if assert.owner.latest_assertion.nil? || (@group.category == "class" && !current_user.lead_of?(@group)) %>
            <%= f.text_field :text, :value =>  "What is the core conclusion of this " + type + "?" %>
@@ -20,6 +19,8 @@
         </div>
          <%= f.hidden_field :about, :value => assert.owner.class.to_s.downcase %>
          <%= f.hidden_field :owner_id, :value => assert.owner.id.to_s %>
+         <%= f.hidden_field :mode, @mode %>
+
          <%= f.submit "Submit" %>
       <% end %>
 

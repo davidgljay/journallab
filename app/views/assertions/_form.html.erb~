@@ -2,9 +2,9 @@
       <%= render 'shared/error_messages', :object => f.object %>
       <div class="field">
          <% if assert.owner.latest_assertion.nil? || (@group.category == "class" && !current_user.lead_of?(@group)) %>
-           <%= f.text_field :text, :value =>  "What is the core conclusion of this " + type + "?" %>
+           <%= f.text_area :text, :value =>  "What is the core conclusion of this " + type + "?", :size => '500x150' %>
            <br>
-           <%= f.text_field :method, :value => "What principal methods are used?" %>
+           <%= f.text_area :method, :value => "What principal methods are used?", :size => '500x80' %>
            <%= f.text_field :alt_approach, :value => "What are alternate approaches?" if @group.category == 'class'%>
 
          <% else %>
@@ -19,7 +19,7 @@
         </div>
          <%= f.hidden_field :about, :value => assert.owner.class.to_s.downcase %>
          <%= f.hidden_field :owner_id, :value => assert.owner.id.to_s %>
-         <%= f.hidden_field :mode, @mode %>
+         <%= f.hidden_field :mode, :value => @mode %>
 
          <%= f.submit "Submit" %>
       <% end %>

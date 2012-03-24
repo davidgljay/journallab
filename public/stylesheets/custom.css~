@@ -358,7 +358,7 @@ td.sumright nav li, .feed nav li {
    cursor: pointer;
 }
 
-td.sumright nav input, .feed nav li {
+td.sumright nav input, .feed nav input {
    font-weight: bold;
    text-align: left;
    color: #09c;

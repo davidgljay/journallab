@@ -16,7 +16,7 @@ def latest_assertion
      assert_list.last
 end
 
-def letter(n)
+def letter(n = self.num)
     letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     letters[n-1]
 end
@@ -47,5 +47,12 @@ def jquery_target
    "div#fig_" + fig.num.to_s + "_sections tr#figsection" + num.to_s
 end
 
+def shortname
+    "Fig " + fig.num.to_s + letter
+end
+
+def longname
+    "Fig " + num.to_s + letter + " of " + fig.paper.title
+end
 
 end

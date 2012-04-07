@@ -38,11 +38,12 @@ describe "Questions:" do
        click_button "Add a Question"
        fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 
+       page.should have_selector('li.replylink')       
        find('li.replylink').click
        fill_in 'comment_text', :with => "That's so smart I'm commenting."
-       click_button 'Submit' 
+       click_button 'Submit'
        find('li.answerlink').click
-       find('answerform').fill_in 'question_text', :with => "Here's an answer to your question."
+       fill_in 'question_text', :with => "Here's an answer to your question."
        click_button 'Submit' 
        page.should have_content("I have an incredibly intelligent thing to say.")
        page.should have_content("That's so smart I'm commenting.")

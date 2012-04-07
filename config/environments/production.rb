@@ -34,8 +34,18 @@ Redcell::Application.configure do
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
-  # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
+
+  #Send mail and raise delivery errors
+  config.action_mailer.smtp_settings = {
+    :address => 'smtp.gmail.com',
+    :port => 587,
+    :domain               => 'journallab.com',
+    :user_name            => 'david@journallab.com',
+    :password             => 'stemcellironman',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true  }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
 
   # Enable threaded mode
   # config.threadsafe!

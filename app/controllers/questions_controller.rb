@@ -51,6 +51,9 @@ before_filter :authenticate
     @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     respond_to do |format|
       if @question.save
+         if !@question.question.nil?
+            Mailer.comment_response(@question).deliver
+         end
          format.js
         format.html { redirect_to url }
 #        format.xml  { render :xml => @comment, :status => :created, :location => @question }

@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
                            :dependent => :destroy
         has_many :groups, :through => :memberships, :source => :group
 	has_many :sumreqs, :dependent => :destroy
-
+        has_many :maillogs
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

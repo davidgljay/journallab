@@ -25,10 +25,10 @@ describe "Searches:" do
   describe "entering text into the homepage" do
     it "loads search results" do
      visit root_path
-     fill_in "pubmed_id", :with => "judson"
+     fill_in "pubmed_id", :with => "judson, robert"
      click_button "Search"
      within('body') { page.should have_content('Search Results') }
-     click_link 'Efficacy and Safety of Apremilast in Chronic Cutaneous Sarcoidosis.'
+     click_link 'Multiple targets of miR-302 and miR-372 promote reprogramming of human fibroblasts to induced pluripotent stem cells.'
      page.should have_content('Judson')
    end
   end

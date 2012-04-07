@@ -133,6 +133,13 @@ def get_paper
     self
 end
 
+def shortname
+    "Overall Paper"
+end
+
+def longname
+    title
+end
 def num
     nil
 end

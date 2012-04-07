@@ -10,23 +10,52 @@ describe PapersController do
     @mock_paper ||= mock_model(Paper, stubs).as_null_object
   end
 
-  describe "GET index" do
-    it "assigns all papers as @papers" do
-      Paper.stub(:all) { [mock_paper] }
-      get :index
-      assigns(:papers).should eq([mock_paper])
+
+  describe "user functions" do
+    before(:each) do
+      @paper = Factory(:paper)
+      @paper.lookup_info
+      @user = Factory(:user)
+      test_sign_in(@user)
+    end
+  
+
+    describe "GET show" do
+      it "assigns the requested paper as @paper" do
+        get :show, :id => @paper.id
+        assigns(:paper).should == @paper
+      end
+    end
+
+    describe "pubmed id lookup" do
+   
+      it "should look up an existing paper" do
+        get :lookup, :pubmed_id => @paper.pubmed_id.to_s
+        response.should redirect_to(@paper)
+      end
+    end
+
+    describe "show from mail" do
+       
+       before(:each) do
+          @maillog = Maillog.create!(:user => @user, :about => @paper, :purpose => 'comment_response')
+       end
+
+       it "should mark a conversion if the paper matches" do
+          get :show_from_mail, :id => @paper.id, :m_id => @maillog.id
+          Maillog.find(@maillog.id).conversiona.should_not be nil
+          response.should redirect_to(@paper)
+       end
+
+       it "should not mark a conversion if the paper does not match" do
+          @paper2 = Factory(:paper, :pubmed_id => '7809879')
+          get :show_from_mail, :id => @paper2.id, :m_id => @maillog.id
+          @maillog.conversiona.should be nil
+          response.should redirect_to(@paper2)
+       end
     end
   end
-
-  describe "GET show" do
-    it "assigns the requested paper as @paper" do
-      Paper.stub(:find).with("37") { mock_paper }
-      get :show, :id => "37"
-      assigns(:paper).should be(mock_paper)
-    end
-  end
-
-
+  
   describe "admin function" do
   
      before(:each) do
@@ -34,21 +63,13 @@ describe PapersController do
         test_sign_in(@admin)
      end
 
-     describe "GET new" do
-       it "assigns a new paper as @paper" do
-         Paper.stub(:new) { mock_paper }
-         get :new
-         assigns(:paper).should be(mock_paper)
-       end
-     end
-
-     describe "GET edit" do
-        it "assigns the requested paper as @paper" do
-          Paper.stub(:find).with("37") { mock_paper }
-          get :edit, :id => "37"
-          assigns(:paper).should be(mock_paper)
-        end
-     end
+    describe "GET index" do
+      it "assigns all papers as @papers" do
+        @paper = Factory(:paper)
+        get :index
+        assigns(:papers).should eq([@paper])
+      end
+    end
 
      describe "with valid params" do
         it "assigns a newly created paper as @paper" do
@@ -78,42 +99,6 @@ describe PapersController do
         end
       end
 
-      describe "PUT update" do
-        describe "with valid params" do
-          it "updates the requested paper" do
-            Paper.stub(:find).with("37") { mock_paper }
-            mock_paper.should_receive(:update_attributes).with({'these' => 'params'})
-            put :update, :id => "37", :paper => {'these' => 'params'}
-          end
-
-          it "assigns the requested paper as @paper" do
-            Paper.stub(:find) { mock_paper(:update_attributes => true) }
-            put :update, :id => "1"
-            assigns(:paper).should be(mock_paper)
-          end
-
-          it "redirects to the paper" do
-            Paper.stub(:find) { mock_paper(:update_attributes => true) }
-            put :update, :id => "1"
-            response.should redirect_to(paper_url(mock_paper))
-          end
-        end
-
-        describe "with invalid params" do
-          it "assigns the paper as @paper" do
-            Paper.stub(:find) { mock_paper(:update_attributes => false) }
-            put :update, :id => "1"
-            assigns(:paper).should be(mock_paper)
-          end
-
-          it "re-renders the 'edit' template" do
-            Paper.stub(:find) { mock_paper(:update_attributes => false) }
-            put :update, :id => "1"
-            response.should render_template("edit")
-          end
-        end
-      end
-
       describe "DELETE destroy" do
         it "destroys the requested paper" do
           Paper.stub(:find).with("37") { mock_paper }
@@ -127,25 +112,5 @@ describe PapersController do
           response.should redirect_to(papers_url)
         end
       end
-     
-      describe "pubmed id lookup" do
-   
-        before(:each) do
-           @paper = Paper.create(:pubmed_id => '18276894')
-           @paper.lookup_info
-        end
-
-        it "should look up an existing paper" do
-          get :lookup, :pubmed_id => @paper.pubmed_id.to_s
-          response.should redirect_to(@paper)
-        end
-
-        #it "should create a new paper if one doesn't exist for that pubmed id" do
-        #  get :lookup, :pubmed_id => '1234' 
-        #  response.should have_selector("p", '1234')
-        #end     
-
-      end
-
     end
 end

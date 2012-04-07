@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h2>Journal Lab</h2> 
+    <p>"<%= @share.text %>" -<%= @user.name %></p> 
+    <p>For more information, you should check out <a href="<%= @m_url%>"><strong><%= @item_name %></strong></a>:</p>
+    <p><em><%= @reply %></em></p>
+    <p>You can view the reply here:</p></br>
+    <%= link_to @url, @m_url %></br>
+    <p>Best,</p>
+    <p>The Journal Lab Team</p>
+  </body>
+</html>

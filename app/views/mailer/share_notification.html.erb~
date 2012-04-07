@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h2>Journal Lab</h2> 
+    <p><h4>"<%= @share.text %>"</h4> -<%= @user.name %></p> 
+    <p>For more information, you should check out <a href="<%= @m_url%>"><strong><%= @item_name %></strong></a>:</p>
+    <% if @item_summary %>
+    <p><h3><%= @item_summary.text %></h3></br>
+    <em><%= @item_summary.method %></em></p>
+    <% end %>
+    <p>You can view the the paper here:</p></br>
+    <%= link_to @url, @m_url %></br>
+    <p>
+    <%= render unsubscribe %></p>
+
+  </body>
+</html>

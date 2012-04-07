@@ -1,0 +1,5 @@
+<table><tr>
+<td style="border-right:none;color:#999999;font-size:11px;border-bottom:none;font-family:'lucida grande',tahoma,verdana,arial,sans-serif;border:none;border-top:none;padding:30px 20px;border-left:none">If you don't want to receive these emails from Journal Lab in the future, please click: 
+<%= link_to 'unsubscribe', user_path(@user, :only_path => false ) + '/unsubscribe', :style => "color:#3b5998;text-decoration:none" %>.<br></td>
+</td>
+</table>

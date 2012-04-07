@@ -38,9 +38,10 @@ describe "Questions:" do
        click_button "Add a Question"
        fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 
+       page.should have_selector('li.replylink')       
        find('li.replylink').click
        fill_in 'comment_text', :with => "That's so smart I'm commenting."
-       click_button 'Submit' 
+       click_button 'Submit'
        find('li.answerlink').click
        fill_in 'question_text', :with => "Here's an answer to your question."
        click_button 'Submit' 
@@ -51,7 +52,7 @@ describe "Questions:" do
        click_link 'Sign out'
        visit '/signin'
        fill_in "session_email", :with => @user2.email
-       find('answerform').fill_in "session_password", :with => @user2.password
+       fill_in "session_password", :with => @user2.password
        click_button "Sign in"
        visit '/papers/' + @paper.id.to_s
        click_button 'vote_submit'

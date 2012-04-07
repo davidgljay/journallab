@@ -59,7 +59,7 @@ describe "Comments:" do
 
      it "adds a comment to a figure section and lets you reply", :js => true do
        find('div.figtoggle').click
-       find('#figsection1').click_button "Add a Comment"
+       find('#fig_1_sections').find('#figsection1').click_button "Add a Comment"
        fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 
        find('li.replylink').click

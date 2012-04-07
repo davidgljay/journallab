@@ -3,7 +3,7 @@ before_filter :authenticate
 
   def list
     @owner = params[:owner].constantize.find(params[:id])
-    @group = current_user.groups.last
+    @group = current_user.get_group
     @mode = params[:mode].to_i
     @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     @owner_type = params[:owner]
@@ -39,7 +39,7 @@ before_filter :authenticate
     end
     @question.save
     @owner = @question.owner
-    @group = current_user.groups.last
+    @group = current_user.get_group
     @heatmap = @owner.get_paper.heatmap
     if @question.user.groups.empty?
        @question.is_public = true

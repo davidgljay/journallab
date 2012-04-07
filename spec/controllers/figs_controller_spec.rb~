@@ -1,0 +1,24 @@
+require 'spec_helper'
+
+describe FigsController do
+
+  describe "GET 'build_sections'" do
+    before(:each) do
+      @paper = Factory(:paper)
+      @paper.buildout([3,2,2,2])
+      @user = Factory(:user)
+      test_sign_in(@user)
+      get 'build_sections', :id => @paper.id, :num => '3'
+
+    end
+     
+    it "should be successful" do
+      response.should redirect_to(@paper)
+    end
+    
+    it "should build three figures" do
+      @paper.figs.count.should == 3
+    end
+  end
+
+end

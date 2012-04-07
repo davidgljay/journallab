@@ -14,26 +14,6 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
     end
   end
 
-# This is legacy code
-#  def discussion
-#    if params[:about] == "papers"
-#       @owner = Paper.find(params[:id])
-#    elsif params[:about] == "figs"
-#       @owner = Fig.find(params[:id])
-#    elsif params[:about] == "figsections"
-#       @owner = Figsection.find(params[:id])
-#    end
-#    @assertion = @owner.latest_assertion
-#    @newcomment = @owner.comments.build
-#    @newquestion = @owner.questions.build
-#    @comments = @owner.comments.all.sort_by{|a| a.votes.count}.reverse
-#    @questions = @owner.questions.all.sort_by{|a| a.votes.count}.reverse
-#    respond_to do |format|
-#      format.html # show.html.erb
-#      format.xml  { render :xml => @comment }
-#    end
-#  end
-
   # GET /papers/1
   # GET /papers/1.xml
   def show
@@ -77,7 +57,6 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
     else
        @mode = 2
     end
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @paper }
@@ -95,6 +74,16 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
     end
   end
 
+  # GET /papers/1/m/1
+  # For tracking links to paper from e-mail
+  def show_from_mail
+    @maillog = Maillog.find(params[:m_id])
+    @paper = Paper.find(params[:id])
+    @maillog.conversiona = Time.now if @maillog.conversiona.nil? && @maillog.about.get_paper == @paper
+    @maillog.save
+    redirect_to @paper
+  end
+  
   # GET /papers/1/edit
   def edit
     @paper = Paper.find(params[:id])

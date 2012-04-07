@@ -1,0 +1,13 @@
+<%= @intro %>
+<%= @commenter.name %> has replied to your <%= @type %> about<%= @owner + @paper.title %>:
+----------------------------------------------
+<%= @reply %></em></p>
+----------------------------------------------
+You can view the reply here:
+<%= paper_path(@paper, :only_path => false )%>
+
+Best,
+The Journal Lab Team
+
+<%= render 'unsubscribe_text' %>
+

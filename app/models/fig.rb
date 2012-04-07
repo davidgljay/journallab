@@ -52,4 +52,12 @@ def jquery_target
    'tr#fig' + num.to_s
 end
 
+def shortname
+    "Fig " + num.to_s
+end
+
+def longname
+    "Fig " + num.to_s + " of " + paper.title
+end
+
 end

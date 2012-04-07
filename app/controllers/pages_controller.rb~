@@ -14,10 +14,6 @@ before_filter :admin_user,   :only => [:dashboard]
     if @group.category == "lab"
       @group.feed.each do |item|
         if item.class == Comment || item.class == Question
-    #      discussion = item.user.comments.where("created_at > ?", item.updated_at - 1.day) + item.user.questions.where("created_at > ?", item.updated_at - 1.day)
-    #      discussed = discussion.map{|c| c.get_paper}.include?(item.paper)
-    #      last_discussion = discussion.select{|d| d.get_paper == item.paper}.last
-    #      summarized = item.user.assertions.where("created_at > ?", item.updated_at - 1.day).map{|a| a.get_paper}.include?(item.paper) 
             text = 'discussed the paper'
             bold = false
             sharetext = item.text

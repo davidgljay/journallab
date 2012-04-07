@@ -12,6 +12,7 @@ belongs_to :question
 
 has_many :comments
 has_many :votes
+has_many :maillogs, :as => :about
 
 
 has_many :filters, :foreign_key => "comment_id",

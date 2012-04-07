@@ -8,6 +8,7 @@ belongs_to :fig
 belongs_to :figsection
 belongs_to :assertion
 belongs_to :question
+has_many :maillogs, :as => :about
 
 #A question owned by another question is an answer.
 has_many :questions

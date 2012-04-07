@@ -8,6 +8,7 @@ belongs_to :fig
 belongs_to :figsection
 belongs_to :assertion
 belongs_to :question
+has_many :maillogs, :as => :about
 
 #A question owned by another question is an answer.
 has_many :questions
@@ -60,13 +61,7 @@ def linktext
 end         
 
 def get_paper
-   if self.paper
-     self.paper
-   elsif self.fig
-     self.fig.paper
-   elsif self.figsection
-     self.figsection.fig.paper
-   end
+   owner.get_paper
 end
 
 def owner

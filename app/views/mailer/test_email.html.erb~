@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Hello <%= @user.firstname %>!</h1>
+    <p>
+      This is a test of our e-mail system. It should only be getting sent to our system administrators, if you're receiving it then there's probably some sort of problem. Please e-mail info@thejournallab.com and let us know what you were doing when you recieved it!<br/>
+    </p>
+    <p>Best,</p>
+    <p>David Jay</p>
+  </body>
+</html>

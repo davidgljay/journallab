@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120309233715) do
+ActiveRecord::Schema.define(:version => 20120406201730) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -119,6 +119,17 @@ ActiveRecord::Schema.define(:version => 20120309233715) do
     t.datetime "updated_at"
   end
 
+  create_table "maillogs", :force => true do |t|
+    t.string   "purpose"
+    t.integer  "user_id"
+    t.integer  "about_id"
+    t.string   "about_type"
+    t.datetime "conversiona"
+    t.datetime "conversionb"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "group_id"
@@ -191,6 +202,12 @@ ActiveRecord::Schema.define(:version => 20120309233715) do
     t.integer  "tone"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "subscriptions", :force => true do |t|
+    t.string  "category"
+    t.integer "user_id"
+    t.boolean "receive_mail"
   end
 
   create_table "sumreqs", :force => true do |t|

@@ -6,6 +6,7 @@ has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
 has_many :questions, :dependent => :destroy
 has_many :shares, :dependent => :destroy
+has_many :sumreqs, :dependent => :destroy
 
 validates :fig_id, :presence => true
 
@@ -15,7 +16,7 @@ def latest_assertion
      assert_list.last
 end
 
-def letter(n)
+def letter(n = self.num)
     letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
     letters[n-1]
 end
@@ -46,5 +47,12 @@ def jquery_target
    "div#fig_" + fig.num.to_s + "_sections tr#figsection" + num.to_s
 end
 
+def shortname
+    "Fig " + fig.num.to_s + letter
+end
+
+def longname
+    "Fig " + num.to_s + " of " + fig.paper.title
+end
 
 end

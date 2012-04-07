@@ -15,7 +15,7 @@ has_many :visits, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :meta_shares, :class_name => "Share"
 has_many :sumreqs, :dependent => :destroy
-has_many :sumreqs, :class_name => "Sumreq", :foreign_key => "get_paper_id"
+has_many :meta_sumreqs, :class_name => "Sumreq", :foreign_key => "get_paper_id"
 has_many :filters, :foreign_key => "paper_id",
                            :dependent => :destroy
 has_many :groups, :through => :filters, :source => :group
@@ -133,6 +133,13 @@ def get_paper
     self
 end
 
+def shortname
+    "Overall Paper"
+end
+
+def longname
+    title
+end
 def num
     nil
 end

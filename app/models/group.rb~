@@ -230,17 +230,27 @@ end
 #Create a list of the most viewed papers
 
 def most_viewed
-    visits = []
-    users.each do |u|
-      visits << u.visits
-    end
-    papers = visits.flatten!.map{|v| v.paper}.uniq
-    papers.map{|paper| [paper, visits.select{|v| v.paper == paper}.map{|v| v.count}.inject(0){|sum, item| sum + item}]}.sort{|x,y| y[1]<=>x[1]}.first(30)
+    visits = users.map{|u| u.visits}
+    papers = visits.flatten!.map{|v| v.paper_id}.uniq.map{|id| Paper.find(id)}
+    papers.map{|paper| [paper, visits.select{|v| v.paper_id == paper.id}.map{|v| v.count}.inject(0){|sum, item| sum + item}]}.sort{|x,y| y[1]<=>x[1]}.first(30)
 end
 
-# List of papers by summary requests for the lab 
+# List of papers by summary request for the lab 
 def sumreq_feed
-   sumreqs.map{|s| s.get_paper}.uniq.map{|p| [p, p.meta_sumreqs.select{|s| s.group == self && !s.summarized}.count]}.sort!{|x,y| y[1] <=> x[1]}.delete_if{|x| x[1] == 0} unless sumreqs.empty?
+   unless sumreqs.empty?
+     sumreq_papers = sumreqs.map{|s| s.get_paper_id}.uniq.map{|id| Paper.find(id)}
+     sumreq_array = []
+     sumreq_papers.each do |p|
+        p_sumreqs = sumreqs.select{|s| s.get_paper == p && !s.summarized}          
+        sumreq_array << [p, p_sumreqs.count, p_sumreqs.map{|s| [s.owner.shortname, p_sumreqs.select{|p_s| p_s.owner_id == s.owner_id}.count]}.uniq]
+     end
+     sumreq_array.sort!{|x,y| y[1] <=> x[1]}.delete_if{|x| x[1] == 0}
+     sumreq_array
+   end
 end
-   
+  
+def sumreq_count
+   sumreqs.select{|s| !s.summarized}.count
+end
+
 end

@@ -1,0 +1,2 @@
+If you don't want to receive these emails from Journal Lab in the future, please visit:  <%= user_path(@user, :only_path => false ) + '/unsubscribe'%>
+

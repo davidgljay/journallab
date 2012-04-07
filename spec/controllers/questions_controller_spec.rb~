@@ -1,0 +1,23 @@
+require 'spec_helper'
+
+describe QuestionsController do
+
+  describe "GET 'list'" do
+
+    before(:each) do
+      @paper = Factory(:paper, :pubmed_id => '7897390')
+      @paper.buildout([2,2,1])
+      @user = Factory(:user, :email => Factory.next(:email))
+      test_sign_in(@user)
+      @question = Factory(:question, :paper_id => @paper.id)
+      @question.paper = @paper
+      @question.save
+    end
+
+    it "should be successful" do
+      get 'list', :owner => 'Paper', :id => @paper.id, :mode => 2 
+      response.should be_success
+    end
+  end
+
+end

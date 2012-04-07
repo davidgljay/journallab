@@ -50,9 +50,16 @@ end
 Factory.define :comment do |comment|
     comment.text "Lorem ipsum."
     comment.association :user, :email => "unique@email.com"
-    comment.association :paper, :pubmed_id => rand(999999999) + 100
+    comment.association :paper, :pubmed_id => rand(999999999) + 100, :title => "The Smartest Science Ever"
     comment.association :assertion
     comment.form "comment"
+end
+
+Factory.define :question do |comment|
+    comment.text "Lorem ipsum."
+    comment.association :user, :email => "unique@email.com"
+    comment.association :paper, :pubmed_id => rand(999999999) + 100, :title => "The Smartest Science Ever"
+    comment.association :assertion
 end
 
 #Factory.sequence :pubmed do |n|

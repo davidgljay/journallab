@@ -48,6 +48,10 @@ before_filter :authenticate
     @comments = @owner.comments.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     respond_to do |format|
       if @comment.save
+         #Send an e-mail if the comment is a reply
+         if !@comment.comment.nil? || !comment.question.nil?
+            Mailer.comment_response(@comment).deliver
+         end
          format.js
 #        flash[:success] = 'Comment added, excellent point.'
         format.html { redirect_to url }

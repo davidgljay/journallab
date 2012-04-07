@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h2>Journal Lab</h2> 
+    <h3><%= @intro %></h3>
+    <p><%= @commenter.name %> has replied to your <%= @type%> about<%= @owner %><a href="<%= @m_url%>"><strong><%= @paper.title %></strong></a>:</p>
+    <p><em><%= @reply %></em></p>
+    <p>You can view the reply here:</p></br>
+    <%= link_to @url, @m_url %></br>
+    <p>Best,</p>
+    <p>The Journal Lab Team</p>
+    <%= render 'unsubscribe' %>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+Journal Lab
+ 
+"<%= @share.text %>" 
+-<%= @user.name %> 
+
+For more information, you should check out <%= @item_name %>:
+--------------
+    <% if @item_summary %>
+    <%= @item_summary.text %>
+    <%= @item_summary.method %>
+    <% end %>
+    You can view the the paper here:
+    <%= @m_url %>
+
+    <%= render 'unsubscribe_text' %>

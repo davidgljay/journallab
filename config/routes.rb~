@@ -35,6 +35,7 @@ Redcell::Application.routes.draw do
    match '/grab_images(/:id)', :to => 'papers#grab_images'
    match '/papers(/:id)/build_figs(/:num)', :to => 'papers#build_figs'
    match 'paper_show',               :to => 'papers#show'
+   match '/papers(/:id)/m(/:m_id)', :to => 'papers#show_from_mail'
 
    match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
@@ -59,18 +60,12 @@ resources :sessions, :only => [:new, :create, :destroy]
 #Users routes
 
 resources :users do
-   member do
-     get :following, :followers
-   end
- end
   match '/reset_password', :to => 'users#reset_password'
-
   match '/signup',   :to => 'users#new'
   match '/bulksignup', :to => 'users#bulk_new', :via => :get 
   match '/bulksignup', :to => 'users#bulk_create', :via => :post 
-#Relationship routes
+  match '/users(/:id)/unsubscribe', :to => 'users#unsubscribe'
 
-resources :relationships, :only => [:create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

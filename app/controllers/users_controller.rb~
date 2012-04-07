@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 before_filter :authenticate, :except => [:new, :create]
-before_filter :correct_user, :only => [:edit, :update]
+before_filter :correct_user, :only => [:edit, :update, :unsubscribe]
 before_filter :admin_user,   :only => [:create, :new, :destroy]
   def index
     @title = "All users"
@@ -17,6 +17,12 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
    @title = "Sign up users"
    @user = User.new
    @groups = Group.all
+  end
+
+  def unsubscribe
+   @user = User.find(params[:id])
+   @user.receive_mail = false
+   @user.save
   end
 
   def reset_password

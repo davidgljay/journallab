@@ -1,6 +1,6 @@
  <header>
        <% unless @title == 'Home' %>
-          <% logo = image_tag("journallab.png", :alt => "The Journal Lab", :id => 'small_logo', :class => "round") %>
+          <% logo = image_tag("journallab.png", :alt => "Journal Lab", :id => 'small_logo', :class => "round") %>
           <%= link_to logo, root_path %>
         <% end %>
         <nav class="round">
@@ -10,7 +10,7 @@
               <% if current_user.admin? %>
               <li><%= link_to "Add Users", bulksignup_path %></li>
               <li><%= link_to "Reset Passwords", reset_password_path %></li>
-              <li><%= link_to "Dashboard", reset_password_path %></li>
+              <li><%= link_to "Dashboard", dashboard_path %></li>
               <% end %>
             <li><%= link_to "Profile", current_user %></li>
             <li><%= link_to "Settings", edit_user_path(current_user) %></li>

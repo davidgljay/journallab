@@ -20,9 +20,9 @@ before_filter :authenticate
        @question = Question.new(:text => params[:question][:text])
        @question.question = Question.find(params[:question][:reply_to])
        flash[:success] = "Thank you for your answer."
-    elsif params[:question][:format] == 'comment'
-      @question = Comment.new(:text => params[:question][:text])
-      flash[:success] = "Your comment has been added."
+ #   elsif params[:question][:format] == 'comment'
+ #     @question = Comment.new(:text => params[:question][:text])
+ #     flash[:success] = "Your comment has been added."
     end
     @mode = params[:mode].to_i
     @question.user = current_user
@@ -40,7 +40,9 @@ before_filter :authenticate
     @question.save
     @owner = @question.owner
     @group = current_user.get_group
-    @heatmap = @owner.get_paper.heatmap
+    @paper = @owner.get_paper
+    @paper.add_heat(@owner)
+    @heatmap = @paper.heatmap
     if @question.user.groups.empty?
        @question.is_public = true
     elsif @mode == 2
@@ -51,7 +53,14 @@ before_filter :authenticate
     @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     respond_to do |format|
       if @question.save
-         format.js
+         if !@question.question.nil?
+            @thread = @question.question
+            #Send the comment to the original commenter and anyone else in the thread, except the current poster
+            ([@thread.user] + @thread.questions.map{|q| q.user} + @thread.comments.map{|c| c.user}).uniq.each do |u|
+               Mailer.comment_response(@question, u).deliver #if u != @question.user && u.receive_mail?
+            end
+         end
+        format.js
         format.html { redirect_to url }
 #        format.xml  { render :xml => @comment, :status => :created, :location => @question }
 #      else

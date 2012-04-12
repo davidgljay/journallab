@@ -326,4 +326,20 @@ describe UsersController do
     end
   end
 
+  describe "unsubscribe" do
+      before(:each) do
+        @user = Factory(:user, :email => Factory.next(:email))
+      end
+
+      it "should unsubscribe the user" do
+        test_sign_in(@user)
+        get :unsubscribe, :id => @user
+        @user.receive_mail?.should == false
+      end
+
+      it "should require the user to sign in" do
+        get :unsubscribe, :id => @user
+        response.should redirect_to(signin_path)
+      end
+   end
 end

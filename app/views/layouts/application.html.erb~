@@ -4,8 +4,8 @@
     <title><%= title %></title>
     <%= csrf_meta_tag %>
     <%= render 'layouts/stylesheets' %>
-    <%= javascript_include_tag 'jquery.js' %>
-    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js' %>
+    <%= javascript_include_tag 'js/application.js.erb' %>
     <%= javascript_include_tag 'plugins' %>
   </head>
   <body>

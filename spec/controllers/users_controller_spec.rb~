@@ -233,8 +233,8 @@ describe UsersController do
 
       before(:each) do
         @user = test_sign_in(Factory(:user))
-        second = Factory(:user, :name => "Bob", :email => "another@example.com")
-        third  = Factory(:user, :name => "Ben", :email => "another@example.net")
+        second = Factory(:user, :firstname => "Bob", :lastname => "Benson", :email => "another@example.com")
+        third  = Factory(:user, :firstname => "Ben", :lastname => "Bobson", :email => "another@example.net")
 
         @users = [@user, second, third]
        30.times do
@@ -326,4 +326,20 @@ describe UsersController do
     end
   end
 
+  describe "unsubscribe" do
+      before(:each) do
+        @user = Factory(:user, :email => Factory.next(:email))
+      end
+
+      it "should unsubscribe the user" do
+        test_sign_in(@user)
+        get :unsubscribe, :id => @user
+        @user.receive_mail?.should == false
+      end
+
+      it "should require the user to sign in" do
+        get :unsubscribe, :id => @user
+        response.should redirect_to(signin_path)
+      end
+   end
 end

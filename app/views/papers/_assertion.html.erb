@@ -2,13 +2,13 @@
     <tr class = "summary" id = <%= about.class.to_s.downcase + about.num.to_s %> >
     <% if about.class == Paper %>
       <td width="1px"></td>
-    <td class  = "sumleft round core assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == "paper" && h[1] == about.id}[0][3]/100).to_s + ",") * 2 %>181)">
+    <td class  = "sumleft round core assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap["paper" + about.id.to_s][1]/100).to_s + ",") * 2 %>181)">
       Core Conclusion:
     </td>
     <% elsif about.class == Fig %>
            <td width="20px">
            </td>
-           <td class = "sumleft round fig assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == "fig" && h[1] == about.id}[0][3]/100).to_s + ",") * 2 %>181)">
+           <td class = "sumleft round fig assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap["fig" + about.id.to_s][1]/100).to_s + ",") * 2 %>181)">
            Fig <%= about.num.to_s %>:
              <% if about.image.nil? %>
                <% if current_user.admin %>
@@ -30,7 +30,7 @@
            </td>
       <% elsif about.class == Figsection %>
        <td width = "40px"></td>
-       <td class = "sumleft round figsection assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == "figsection" && h[1] == about.id}[0][3]/100).to_s + ",") * 2 %>181)">
+       <td class = "sumleft round figsection assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap["figsection" + about.id.to_s][1]/100).to_s + ",") * 2 %>181)">
          Section <%= about.letter(about.num) %>:  
        </td>
       <% end %>

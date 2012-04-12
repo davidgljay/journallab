@@ -119,7 +119,9 @@ end
          s.summarized = true
          s.save
     end
-    @heatmap = @assertion.get_paper.heatmap
+    @paper = @owner.get_paper
+    @paper.add_heat(@owner)
+    @heatmap = @paper.heatmap
     if signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
     else

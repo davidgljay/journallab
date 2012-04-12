@@ -153,4 +153,26 @@ describe User do
       @user.should be_admin
     end
   end
+
+  describe "unsubscribe functionality" do
+
+    before(:each) do
+      @user = Factory(:user, :email => Factory.next(:email))
+    end
+
+    it "should record an unsubscribe" do
+      @user.unsubscribe
+      @user.subscriptions.first.receive_mail.should == false
+    end
+
+    it "should know when someone is unsubscribed" do
+      @user.unsubscribe
+      @user.receive_mail? == false
+    end
+
+    it "should know when someone is not unsubscribed" do
+      @user.receive_mail? == true
+    end
+  end
+
 end

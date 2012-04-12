@@ -3,7 +3,9 @@ require 'rexml/document'
 require 'nokogiri'
 require 'open-uri'
 
-#Links
+serialize :h_map
+
+#Associations
 has_many :authorships, :foreign_key => "paper_id",
                            :dependent => :destroy
 has_many :authors, :through => :authorships, :source => :author
@@ -29,10 +31,9 @@ has_many :groups, :through => :filters, :source => :group
                          :greater_than => 0
 
 def lookup_info
-  url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s + '?report=xml'
+  url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
   #Check to see if the ID showed up on pubmed, if not return to the homepage.
-  doc = Nokogiri::XML(open(url))
-  data = Nokogiri::XML(doc.children[1].children.text)
+  data = Nokogiri::XML(open(url))
   if data.xpath("/").empty?
      flash = { :error => "This Pubmed ID is not valid." }
      self.destroy
@@ -50,9 +51,8 @@ end
 
 #Derive authors
 def extract_authors
-    url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s + '?report=xml'
-    doc = Nokogiri::XML(open(url))
-    data = Nokogiri::XML(doc.children[1].children.text)
+    url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pubmed_id.to_s + '&retmode=xml&rettype=abstract'
+    data = Nokogiri::XML(open(url))
     data.xpath('//AuthorList/Author').each do |auth|
      author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
        a = Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
@@ -84,31 +84,62 @@ def grab_images
   end 
 end  
 
+def monthhash
+   monthhash = {
+      'Jan' => 1,
+      'Feb' => 2,
+      'Mar' => 3,
+      'Apr' => 4,
+      'May' => 5,
+      'Jun' => 6,
+      'July' => 7,
+      'Aug' => 8,
+      'Sep' => 9,
+      'Oct' => 10,
+      'Nov' => 11,
+      'Dec' => 12
+      }
+end
+
 #Map how much discussion is going on in each part of the paper.
 def heatmap
-    heatmap = []
-    heatmap << ["paper", id, heat]
-    figs.each do |fig|
-      heatmap << ["fig", fig.id, fig.heat]
-      fig.figsections.each do |s|
-         heatmap << ["figsection", s.id, s.heat]
+    if h_map.nil?
+      heatmap = {}
+      heatmap["paper" + id.to_s] = [heat]
+      figs.each do |fig|
+        heatmap["fig" + fig.id.to_s] = [fig.heat]
+        fig.figsections.each do |s|
+          heatmap["figsection" + s.id.to_s] = [s.heat]
+        end
       end
+      calc_heat(heatmap)     
     end
-    max = heatmap.map{|h| h[2]}.max
-    if max == 0
-      max += 1
-    end
-    heatmap.each do |h|
-      if h[2] > 0
-         a = 1
-      else
-         a = 0
-      end
-      float = h[2].to_f/max * 99 + a
-      h[3] = float.to_i
-    end       
-    heatmap
+    h_map
 end  
+
+#Calculate the relative heat of each element, with 0 being cool and 100 being warm
+
+def calc_heat(heatmap)
+   #Find the maximum number of comments
+   max = heatmap.values.map{|h| h[0]}.max
+   if max == 0
+     max = 1
+   end
+   #Indicate everything else as a percentage
+   heatmap.each do |id, h|
+     h = h[0]
+     float = h.to_f/max * 100
+     heatmap[id] = [h, float.to_i]
+   end
+   self.h_map = heatmap
+   self.save     
+   self.h_map
+end
+
+def add_heat(item)
+    self.h_map[item.class.to_s.downcase + item.id.to_s][0] += 1
+    calc_heat(self.h_map)
+end
 
 def heat
    heat = comments.count
@@ -144,22 +175,7 @@ def num
     nil
 end
 
-def monthhash
-   monthhash = {
-      'Jan' => 1,
-      'Feb' => 2,
-      'Mar' => 3,
-      'Apr' => 4,
-      'May' => 5,
-      'Jun' => 6,
-      'July' => 7,
-      'Aug' => 8,
-      'Sep' => 9,
-      'Oct' => 10,
-      'Nov' => 11,
-      'Dec' => 12
-      }
-end
+
 
 def short_abstract
   unless self.abstract.length < 300
@@ -174,6 +190,9 @@ def build_figs(numfigs)
    newfigs.times do |i|
      self.figs.create(:num => (self.figs.count+1))
    end
+   h_map = nil
+   self.save
+   numfigs
 end
 
 # This is a function for quickly building a paper from the console and for testing purposes.
@@ -185,6 +204,9 @@ def buildout(struct)
            self.figs[i-1].build_figsections(struct[i])
        end
     end
+    h_map = nil
+    self.save
+    struct
 end
 
 

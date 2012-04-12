@@ -37,7 +37,9 @@ before_filter :authenticate
     end
     @comment.save
     @owner = @comment.owner
-    @heatmap = @owner.get_paper.heatmap
+    @paper = @owner.get_paper
+    @paper.add_heat(@owner)
+    @heatmap = @paper.heatmap
     if @comment.user.groups.empty?
        @comment.is_public = true
     elsif @mode == 2
@@ -50,7 +52,11 @@ before_filter :authenticate
       if @comment.save
          #Send an e-mail if the comment is a reply
          if !@comment.comment.nil? || !@comment.question.nil?
-            Mailer.comment_response(@comment).deliver
+            #Send the comment to the original commenter and anyone else in the thread, except the current poster
+            @thread = @comment.comment ? @comment.comment : @comment.question
+            ([@thread.user] + @thread.comments.map{|c| c.user}).uniq.each do |u|
+              Mailer.comment_response(@comment, u).deliver if u != @comment.user && u.receive_mail?
+            end
          end
          format.js
 #        flash[:success] = 'Comment added, excellent point.'

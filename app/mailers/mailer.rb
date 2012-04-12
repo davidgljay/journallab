@@ -9,30 +9,31 @@ class Mailer < ActionMailer::Base
   end
 
   #Someone has responded to your comment
-  def comment_response(response)
+  def comment_response(response,user) 
+      @recipient = user
       if response.class == Comment && !response.comment.nil?
-        @recipient = response.comment.user
-        o = response.comment.owner
+        @thread = response.comment
+        o = @thread.owner
         @type = "comment"
       elsif !response.question.nil?
-        @recipient = response.question.user
-        o = response.question.owner
+        @thread = response.question
+        o = @thread.owner
         @type = "question"
-      end
+      end     
       @commenter = response.user
       @reply = response.text
       @paper = response.get_paper
-      @owner = o.class == Paper ? "" : " " + o.shortname + " of " 
+      @owner = o.class == Paper ? " " : " " + o.shortname + " of " 
       @intro = rand_intro
-      unless @recipient == @commenter && Rails.env != 'development'
-         @maillog = Maillog.create!(:purpose => 'comment_response', :user => @recipient, :about => response)
-         @url = paper_path(@paper, :only_path => false )
-         @m_url = paper_path(@paper, :only_path => false ) + '/m/' + @maillog.id.to_s
-         mail(:to => to(@recipient.email), :subject => "Nerd Alert! Response to your J.Lab " + @type + " on" + @owner + @paper.title)
-      end
+      @maillog = Maillog.create!(:purpose => 'comment_response', :user => @recipient, :about => response)
+      @url = paper_path(@paper, :only_path => false )
+      @m_url = paper_path(@paper, :only_path => false ) + '/m/' + @maillog.id.to_s
+      mail(:to => to(@recipient), :subject => "Response to your J.Lab " + @type + " on" + @owner + @paper.title)
   end
 
-  def share_notification(share)
+  #Notify the appropriate group when something is shared
+  def share_notification(share, user)
+      @recipient = user
       @share = share
       @user = @share.user
       @item = @share.owner
@@ -43,13 +44,10 @@ class Mailer < ActionMailer::Base
       if @share.text.length > @short_sharetext.length
          @short_sharetext << '...' 
       end
-      share.group.users.each do |u|
-        @recipient = u
-        @maillog = Maillog.create!(:purpose => 'share_notification', :user => @recipient, :about => share)
-        @url = paper_path(@paper, :only_path => false )
-        @m_url = paper_path(@paper, :only_path => false ) + '/m/' + @maillog.id.to_s
-        mail(:to => to(@recipient.email), :subject => @user.name + " has shared something on J.lab: " + @short_sharetext)
-      end
+      @maillog = Maillog.create!(:purpose => 'share_notification', :user => @recipient, :about => share)
+      @url = paper_path(@paper, :only_path => false )
+      @m_url = paper_path(@paper, :only_path => false ) + '/m/' + @maillog.id.to_s
+      mail(:to => to(@recipient), :subject => @user.name + " has shared something on J.lab: " + @short_sharetext)
   end 
 
   def rand_intro
@@ -57,7 +55,8 @@ class Mailer < ActionMailer::Base
     intros[rand(intros.length)]
   end
 
-  def to(email)
-    Rails.env == 'development' ? 'test.jlab@gmail.com' : email
+  def to(user)
+    Rails.env == 'development' ? 'test.jlab@gmail.com' : user.email
   end
+
 end

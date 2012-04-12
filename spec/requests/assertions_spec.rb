@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Assertions" do
    before(:each) do
-     @user = Factory(:user)
+     @user = Factory(:user, :email => Factory.next(:email))
      @paper = Factory(:paper)
      @group = Factory(:group)
      @group.add(@user)

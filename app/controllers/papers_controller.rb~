@@ -31,19 +31,15 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 
     @heatmap = @paper.heatmap
     # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
-    if signed_in? && !current_user.groups.empty? 
-      @group = current_user.groups.last
-    else
-      @group = Group.new
-    end
+    @group = current_user.get_group
 
-    @classdates = []
-    @group.filters.each do |f|
-      unless f.date.nil?
-        @classdates << f.date
-      end
-    end
-    @classdates.sort!{|x,y| x <=> y}.uniq! unless @classdates.nil?
+    #@classdates = []
+    #@group.filters.each do |f|
+    #  unless f.date.nil?
+    #    @classdates << f.date
+    #  end
+    #end
+    #@classdates.sort!{|x,y| x <=> y}.uniq! unless @classdates.nil?
   
     #Prep the selection dropdown for selection the # of figs in the paper.  
     @numfig_select = Array.new
@@ -167,19 +163,30 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
       cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+")
 
 # Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
-      url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch
-      doc = Nokogiri::XML(open(url))
-      pids = doc.xpath("//IdList/Id")
+
+      #Get a list of pubmed IDs for the search terms
+      url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch
+      pids = Nokogiri::XML(open(url1)).xpath("//IdList/Id").map{|p| p.text} * ","
+      url2 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
+      data = Nokogiri::XML(open(url2))
       @search_results = []
-      pids.each do |pid|
-         paper = Paper.find_by_pubmed_id(pid.text)
+      data.xpath('//PubmedArticle').count.times do |i|
+         pid = data.xpath('//PMID')[i].text
+         title = data.xpath('//Article/ArticleTitle')[i].text
+         journal = data.xpath('//Journal/Title')[i].text
+         pubdate = nil
+         day = data.xpath('//PubDate/Day')[i].nil? ? nil : data.xpath('//PubDate/Day')[i].text.to_i
+         month = data.xpath('//PubDate/Month')[i].nil? ? nil : monthhash[data.xpath('//PubDate/Month')[i].text]
+         pubdate = Time.local(data.xpath('//PubDate/Year')[i].text.to_i, month, day )
+         abstract = nil
+         unless data.xpath('//Abstract/AbstractText')[i].nil?
+           abstract = data.xpath('//Abstract/AbstractText')[i].text
+         end
+         paper = Paper.find_by_pubmed_id(pid)  
          if paper.nil?
-            paper = Paper.create!(:pubmed_id => pid.text)
-            paper.lookup_info
+            paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
          end
-         unless paper.title.nil?
-            @search_results << paper
-         end
+         @search_results << paper    
       end
       respond_to do |format|
         format.html
@@ -188,9 +195,29 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
      end
   end    
 
+def monthhash
+   monthhash = {
+      'Jan' => 1,
+      'Feb' => 2,
+      'Mar' => 3,
+      'Apr' => 4,
+      'May' => 5,
+      'Jun' => 6,
+      'July' => 7,
+      'Aug' => 8,
+      'Sep' => 9,
+      'Oct' => 10,
+      'Nov' => 11,
+      'Dec' => 12
+      }
+end
+
   def build_figs
       @paper = Paper.find(params[:id])
       @paper.build_figs(params[:num]) 
+      @paper.h_map = nil
+      @paper.save
+      @paper.heatmap
       redirect_to @paper
   end
      

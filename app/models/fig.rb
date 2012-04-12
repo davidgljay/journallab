@@ -26,6 +26,9 @@ def build_figsections(numsections)
       self.figsections.create(:num => (self.figsections.count+1))
      end
    end
+   @paper = get_paper  
+   @paper.h_map = nil
+   @paper.save
 end
 
 def heat

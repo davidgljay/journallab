@@ -96,7 +96,6 @@
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.question").hide("slow");
-    $("div.sharebox").hide("slow");
     $(this).parent().parent().parent().find("div.sharebox").slideToggle();
   });
 

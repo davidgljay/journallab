@@ -15,7 +15,9 @@ describe PapersController do
     before(:each) do
       @paper = Factory(:paper)
       @paper.lookup_info
-      @user = Factory(:user)
+      @user = Factory(:user, :email => Factory.next(:email))
+      @group = Factory(:group)
+      @group.add(@user)
       test_sign_in(@user)
     end
   
@@ -25,6 +27,7 @@ describe PapersController do
         get :show, :id => @paper.id
         assigns(:paper).should == @paper
       end
+
     end
 
     describe "pubmed id lookup" do

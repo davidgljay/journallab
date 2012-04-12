@@ -15,7 +15,9 @@ describe PapersController do
     before(:each) do
       @paper = Factory(:paper)
       @paper.lookup_info
-      @user = Factory(:user)
+      @user = Factory(:user, :email => Factory.next(:email))
+      @group = Factory(:group)
+      @group.add(@user)
       test_sign_in(@user)
     end
   
@@ -24,6 +26,13 @@ describe PapersController do
       it "assigns the requested paper as @paper" do
         get :show, :id => @paper.id
         assigns(:paper).should == @paper
+      end
+
+      it "loads the paper" do
+        get :show, :id => @paper.id
+        response.body.should == "pancakes"
+        response.body.should have_selector("div", :id => "abstract")
+        response.body.should have_selector("input", :value => "Summarize for your lab")
       end
     end
 
@@ -43,7 +52,7 @@ describe PapersController do
 
        it "should mark a conversion if the paper matches" do
           get :show_from_mail, :id => @paper.id, :m_id => @maillog.id
-          Maillog.find(@maillog.id).conversiona.should == Time.now
+          Maillog.find(@maillog.id).conversiona.should_not be nil
           response.should redirect_to(@paper)
        end
 

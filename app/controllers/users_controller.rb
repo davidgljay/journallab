@@ -20,9 +20,7 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
   end
 
   def unsubscribe
-   @user = User.find(params[:id])
-   @user.receive_mail = false
-   @user.save
+   User.find(params[:id]).unsubscribe
   end
 
   def reset_password

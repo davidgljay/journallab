@@ -4,8 +4,13 @@
 # Table name: users
 #
 #  id         :integer         not null, primary key
-#  name       :string(255)
+#  firstname  :string(255)
+#  lastname   :string(255)
 #  email      :string(255)
+#  password   :string(255)
+#  admin      :boolean
+#  anon_name  :string(255)
+#  specialization  :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #
@@ -15,16 +20,6 @@ require 'digest'
 class User < ActiveRecord::Base
 	attr_accessor :password	
 	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link
-
-        has_many :microposts, :dependent => :destroy
-        has_many :relationships, :foreign_key => "follower_id",
-                               :dependent => :destroy
-        has_many :following, :through => :relationships, :source => :followed
-
-        has_many :reverse_relationships, :foreign_key => "followed_id",
-                               :class_name => "Relationship",
-                               :dependent => :destroy
-        has_many :followers, :through => :reverse_relationships, :source => :follower
 
         has_many :assertions
         has_many :comments
@@ -39,6 +34,7 @@ class User < ActiveRecord::Base
         has_many :groups, :through => :memberships, :source => :group
 	has_many :sumreqs, :dependent => :destroy
         has_many :maillogs
+        has_many :subscriptions
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -96,25 +92,6 @@ end
    def self.authenticate_with_salt(id, cookie_salt)
        user= find_by_id(id)
        (user && user.salt == cookie_salt) ? user : nil #OK, so cookie_salt is the user id plus the user's salt, NOT encoded I guess?!
-   end
-
-#Create a feed of the user's microposts
-  def feed
-    Micropost.from_users_followed_by(self)
-  end
-
-#Create following and unfollowing. This is an attribute of the user, not of the relationship, since the rel is created and destroyed.
-
-   def following?(followed)
-      relationships.find_by_followed_id(followed)
-   end
-
-   def follow!(followed)
-      relationships.create!(:followed_id => followed.id)
-   end
-
-   def unfollow!(followed)
-      relationships.find_by_followed_id(followed).destroy
    end
 
 #Check to see if a user has visited a particular paper
@@ -207,6 +184,17 @@ end
      return true
   end
 
+  #
+  # Mail Subscription Management
+  # 
+
+  def unsubscribe
+      subscriptions.create!(:category => "all", :receive_mail => false)
+  end
+
+  def receive_mail?
+      subscriptions.select{|s| s.category == "all" && !s.receive_mail}.empty?
+  end
 
 
 

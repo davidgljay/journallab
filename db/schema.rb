@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120406201730) do
+ActiveRecord::Schema.define(:version => 20120409195358) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20120406201730) do
     t.datetime "updated_at"
     t.string   "pdf_link"
     t.datetime "pubdate"
+    t.text     "h_map"
   end
 
   create_table "questions", :force => true do |t|

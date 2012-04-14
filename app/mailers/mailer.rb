@@ -1,5 +1,5 @@
 class Mailer < ActionMailer::Base
-  default :from => "david@journallab.com"
+  default :from => "'J.Lab Nerd Alert' <david@journallab.com>"
 
 
   #Mailer used for testing purposes

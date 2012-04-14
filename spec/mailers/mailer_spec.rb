@@ -72,10 +72,10 @@ describe Mailer do
 
   describe "share notification" do 
     before(:each) do
+      
       @user1 = Factory(:user, :email => Factory.next(:email))
       @paper = Factory(:paper)
       @group = Factory(:group)
-      @group.add(@user1)
       @share = @user1.share!(@paper)
       @email = Mailer.share_notification(@share, @user1)
     end
@@ -95,6 +95,5 @@ describe Mailer do
       @email.deliver
       Maillog.last.about.should == @share
     end
-
   end
 end

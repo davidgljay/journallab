@@ -27,6 +27,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
     end
     if @paper.authors.empty? || @paper.authors.nil?
        @paper.extract_authors
+       @paper.count_figs
     end
 
     @heatmap = @paper.heatmap
@@ -177,7 +178,8 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
          pubdate = nil
          day = data.xpath('//PubDate/Day')[i].nil? ? nil : data.xpath('//PubDate/Day')[i].text.to_i
          month = data.xpath('//PubDate/Month')[i].nil? ? nil : monthhash[data.xpath('//PubDate/Month')[i].text]
-         pubdate = Time.local(data.xpath('//PubDate/Year')[i].text.to_i, month, day )
+         year = data.xpath('//PubDate/Year')[i].nil? ? nil : data.xpath('//PubDate/Year')[i].text.to_i
+         pubdate = Time.local(year, month, day) if year
          abstract = nil
          unless data.xpath('//Abstract/AbstractText')[i].nil?
            abstract = data.xpath('//Abstract/AbstractText')[i].text

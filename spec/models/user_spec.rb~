@@ -162,7 +162,7 @@ describe User do
 
     it "should record an unsubscribe" do
       @user.unsubscribe
-      @user.subscriptions.first.recieve_mail.shoul == false
+      @user.subscriptions.first.receive_mail.should == false
     end
 
     it "should know when someone is unsubscribed" do

@@ -11,7 +11,7 @@ describe PapersController do
   end
 
 
-  describe "user functions" do
+  describe "paper functions" do
     before(:each) do
       @paper = Factory(:paper)
       @paper.lookup_info

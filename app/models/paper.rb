@@ -67,6 +67,30 @@ def extract_authors
      end               
 end
 
+def count_figs
+  url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s
+  doc = Nokogiri::HTML(open(url))
+  imagearray = []
+  doc.css('img').each do |img|
+    if img.attributes.has_key?("src-large")
+      imagearray << img.attributes["src-large"].to_s
+    end
+  end
+  self.build_figs(imagearray.count)
+  pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
+  unless pmcid == ' '
+    url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
+    oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
+    unless oai.css('error').attribute("code").value == "idDoesNotExist"
+      imagearray.count.times do |n|
+        self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
+        self.figs[n].save
+      end 
+    end
+  end
+end
+
+
 #Grab images
 def grab_images
   url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s

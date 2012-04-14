@@ -80,5 +80,20 @@ describe CommentsController do
       Maillog.all.count.should == 3
     end
 
+    it "should not send e-mail to someone who is unsubscribed" do
+      @user3 = Factory(:user, :email => Factory.next(:email))   
+      @user1.unsubscribe
+      @user2.unsubscribe
+      @user3.unsubscribe
+      get :create, :comment => @attr, :mode => '2'
+      @comment = Comment.last
+      test_sign_in @user2
+      @attr = {:text => "Lorem ipsum reply", :form => "reply", :reply_to => @comment.id.to_s, :assertion_id => @assertion.id}
+      get :create, :comment => @attr, :mode => '2'
+      test_sign_in @user3
+      @attr = {:text => "Lorem ipsum pancakes", :form => "reply", :reply_to => @comment.id.to_s, :assertion_id => @assertion.id}
+      get :create, :comment => @attr, :mode => '2'
+      Maillog.all.count.should == 0
+    end
    end   
 end

@@ -134,14 +134,19 @@ $(document).ready(function(){
     $("form.enter_assertion").show("slow");
     });
 
+//Forms on profile page
+   $(".editme").click(function(){
+     $(this).hide();
+     $(this).next().show();
+    });
 
 //
 //Dynamic Loading of Elements
 //
 
 //Load Summary Form
-//$("form.enter_assertion").click(function(){
-$("form.enter_assertion").mouseover(function(){
+$("form.enter_assertion").click(function(){
+//$("form.enter_assertion").mouseover(function(){
       $(this).hide();
       mpq.track("Summary form called");
       $.post($(this).attr("action"), $(this).serialize(), null, "script");

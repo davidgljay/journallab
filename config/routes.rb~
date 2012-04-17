@@ -59,13 +59,13 @@ resources :sessions, :only => [:new, :create, :destroy]
 
 #Users routes
 
-resources :users do
+resources :users
   match '/reset_password', :to => 'users#reset_password'
   match '/signup',   :to => 'users#new'
   match '/bulksignup', :to => 'users#bulk_new', :via => :get 
   match '/bulksignup', :to => 'users#bulk_create', :via => :post 
   match '/users(/:id)/unsubscribe', :to => 'users#unsubscribe'
-
+  match '/user_image_upload', :to => 'users#image_upload'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

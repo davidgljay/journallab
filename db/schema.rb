@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120409195358) do
+ActiveRecord::Schema.define(:version => 20120415002449) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -235,6 +235,12 @@ ActiveRecord::Schema.define(:version => 20120409195358) do
     t.string   "anon_name"
     t.text     "specialization"
     t.string   "profile_link"
+    t.string   "image_uid"
+    t.string   "image_name"
+    t.string   "homepage"
+    t.string   "cv"
+    t.string   "position"
+    t.string   "institution"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -254,6 +260,7 @@ ActiveRecord::Schema.define(:version => 20120409195358) do
     t.integer  "question_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "vote_for_id"
   end
 
   add_index "votes", ["assertion_id"], :name => "index_votes_on_assertion_id"

@@ -134,6 +134,11 @@ $(document).ready(function(){
     $("form.enter_assertion").show("slow");
     });
 
+//Forms on profile page
+   $(".editme").click(function(){
+     $(this).hide();
+     $(this).next().css('display', 'inline');
+    });
 
 //
 //Dynamic Loading of Elements

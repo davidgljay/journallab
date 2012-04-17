@@ -1,0 +1,7 @@
+      <div class = "clickme editme"><h3><%= @user.send(about) ? @user.send(about) : "Enter your #{about_text}" %></h3></div>
+      <div class = "hideonload editme_form">
+           <%= form_for @user do |f| %>
+               <%= f.text_field about %>
+           <% end %>
+      </div>
+

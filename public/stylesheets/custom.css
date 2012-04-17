@@ -850,6 +850,10 @@ div.field, div.actions {
   margin-bottom: 10px;
 }
 
+.editme, .editme_form, .editme_form form {
+  display: inline;
+}
+
 /* User Class Selection */
 
 td.groupselect {

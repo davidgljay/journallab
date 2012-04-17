@@ -30,6 +30,10 @@ has_many :groups, :through => :filters, :source => :group
                          :less_than => 9999999999999,
                          :greater_than => 0
 
+def inspect
+  title
+end
+
 def lookup_info
   url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
   #Check to see if the ID showed up on pubmed, if not return to the homepage.

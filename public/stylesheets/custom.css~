@@ -396,7 +396,6 @@ img.figthumnail {
 
 td.sumright input[ type = "text" ] {
   width: 500px;
-  font-size: 100%;
 }
 
 
@@ -849,6 +848,10 @@ footer nav {
 
 div.field, div.actions {
   margin-bottom: 10px;
+}
+
+.editme, .editme_form {
+  display: inline;
 }
 
 /* User Class Selection */

@@ -29,7 +29,7 @@ before_filter :admin_user,   :only => [:dashboard]
             bold = false
             paper = item.get_paper 
          end
-        @feed << [item.user, text, paper, item.updated_at, bold, sharetext]
+        @feed << [item.user, text, paper, item.updated_at, bold, item]
       end
     end
     # If it's a class

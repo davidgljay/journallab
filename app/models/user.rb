@@ -19,7 +19,7 @@ require 'digest'
 
 class User < ActiveRecord::Base
 	attr_accessor :password	
-	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link
+	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link, :position, :institution, :homepage, :cv, :image
 
         has_many :assertions
         has_many :comments
@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
 	has_many :sumreqs, :dependent => :destroy
         has_many :maillogs
         has_many :subscriptions
+        has_many :votes_for_me, :class_name => "Vote", :foreign_key => "vote_for_id"
+
+        image_accessor :image
+
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -47,12 +51,17 @@ class User < ActiveRecord::Base
 	validates :email, :presence => true,
 		:format   => { :with => email_regex },
 		:uniqueness => { :case_sensitive => false }
-	validates :password, :presence => true,
-		:confirmation => true,
-		:length => { :within => 6..30 }  
+        validates :password, :presence => true,
+                :confirmation => true,
+                :length => {:within => 6..40},
+                :on => :create
+        validates :password, :confirmation => true,
+                :length => {:within => 6..40},
+                :allow_blank => true,
+                :on => :update
 	validates :anon_name,  :uniqueness => true
 
-  before_save :encrypt_password, :assign_anon_name
+        before_save :encrypt_password, :assign_anon_name
 
 #Some functions for calling names
   def name
@@ -64,6 +73,10 @@ class User < ActiveRecord::Base
       encrypted_password == encrypt(submitted_password)
    end
 
+
+   def inspect
+      name
+   end
 
 #Set up an authentication method
    def self.authenticate(email, submitted_password)
@@ -183,20 +196,35 @@ end
   # 
 
   def unsubscribe
-      subscriptions.create!(:category => "all", :receive_mail => false)
+    subscriptions.create!(:category => "all", :receive_mail => false)
   end
 
   def receive_mail?
-      subscriptions.select{|s| s.category == "all" && !s.receive_mail}.empty?
+    subscriptions.select{|s| s.category == "all" && !s.receive_mail}.empty?
   end
 
+  #
+  # Generates a feed of the form [papers[],comments{}], where papers[] is a list of the 10 most recently viewed papers from most recent to least recent, and comments{} is a hash of the form {:paper_id => [comments on that paper]} 
+  #
+  def recent_activity
+     actions = (self.comments.to_a + self.questions.to_a + self.shares.to_a) 
+     activity = Hash.new
+     actions.each do |a|
+        p = a.get_paper
+        activity[p] = []
+        activity[p] << a
+     end
+     activity
+  end
 
 
   private
 
     def encrypt_password
-      self.salt = make_salt if new_record?
-      self.encrypted_password = encrypt(password)
+      if password
+        self.salt = make_salt if new_record?
+        self.encrypted_password = encrypt(password)
+      end
     end
 
     def assign_anon_name

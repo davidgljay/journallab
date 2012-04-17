@@ -50,4 +50,8 @@ def get_paper
   end
 end
 
+def linktext
+  text
+end
+
 end

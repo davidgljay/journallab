@@ -5,7 +5,7 @@
      <br>
      <% if !item[5].nil? %>
       <div class = "sharetext">
-        <strong>"</strong><%= item[5] %><strong>"</strong>
+        <strong>"</strong><%= render 'comments/linktext', :comment => item[5] %><strong>"</strong>
       </div>
      <% end %>
      <em><%= item[3].strftime('%B %d, %Y') %></em>

@@ -1,0 +1,11 @@
+<% @recent_visits.each do |p| %>
+  <div class="search_results2">
+  <%= link_to p.title, p %><br>
+  <div class="sr_info2">
+  <%= p.journal %> | <%= p.pubdate.year %>
+  </div>
+  </div>
+  <% @recent_activity[p].to_a.each do |a| %>
+     <%= a.class.to_s %>: <b>“</b><%= render 'comments/linktext', :comment => a %><b>”</b><p></p>
+  <% end %>
+<% end %>

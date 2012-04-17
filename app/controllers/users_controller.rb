@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 before_filter :authenticate, :except => [:new, :create]
-before_filter :correct_user, :only => [:edit, :update, :unsubscribe]
+before_filter :correct_user, :only => [:edit, :update, :unsubscribe, :image_upload]
 before_filter :admin_user,   :only => [:create, :new, :destroy]
   def index
     @title = "All users"
@@ -9,8 +9,9 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
 
   def show
    @user = User.find(params[:id])
-   @microposts = @user.microposts.paginate(:page => params[:page])
    @title = @user.name
+   @recent_visits = @user.visited_papers.reverse.uniq.first(20)
+   @recent_activity = @user.recent_activity
   end
 
   def new
@@ -105,11 +106,8 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
   def update
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated."
-      redirect_to @user
-    else
-      @title = "Edit user"
-      render 'edit'
     end
+      redirect_to @user
   end
 
   def destroy
@@ -124,19 +122,13 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
     end
   end
 
-  def following
-    @title = "Following"
-    @user = User.find(params[:id])
-    @users = @user.following.paginate(:page => params[:page])
-    render 'show_follow'
+  def image_upload
+    @user = User.find(params[:user][:id])
+    @user.image = params[:user][:user_image]
+    @user.save
+    redirect_to @user
   end
-
-  def followers
-    @title = "Followers"
-    @user = User.find(params[:id])
-    @users = @user.followers.paginate(:page => params[:page])
-    render 'show_follow'
-  end
+  
 
   private
 

@@ -78,13 +78,15 @@ def count_figs
   end
   self.build_figs(imagearray.count)
   pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
-  url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
-  oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
-  unless oai.css('error').attribute("code").value == "idDoesNotExist"
-    imagearray.count.times do |n|
-      self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
-      self.figs[n].save
-    end 
+  unless pmcid == ' '
+    url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
+    oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
+    unless oai.css('error').attribute("code").value == "idDoesNotExist"
+      imagearray.count.times do |n|
+        self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
+        self.figs[n].save
+      end 
+    end
   end
 end
 

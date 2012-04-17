@@ -32,7 +32,7 @@ describe "Users" do
      @question = @paper.questions.build(:text => "comment")
      @question.user = @user
      @question.save
-     v = @user.visits.build(:paper => @paper, :count => 1)
+     v = @user.visits.build(:paper => @paper)
      v.save
      visit '/signin'
      fill_in "session_email", :with => @user.email

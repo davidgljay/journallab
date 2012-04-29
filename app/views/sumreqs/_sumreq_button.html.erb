@@ -1,4 +1,3 @@
-<div class = "sumreq round">
    <div class = "sumreq_counter inline">
      <% if item.sumreqs.count == 0 %>
         Request Summary
@@ -6,17 +5,16 @@
         <%= pluralize(item.sumreqs.count, "Summary Request") %>
      <% end %>
    </div>
-   <div class = "sumreq_button inline">
+   <div class = "sumreq_button inline clickme">
     <%= form_for item.sumreqs.create, :html => { :class => hide_my_sumreq(item) + 'inline'}, :remote => true do |f| %>
       <%= f.hidden_field :id, :value => item.id %>
       <%= f.hidden_field :type, :value => item.class.to_s %>
       <% if signed_in? %>
          <%= f.hidden_field :group, :value => current_user.get_group.id %>
       <% end %>
-      <%= f.submit "+" %>
+      [+]
     <% end %>
    </div>
-   <div class = "sumreq_confirm hideonload">
+   <div class = "sumreq_confirm hideonload inline">
    Got it! We'll give this priority.
    </div>
-</div>

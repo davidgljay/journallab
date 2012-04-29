@@ -1,7 +1,7 @@
 <% if fig.image.nil? %>
-<%= image_tag 'upload.png', :class=>'fig_upload clickme' %>
+<h5 class = 'fig_upload'>Upload Image</h5>
 <div align='left' class='upload_form hideonload'>
-<% form_for fig, :url => '/figs/' + fig.id.to_s + '/image_upload', :html => {:multipart => true} do |f| %>
+<%= form_for fig, :url => '/figs/' + fig.id.to_s + '/image_upload', :html => {:multipart => true} do |f| %>
 <%= f.file_field :fig_image %>
 <%= f.submit 'Upload' %>
 <% end %>

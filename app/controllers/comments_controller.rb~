@@ -53,7 +53,7 @@ before_filter :authenticate
          #Send an e-mail if the comment is a reply
          if !@comment.comment.nil? || !@comment.question.nil?
             #Send the comment to the original commenter and anyone else in the thread, except the current poster
-            @thread = @comment.comment
+            @thread = @comment.comment ? @comment.comment : @comment.question
             ([@thread.user] + @thread.comments.map{|c| c.user}).uniq.each do |u|
               Mailer.comment_response(@comment, u).deliver if u != @comment.user && u.receive_mail?
             end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120415002449) do
+ActiveRecord::Schema.define(:version => 20120426040246) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20120415002449) do
     t.datetime "updated_at"
     t.integer  "heatmap"
     t.string   "about"
-    t.text     "method"
+    t.text     "method_text"
     t.boolean  "is_public"
     t.text     "alt_approach"
   end

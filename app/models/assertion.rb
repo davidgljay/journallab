@@ -1,5 +1,5 @@
 class Assertion < ActiveRecord::Base
-attr_accessible :text, :method, :about, :alt_approach
+attr_accessible :text, :method_text, :about, :alt_approach
 
 belongs_to :paper
 belongs_to :user
@@ -16,8 +16,7 @@ has_many :questions
 has_many :votes
 
 #Validations
-   validates :text, :presence => true,
-                    :length => { :maximum => 300 }
+
    validates :user_id, :presence => true 
 
 def owner_id
@@ -51,7 +50,7 @@ def get_paper
 end
 
 def linktext
-  text
+  text ? [text] : [method_text]
 end
 
 end

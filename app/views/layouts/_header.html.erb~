@@ -1,34 +1,41 @@
  <header>
-       <% unless @title == 'Home' %>
-          <% logo = image_tag("journallab.png", :alt => "Journal Lab", :id => 'small_logo', :class => "round") %>
-          <%= link_to logo, root_path %>
-        <% end %>
-        <nav class="round">
-          <ul>
-            <li><%= link_to "Home", root_path %></li>
+       <div id='header'>
+            <div id='utNav'>
+            <%= link_to "Home", root_path %>
             <% if signed_in? %>
               <% if current_user.admin? %>
-              <li><%= link_to "Add Users", bulksignup_path %></li>
-              <li><%= link_to "Reset Passwords", reset_password_path %></li>
-              <li><%= link_to "Dashboard", dashboard_path %></li>
+              <%= link_to "Add Users", bulksignup_path %>
+              <%= link_to "Reset Passwords", reset_password_path %>
+              <%= link_to "Dashboard", dashboard_path %>
               <% end %>
-            <li><%= link_to "Profile", current_user %></li>
-            <li><%= link_to "Settings", edit_user_path(current_user) %></li>
-	    <li><%= link_to "Sign out", signout_path, :method => :delete %></li>
+            <%= link_to "Profile", current_user %>
+            <%= link_to "Settings", edit_user_path(current_user) %>
+	    <%= link_to "Sign out", signout_path, :method => :delete %>
             <% else %>                  
-            <li><%= link_to "Sign in", signin_path %></li>
+            <%= link_to "Sign in", signin_path %>
             <% end %>
-         </ul>
-        </nav>
-&nbsp;
+
             <% unless @title == 'Home' %>
-                <div>
-                <%= form_tag('/lookup', :method => "get", :class => "topsearch") do  %>
-                <%= text_field_tag :pubmed_id %>
-                <%= submit_tag("Search") %>
-                <% end %>
+
+                <div id = 'contentSearch'>
+		<table border="0" align="right" cellpadding="0" cellspacing="0">
+		      <tbody><tr>
+        		<td>
+                	<%= form_tag('/lookup', :method => "get") do  %>
+                	<%= text_field_tag(:pubmed_id, "Search PubMed", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch" ) %> </td>
+                	<td><%= image_submit_tag("button_go.png") %></td>
+                	<% end %>
+			</td>
+      			</tr>
+    		       </tbody></table>
+
                 </div>
-            <% end %>
+         </div>
+     <% logo = image_tag("journal_lab_logo2.png", :alt => "Journal Lab", :width => '160', :height => '90') %>
+     <%= link_to logo, root_path %>
+     </div>
+<% end %>
+
 <% if Rails.env.production? %>
 <!-- start Mixpanel --><script type="text/javascript">var mpq=[];mpq.push(["init","3cb0b675b6f04afdcfe615a5461c5045"]);(function(){var b,a,e,d,c;b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=(document.location.protocol==="https:"?"https:":"http:")+"//api.mixpanel.com/site_media/js/api/mixpanel.js";a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);e=function(f){return function(){mpq.push([f].concat(Array.prototype.slice.call(arguments,0)))}};d=["init","track","track_links","track_forms","register","register_once","identify","name_tag","set_config"];for(c=0;c<d.length;c++){mpq[d[c]]=e(d[c])}})();
 <% if signed_in? %>
@@ -58,6 +65,4 @@ mpq.name_tag('<%= current_user.name %>');
 <% end %>
 </script><!-- end Mixpanel -->
 <% end %>
-
-
       </header>

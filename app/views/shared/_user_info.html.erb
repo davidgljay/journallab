@@ -5,16 +5,17 @@
       <%= user.anon_name %>
     </span>
     <% if date %>
-    <em><%= render 'shared/display_date', :date => date %></em>
+    	<div class = 'small inline' ><em><%= render 'shared/display_date', :date => date %></em></div>
     <% end %>
 <% else %>
   <a href="<%= user_path(user) %>">
+    <%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" %>
     <span class="user_name">
       <%= user.name %>
     </span>
   </a>
     <% if date %>
-    <em><%= render 'shared/display_date', :date => date %></em>
+	    <div class = 'small inline'><em><%= render 'shared/display_date', :date => date %></em></div>
     <% end %>
 <% end %>
 </div>

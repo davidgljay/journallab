@@ -1,0 +1,23 @@
+module PapersHelper
+
+#Create an overview for the paper display page.
+
+def heatmap_overview(paper)
+	heatmap = paper.heatmap
+	max_sections = (paper.figs.map{|f| f.figsections.count}).max
+	overview = [[heatmap['paper' + paper.id.to_s]] + [nil] * max_sections]
+	paper.figs.each do |fig|
+		figrow = [heatmap['fig' + fig.id.to_s]]
+		fig.figsections.each do |section|
+			figrow << [heatmap['figsection' + section.id.to_s]]
+		end
+		overview << [figrow + [nil] * (max_sections - fig.figsections.count)]
+	end
+	overview
+end
+	
+	
+
+end
+
+

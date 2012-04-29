@@ -1,11 +1,6 @@
     <table>
     <tr class = "summary" id = <%= about.class.to_s.downcase + about.num.to_s %> >
-    <% if about.class == Paper %>
-      <td width="1px"></td>
-    <td class  = "sumleft round core assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap["paper" + about.id.to_s][1]/100).to_s + ",") * 2 %>181)">
-      Core Conclusion:
-    </td>
-    <% elsif about.class == Fig %>
+    <% if about.class == Fig %>
            <td width="20px">
            </td>
            <td class = "sumleft round fig assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap["fig" + about.id.to_s][1]/100).to_s + ",") * 2 %>181)">
@@ -30,89 +25,64 @@
            </td>
       <% elsif about.class == Figsection %>
        <td width = "40px"></td>
-       <td class = "sumleft round figsection assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap.["figsection" + about.id.to_s][1]/100).to_s + ",") * 2 %>181)">
+       <td class = "sumleft round figsection assertion" style = "background:rgb(<%= ((181 - 181 * @heatmap["figsection" + about.id.to_s][1]/100).to_s + ",") * 2 %>181)">
          Section <%= about.letter(about.num) %>:  
        </td>
       <% end %>
-    <td class = "sumright">
-    
-  <% if about.assertions.count != 0 && @group.let_through_filter?(about.latest_assertion, current_user) %>
-       <%= about.latest_assertion.text %>
-       <br>
-         <style class="method"><%= about.latest_assertion.method %> </style>
-       <% if !about.latest_assertion.alt_approach.nil? && @group.category == 'class' %>
-       <div class = "alt_approach">
-         <strong>Alternate Approaches: </strong><style class="method"><%= about.latest_assertion.alt_approach %> </style>
-       </div>
-       <% end %>
-       <nav>
-       <ul>
-         <li class="improvelink">
-            <%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
-               <%= hidden_field_tag :owner, about.class.to_s %>
-               <%= hidden_field_tag :id, about.id %>
-               <%= submit_tag("Improve Summary") %>
-             <% end %>
-         </li>
-         <li class="commentlink">  
+
+    	<td class = "sumright">
+    		<h1>Overall Paper</h1>
+			<p>
+       			<div class = 'latest_assertion'><%= about.latest_assertion ? about.latest_assertion.text : 'Click to enter summary' %></div>
+         		<p class="method"><%= about.latest_assertion ? about.latest_assertion.method : 'Click to enter methods' %></p>
+		     	<div class='assertion_form'></div>
+			</p>
+<div class="contribute">
+  	<ul>
+         <li class="commentlink clickme">  
              <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
                <%= hidden_field_tag :owner, about.class.to_s %>
                <%= hidden_field_tag :id, about.id %>
                <%= hidden_field_tag :mode, @mode %>
                <% if @group.filter_count(about.comments.all, current_user,@mode) > 0 %>
-                 <%= submit_tag(pluralize(@group.filter_count(about.comments.all, current_user,@mode), "Comment")) %>
+                 <%= pluralize(@group.filter_count(about.comments.all, current_user,@mode), "Comment") %>
                <% else %>
-                 <%= submit_tag("Add a Comment") %>
+                 <%= "Add a Comment" %>
                <% end %>
              <% end %>
           </li>
-           <li class="questionlink">
+	<li class="questionlink clickme">
              <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
                <%= hidden_field_tag :owner, about.class.to_s %>
                <%= hidden_field_tag :id, about.id %>
                <%= hidden_field_tag :mode, @mode %>
                <% if @group.filter_count(about.questions.all, current_user, @mode) > 0 %>
-                 <%= submit_tag(pluralize(@group.filter_count(about.questions.all, current_user, @mode), "Question")) %>
+                 <%= pluralize(@group.filter_count(about.questions.all, current_user, @mode), "Question") %>
                <% else %>
-                 <%= submit_tag("Add a Question") %>
+                 <%= "Add a Question" %>
                <% end %>
              <% end %>
-           </li>
-           <% unless @group.id.nil? %>
-           <li class = "sharelink clickme">
-                Share
-           </li>
-           <% end %>
-        </ul>
-        </nav>
+	</li>
+        <% unless @group.id.nil? %>
+        <li class = "sharelink clickme">
+        	Share
+        </li>
+	<li>
+	       	<%= render 'sumreqs/sumreq_button', :item => about %>
+	</li>
+        <% end %>
+	</ul>
+        <div class = "sharebox hideonload", id = <%= 'share_' + about.class.to_s + '_' + about.id.to_s %>>
+        	<%= render 'shares/share_form', :item => about %>
+        </div>
+
+</div>
         <div class="improve">
          </div>
          <div class = "commentbox", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
          <div class = "questionbox", id = <%= 'questions_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
-         <% unless @group.id.nil? %>
-         <div class = "sharebox hideonload", id = <%= 'share_' + about.class.to_s + '_' + about.id.to_s %>>
-            <%= render 'shares/share_form', :item => about %>
-         </div>
-         <% end %>
-  <% else %>
-
-      <% if @group.category == 'class' %>
-        <% button = 'Summarize for your class' %>
-      <% else %>
-        <% button = 'Summarize for your lab' %>
-      <% end %>
-     <%= form_tag('/assertions/new', :method => "post", :remote => true, :class => 'enter_assertion')  do  %>
-       <%= hidden_field_tag :about, about.class.to_s %>
-       <%= hidden_field_tag :id, about.id %>
-       <%= hidden_field_tag :mode, @mode %>
-       <%= submit_tag(button) %> 
-     <% end %>
-     <div class='assertion_form'>
-     </div>
-       <%= render 'sumreqs/sumreq_button', :item => about %>
-<% end %>
      <% if about.class == Fig %>
        <% unless about.image.nil? %>
           <%= image_tag about.image.thumb('800x800>').url, :class => 'fullfig'%>

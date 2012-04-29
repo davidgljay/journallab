@@ -1,0 +1,10 @@
+module FigsHelper
+
+require 'RMagick'
+include Magick
+
+def thumbnail_image(fig)
+	ImageList.new(fig.image.thumb('150x150').url, 'magnifying_glass.png').flatten
+end
+
+end

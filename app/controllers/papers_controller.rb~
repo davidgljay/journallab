@@ -17,22 +17,22 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
   # GET /papers/1
   # GET /papers/1.xml
   def show
-    @paper = Paper.find(params[:id])
-    if signed_in?
-       visit = Visit.where(:user_id => current_user.id, :paper_id => @paper.id).first
-       visit ||= Visit.create(:user_id => current_user.id, :paper_id => @paper.id, :count => 0)
-       visit.count ||= 0
-       visit.count += 1 unless visit.updated_at > Time.now - 3.hours
-       visit.save
-    end
-    if @paper.authors.empty? || @paper.authors.nil?
-       @paper.extract_authors
-       @paper.count_figs
-    end
-
-    @heatmap = @paper.heatmap
-    # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
-    @group = current_user.get_group
+    	@paper = Paper.find(params[:id])
+    	if signed_in?
+       		visit = Visit.where(:user_id => current_user.id, :paper_id => @paper.id).first
+       		visit ||= Visit.create(:user_id => current_user.id, :paper_id => @paper.id, :count => 0)
+       		visit.count ||= 0
+       		visit.count += 1 unless visit.updated_at > Time.now - 3.hours
+       		visit.save
+    	end
+	if @paper.authors.empty? || @paper.authors.nil?
+       		@paper.extract_authors
+       		@paper.count_figs
+	end
+	@heatmap = @paper.heatmap
+	@overview_heatmap = @paper.overview_heatmap
+   # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
+  	@group = current_user.get_group
 
     #@classdates = []
     #@group.filters.each do |f|
@@ -43,22 +43,22 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
     #@classdates.sort!{|x,y| x <=> y}.uniq! unless @classdates.nil?
   
     #Prep the selection dropdown for selection the # of figs in the paper.  
-    @numfig_select = Array.new
-    30.times do |i| 
-      @numfig_select << [(i+1).to_s, i+1 ]
-    end
+    	@numfig_select = Array.new
+    	30.times do |i| 
+      		@numfig_select << [(i+1).to_s, i+1 ]
+   	end
 
     #Are you viewing in group or public mode?
-    if params[:mode] == "public"
-       @mode = 1
-    else
-       @mode = 2
-    end
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @paper }
-    end
-  end
+	if params[:mode] == "public"
+       		@mode = 1
+    	else
+       		@mode = 2
+    	end
+    	respond_to do |format|
+      		format.html # show.html.erb
+      		format.xml  { render :xml => @paper }
+   	end
+end
 
   # GET /papers/new
   # GET /papers/new.xml
@@ -172,23 +172,30 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
       data = Nokogiri::XML(open(url2))
       @search_results = []
       data.xpath('//PubmedArticle').count.times do |i|
-         pid = data.xpath('//PMID')[i].text
-         title = data.xpath('//Article/ArticleTitle')[i].text
-         journal = data.xpath('//Journal/Title')[i].text
-         pubdate = nil
-         day = data.xpath('//PubDate/Day')[i].nil? ? nil : data.xpath('//PubDate/Day')[i].text.to_i
-         month = data.xpath('//PubDate/Month')[i].nil? ? nil : monthhash[data.xpath('//PubDate/Month')[i].text]
-         year = data.xpath('//PubDate/Year')[i].nil? ? nil : data.xpath('//PubDate/Year')[i].text.to_i
-         pubdate = Time.local(year, month, day )
-         abstract = nil
-         unless data.xpath('//Abstract/AbstractText')[i].nil?
-           abstract = data.xpath('//Abstract/AbstractText')[i].text
-         end
-         paper = Paper.find_by_pubmed_id(pid)  
-         if paper.nil?
-            paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
-         end
-         @search_results << paper    
+        pid = data.xpath('//PMID')[i].text
+        title = data.xpath('//Article/ArticleTitle')[i].text
+        journal = data.xpath('//Journal/Title')[i].text
+        pubdate = nil
+        day = data.xpath('//PubDate/Day')[i].nil? ? nil : data.xpath('//PubDate/Day')[i].text.to_i
+        month = data.xpath('//PubDate/Month')[i].nil? ? nil : monthhash[data.xpath('//PubDate/Month')[i].text]
+        year = data.xpath('//PubDate/Year')[i].nil? ? nil : data.xpath('//PubDate/Year')[i].text.to_i
+	pubdate = Time.local(year, month, day) if year
+        abstract = nil
+        unless data.xpath('//Abstract/AbstractText')[i].nil?
+        	abstract = data.xpath('//Abstract/AbstractText')[i].text
+        end
+	# Extract the authors as an array for now. When someone clicks on the paper we'll create records for them.
+	authors = []
+	data.xpath('//AuthorList/Author').each do |auth|
+	     	author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
+       		authors << Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
+	end
+
+        paper = Paper.find_by_pubmed_id(pid)  
+        if paper.nil?
+        	paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
+        end
+        @search_results << [paper, authors]    
       end
       respond_to do |format|
         format.html

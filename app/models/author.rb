@@ -5,5 +5,12 @@ has_many :authorships, :foreign_key => "author_id",
 has_many :papers, :through => :authorships, :source => :paper
 validates_uniqueness_of :firstname, :scope => [:lastname]
 
+def inspect
+	"#{lastname}, #{firstname}"
+end
+
+def name
+	inspect
+end
 
 end

@@ -1,0 +1,7 @@
+module QuestionHelper
+
+def boxtext(reply_to)
+	reply_to ? 'Provide an answer.' : 'Pose a question.'
+end
+
+end

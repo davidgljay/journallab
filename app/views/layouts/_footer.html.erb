@@ -1,20 +1,7 @@
-<footer>
-  <nav class="round">
-    <ul>
-      <li><%= link_to "About", about_path %></li>
-      <li><%= link_to "Feedback", 'http://jlab.uservoice.com' %></li>
-    </ul>
-  </nav>
+<div id="footerFloat">
+<div id="footer">
+<div id="footerNav"><%= link_to "About", about_path %>   <%= link_to "Feedback", 'http://jlab.uservoice.com' %></div>
+© 2012 Journal Lab, San Francisco, CA.</div>
+</div>
+</div>
 
-<% if signed_in? && !Rails.env.test? %>
-<script type="text/javascript">
-  var uvOptions = {};
-  (function() {
-    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/sRkfPpl2KABtPcCrux29w.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-  })();
-</script>
-<% end %>
-
-</footer>

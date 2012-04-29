@@ -52,7 +52,7 @@ def shortname
 end
 
 def longname
-    "Fig " + num.to_s + " of " + fig.paper.title
+    "Fig " + num.to_s + letter + " of " + fig.paper.title
 end
 
 end

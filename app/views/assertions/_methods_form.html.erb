@@ -1,0 +1,14 @@
+ <%= form_for new_or_edit(assert), :class => "methods_form"  do |f| %>
+      <%= render 'shared/error_messages', :object => f.object %>
+      <div class="field">
+         <% if assert.nil? || new_if_nil(assert).method_text.nil? %>
+           <%= f.text_area :method_text, :value => "Separate methods with commas, e.g. western blot, QPCR", :rows => 1 %>
+         <% else %>
+           Methods:<%= f.text_field :method_text, :value => assert.method_text %>
+         <% end %>
+        </div>
+        <%= f.hidden_field :about, :value => owner.class.to_s.downcase %>
+        <%= f.hidden_field :owner_id, :value => owner.id.to_s %>
+        <%= f.hidden_field :mode, :value => @mode %>
+	<%= f.submit 'Submit' %>
+      <% end %>

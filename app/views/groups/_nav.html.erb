@@ -1,7 +1,7 @@
-<nav>
+<div id = "feedNav">
 <ul>
-<li><div class="updates round pad10">Updates</div></li>
-<li><div class="most_viewed round pad10">Most Viewed</div></li>
-<li><div class="sumreqs round pad10"><%= pluralize(@group.sumreq_count, "Summary Request")%></div></li>
+<li><div class="updates feed_nav_item">Latest Activity</div></li>
+<li><div class="most_viewed feed_nav_item">Popular Papers</div></li>
+<li><div class="sumreqs feed_nav_item"><%= pluralize(@group.sumreq_count, "Summary Request")%></div></li>
 </ul>
-</nav>
+</div>

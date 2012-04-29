@@ -65,4 +65,22 @@ describe Paper do
         @paper.latest_assertion.text.should == "I love St. Louis!"
      end
  end
+
+describe "heatmap_overview" do
+
+	it "should create a heatmap overview" do
+		@paper = Factory(:paper)
+		@paper.buildout([3,3,4,2])
+		@user = Factory(:user)
+		@paper.comments.build(:text => 'Comment', :form => 'comment', :user => @user)
+		@fig = @paper.figs[1]
+		@fig.questions.build(:text => 'Question', :user => @user)
+		@fig.assertions.build(:text => 'Summary', :user => @user)
+		@paper.heatmap
+		@overview = @paper.heatmap_overview
+		@overview.should == '[[["P", 0], nil, nil, nil, nil], [["1", 0], ["A", 0], ["B", 0], ["C", 0], nil], [["2", 0], ["A", 0], ["B", 0], ["C", 0], ["D", 0]], [["3", 0], ["A", 0], ["B", 0], nil, nil]]'
+	end 
+
+end
+	
 end

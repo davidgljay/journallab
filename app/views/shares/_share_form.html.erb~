@@ -3,14 +3,10 @@
       <%= f.hidden_field :id, :value => item.id %>
       <%= f.hidden_field :type, :value => item.class.to_s %>
       <%= f.hidden_field :group, :value => @group.id %> 
-     <div class="field">
-      <%= f.text_area :text, :value=> "Check this out!" %>
-     </div>
-     <div class="actions">
+      <%= f.text_field :text, :value=> "Check this out!" %>
       <%= f.submit "Share with your " + @group.category %>
-     </div>
     <% end %>
 </div>
-<div class = "share_confirmation round hideonload">
-   Shared! Your <%= @group.category %>mates will be notified in their feeds.
+<div class = "share_confirmation hideonload">
+   Shared! Your <%= @group.category %>mates will be notified.
 </div>

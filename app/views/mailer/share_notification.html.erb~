@@ -14,7 +14,7 @@
     <p>You can view the the paper here:</p></br>
     <%= link_to @url, @m_url %></br>
     <p>
-    <%= render unsubscribe %></p>
+    <%= render 'unsubscribe' %></p>
 
   </body>
 </html>

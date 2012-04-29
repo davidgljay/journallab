@@ -2,7 +2,7 @@
     $("div.questionbox").hide("slow");
     $("div.sharebox").hide("slow");
     $('<%= escape_javascript(@owner.jquery_target) %>').find('div.improve').html('<%= escape_javascript(render 'list') %>');
-    $('<%= escape_javascript(@owner.jquery_target) %>').find('div.improve').slideToggle();
+    $('<%= escape_javascript(@owner.jquery_target) %>').find('div.improve').show('slow');
 
 jQuery.ajaxSetup({
    'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}

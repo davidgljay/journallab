@@ -1,4 +1,4 @@
-    $('<%= @about.jquery_target %>').find('div.assertion_form').html('<%= escape_javascript(render 'assertions/form', :assert => @assertion, :type => @about.class.to_s.downcase) %>');
+    $('<%= @about.jquery_target %>').find('div.assertion_form').html('<%= escape_javascript(render 'assertions/form', :assert => @assertion, :type => @type[@about.class.to_s.downcase]) %>');
    $('<%= @about.jquery_target %>').find('form.new_assertion').show("med");
 
 jQuery.ajaxSetup({

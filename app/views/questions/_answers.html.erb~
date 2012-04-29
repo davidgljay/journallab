@@ -1,12 +1,11 @@
   <% answers = question.questions.all.sort_by{|a| a.votes.count}.reverse %>
-  <% last = answers[-1] %>
   <% answers.each do |a| %>
   <tr>
-    <td class = "answer <% unless a == last %> more_answers <% end %><% if comment.author %> author_comment <% end %>">
-      <%= render 'shared/user_info', :user => a.user, :date => a.created_at %>
-      <div class = "question_body <%= 'author_comment_body' if comment.author %>">
+    <td class = "answer <% if a.author %> author_comment <% end %>">
+      <div class = "question_body <%= 'author_comment_body' if a.author %>">
       <%= render 'votes/vote_form', :candidate => a %>
       <%= render 'questions/linktext', :comment => a %>
+      <%= render 'shared/user_info', :user => a.user, :date => a.created_at %>
       <nav>
         <ul>
          <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/numvotes', :candidate => question %>

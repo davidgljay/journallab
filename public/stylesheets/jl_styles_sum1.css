@@ -1,0 +1,144 @@
+@charset "UTF-8";
+#abstract {
+	margin-right: 50px;
+	margin-left: 50px;
+}
+
+#abstract_short, #abstract_long {
+	text-align: left;
+}
+
+
+#paperInfo h3 {
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+
+#assertion_text, #assertion_method_text {
+	width: 450px;
+}
+
+.share_button_top {
+	color: #63A82A;
+}
+
+.visits {
+	font-size: 11px;
+	font-style: italic;
+	color: #545B5F;
+}
+
+.method {
+	font-style: italic;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.summaryBox {
+	margin-left: 20px;
+	border-left-width: 10px;
+	border-left-style: solid;
+	border-left-color: #025B98;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	margin-bottom: 5px;
+	clear: both;
+}
+
+.summaryBox h1 {
+	font-size: 14px;
+	text-transform: uppercase;
+	line-height: 18px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.fig_upload {
+	background-color: #fff;
+	width: 80px;
+}
+
+.latest_assertion {
+	font-weight: bold;
+}
+
+.heatBox0{
+	background-color: #fff;
+}
+	
+.heatBox1{
+	background-color: #D1D6D8;
+}
+.heatBox2{
+	background-color: #e2eaee;
+	border-left-width: 10px;
+	border-left-style: solid;
+	border-left-color: #a6c3d4;
+}
+.heatBox3{
+	background-color: #A9D6EC;
+}
+.heatBox4{
+	background-color: #8CD4F6;
+}
+.heatBox5{
+	background-color: #94D2C7;
+}
+.heatBox6{
+	background-color: #9CD098;
+}
+.heatBox7{
+	background-color: #A0CF67;
+}
+.heatBox8{
+	background-color: #e6ebca;
+	border-left-width: 10px;
+	border-left-style: solid;
+	border-left-color: #aac854;
+}
+.heatBox9{
+	background-color: #E3DD64;
+}
+.heatBox10{
+	background-color: #fbefcb;
+	border-left-width: 10px;
+	border-left-style: solid;
+	border-left-color: #ffdc47;
+}
+
+.contribute {
+	margin: 0px;
+	padding: 0px;
+}
+.contribute ul, .commentbox ul, .questionbox ul {
+	margin: 0px;
+	padding: 0px;
+}
+.contribute li, .commentbox li, .questionbox li {
+	display: block;
+	float: left;
+	list-style-type: none;
+	margin: 5px;
+	color: #666666;
+	font-size: 11px;
+	padding-top: 1px;
+	padding-right: 5px;
+	padding-bottom: 1px;
+	padding-left: 5px;
+	background-image: url(/images/vellum.png);
+}
+
+.figtoggle, .add_figs_and_sections {
+	background-repeat: no-repeat;
+	padding-left: 15px;
+	display: block;
+	color: #00569B;
+	text-transform: uppercase;
+	font-weight: bold;
+	line-height: 18px;
+	font-size: 12px;
+	width: 100px;
+}
+
+

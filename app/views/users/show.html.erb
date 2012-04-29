@@ -1,4 +1,7 @@
 
+
+<div id="contentMain">
+<h1>Member Profile</h1>
   <div id="profileInfo">
    <% if @user == current_user %>
      <% if @user.image %>
@@ -24,26 +27,26 @@
 
     <h2><%= @user.name %></h2><br>
       <% if @user == current_user %>
-        <div class = "clickme editme" id="position"><%= @user.position ? @user.position : "Enter your position" %></div>
+        <div class = "clickme editme" id="position"><h2><%= @user.position ? @user.position : "Enter your position" %></h2></div>
          <div class = "hideonload editme_form">
            <%= form_for @user do |f| %>
                <%= f.text_field :position %>
            <% end %>
            <i>Press enter to save</i>
-        </div>,
-        <div class = "clickme editme" id="institution"><%= @user.institution ? @user.institution : "Enter your institution" %></div>
+        </div><h2>,</h2>
+        <div class = "clickme editme" id="institution"><h2><%= @user.institution ? @user.institution : "Enter your institution" %></h2></div>
          <div class = "hideonload editme_form">
            <%= form_for @user do |f| %>
                <%= f.text_field :institution %>
            <% end %>
            <i>Press enter to save</i>
         </div>      <% else %>
-        <%= @user.position %><%= ', ' + @user.institution if @user.institution %><br>
-      <% end %>
-      <h2><%= @user.get_group.name %></h2>
+        <h2><%= @user.position %><%= ', ' + @user.institution if @user.institution %></h2>
+      <% end %><br>
+      <h2><%= @user.get_group.name %></h2></p>
 
     <% if @user == current_user %>
-       <div class = "clickme editme" id="specialization"><%= @user.specialization ? "Focus: #{@user.specialization}" : "Enter your research focus" %></div>
+       <div class = "clickme editme" id="specialization"><h3><%= @user.specialization ? "Focus: #{@user.specialization}" : "Enter your research focus" %></h3></div>
          <div class = "hideonload editme_form">
            <%= form_for @user do |f| %>
                <%= f.text_field :specialization %>
@@ -54,7 +57,7 @@
        <h3>Focus: <%= @user.specialization %></h3>
     <% end %>
     
-    <p>
+    <p><h3>
     <% if @user == current_user %>
        <div class = "clickme editme" id="homepage">Edit Homepage Link</div> 
          <div class = "editme_form hideonload">
@@ -71,28 +74,29 @@
            <% end %>
            <i>Press enter to save</i>
         </div>
+        </h3>
         <p>
-       <div class = "clickme editme">Change Password</div> 
+       <div class = "clickme editme"><h3>Change Password</h3></div> 
          <div class = "editme_form hideonload">
            <%= form_for @user do |f| %>
                New Password: <%= f.password_field :password %><br>
                Confirmation: <%= f.password_field :password_confirmation %><br>
                <%= f.submit 'Change Password' %>
            <% end %>
+           </div>
+         
  
      <% else %>
-       <%= link_to "Homepage", @user.homepage %>
+       <h3><%= link_to "Homepage", @user.homepage %>
        <%= " • " if @user.cv && @user.homepage %> 
-       <%= link_to "CV", @user.cv if @user.cv %></p>
+       <%= link_to "CV", @user.cv if @user.cv %></h3></p>
      <% end %>
-    <p>Has recieved <%= pluralize(@user.votes_for_me.count,"Nod") %>.<br>
-      Summaries posted: <%= @user.assertions.count %></p>
-    <p>&nbsp;</p>
-   
+    <p><h3>Has recieved <%= pluralize(@user.votes_for_me.count,"Nod") %>.<br>
+      Summaries posted: <%= @user.assertions.count %></h3></p>   
     </div>
-  <p>&nbsp;</p>
   <div id="summary">
 <h4>Recent Activity</h4>
 <%= render 'recent_activity' %>
+</div>
 </div>
 </div>

@@ -13,18 +13,18 @@
   <div class="field">
     <%= hidden_field_tag :mode, @mode %>
     <% if question.class == Comment %>
-      <%= f.label "Leave a Comment" %><br />
-    <%= f.hidden_field :reply_to, :value => reply_to.id %>
-    <%= f.hidden_field :form, :value => 'qcomment' %>
+    	<% boxtext = "Leave a comment." %>
+    	<%= f.hidden_field :reply_to, :value => reply_to.id %>
+    	<%= f.hidden_field :form, :value => 'qcomment' %>
     <% elsif reply_to %>
-      <%= f.hidden_field :reply_to, :value => reply_to.id %>
-      <%= f.label "Provide an Answer" %><br />
-      <%= f.hidden_field :format, :value => 'answer' %>
+	<% boxtext = "Leave a comment." %>
+      	<%= f.hidden_field :reply_to, :value => reply_to.id %>
+      	<%= f.hidden_field :format, :value => 'answer' %>
     <% else %>
-      <%= f.label "Pose a Question" %><br />
-      <%= f.hidden_field :format, :value => 'question' %>
+	<% boxtext = "Leave a comment." %>
+     	<%= f.hidden_field :format, :value => 'question' %>
     <% end %>
-    <%= f.text_area :text %>
+    <%= f.text_area :text, :value => boxtext, :onfocus => "if(this.value == '#{boxtext}') { this.value = ''; }" %>
   </div>
     <% if reply_to %>
     <%= f.hidden_field :assertion_id, :value => reply_to.assertion.id %>

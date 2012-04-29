@@ -14,20 +14,21 @@ before_filter :admin_user,   :only => [:dashboard]
     if @group.category == "lab"
       @group.feed.each do |item|
         if item.class == Comment || item.class == Question
-            text = 'discussed the paper'
-            bold = false
-            sharetext = item.text
-            paper = item.get_paper
+            	text = item.owner.class == Paper ? "left a #{item.class.to_s.downcase} on the overall paper:":"left a #{item.class.to_s.downcase} on #{item.owner.shortname}:"
+		
+            	bold = false
+            	sharetext = item.text
+            	paper = item.get_paper
          elsif item.class == Assertion
-            text = 'summarized the paper'
-            bold = false
-            sharetext = item.text
-            paper = item.get_paper
+         	text = 'summarized the paper'
+            	bold = false
+            	sharetext = item.text
+            	paper = item.get_paper
          elsif item.class == Share
-            text = reftext(item)
-            sharetext = item.text
-            bold = false
-            paper = item.get_paper 
+            	text = reftext(item)
+            	sharetext = item.text
+            	bold = false
+            	paper = item.get_paper 
          end
         @feed << [item.user, text, paper, item.updated_at, bold, item]
       end

@@ -1,19 +1,18 @@
 <div class = "add_figs_and_sections"> 
-  Sections A-?
-<%= image_tag 'magnifying_glass.png', :class=>'expand_image clickme' %>
-  <div class = "numselect hideonload">
-
-
-    <% if about.class == Fig %>
-    This figure has:</br>
-     <div class = "figsection_numselect round">
-      <%= link_to 'No Sections', '/figs/' + about.id.to_s + '/build_figsections/0' %>
-     </div>
-     <% 25.times do |i| %>
-     <div class = "figsection_numselect round">
-      <%= link_to 'Sections A-'+ about.figsections.new.letter(i+2), '/figs/' + about.id.to_s + '/build_figsections/' + (i+2).to_s %>
-     </div>
-     <% end %>  
-    <% end %>
-  </div>
+	<img src="/images/arrow_open_sm.png" alt="open" width="10" height="10" class = 'hideonload'>
+	<img src="/images/arrow_closed_sm.png" alt="closed" width="10" height="10">
+	Sections A-?
+  	<div class = "numselect hideonload">
+    		<% if about.class == Fig %>
+    			This figure has:</br>
+     			<div class = "figsection_numselect round">
+			      <%= link_to 'No Sections', '/figs/' + about.id.to_s + '/build_figsections/0' %>
+     			</div>
+     			<% 25.times do |i| %>
+     				<div class = "figsection_numselect round">
+      					<%= link_to 'Sections A-'+ about.figsections.new.letter(i+2), '/figs/' + about.id.to_s + '/build_figsections/' + (i+2).to_s %>
+     				</div>
+     			<% end %>  
+    		<% end %>
+  	</div>
 </div>

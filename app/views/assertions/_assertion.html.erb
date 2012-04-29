@@ -1,0 +1,114 @@
+    <table>
+    <tr class = "summary" id = <%= about.class.to_s.downcase + about.id.to_s %> >
+	<% if about.class == Paper %>
+	    	<td class = "sumright">
+	    		<h1>Overall Paper</h1>
+	<% elsif about.class == Fig %>
+		<% if about.image %>
+			<td width="180" align="center">
+		               <%= image_tag about.image.thumb('150x150').url, :class => 'thumbnail clickme'%>
+			</td>
+		<% elsif %>
+			<td width="180" align="center">
+		                  <%= render '/figs/image_upload', :fig => about %>
+			</td>
+		<% end %>
+    	<td class = "sumright">
+    		<h1>Fig <%= about.num.to_s %></h1>
+      <% elsif about.class == Figsection %>
+    	<td class = "sumright">
+    		<h1>Section <%= about.letter(about.num) %></h1>
+      <% end %>
+
+
+			<p>
+       			<div class = 'latest_assertion clickme editme'><%= new_if_nil(about.latest_assertion).text ? about.latest_assertion.text : 'Click to enter summary' %></div>
+			<div class = "hideonload editme_form">
+				<%= render '/assertions/summary_form' , :assert => about.latest_assertion, :owner => about %>
+        		</div><br>
+         		<p class="method clickme editme"><%= new_if_nil(about.latest_assertion).method_text ? about.latest_assertion.method_text : 'Click to list methods' %>
+			</p>
+			<div class = "hideonload editme_form">
+				<%= render '/assertions/methods_form' , :assert => about.latest_assertion, :owner => about %>
+			</div>
+			<%= render '/shared/user_info', :user => current_user, :date => about.latest_assertion.updated_at if about.latest_assertion %>
+			<%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
+		        	<%= hidden_field_tag :owner, about.class.to_s %>
+              			<%= hidden_field_tag :id, about.id %>
+			<% end %>
+		        <div class="improve">
+         		</div><br>
+<div class="contribute">
+  	<div><ul>
+         <li class="commentlink clickme">  
+             <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
+               <%= hidden_field_tag :owner, about.class.to_s %>
+               <%= hidden_field_tag :id, about.id %>
+               <%= hidden_field_tag :mode, @mode %>
+               <% if @group.filter_count(about.comments.all, current_user,@mode) > 0 %>
+                 <%= pluralize(@group.filter_count(about.comments.all, current_user,@mode), "Comment") %>
+               <% else %>
+                 <%= "Add a Comment" %>
+               <% end %>
+             <% end %>
+          </li>
+	<li class="questionlink clickme">
+             <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
+               <%= hidden_field_tag :owner, about.class.to_s %>
+               <%= hidden_field_tag :id, about.id %>
+               <%= hidden_field_tag :mode, @mode %>
+               <% if @group.filter_count(about.questions.all, current_user, @mode) > 0 %>
+                 <%= pluralize(@group.filter_count(about.questions.all, current_user, @mode), "Question") %>
+               <% else %>
+                 <%= "Add a Question" %>
+               <% end %>
+             <% end %>
+	</li>
+        <% unless @group.id.nil? %>
+        <li class = "sharelink clickme">
+        	Share
+        </li>
+	<li>
+	       	<%= render 'sumreqs/sumreq_button', :item => about %>
+	</li>
+        <% end %>
+	</ul></div>
+        <div class = "sharebox hideonload", id = <%= 'share_' + about.class.to_s + '_' + about.id.to_s %>>
+        	<%= render 'shares/share_form', :item => about %>
+        </div>
+
+</div> <br><br>
+         <div class = "commentbox hideonload", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
+         </div>
+         <div class = "questionbox hideonload", id = <%= 'questions_' + about.class.to_s + '_' + about.id.to_s %>>
+         </div>
+     <% if about.class == Fig %>
+       <% unless about.image.nil? %>
+          <%= image_tag about.image.thumb('700x700>').url, :class => 'fullfig hideonload'%>
+       <% end %>
+     <% end %>
+</td>
+</tr>
+</table>
+<% if about.class == Fig %>
+	<% if about.figsections.empty? %> 
+		<%= render '/papers/add_sections', :about => about %>
+	<% else %>
+		<div class = "figtoggle clickme">
+			<img src="/images/arrow_open_sm.png" alt="open" width="10" height="10"  class = 'hideonload'>
+			<img src="/images/arrow_closed_sm.png" alt="closed" width="10" height="10">
+			<%= about.nosections ? nil:'Sections A-'+ about.figsections.first.letter(about.figsections.count) %>
+		</div>
+	<% end %>
+	<div id="<%= "fig_" + about.num.to_s + "_sections"%>" class = "fig_sections hideonload">	
+		<% about.figsections.each do |section| %>
+			<div class = 'summaryBox heatBox<%= @heatmap['figsection' + section.id.to_s][1] %>' id = 'figsection<%= section.id.to_s %>'>
+				<table width="95%" border="0" cellspacing="0" cellpadding="5">
+					<tbody><tr><td>
+						<%= render '/assertions/assertion', :about => section %>
+					</td></tr></tbody>
+				</table>
+			</div>
+		<% end %>
+	</div>
+<% end %>

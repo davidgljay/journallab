@@ -1,21 +1,16 @@
-<%= render 'assertions/form', :assert => @owner.assertions.build, :type => @owner.class.to_s.downcase, :id => @owner %>
+<h4>Alternate Summaries</h4>
 <% @assertions.each do |assertion| %>
 <% if @group.let_through_filter?(assertion, current_user) %>
-<div class="improvelist">
-      <%= assertion.text %> 
-      <br>
-      <em><%= assertion.method %></em>
-      <% unless assertion.alt_approach.nil? %>
-        <br>
-        <strong>Alternate Approaches: </strong><em><%= assertion.alt_approach %></em>
-      <% end %>
-       <br>
-      <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at %> 
+<div class="assertion_list">
     <div class="vote">
       <%= render '/votes/vote_form', :candidate => assertion %>
-       <div id = "numvotes_<%=assertion.id%>" style="float:right;"><%= render '/votes/numvotes', :candidate => assertion %>
+       <div id = "numvotes_<%=assertion.id%>"><%= render '/votes/numvotes', :candidate => assertion %>
        </div>
     </div>
-   </div>
+      <div class="latest_assertion"><%= assertion.text %></div> 
+      <p class="method"><%= assertion.method_text %></p>
+      <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at %> 
+<br>
+</div>
 <% end %>
 <% end %>

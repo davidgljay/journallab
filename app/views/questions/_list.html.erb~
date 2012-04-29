@@ -1,14 +1,25 @@
-<h4>Questions</h4>
+<h3>Questions</h3>
 <%= render 'questions/form', :question => @owner.questions.build, :owner => @owner, :reply_to => false, :format => 'question' %>
 <table class = "question discussion">
 <% @questions.each do |question| %>
   <tr>
-    <td class = "<% if question.questions.count > 0 %> has_answer <% end %><% if question.author %> author_comment <% end %>">
-      <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
-      <div class = "question_body <%= 'author_comment_body' if comment.author %>">
+    <td class = "<% if question.author %> author_comment <% end %>">
+      <div class = "question_body <%= 'author_comment_body' if question.author %>">
       <%= render 'votes/vote_form', :candidate => question %>
       <%= render 'questions/linktext', :comment => question %>
-      <br>
+      <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
+      <% unless question.comments.empty? %>
+      <div class = "qcomment">
+      <% question.comments.all.each do |c| %>
+      
+             <div>
+             <%= render 'questions/linktext', :comment => c %>
+             <br>
+             <%= render 'shared/user_info', :user => c.user, :date => c.created_at %>
+             </div>     
+      <% end %>
+      </div>
+      <% end %>
       <nav>
         <ul>
          <li class="replylink">
@@ -20,22 +31,12 @@
          <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/numvotes', :candidate => question %>
         </ul>
       </nav>
-      <% unless question.comments.empty? %>
-      <div class = "qcomment">
-      <% question.comments.all.each do |c| %>
-      
-             <div>
-             <%= render 'questions/linktext', :comment => c %>
-             <br>
-             -<%= c.user.name %>
-             </div>     
-      <% end %>
-      </div>
-      <% end %>
-      <div class = "replyform">
+
+
+      <div class = "replyform hideonload clickme">
       <%= render '/questions/form', :question => question.comments.build, :reply_to => question, :format => 'reply' %>
       </div>
-      <div class = "answerform">
+      <div class = "answerform hideonload clickme">
       <%= render '/questions/form', :question => question.questions.build, :reply_to => question, :format => 'answer' %>
       </div>
       </div>

@@ -1,122 +1,29 @@
-   $('<%= @owner.jquery_target %>').html('<%= escape_javascript(render 'papers/assertion', :about => @owner) %>');   
-   //$.include('/javascripts/application.js');
-   <% if @owner.class == Fig %>
-   $('<%= 'div.fig_' + @owner.num.to_s + '_sections' %>').html('')
-   <% end %>
+
+<% if @owner.class == Paper %>
+	<% if @assertion.text %>
+		$('<%= @owner.jquery_target %>').find('tr#paper<%= @owner.id.to_s %>').find('div.latest_assertion').html('<%= @assertion.text %>');
+	<% end %>
+	<% if @assertion.method_text %>
+		$('<%= @owner.jquery_target %>').find('tr#paper<%= @owner.id.to_s %>').find('p.method').html('<%= @assertion.method_text %>');
+	<% end %>
+<% else %>
+	<% if @assertion.text %>
+		$('<%= @owner.jquery_target %>').find('div.latest_assertion').html('<%= @assertion.text %>');
+	<% end %>
+	<% if @assertion.method_text %>
+		$('<%= @owner.jquery_target %>').find('p.method').html('<%= @assertion.method_text %>');
+	<% end %>
+<% end %>
+
+$('<%= @owner.jquery_target %>').addClass('<%= @heatmap[@owner.class.to_s.downcase + @owner.id.to_s][1] %>');
+
+$('.editme_form').css('display', 'none');
+$('.editme').css('display', 'inline');
+$('div.improve').hide();
 
 
 
-
-//Close when you click colored area on the right
-   $('<%= @owner.jquery_target %>').find("td.sumleft").click(function(){
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $("div.questionbox").hide("slow"); 
-    $("form.new_assertion").hide("slow");
-    $("form.enter_assertion").show("slow");
-    });
-
-//Toggle Figure sections
-   $('<%= @owner.jquery_target %>').find("div.figtoggle").toggle(function(){
-     mpq.track("Sections expanded");
-     $(this).parent().parent().parent().parent().next().show("slow");
-     $("td.figtoggle", this).text("-");
-     },function(){
-     $(this).parent().parent().parent().parent().next().hide("slow");
-     $("td.figtoggle", this).text("+"); 
-    });
-
-//Select # of figures and figsections expansion
-//    $('<%= @owner.jquery_target %>').find("div.add_figs_and_sections").click(function(){
-//      mpq.track("Section menu expanded");
-//      $(this).parent().find('div.numselect').slideToggle();
-//     });
-
-//Reply box expansion
-  $('<%= @owner.jquery_target %>').find("div.commentbox nav").click(function(){
-    $("div.answerform").hide("slow");
-    $(this).parent().parent().parent().find("div.replyform").slideToggle();
-    //$(this).html('It works!');
-  });
-
-//Answer box expansion
-  $('<%= @owner.jquery_target %>').find("nav li.answerlink").click(function(){
-    $("div.replyform").hide("slow");
-    $(this).parent().parent().parent().find("div.answerform").slideToggle();
-  });
-
-//Image expansion
-  
-   $('<%= @owner.jquery_target %>').find("td.fig img").click(function(){
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $("div.questionbox").hide("slow");
-    $(this).parent().next().find("img.fullfig").slideToggle();
-    });
-
-//Styling
-
-   $('<%= @owner.jquery_target %>').find('form.new_assertion').find(':input').click(function(){
-     if( $(this).val().substring(0,27) == "What is the core conclusion" || $(this).val() == "What principal methods are used?" || $(this).val() == "What are alternate approaches?")
-        $(this).val('');
-     end
-     });
-
-  $('<%= @owner.jquery_target %>').find("div.fig_numselect, div.figsection_numselect").hover(function(){
-      $(this).css('background', '#fff')},
-      function(){
-      $(this).css('background', 'none')
-    });
-
-//Select # of figures and figsections expansion
-    $('<%= @owner.jquery_target %>').find("div.add_figs_and_sections").click(function(){
-      $(this).parent().find('div.numselect').slideToggle();
-     });
-
-//Image upload for admins
-    $('<%= @owner.jquery_target %>').find(".fig_upload").click(function(){
-      $(this).parent().find('div.upload_form').show();
-     });
-
-// Enter Assertion
-
-   $('<%= @owner.jquery_target %>').find("form.new_assertion").submit(function(){
-     $.post($(this).attr("action"), $(this).serialize(), null, "script");  
-      return false;
-    });
-
-// Vote Button
-   $('<%= @owner.jquery_target %>').find("form#new_vote").submit(function(){
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-//Share Expansion
-  $('<%= @owner.jquery_target %>').find("nav li.sharelink").click(function(){
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $("div.question").hide("slow");
-    $(this).parent().parent().parent().find("div.sharebox").slideToggle();
-  });
-
-// Forms to submit through jQuery
-   $('<%= @owner.jquery_target %>').find("form.commentlist").submit(function(){
-      mpq.track("Comments viewed");
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-   $('<%= @owner.jquery_target %>').find("form.questionlist").submit(function(){
-      mpq.track("Questions viewed");
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-   $('<%= @owner.jquery_target %>').find("form.improvelist").submit(function(){
-      mpq.track("Improve viewed");
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-
+//<% if @owner.class == Fig %>
+//  	$('<%= 'div.fig_' + @owner.num.to_s + '_sections' %>').html('')
+//<% end %>
 

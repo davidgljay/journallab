@@ -1,8 +1,8 @@
-<div class="most_viewed_feed">
+<div id="mostViewedFeed" class = "hideonload">
 <% @group.most_viewed.each do |paper| %>
-  <div class = "feeditem most_viewed_feed hideonload">
-   <strong><%= link_to paper[0].title, paper[0] %></strong><%= link_to(image_tag("pdf.png"), "http://pubget.com/paper/" + paper[0].pubmed_id.to_s) %><br>
-   <em><%= pluralize(paper[1], "View") %></em>  
+   <div class = "search_results">
+   <div class="feedInfo"><%= pluralize(paper[1], "View") %></div>
+   <%= render 'papers/list', :paper => paper[0], :authors => paper[0].authors %>
   </div>
 <% end %>
 </div>

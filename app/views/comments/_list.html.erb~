@@ -1,15 +1,14 @@
-<h4>Comments</h4>
+<h3>Comments</h3>
 <%= render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment' %>
 
 <table class = "comment discussion">
 <% @comments.each do |comment| %>
   <tr >
     <td class = "<% if comment.comments.count > 0 %> has_reply <% end %> <% if comment.author %> author_comment <% end %>">
-      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
       <div class = "comment_body <%= 'author_comment_body' if comment.author %>">
       <%= render 'votes/vote_form', :candidate => comment %>
       <%= render 'linktext', :comment => comment %>
-      <br>
+      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
       <nav>
         <ul>
          <li class="replylink">
@@ -18,7 +17,7 @@
          <li id = "numvotes_<%= comment.id.to_s %>"><%= render 'votes/numvotes', :candidate => comment %>
         </ul>
       </nav> 
-      <div class = "replyform">
+      <div class = "replyform hideonload">
       <%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply' %>
       </div>
       </div>

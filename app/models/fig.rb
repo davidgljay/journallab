@@ -1,3 +1,6 @@
+require 'RMagick'
+include Magick
+
 class Fig < ActiveRecord::Base
 
 belongs_to :paper
@@ -61,6 +64,16 @@ end
 
 def longname
     "Fig " + num.to_s + " of " + paper.title
+end
+
+# Get this to work later
+def thumbnail_image
+	fig = ImageList.new('http://localhost:3000' + image.thumb('150x150').url)
+	mag = ImageList.new('http://localhost:3000/images/' + 'magnifying_glass.png')
+	mag.gravity=SouthEastGravity
+	mag_on_fig = fig.composite_layers(mag, Magick::OverCompositeOp)
+	mag_on_fig.format = ‘jpeg’
+	send_data mag_on_fig.to_blob, :stream => ‘false’, :filename => ‘thumb.jpg’, :type => ‘image/jpeg’, :disposition => ‘inline’
 end
 
 end

@@ -1,15 +1,23 @@
+<%= stylesheet_link_tag 'jl_styles_home', :media => 'screen' %>
 
-<%= image_tag 'jlablogo.png', :id => 'mainlogo' %>
+<div id="homeLogo"><%= image_tag 'journal_lab_logo.gif', :id => 'mainlogo' %></div>
 
-<%= form_tag('/lookup', :method => "get", :class => "homepage_search round") do  %>
-   <%= label_tag :pubmed_id, 'Find a paper, discuss it with your lab or with the world.' %>
-   <%= text_field_tag :pubmed_id %></br>
-   <%= submit_tag("Search") %>
+<div id="homeSearch">
+<%= form_tag('/lookup', :method => "get") do  %>
+   <h1><%= label_tag :pubmed_id, 'Discuss Published Science With Smart People.' %></h1>
+    <table border="0" align="center" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td>
+   	<%= text_field_tag :pubmed_id, "Search PubMed  with style.", :onfocus =>  "if(this.value == 'Search PubMed with style') { this.value = ''; }", :class => "inputSearch" %>
+	</td>
+<td valign="middle">   <%= image_submit_tag("button_go.png") %></tb></tr></table>
+  
+
 <% end %>
 
 <% if signed_in? && @group.id != nil %>
-<div class = "feed round">
-  <h3><%= @group.name %></h3>
+<div id = "homeFeed" class = "feed round">
+  <h1><%= @group.name %></h1>
     <% if @group.category == "class" %>
     <strong>
      Instructors: 
@@ -25,7 +33,7 @@
       <%= render '/groups/nav' %>
       <%= render '/groups/feed' %>
       <%= render '/groups/most_viewed_feed' %>
-      <%= render '/groups/sumreq_feed' if !@group.sumreq_feed.empty? %>
+      <%= render '/groups/sumreq_feed' if !@group.sumreq_feed.nil? %>
     <% end %>
 </div>
 <% end %>

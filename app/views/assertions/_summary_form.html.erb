@@ -1,0 +1,16 @@
+ <%= form_for new_or_edit(assert), :class => "new_assertion summary_form"  do |f| %>
+      <div class="field">
+         <% if assert.nil? || new_if_nil(assert).text.nil? %>
+           	<%= f.text_area :text, :value =>  "What is the core conclusion of " + owner.shortname + "?", :rows => 5 %><br>
+		<%= f.submit 'Submit' %>
+         <% else %>
+           	<table><tr><td>Summary:</td><td><%= f.text_area :text, :value =>  assert.text, :rows => 5 %><br>	
+		<%= f.submit 'Submit' %></td></tr></table>
+         <% end %>
+        </div>
+        <%= f.hidden_field :about, :value => owner.class.to_s.downcase %>
+        <%= f.hidden_field :owner_id, :value => owner.id.to_s %>
+        <%= f.hidden_field :mode, :value => @mode %>
+
+      <% end %>
+

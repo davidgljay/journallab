@@ -1,0 +1,8 @@
+module AssertionsHelper
+
+def new_or_edit(assertion)
+	a = assertion.nil? ? Assertion.new : assertion
+	a.user == current_user ? a : Assertion.new
+end
+
+end

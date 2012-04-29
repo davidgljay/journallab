@@ -11,16 +11,14 @@
     </div>
   <% end %>
   <div class="field">
-    <%= f.hidden_field :view_mode, '2' %>
+    <%= hidden_field_tag :mode, @mode %>
     <% if reply_to %>
-      <%= f.label "Leave a reply" %><br />
     <%= f.hidden_field :reply_to, :value => reply_to.id %>
     <%= f.hidden_field :form, :value => 'reply' %>
     <% else %>
-      <%= f.label "Leave a Comment" %><br />
       <%= f.hidden_field :form, :value => 'comment' %>
     <% end %>
-    <%= f.text_area :text %>
+    <%= f.text_area :text, :value => boxtext(!reply_to.nil?), :onfocus => "if(this.value == '#{boxtext(!reply_to.nil?)}') { this.value = ''; }" %>
   </div>
     <% if reply_to %>
     <%= f.hidden_field :assertion_id, :value => reply_to.assertion_id %>    

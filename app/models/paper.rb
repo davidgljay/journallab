@@ -156,7 +156,7 @@ def calc_heat(heatmap)
    #Indicate everything else as a percentage
    heatmap.each do |id, h|
      h = h[0]
-     float = h.to_f/max * 100
+     float = h.to_f/max * 10
      heatmap[id] = [h, float.to_i]
    end
    self.h_map = heatmap
@@ -182,6 +182,25 @@ def heat
    heat
 end
 
+def heatmap_overview
+	max_sections = (figs.map{|f| f.figsections.count}).max
+	overview = [[['Paper', heatmap['paper' + id.to_s][1]]] + [nil] * max_sections]
+	figs.sort{|x,y| x.num <=> y.num}.each do |fig|
+		figrow = [['Fig ' + fig.num.to_s, heatmap['fig' + fig.id.to_s][1]]]
+		fig.figsections.each do |section|
+			figrow << [fig.num.to_s + section.letter, heatmap['figsection' + section.id.to_s][1]]
+		end
+		overview << figrow + [nil] * (max_sections - fig.figsections.count)
+	end
+	overview
+end
+
+def reset_heatmap
+	h_map = nil
+	heatmap
+end
+
+
 def latest_assertion
      assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
      assert_list.sort!{|x,y| x.votes.count <=> y.votes.count}
@@ -193,12 +212,13 @@ def get_paper
 end
 
 def shortname
-    "Overall Paper"
+    "the overall paper"
 end
 
 def longname
     title
 end
+
 def num
     nil
 end
@@ -256,7 +276,7 @@ def is_public
 end
 
 def jquery_target
-   'tr#paper'
+   '#paper' + id.to_s
 end
 
 #Check to see if the paper is supplementary reading for a given class

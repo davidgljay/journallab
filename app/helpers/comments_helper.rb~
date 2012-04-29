@@ -1,0 +1,7 @@
+module CommentsHelper
+
+def boxtext(is_reply)
+	is_reply ? 'Leave a reply.' : 'Leave a comment.'
+end
+
+end

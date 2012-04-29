@@ -1,61 +1,32 @@
+<%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
+<div id="contentMain">
 <script type="text/javascript">
   mpq.track("Paper viewed",{'id':'<%= @paper.id.to_s %>', 'user':'<%= current_user.anon_name %>'});
 </script>
 
-<% if signed_in? && Group.exists?(2) %>
-<% if current_user.groups.include?(Group.new) %>
-  <%= link_to 'Extract images from Medline', '/grab_images/' + @paper.id.to_s %>
-<% end %>
-<% end %>
-<p></p><br>
-
-<h3><%= @paper.title %></h3>
-<% unless @group.id.nil? %>
-<nav class = 'undertitle'><ul>
-<li><%= render '/shares/share_button' %></li>
-<li><%= render '/sumreqs/sumreq_button', :item => @paper %></li>
-</ul>
-</nav>
-<% end %>
-<table>
-  <tr>
-   <td class="paperinfo">
-   <p>Journal: <%= @paper.journal %>, <%= @paper.pubdate.year unless @paper.pubdate == nil %>
-   | 
-   Pubmed ID: <%= link_to @paper.pubmed_id, 'http://www.ncbi.nlm.nih.gov/pubmed/' + @paper.pubmed_id.to_s %>
-   | <%= link_to(image_tag("pdf.png"), "http://pubget.com/paper/" + @paper.pubmed_id.to_s) %> <em><style class="tinytext">(via pubget)</style></em>
-
-  <br>
-  <%= render '/authors/author_list', :paper => @paper %>
-  </td>
-  <% if @paper.visits.count > 1 %>
-  <td class = "visits">
-  <strong><%= pluralize(@paper.visits.count,"People")%></strong>
-  <br>
-  <span class="tinytext">have viewed this paper.</span>
-  </td>
-  <% end %>
- </tr>
-</table>
-
-
-
-<% unless @paper.abstract.nil? %>
-<div id='abstract' class = "clickme">
-  <b>Abstract</b><%= image_tag 'magnifying_glass.png', :class => 'expand_image' %>
-  <p id='abstract_short'><%= @paper.short_abstract %></p>
-  <p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
+<div id="paperInfo">
+<h1><%= @paper.title %></h1>
+	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
+	<h3><%= render '/authors/author_list', :paper => @paper %></h3>
+	<% unless @paper.abstract.nil? %>
+		<div id='abstract' class = "clickme">
+  			<h4>Abstract</h4>
+  			<p id='abstract_short'><%= @paper.short_abstract %></p>
+  			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
+		</div>
+	<% end %>
+	<h3><%= link_to("Download", "http://pubget.com/paper/" + @paper.pubmed_id.to_s) %> | <%= render '/shares/share_button' unless @group.id.nil? %></h3>
+		<span class="small grey">
+			<% if @paper.visits.count == 1 %>
+  				<em><strong>1 person has visited this paper.</strong></em>
+			<% else %>
+	  			<em><strong><%= pluralize(@paper.visits.count,"People")%></strong> have visited this paper.</em>
+			<% end %>
+		</span>
 </div>
-<% end %>
-
-  <% if @group.papers.include?(@paper) && @paper.pdf_link != nil %>
-  <div class="downloadlink round">
-     <%= link_to 'Download PDF', @paper.pdf_link %>
-  </div>
-  <% end %>
 
 <%= render 'filters/class_options' %>
-<div class = "view_mode">
+<div class = "view_mode hideonload">
   <%= form_tag(:paper_show, :method => "get", :class => 'view_mode') do  %>
     <%= hidden_field_tag :id, @paper.id %>
     <% if @mode == 2 %>
@@ -72,11 +43,11 @@
     <% end %>    
   <% end %>
 </div>
+<%= render 'overview' %>
 
 <p>
-<% if @paper.figs.empty? %>
-  <%= render '/papers/add_figs', :about => @paper unless @paper.figs.count > 0%>
-<% else %>
+<% unless @paper.figs.empty? %>
   <%= render 'summary' %>
 <% end %>
 </p>
+</div>

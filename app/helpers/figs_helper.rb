@@ -1,2 +1,6 @@
 module FigsHelper
+
+
+
+
 end

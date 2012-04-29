@@ -93,25 +93,20 @@ end
     @mode = params[:assertion][:mode].to_i
    
   #Check to make sure that something was entered.
-   if @assertion.text.include?('What is the core conclusion') || @assertion.method.include?('What principle methods')
-    flash[:error] = "Please enter a conclusion and method."
-    save = false
-   else
-
+    @assertion.text = @assertion.text.nil? || @assertion.text.include?('What is the core conclusion') ? nil : @assertion.text
+    @assertion.method_text = @assertion.method_text.nil? || @assertion.method_text.include?('Separate methods with commas') ? nil : @assertion.method_text
     @assertion.is_public = true
-    @assertion.alt_approach = @assertion.alt_approach == 'What are alternate approaches?' ? nil : @assertion.alt_approach
-    save = @assertion.save
-    flash[:success] = 'Summary entered, thanks for your contribution.'
-    save = true
-   end
+   # @assertion.alt_approach = @assertion.alt_approach == 'What are alternate approaches?' ? nil : @assertion.alt_approach
+    @assertion.save
+   # flash[:success] = 'Summary entered, thanks for your contribution.'
 
   # Add a privacy setting if the user is part of a class that's reading this paper.
-    if @group = current_user.groups.last
-      if @group.category == "class" && :save
-         @group.make_group(@assertion)
-         @assertion.is_public = false
-      end
-    end
+  #  if @group = current_user.groups.last
+  #    if @group.category == "class" && :save
+  #       @group.make_group(@assertion)
+  #       @assertion.is_public = false
+  #    end
+  #  end
 
     @owner = @assertion.owner
     #Mark any summary requests on the paper as summarized
@@ -119,8 +114,9 @@ end
          s.summarized = true
          s.save
     end
+
     @paper = @owner.get_paper
-    @paper.add_heat(owner)
+    @paper.add_heat(@owner)
     @heatmap = @paper.heatmap
     if signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
@@ -143,15 +139,14 @@ end
   # PUT /assertions/1.xml
   def update
     @assertion = Assertion.find(params[:id])
+    @owner = @assertion.owner
+    @paper = @owner.get_paper
 
+    @group = current_user.get_group
     respond_to do |format|
       if @assertion.update_attributes(params[:assertion])
-        flash[:success] = 'Assertion was successfully updated.'
-        format.html { redirect_to(@assertion)  }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @assertion.errors, :status => :unprocessable_entity }
+	format.js { render :create }
+        format.html { redirect_to(@paper)  }
       end
     end
   end

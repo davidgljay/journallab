@@ -5,7 +5,8 @@ describe Mailer do
     before(:each) do
       @user1 = Factory(:user, :email => Factory.next(:email))
       @user2 = Factory(:user, :email => Factory.next(:email))
-      @comment = Factory(:comment, :user => @user1)
+      @comment = Factory(:comment)
+      @comment.user = @user1
       @reply = @comment.comments.build(:text => "Stampi", :form => "reply")
       @reply.user = @user2
       @reply.save
@@ -45,7 +46,7 @@ describe Mailer do
     before(:each) do
       @user1 = Factory(:user, :email => Factory.next(:email))
       @user2 = Factory(:user, :email => Factory.next(:email))
-      @question = Factory(:question, :user => @user1)
+      @question = Factory(:question, :user_id => @user1.id)
       @qcomment = @question.comments.build(:text => "Stampi", :form => "reply")
       @answer = @question.comments.build(:text => "Stampi", :form => "reply")
       @qcomment.user = @user2
@@ -76,7 +77,7 @@ describe Mailer do
       @user1 = Factory(:user, :email => Factory.next(:email))
       @paper = Factory(:paper)
       @group = Factory(:group)
-      @share = @user1.share!(@paper)
+      @share = @paper.shares.create!(:user => @user1, :get_paper => @paper, :text => 'Check this out!')
       @email = Mailer.share_notification(@share, @user1)
     end
 

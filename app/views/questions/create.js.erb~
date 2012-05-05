@@ -1,45 +1,4 @@
-   $('<%= @owner.jquery_target %>').find('div.questionbox').html('<%= escape_javascript(render '/questions/list') %>');   
-   $('<%= @owner.jquery_target %>').find('form.questionlist').find('input[type = "submit"]').val('<%= pluralize(@group.filter_count(@owner.questions.all, current_user,@mode),'Question') %>');  
-  $('<%= @owner.jquery_target %>').find('td.sumleft').css("background","rgb(<%= ((181 - 181 * @heatmap.select{|h| h[0] == @owner.class.to_s.downcase && h[1] == @owner.id}[0][3]/100).to_s + ",") * 2 %>181)");
-
-
-jQuery.ajaxSetup({
-   'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
-});
-
-$(document).ready(function(){
-
-//Reply box expansion
-  $('<%= @owner.jquery_target %>').find("nav li.replylink").click(function(){
-    $("div.answerform").hide("slow");
-    $(this).parent().parent().parent().find("div.replyform").slideToggle();
-  });
-
-//Answer box expansion
-  $('<%= @owner.jquery_target %>').find("nav li.answerlink").click(function(){
-    $("div.replyform").hide("slow");
-    $(this).parent().parent().parent().find("div.answerform").slideToggle();
-  });
-
-// Vote Button
-   $('<%= @owner.jquery_target %>').find("form#new_vote").submit(function(){
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-//Comment submit
-
-   $('<%= @owner.jquery_target %>').find("form.new_comment").submit(function(){
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-//Question submit
-
-   $('<%= @owner.jquery_target %>').find("form.new_question").submit(function(){
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-
-});
+$('<%= @owner.jquery_target %>').find('form.questionlist').first().find('div.navText').text('<%= pluralize(@questions.count,'Questions') %>');  
+$('<%= @owner.jquery_target %>').addClass('heatBox<%= @heatmap[@owner.inspect][1] %>');
+$('<%= @owner.jquery_target %>').find('div.questionbox').first().html('<%= escape_javascript(render '/questions/list') %>'); 
+$('<%= @owner.jquery_target %>').find('form.new_question').hide();

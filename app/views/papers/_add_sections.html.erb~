@@ -1,6 +1,6 @@
 <div class = "add_figs_and_sections"> 
-	<img src="/images/arrow_open_sm.png" alt="open" width="10" height="10">
-	<img src="/images/arrow_closed_sm.png" alt="closed" width="10" height="10" class = 'hideonload'>
+	<img src="/images/arrow_open_sm.png" alt="open" width="10" height="10" class = 'hideonload'>
+	<img src="/images/arrow_closed_sm.png" alt="closed" width="10" height="10">
 	Sections A-?
   	<div class = "numselect hideonload">
     		<% if about.class == Fig %>

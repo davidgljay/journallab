@@ -44,15 +44,19 @@ def get_paper
 end
 
 def jquery_target
-   "div#fig_" + fig.num.to_s + "_sections tr#figsection" + num.to_s
+   	"div#figsection" + id.to_s
 end
 
 def shortname
-    "Fig " + fig.num.to_s + letter
+    	"Fig " + fig.num.to_s + letter
 end
 
 def longname
-    "Fig " + num.to_s + letter + " of " + fig.paper.title
+    	"Fig " + num.to_s + letter + " of " + fig.paper.title
+end
+
+def inspect
+	'figsection' + id.to_s
 end
 
 end

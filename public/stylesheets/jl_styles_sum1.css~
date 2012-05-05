@@ -29,18 +29,6 @@
 	color: #545B5F;
 }
 
-.figtoggle {
-	background-repeat: no-repeat;
-	padding-left: 15px;
-	display: block;
-	color: #00569B;
-	text-transform: uppercase;
-	font-weight: bold;
-	line-height: 18px;
-	font-size: 12px;
-	width: 100px;
-}
-
 .method {
 	font-style: italic;
 	font-size: 11px;

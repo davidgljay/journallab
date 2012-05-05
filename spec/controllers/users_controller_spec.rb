@@ -104,31 +104,6 @@ describe UsersController do
       end
     end
    end
-
-    describe "'POST' edit" do
- 
-       before(:each) do
-         @user = Factory(:user)
-         test_sign_in(@user)
-       end
-       
-       it "should be successful" do
-          get :edit, :id => @user
-          response.should be_success
-       end
-
-       it "should have the right title" do
-          get :edit, :id => @user
-          response.body.should have_selector('title', :content => "Edit")
-       end
-   
-       it "should have a link to change the gravatar" do
-           get :edit, :id => @user
-           gravatar_url = "http://gravatar.com/emails"
-           response.body.should have_selector('a', :href => gravatar_url,
-                                              :content => "Change")
-       end
-   end
     
    describe "'PUT' update" do
      
@@ -137,23 +112,6 @@ describe UsersController do
          test_sign_in(@user)
        end
  
-    describe "failure" do
-     
-        before(:each) do
-           @attr = { :email => "", :name => "", :password => "", :password_confirmation => "" }
-        end
-
-        it "should render the edit page" do
-          put :update, :id => @user, :user => @attr
-          response.should render_template('edit')
-        end
-
-        it "should have the right title" do
-          put :update, :id => @user, :user => @attr
-          response.body.should have_selector('title', :content => "Edit")
-        end
-    end
-
     describe "success" do
 
        before(:each) do

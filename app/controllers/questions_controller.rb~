@@ -15,32 +15,28 @@ before_filter :authenticate
   def create
     if params[:question][:format] == 'question'
        @question = Question.new(:text => params[:question][:text])
-       flash[:success] = "Question added."
+       @owner = params[:owner_class].constantize.find(params[:owner_id])
+	 if @owner.class == Paper
+	 	@question.paper = @owner
+	 elsif @owner.class == Fig
+    	 	@question.fig = @owner
+    	 elsif @owner.class == Figsection
+		@question.figsection = @owner
+	 end
+
     elsif params[:question][:format] == 'answer'
-       @question = Question.new(:text => params[:question][:text])
-       @question.question = Question.find(params[:question][:reply_to])
-       flash[:success] = "Thank you for your answer."
- #   elsif params[:question][:format] == 'comment'
- #     @question = Comment.new(:text => params[:question][:text])
- #     flash[:success] = "Your comment has been added."
+        @question = Question.new(:text => params[:question][:text])
+        @question.question = Question.find(params[:question][:reply_to])
     end
     @mode = params[:mode].to_i
     @question.user = current_user
     @question.save
-    @question.assertion = Assertion.find(params[:question][:assertion_id])
-    assertion = @question.assertion
+    @question.assertion = params[:question][:assertion_id] ? Assertion.find(params[:question][:assertion_id]) : nil
     # Replies and answers are associated with assertions (for counting purposes), but NOT with figs, papers, etc.
-    url = '/papers/' + assertion.get_paper.id.to_s
-    unless @question.question
-      if @question.paper = assertion.paper
-      elsif @question.fig = assertion.fig
-      elsif @question.figsection = assertion.figsection
-      end
-    end
-    @question.save
+    @paper = @question.get_paper
     @owner = @question.owner
     @group = current_user.get_group
-    @paper = @owner.get_paper
+    @paper.heatmap
     @paper.add_heat(@owner)
     @heatmap = @paper.heatmap
     if @question.user.groups.empty?
@@ -57,11 +53,11 @@ before_filter :authenticate
             @thread = @question.question
             #Send the comment to the original commenter and anyone else in the thread, except the current poster
             ([@thread.user] + @thread.questions.map{|q| q.user} + @thread.comments.map{|c| c.user}).uniq.each do |u|
-               Mailer.comment_response(@question, u).deliver #if u != @question.user && u.receive_mail?
+               Mailer.comment_response(@question, u).deliver if u != @question.user && u.receive_mail?
             end
          end
         format.js
-        format.html { redirect_to url }
+        format.html { redirect_to @paper }
 #        format.xml  { render :xml => @comment, :status => :created, :location => @question }
 #      else
 #        flash[:error] = "Please enter a comment."

@@ -18,12 +18,15 @@
     <% else %>
       <%= f.hidden_field :form, :value => 'comment' %>
     <% end %>
-    <%= f.text_area :text, :value => boxtext(!reply_to.nil?), :onfocus => "if(this.value == '#{boxtext(!reply_to.nil?)}') { this.value = ''; }" %>
+    <%= f.text_area :text, :value => boxtext(reply_to), :onfocus => "if(this.value == '#{boxtext(reply_to)}') { this.value = ''; }" %>
   </div>
-    <% if reply_to %>
-    <%= f.hidden_field :assertion_id, :value => reply_to.assertion_id %>    
+    <% if owner.latest_assertion %>
+    	<%= f.hidden_field :assertion_id, :value => owner.latest_assertion.id %>
+    	<%= hidden_field_tag :owner_id, owner.id %>
+    	<%= hidden_field_tag :owner_class, owner.class.to_s %>  
     <% else %>
-    <%= f.hidden_field :assertion_id, :value => owner.assertions[-1].id %>    
+    	<%= hidden_field_tag :owner_id, owner.id %>
+    	<%= hidden_field_tag :owner_class, owner.class.to_s %>
     <% end %>
   <div class="actions">
     <%= f.submit :value => "Submit" %>

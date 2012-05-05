@@ -31,7 +31,7 @@ has_many :groups, :through => :filters, :source => :group
                          :greater_than => 0
 
 def inspect
-  title
+	'paper' + id.to_s
 end
 
 def lookup_info
@@ -54,21 +54,24 @@ def lookup_info
 end
 
 #Derive authors
-def extract_authors
-    url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pubmed_id.to_s + '&retmode=xml&rettype=abstract'
-    data = Nokogiri::XML(open(url))
-    data.xpath('//AuthorList/Author').each do |auth|
-     author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
-       a = Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
-       if a.save
-          self.authors << a
-       else 
-          auth = Author.find(:last, :conditions=> {:firstname => author[0], :lastname => author[1]})  
-          if !self.authors.include?(auth) 
-            self.authors << auth
-          end
-       end
-     end               
+def extract_authors(authorlist = nil)
+	if authorlist.nil?
+		url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pubmed_id.to_s + '&retmode=xml&rettype=abstract'
+    		data = Nokogiri::XML(open(url))
+    		authorlist = data.xpath('//AuthorList')
+	end
+	authorlist.xpath('Author').count.times do |i|
+     		author = [authorlist.xpath('Author/ForeName')[i].text, authorlist.xpath('Author/LastName')[i].text, authorlist.xpath('Author/Initials')[i].text]
+       		a = Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
+       		if a.save
+          		self.authors << a
+       		else 
+          		auth = Author.find(:last, :conditions=> {:firstname => author[0], :lastname => author[1]})  
+          		if !self.authors.include?(auth) 
+            			self.authors << auth
+          		end
+       		end
+     	end               
 end
 
 def count_figs
@@ -81,16 +84,21 @@ def count_figs
     end
   end
   self.build_figs(imagearray.count)
-  pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
-  unless pmcid == ' '
-    url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
-    oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
-    unless oai.css('error').attribute("code").value == "idDoesNotExist"
-      imagearray.count.times do |n|
-        self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
-        self.figs[n].save
-      end 
-    end
+  
+  #
+  #Slightly more liberal, extract images if it's free on PMC.
+  #
+
+  if doc.css('a.status_icon').text == "Free PMC Article"
+  #pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
+  #unless pmcid == ' '
+  #  url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
+  #  oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
+  #  unless oai.css('error').attribute("code").value == "idDoesNotExist"
+    imagearray.count.times do |n|
+      self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
+      self.figs[n].save
+    end 
   end
 end
 
@@ -183,12 +191,12 @@ def heat
 end
 
 def heatmap_overview
-	max_sections = (figs.map{|f| f.figsections.count}).max
-	overview = [[['Paper', heatmap['paper' + id.to_s][1]]] + [nil] * max_sections]
+	max_sections = (figs.map{|f| f.figsections.count}).max.to_i
+	overview = [[['Paper', heatmap['paper' + id.to_s][1], 'paper' + id.to_s]] + [nil] * max_sections]
 	figs.sort{|x,y| x.num <=> y.num}.each do |fig|
-		figrow = [['Fig ' + fig.num.to_s, heatmap['fig' + fig.id.to_s][1]]]
+		figrow = [['Fig ' + fig.num.to_s, heatmap['fig' + fig.id.to_s][1], 'fig' + fig.id.to_s]]
 		fig.figsections.each do |section|
-			figrow << [section.letter, heatmap['figsection' + section.id.to_s][1]]
+			figrow << [fig.num.to_s + section.letter, heatmap['figsection' + section.id.to_s][1], 'figsection' + section.id.to_s]
 		end
 		overview << figrow + [nil] * (max_sections - fig.figsections.count)
 	end
@@ -196,7 +204,8 @@ def heatmap_overview
 end
 
 def reset_heatmap
-	h_map = nil
+	self.h_map = nil
+	self.save
 	heatmap
 end
 
@@ -234,13 +243,14 @@ def short_abstract
 end
 
 def build_figs(numfigs)
-   newfigs = numfigs.to_i-self.figs.count
-   newfigs.times do |i|
-     self.figs.create(:num => (self.figs.count+1))
-   end
-   self.h_map = nil
-   self.save
-   numfigs
+   	newfigs = numfigs.to_i-self.figs.count
+	if newfigs > 0
+   		newfigs.times do |i|
+     			self.figs.create(:num => (self.figs.count+1))
+   		end
+		reset_heatmap
+	end
+   	numfigs
 end
 
 # This is a function for quickly building a paper from the console and for testing purposes.
@@ -252,8 +262,7 @@ def buildout(struct)
            self.figs[i-1].build_figsections(struct[i])
        end
     end
-    self.h_map = nil
-    self.save
+    reset_heatmap
     struct
 end
 

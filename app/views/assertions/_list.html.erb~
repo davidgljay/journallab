@@ -1,15 +1,16 @@
-<h4>Alternate Summaries</h4>
+<% if !@assertions.empty? %>
+	<h4>Alternate Summaries</h4>
+<% end %>
 <% @assertions.each do |assertion| %>
 <% if @group.let_through_filter?(assertion, current_user) %>
 <div class="assertion_list">
+    <div class="vote">
+      <%= render '/votes/vote_form', :candidate => assertion %>
+    </div>
       <div class="latest_assertion"><%= assertion.text %></div> 
       <p class="method"><%= assertion.method_text %></p>
       <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at %> 
-    <div class="vote">
-      <%= render '/votes/vote_form', :candidate => assertion %>
-       <div id = "numvotes_<%=assertion.id%>"><%= render '/votes/numvotes', :candidate => assertion %>
-       </div>
-    </div><br>
+<br>
 </div>
 <% end %>
 <% end %>

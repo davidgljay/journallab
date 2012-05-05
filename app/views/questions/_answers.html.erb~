@@ -1,14 +1,14 @@
   <% answers = question.questions.all.sort_by{|a| a.votes.count}.reverse %>
+  <%= answers.empty? ? nil : '<tr><td><h5>ANSWERS</h5></td></tr>'.html_safe() %>
   <% answers.each do |a| %>
   <tr>
-    <td class = "answer <% if a.author %> author_comment <% end %>">
+    <td><div class = "answer <% if a.author %> author_comment <% end %>">
       <div class = "question_body <%= 'author_comment_body' if a.author %>">
-      <%= render 'votes/vote_form', :candidate => a %>
       <%= render 'questions/linktext', :comment => a %>
       <%= render 'shared/user_info', :user => a.user, :date => a.created_at %>
       <nav>
         <ul>
-         <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/numvotes', :candidate => question %>
+         <li id = "numvotes_<%= a.id.to_s %>"><%= render 'votes/vote_form', :candidate => a %>
         </ul>
       </nav>
       </div>

@@ -21,17 +21,18 @@ def latest_assertion
 end
 
 def build_figsections(numsections)
-   if numsections == 0
-     nosections = true
-   else
-     newsections = numsections.to_i - self.figsections.count
-     newsections.times do |i|
-      self.figsections.create(:num => (self.figsections.count+1))
-     end
-   end
-   @paper = get_paper  
-   @paper.h_map = nil
-   @paper.save
+   	if numsections == 0
+     		nosections = true
+   	else
+     		newsections = numsections.to_i - self.figsections.count
+		if newsections > 0
+     			newsections.times do |i|
+      				self.figsections.create(:num => (self.figsections.count+1))
+			end
+			self.paper.reset_heatmap
+		end
+		numsections
+	end
 end
 
 def heat
@@ -51,19 +52,23 @@ def heat
 end
 
 def get_paper
-   self.paper
+   	self.paper
 end
 
 def jquery_target
-   'tr#fig' + num.to_s
+   	'div#fig' + id.to_s
 end
 
 def shortname
-    "Fig " + num.to_s
+    	"Fig " + num.to_s
 end
 
 def longname
-    "Fig " + num.to_s + " of " + paper.title
+    	"Fig " + num.to_s + " of " + paper.title
+end
+
+def inspect
+	"fig" + id.to_s
 end
 
 # Get this to work later

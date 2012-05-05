@@ -3,32 +3,3 @@
     $("div.sharebox").hide("slow");
     $('<%= escape_javascript(@owner.jquery_target) %>').find('div.improve').html('<%= escape_javascript(render 'list') %>');
     $('<%= escape_javascript(@owner.jquery_target) %>').find('div.improve').show('slow');
-
-jQuery.ajaxSetup({
-   'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
-});
-
-$(document).ready(function(){
-
-// Vote Button
-   $('<%= escape_javascript(@owner.jquery_target) %>').find("form#new_vote").submit(function(){
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-   $('<%= escape_javascript(@owner.jquery_target) %>').find('form.new_assertion').find(':input').click(function(){
-     if( $(this).val().substring(0,27) == "What is the core conclusion" || $(this).val() == "What principal methods are used?" || $(this).val() == "What are alternate approaches?")
-        $(this).val('');
-     end
-     });
-
-
-   $('<%= escape_javascript(@owner.jquery_target) %>').find("form.new_assertion").submit(function(){
-     mpq.track("Improved summary entered");
-     $.post($(this).attr("action"), $(this).serialize(), null, "script");  
-      return false;
-    });
-
-
-
-});

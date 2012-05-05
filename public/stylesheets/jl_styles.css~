@@ -37,6 +37,10 @@ h4 {
 	margin-bottom: 5px;
 	clear: both;
 }
+h5 {
+	margin: 0px;
+}
+
 p {
 	padding: 0px;
 	line-height: 15px;
@@ -76,7 +80,7 @@ img {
 	font-style: italic;
 }
 
-textarea, input [text] {
+textarea, input [type = 'text'] {
 	border: 1px solid #C7CBCF;
 	padding: 0px;
 	margin-top: 0px;
@@ -159,9 +163,6 @@ textarea, input [text] {
 #profileInfo .profilePhoto {
 	float: left;
 	padding-right: 20px;
-	border-right-width: 1px;
-	border-right-style: solid;
-	border-right-color: #CFD4D8;
 	margin-right: 5px;
 }
 .notes {
@@ -208,6 +209,14 @@ textarea, input [text] {
 
 #profileInfo h2 {
 	display: inline;
+}
+
+td#profileImage {
+	text-align: center;
+	width: 328px;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #CFD4D8;
 }
 
 #timestamp {
@@ -263,7 +272,7 @@ textarea, input [text] {
 /* Sharing */
 
 input#share_text {
-	width: 600px;
+	width: 390px;
 	margin-top: 10px;
 }
 
@@ -369,6 +378,14 @@ input#share_text {
 	display: inline;
 }
 
+.italic {
+	font-style: italic;
+}
+
+.bold 	{
+	font-weight: bold;
+} 
+
 
 /* Heatmaps */
 
@@ -418,6 +435,10 @@ input#share_text {
 	text-align: center;
 	vertical-align: middle;
 	width: 25px;
+}
+
+.heatTable a {
+	color: #000;
 }
 
 .heat0{
@@ -473,6 +494,10 @@ input#share_text {
 	background-image: url(/images/vellum.png);
 }
 
+form.new_vote {
+	display: inline;
+}
+
 /* Comments and questions */
 
 .commentbox, .questionbox {
@@ -480,6 +505,7 @@ input#share_text {
 	border: 1px solid #025B98;
 	padding-top: 5px;
 	background: #fff;
+	width: 500px;
 }
 
 .commentbox textarea, .questionbox textarea {
@@ -507,9 +533,10 @@ td.comment_body, td.question_body {
 	border-bottom-color: #D1D5D8;
 	padding-top: 5px;
 	margin-bottom: 5px;
-	width: 90%;
+	width: 100%;
 	padding-bottom: 10px;
 }
+
 
 .reply, .answer {
 	border-bottom-width: 1px;
@@ -517,7 +544,6 @@ td.comment_body, td.question_body {
 	border-bottom-color: #D1D5D8;
 	padding-top: 5px;
 	margin-bottom: 5px;
-	width: 560px;
 	padding-bottom: 10px;
 	margin-left: 40px;
 }
@@ -531,7 +557,7 @@ td.comment_body, td.question_body {
 }
 
 .replyform textarea {
-	width: 560px;
+	width: 450px;
 }
 
 .qcomment {
@@ -539,6 +565,51 @@ td.comment_body, td.question_body {
 	margin-top: 5px;
 	font-style: italic;
 }
+
+/* Quickforms (for quickly adding comments and questions) */
+
+
+.quickform {
+	border: 1px solid #025B98;
+	margin-left: 30px;
+	margin-right: 30px;
+	padding: 10px;
+}
+
+.quickform .figSelector {
+	float: left;
+	text-align: left;
+	font-size: 11px;
+}
+
+.quickform .figSelector div {
+	padding: 5px;
+	width: 225px;
+	border: 1px gray solid
+}
+
+.quickform .selectPaper {
+	font-style: italic;
+	background: gray; 
+}
+
+.quickform .selectFig {
+	font-weight: bold;
+}
+
+.quickform input#fig {
+	width: 50px;
+	font-size: 11px;
+	color: gray;
+	font-style: italic;
+}
+
+.quickform textarea {
+	width: 60%;
+	height: 80px;
+}
+
+
 /* Classes related to javascript */
 
 .hideonload {

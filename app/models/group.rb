@@ -111,17 +111,21 @@ def otherwise_public?(item)
 end
 
 def make_filter(item, state, date = nil, supplementary = false)
-  unless find_filter_by_item(item)
-    if item.class == Paper
-       self.filters.build(:paper_id => item.id, :state => state, :date => date, :supplementary => supplementary).save
-    elsif item.class == Comment
-       self.filters.build(:comment_id => item.id, :state => state).save
-    elsif item.class == Question
-       self.filters.build(:question_id => item.id, :state => state).save
-    elsif item.class == Assertion
-       self.filters.build(:assertion_id => item.id, :state => state).save
-    end
-  end
+	unless find_filter_by_item(item) || id == nil
+		if item.class == Paper
+			self.filters.build(:paper_id => item.id, :state => state, :date => date, :supplementary => supplementary).save
+		elsif item.class == Comment
+			self.filters.build(:comment_id => item.id, :state => state).save
+		elsif item.class == Question
+			self.filters.build(:question_id => item.id, :state => state).save
+		elsif item.class == Assertion
+			self.filters.build(:assertion_id => item.id, :state => state).save
+		end
+	end
+	if state == 1 && item.class != Paper
+		item.is_public = true
+		item.save
+	end
 end
 
 
@@ -232,7 +236,7 @@ end
 def most_viewed
     visits = users.map{|u| u.visits}
     papers = visits.flatten!.map{|v| v.paper_id}.uniq.map{|id| Paper.find(id)}
-    papers.map{|paper| [paper, visits.select{|v| v.paper_id == paper.id}.map{|v| v.count}.inject(0){|sum, item| sum + item}]}.sort{|x,y| y[1]<=>x[1]}.first(30)
+    papers.map{|paper| [paper, visits.select{|v| v.paper_id == paper.id}.map{|v| v.count.to_i }.inject(0){|sum, item| sum + item}]}.sort{|x,y| y[1]<=>x[1]}.first(30)
 end
 
 # List of papers by summary request for the lab 

@@ -35,9 +35,10 @@ describe "Shares:" do
 
   it "shares a paper.", :js => true do
       find('#paper').find('li.sharelink').click
-      fill_in 'share_text', :with => "This is the bees cromosomes."
+      fill_in 'share_text', :with => "This is the bees stripes."
       click_button 'Share with your lab'
       page.should have_content("Shared!")
-      @group.feed.first.meta_paper.should be @paper
+      @group.feed.first.paper.should == @paper
   end
+
 end

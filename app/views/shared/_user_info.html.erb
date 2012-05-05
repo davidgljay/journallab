@@ -9,7 +9,7 @@
     <% end %>
 <% else %>
   <a href="<%= user_path(user) %>">
-    <%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" %>
+    <%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" if user.image %>
     <span class="user_name">
       <%= user.name %>
     </span>

@@ -17,19 +17,22 @@
     	<%= f.hidden_field :reply_to, :value => reply_to.id %>
     	<%= f.hidden_field :form, :value => 'qcomment' %>
     <% elsif reply_to %>
-	<% boxtext = "Leave a comment." %>
+	<% boxtext = "Provide an answer." %>
       	<%= f.hidden_field :reply_to, :value => reply_to.id %>
       	<%= f.hidden_field :format, :value => 'answer' %>
     <% else %>
-	<% boxtext = "Leave a comment." %>
+	<% boxtext = "Pose a question." %>
      	<%= f.hidden_field :format, :value => 'question' %>
     <% end %>
     <%= f.text_area :text, :value => boxtext, :onfocus => "if(this.value == '#{boxtext}') { this.value = ''; }" %>
   </div>
-    <% if reply_to %>
-    <%= f.hidden_field :assertion_id, :value => reply_to.assertion.id %>
+    <% if owner.latest_assertion %>
+    	<%= f.hidden_field :assertion_id, :value => owner.latest_assertion.id %>
+    	<%= hidden_field_tag :owner_id, owner.id %>
+    	<%= hidden_field_tag :owner_class, owner.class.to_s %>  
     <% else %>
-    <%= f.hidden_field :assertion_id, :value => owner.assertions[-1].id %>
+    	<%= hidden_field_tag :owner_id, owner.id %>
+    	<%= hidden_field_tag :owner_class, owner.class.to_s %>
     <% end %>
   <div class="actions">
     <%= f.submit :value => "Submit" %>

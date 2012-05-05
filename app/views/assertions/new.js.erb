@@ -1,17 +1,2 @@
     $('<%= @about.jquery_target %>').find('div.assertion_form').html('<%= escape_javascript(render 'assertions/form', :assert => @assertion, :type => @type[@about.class.to_s.downcase]) %>');
    $('<%= @about.jquery_target %>').find('form.new_assertion').show("med");
-
-jQuery.ajaxSetup({
-   'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
-});
-
-$(document).ready(function(){
-
-   $('<%= @about.jquery_target %>').find('form.new_assertion').find(':input').click(function(){
-     if( $(this).val().substring(0,27) == "What is the core conclusion" || $(this).val() == "What principal methods are used?" || $(this).val() == "What are alternate approaches?")
-        $(this).val('');
-     end
-     });
-
-});
-

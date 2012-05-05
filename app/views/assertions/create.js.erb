@@ -1,29 +1,18 @@
+$('<%= @owner.jquery_target %>').find('div.latest_assertion').first().html('<%= escape_javascript(@assertion.text.to_s.empty? ? 'Click to enter summary' : @assertion.text) %>');
 
-<% if @owner.class == Paper %>
-	<% if @assertion.text %>
-		$('<%= @owner.jquery_target %>').find('tr#paper<%= @owner.id.to_s %>').find('div.latest_assertion').html('<%= @assertion.text %>');
-	<% end %>
-	<% if @assertion.method_text %>
-		$('<%= @owner.jquery_target %>').find('tr#paper<%= @owner.id.to_s %>').find('p.method').html('<%= @assertion.method_text %>');
-	<% end %>
-<% else %>
-	<% if @assertion.text %>
-		$('<%= @owner.jquery_target %>').find('div.latest_assertion').html('<%= @assertion.text %>');
-	<% end %>
-	<% if @assertion.method_text %>
-		$('<%= @owner.jquery_target %>').find('p.method').html('<%= @assertion.method_text %>');
-	<% end %>
-<% end %>
 
-$('<%= @owner.jquery_target %>').addClass('<%= @heatmap[@owner.class.to_s.downcase + @owner.id.to_s][1] %>');
+$('<%= @owner.jquery_target %>').find('p.method').first().html('<%= escape_javascript(@assertion.method_text.to_s.empty? ? 'Click to list methods' : @assertion.method_text) %>');
+
+
+$('<%= @owner.jquery_target %>').find('div.user_info').first().html('<%= escape_javascript(render '/shared/user_info', :user => @assertion.user, :date => @assertion.created_at) %>');
+
+$('<%= @owner.jquery_target %>').find('div.summary_form').first().html('<%= escape_javascript(render '/assertions/summary_form', :assert => @assertion, :owner => @owner) %>');
+$('<%= @owner.jquery_target %>').find('div.methods_form').first().html('<%= escape_javascript(render '/assertions/methods_form', :assert => @assertion, :owner => @owner) %>');
+
+
+$('<%= @owner.jquery_target %>').addClass('heatBox<%= @heatmap[@owner.class.to_s.downcase + @owner.id.to_s][1] %>');
 
 $('.editme_form').css('display', 'none');
 $('.editme').css('display', 'inline');
 $('div.improve').hide();
-
-
-
-//<% if @owner.class == Fig %>
-//  	$('<%= 'div.fig_' + @owner.num.to_s + '_sections' %>').html('')
-//<% end %>
 

@@ -22,12 +22,12 @@ describe QuestionsController do
 
     it "should create a question" do
       lambda do
-        get :create, :question => @attr, :mode => '2'
+        get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
       end.should change(Question, :count).by(1)
     end
 
     it "should create a filter state and have the right attributes" do
-      get :create, :question => @attr, :mode => '2'
+      get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
       @question = Question.last
       @question.filters.first.state.should == 2
       @question.text.should == "Lorem ipsum underpants"
@@ -37,11 +37,11 @@ describe QuestionsController do
     end
 
     it "should create a reply which triggers an e-mail" do
-      get :create, :question => @attr, :mode => '2'
+      get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
       @question = Question.last
       test_sign_in @user2
       @attr = {:text => "Lorem ipsum reply", :format => "answer", :reply_to => @question.id, :assertion_id => @assertion.id}
-      get :create, :question => @attr, :mode => '2'
+      get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
       @answer = Question.last
       @answer.filters.first.state.should == 2
       @answer.text.should == "Lorem ipsum reply"
@@ -54,14 +54,14 @@ describe QuestionsController do
 
     it "should trigger an e-mail to multiple users on a thread" do
       @user3 = Factory(:user, :email => Factory.next(:email))   
-      get :create, :question => @attr, :mode => '2'
+      get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
       @question = Question.last
       test_sign_in @user2
       @attr = {:text => "Lorem ipsum answer", :format => "answer", :reply_to => @question.id.to_s, :assertion_id => @assertion.id}
-      get :create, :question => @attr, :mode => '2'
+      get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
       test_sign_in @user3
       @attr = {:text => "Lorem ipsum pancakes", :format => "answer", :reply_to => @question.id.to_s, :assertion_id => @assertion.id}
-      get :create, :question => @attr, :mode => '2'
+      get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
       Maillog.all.count.should == 3
     end
 

@@ -173,28 +173,35 @@ end
       @search_results = []
       data.xpath('//PubmedArticle').count.times do |i|
         pid = data.xpath('//PMID')[i].text
-        title = data.xpath('//Article/ArticleTitle')[i].text
-        journal = data.xpath('//Journal/Title')[i].text
-        pubdate = nil
-        day = data.xpath('//PubDate/Day')[i].nil? ? nil : data.xpath('//PubDate/Day')[i].text.to_i
-        month = data.xpath('//PubDate/Month')[i].nil? ? nil : monthhash[data.xpath('//PubDate/Month')[i].text]
-        year = data.xpath('//PubDate/Year')[i].nil? ? nil : data.xpath('//PubDate/Year')[i].text.to_i
-	pubdate = Time.local(year, month, day) if year
-        abstract = nil
-        unless data.xpath('//Abstract/AbstractText')[i].nil?
-        	abstract = data.xpath('//Abstract/AbstractText')[i].text
-        end
-	# Extract the authors as an array for now. When someone clicks on the paper we'll create records for them.
-	authors = []
-	data.xpath('//AuthorList/Author').each do |auth|
-	     	author = [auth.xpath('ForeName').text, auth.xpath('LastName').text, auth.xpath('Initials').text]
-       		authors << Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
+        paper = Paper.find_by_pubmed_id(pid)
+        if paper.nil?
+	        title = data.xpath('//Article/ArticleTitle')[i].text
+	        journal = data.xpath('//Journal/Title')[i].text
+	        pubdate = nil
+	        day = data.xpath('//PubDate/Day')[i].nil? ? nil : data.xpath('//PubDate/Day')[i].text.to_i
+	        month = data.xpath('//PubDate/Month')[i].nil? ? nil : monthhash[data.xpath('//PubDate/Month')[i].text]
+	        year = data.xpath('//PubDate/Year')[i].nil? ? nil : data.xpath('//PubDate/Year')[i].text.to_i
+		pubdate = Time.local(year, month, day) if year
+	        abstract = nil
+	        unless data.xpath('//Abstract/AbstractText')[i].nil?
+	        	abstract = data.xpath('//Abstract/AbstractText')[i].text
+	        end
+        	paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
 	end
 
-        paper = Paper.find_by_pubmed_id(pid)  
-        if paper.nil?
-        	paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
-        end
+	# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
+	if paper.authors.empty?
+		authors = []
+		authorlist = data.xpath('//Article/AuthorList')[i]
+		authorlist.xpath('Author').count.times do |i|
+		     	author = [authorlist.xpath('Author/ForeName')[i].text, authorlist.xpath('Author/LastName')[i].text, authorlist.xpath('Author/Initials')[i].text]
+			
+			authors << Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
+		end
+		#paper.extract_authors(data.xpath('//Article/AuthorList')[i])
+	else
+		authors = paper.authors
+	end
         @search_results << [paper, authors]    
       end
       respond_to do |format|

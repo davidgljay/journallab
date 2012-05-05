@@ -4,38 +4,3 @@
     $('div#questions_<%= @owner_type + '_' + @owner.id.to_s %>').html('<%= escape_javascript(render 'list') %>');
     $('div#questions_<%= @owner_type + '_' + @owner.id.to_s %>').slideToggle();
 
-jQuery.ajaxSetup({
-   'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
-});
-
-$(document).ready(function(){
-
-//Reply box expansion
-  $("nav li.replylink").click(function(){
-    $("div.answerform").hide("slow");
-    $(this).parent().parent().parent().find("div.replyform").slideToggle();
-  });
-
-//Answer box expansion
-  $("nav li.answerlink").click(function(){
-    $("div.replyform").hide("slow");
-    $(this).parent().parent().parent().find("div.answerform").slideToggle();
-  });
-
-// Vote Button
-   $("form#new_vote").submit(function(){
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-//Question submit
-
-   $("form.new_comment, form.new_question, form.new_assertion").submit(function(){
-      mpq.track("Question submitted");
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-
-
-});

@@ -1,3 +1,4 @@
+    <a name = <%= about.class.to_s.downcase + about.id.to_s %> ></a>
     <table>
     <tr class = "summary" id = <%= about.class.to_s.downcase + about.id.to_s %> >
 	<% if about.class == Paper %>
@@ -22,16 +23,16 @@
 
 
 			<p>
-       			<div class = 'latest_assertion clickme editme'><%= new_if_nil(about.latest_assertion).text ? about.latest_assertion.text : 'Click to enter summary' %></div>
+       			<div class = 'latest_assertion clickme editme'><%= new_if_nil(about.latest_assertion).text.to_s.empty? ? 'Click to enter summary' : about.latest_assertion.text %></div>
 			<div class = "hideonload editme_form">
 				<%= render '/assertions/summary_form' , :assert => about.latest_assertion, :owner => about %>
         		</div><br>
-         		<p class="method clickme editme"><%= new_if_nil(about.latest_assertion).method_text ? about.latest_assertion.method_text : 'Click to list methods' %>
+         		<p class="method clickme editme"><%= new_if_nil(about.latest_assertion).method_text.to_s.empty? ? 'Click to list methods' : about.latest_assertion.method_text %>
 			</p>
 			<div class = "hideonload editme_form">
 				<%= render '/assertions/methods_form' , :assert => about.latest_assertion, :owner => about %>
 			</div>
-			<%= render '/shared/user_info', :user => current_user, :date => about.latest_assertion.updated_at if about.latest_assertion %>
+			<%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at if about.latest_assertion %>
 			<%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
 		        	<%= hidden_field_tag :owner, about.class.to_s %>
               			<%= hidden_field_tag :id, about.id %>
@@ -42,26 +43,30 @@
   	<div><ul>
          <li class="commentlink clickme">  
              <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
-               <%= hidden_field_tag :owner, about.class.to_s %>
-               <%= hidden_field_tag :id, about.id %>
-               <%= hidden_field_tag :mode, @mode %>
-               <% if @group.filter_count(about.comments.all, current_user,@mode) > 0 %>
-                 <%= pluralize(@group.filter_count(about.comments.all, current_user,@mode), "Comment") %>
-               <% else %>
-                 <%= "Add a Comment" %>
-               <% end %>
+               	<%= hidden_field_tag :owner, about.class.to_s %>
+               	<%= hidden_field_tag :id, about.id %>
+               	<%= hidden_field_tag :mode, @mode %>
+		<div class = 'navText'>
+               		<% if @group.filter_count(about.comments.all, current_user,@mode) > 0 %>
+                 		<%= pluralize(@group.filter_count(about.comments.all, current_user,@mode), "Comment") %>
+               		<% else %>
+                 		<%= "Add a Comment" %>
+               		<% end %>
+		</div>
              <% end %>
           </li>
 	<li class="questionlink clickme">
              <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
-               <%= hidden_field_tag :owner, about.class.to_s %>
-               <%= hidden_field_tag :id, about.id %>
-               <%= hidden_field_tag :mode, @mode %>
-               <% if @group.filter_count(about.questions.all, current_user, @mode) > 0 %>
-                 <%= pluralize(@group.filter_count(about.questions.all, current_user, @mode), "Question") %>
-               <% else %>
-                 <%= "Add a Question" %>
-               <% end %>
+   		<%= hidden_field_tag :owner, about.class.to_s %>
+		<%= hidden_field_tag :id, about.id %>
+		<%= hidden_field_tag :mode, @mode %>
+		<div class = 'navText'>
+               		<% if @group.filter_count(about.questions.all, current_user, @mode) > 0 %>
+                 		<%= pluralize(@group.filter_count(about.questions.all, current_user, @mode), "Question") %>
+               		<% else %>
+                 		<%= "Add a Question" %>
+               		<% end %>
+		</div>
              <% end %>
 	</li>
         <% unless @group.id.nil? %>

@@ -1,3 +1,4 @@
+<% if @heatmap.count > 1 || @heatmap.first[1][1] > 0 %> 
 <div class = 'overview_open clickme'>
 <h4><img src="/images/arrow_open.gif" alt="open" width="15" height="15">
 <img src="/images/arrow_closed.gif" alt="open" width="15" height="15" class = 'hideonload'>
@@ -36,10 +37,11 @@ Heatmap</h4>
 <% @heatmap_overview.first.length.times do |i| %>
 	<% @heatmap_overview.length.times do |h| %>
 		<td> 
-		<%= @heatmap_overview[h][i] ? "<div class='heat#{@heatmap_overview[h][i][1]}'>#{@heatmap_overview[h][i][0]}</div>".html_safe : ' '  %>
+		<%= @heatmap_overview[h][i] ? "<a href = '##{@heatmap_overview[h][i][2]}'><div class='heat#{@heatmap_overview[h][i][1]}'>#{@heatmap_overview[h][i][0]}</div></a>".html_safe : ' '  %>
 		</td>
 	<% end %>
 	</tr>
 <% end %>
 </table>
 </div>
+<% end %>

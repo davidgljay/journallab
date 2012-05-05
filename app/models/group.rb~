@@ -21,7 +21,7 @@ has_many :questions, :through => :filters, :source => :question
 has_many :assertions, :through => :filters, :source => :assertion
 has_many :sumreqs, :dependent => :destroy
 has_many :shares, :dependent => :destroy
-
+has_many :maillogs, :as => :about
 
 validates :category, :presence => true
 validates :name, :presence => true
@@ -111,17 +111,21 @@ def otherwise_public?(item)
 end
 
 def make_filter(item, state, date = nil, supplementary = false)
-  unless find_filter_by_item(item)
-    if item.class == Paper
-       self.filters.build(:paper_id => item.id, :state => state, :date => date, :supplementary => supplementary).save
-    elsif item.class == Comment
-       self.filters.build(:comment_id => item.id, :state => state).save
-    elsif item.class == Question
-       self.filters.build(:question_id => item.id, :state => state).save
-    elsif item.class == Assertion
-       self.filters.build(:assertion_id => item.id, :state => state).save
-    end
-  end
+	unless find_filter_by_item(item) || id == nil
+		if item.class == Paper
+			self.filters.build(:paper_id => item.id, :state => state, :date => date, :supplementary => supplementary).save
+		elsif item.class == Comment
+			self.filters.build(:comment_id => item.id, :state => state).save
+		elsif item.class == Question
+			self.filters.build(:question_id => item.id, :state => state).save
+		elsif item.class == Assertion
+			self.filters.build(:assertion_id => item.id, :state => state).save
+		end
+	end
+	if state == 1 && item.class != Paper
+		item.is_public = true
+		item.save
+	end
 end
 
 

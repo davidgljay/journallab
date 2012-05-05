@@ -1,0 +1,22 @@
+<div class = 'quickform quick_<%= form %> hideonload'>
+	<%= form_tag '/quickform', :method => :post do %>
+		<%= hidden_field_tag :paper, @paper.id %>
+		<%= hidden_field_tag :form, form %>
+		<%= hidden_field_tag :mode, @mode %>
+		<div class = 'figSelector'>
+			<div class = 'selectFig clickme' >
+				<%= form == 'comment' ? 'Leave a comment on' : 'Pose a questions about' %> 
+				fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>:
+			</div>
+			<div class = 'selectPaper clickme'>
+				<%= form == 'comment' ? 'Leave a comment on' : 'Pose a question about' %> 
+				the overall paper:
+			</div>
+		</div>
+		<div class = 'textfield'>
+			<%= text_area_tag :text %><br>
+			<%= submit_tag 'Submit' %>
+		</div>
+	<% end %>
+</div>
+

@@ -3,9 +3,8 @@
 <table class = "question discussion">
 <% @questions.each do |question| %>
   <tr>
-    <td class = "<% if question.author %> author_comment <% end %>">
-      <div class = "question_body <%= 'author_comment_body' if question.author %>">
-      <%= render 'votes/vote_form', :candidate => question %>
+    <td class = "question_body <%= 'author_comment_body' if question.author %> <% if question.author %> author_comment <% end %>">
+      <div>
       <%= render 'questions/linktext', :comment => question %>
       <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
       <% unless question.comments.empty? %>
@@ -20,23 +19,22 @@
       <% end %>
       </div>
       <% end %>
-      <nav>
+      <div>
         <ul>
-         <li class="replylink">
+         <li class="replylink clickme">
          Comment
          </li>
-         <li class="answerlink">
+         <li class="answerlink clickme">
          Answer
          </li>
-         <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/numvotes', :candidate => question %>
+         <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/vote_form', :candidate => question %></li>
         </ul>
-      </nav>
-
-
-      <div class = "replyform hideonload clickme">
+      </div>
+      </td></tr><tr><td>	      
+      <div class = "replyform hideonload">
       <%= render '/questions/form', :question => question.comments.build, :reply_to => question, :format => 'reply' %>
       </div>
-      <div class = "answerform hideonload clickme">
+      <div class = "answerform hideonload">
       <%= render '/questions/form', :question => question.questions.build, :reply_to => question, :format => 'answer' %>
       </div>
       </div>

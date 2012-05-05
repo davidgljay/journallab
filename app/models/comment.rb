@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
 
-attr_accessible :text, :form, :paper_id, :fig_id, :figsection_id
+attr_accessible :text, :form, :paper_id, :fig_id, :figsection_id, :user_id, :assertion_id
 
 belongs_to :user
 belongs_to :paper

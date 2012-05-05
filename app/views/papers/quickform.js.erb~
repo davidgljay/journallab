@@ -1,0 +1,1 @@
+$('quickform').html('Your comment has been posted');

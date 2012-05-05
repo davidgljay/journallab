@@ -1,13 +1,13 @@
-<div id = "vote_form_<%= candidate.id.to_s %>" class = "vote_form">
-    <% if signed_in? && current_user != candidate.user %>
-    <% if current_user.voted_for?(candidate) %>
-    <%= render '' %>
-    <% else %>
-    <%= form_for candidate.votes.create, :remote => true do |f| %>
-      <%= f.hidden_field :id, :value => candidate.id %>
-       <%= f.hidden_field :type, :value => candidate.class.to_s %>
-      <%= f.submit "[+]" %>
-    <% end %>
-    <% end %>
-    <% end %>
+<div id = "vote_form_<%= candidate.id.to_s %>" class = "vote_form clickme">
+	<%= render '/votes/numvotes', :candidate => candidate %>
+    	<% if signed_in? && current_user != candidate.user %>
+    	<% if !current_user.voted_for?(candidate) %>
+    		<%= form_for candidate.votes.create, :remote => true do |f| %>
+      			<%= f.hidden_field :id, :value => candidate.id %>
+       			<%= f.hidden_field :type, :value => candidate.class.to_s %>
+      			[+]
+    		<% end %>
+    	<% end %>
+    	<% end %>
+
 </div>

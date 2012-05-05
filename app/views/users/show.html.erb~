@@ -1,100 +1,100 @@
+
+
 <div id="contentMain">
 <h1>Member Profile</h1>
-  <div id="profileInfo">
-   <% if @user == current_user %>
-     <% if @user.image %>
-       <%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :id => "profilephoto", :class => "profilePhoto clickme editme" %>
-     <% else %>
-       <%= image_tag 'green_testube.jpg', :alt => "#{@user.firstname} has not uploaded a profile.", :width => "300", :height => "300", :class => "profilePhoto clickme editme" %>
-     <% end %>
-     <div class='upload_form hideonload'>
-     <h3>Upload a new profile picture</h3>
-     <%= form_for @user, :url => "#{@user.id}/image_upload", :html => {:multipart => true} do |f| %>
-       <%= f.file_field :user_image %>
-       <%= f.hidden_field :id %>
-       <%= f.submit 'Upload' %>
-     <% end %>
-     </div>
-   <% else %>
-     <% if @user.image %>
-       <%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :class => "profilePhoto" %>
-     <% else %>
-       <%= image_tag 'green_testube.jpg', :alt => "#{@user.firstname} has not uploaded a profile.", :width => "300", :height => "300", :class => "profilePhoto" %>
-     <% end %>
-   <% end %>
-
-    <h2><%= @user.name %></h2><br>
-      <% if @user == current_user %>
-        <div class = "clickme editme" id="position"><h2><%= @user.position ? @user.position : "Enter your position" %></h2></div>
-         <div class = "hideonload editme_form">
-           <%= form_for @user do |f| %>
-               <%= f.text_field :position %>
-           <% end %>
-           <i>Press enter to save</i>
-        </div><h2>,</h2>
-        <div class = "clickme editme" id="institution"><h2><%= @user.institution ? @user.institution : "Enter your institution" %></h2></div>
-         <div class = "hideonload editme_form">
-           <%= form_for @user do |f| %>
-               <%= f.text_field :institution %>
-           <% end %>
-           <i>Press enter to save</i>
-        </div>      <% else %>
-        <h2><%= @user.position %><%= ', ' + @user.institution if @user.institution %></h2>
-      <% end %><br>
-      <h2><%= @user.get_group.name %></h2></p>
-
-    <% if @user == current_user %>
-       <div class = "clickme editme" id="specialization"><h3><%= @user.specialization ? "Focus: #{@user.specialization}" : "Enter your research focus" %></h3></div>
-         <div class = "hideonload editme_form">
-           <%= form_for @user do |f| %>
-               <%= f.text_field :specialization %>
-           <% end %>
-           <i>Press enter to save</i>
-        </div>
-    <% elsif @user.specialization %>
-       <h3>Focus: <%= @user.specialization %></h3>
-    <% end %>
-    
-    <p><h3>
-    <% if @user == current_user %>
-       <div class = "clickme editme" id="homepage">Edit Homepage Link</div> 
-         <div class = "editme_form hideonload">
-           <%= form_for @user do |f| %>
-               <%= f.text_field :homepage %>
-           <% end %>
-           <i>Press enter to save</i>
-        </div>
-        • 
-       <div class = "clickme editme" id="cv">Edit CV Link</div> 
-         <div class = "editme_form hideonload">
-           <%= form_for @user do |f| %>
-               <%= f.text_field :cv %>
-           <% end %>
-           <i>Press enter to save</i>
-        </div>
-        </h3>
-        <p>
-       <div class = "clickme editme"><h3>Change Password</h3></div> 
-         <div class = "editme_form hideonload">
-           <%= form_for @user do |f| %>
-               New Password: <%= f.password_field :password %><br>
-               Confirmation: <%= f.password_field :password_confirmation %><br>
-               <%= f.submit 'Change Password' %>
-           <% end %>
-           </div>
-         
- 
-     <% else %>
-       <h3><%= link_to "Homepage", @user.homepage %>
-       <%= " • " if @user.cv && @user.homepage %> 
-       <%= link_to "CV", @user.cv if @user.cv %></h3></p>
-     <% end %>
-    <p><h3>Has recieved <%= pluralize(@user.votes_for_me.count,"Nod") %>.<br>
-      Summaries posted: <%= @user.assertions.count %></h3></p>   
-    </div>
-  <div id="summary">
-<h4>Recent Activity</h4>
-<%= render 'recent_activity' %>
-</div>
-</div>
+	<div id="profileInfo">
+		<table><tr id = 'profileImage'><td>
+			<% if @user == current_user %>
+				<% if @user.image %>
+					<%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :id => "profilephoto", :class => "profilePhoto clickme editme" %>
+				<% else %>
+					<%= image_tag 'green_testube.jpg', :alt => "#{@user.firstname} has not uploaded a profile.", :width => "300", :height => "300", :class => "profilePhoto clickme editme" %>
+				<% end %>
+				<div class='upload_form hideonload'>
+					<h3>Upload a new profile picture</h3>
+					<%= form_for @user, :url => "#{@user.id}/image_upload", :html => {:multipart => true} do |f| %>
+						<%= f.file_field :user_image %>
+						<%= f.hidden_field :id %><br>
+						<%= f.submit 'Upload' %>
+					<% end %>
+				</div>
+			<% else %>
+				<% if @user.image %>
+					<%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :class => "profilePhoto" %>
+				<% else %>
+					<%= image_tag 'green_testube.jpg', :alt => "#{@user.firstname} has not uploaded a profile.", :width => "300", :height => "300", :class => "profilePhoto" %>
+				<% end %>
+			<% end %>
+		</td><td>
+			<h2><%= @user.name %></h2><br>
+			<% if @user == current_user %>
+			<div class = "clickme editme" id="position"><h2><%= @user.position ? @user.position : "Enter your position" %></h2></div>
+			<div class = "hideonload editme_form">
+				<%= form_for @user do |f| %>
+					<%= f.text_field :position %>
+				<% end %>
+        	   	<i>Press enter to save</i>
+        		</div><h2>,</h2>
+        		<div class = "clickme editme" id="institution"><h2><%= @user.institution ? @user.institution : "Enter your institution" %></h2></div>
+        	 	<div class = "hideonload editme_form">
+  				<%= form_for @user do |f| %>
+        	       			<%= f.text_field :institution %>
+        	   		<% end %>
+        	   		<i>Press enter to save</i>
+        		</div>      <% else %>
+        			<h2><%= @user.position %><%= ', ' + @user.institution if @user.institution %></h2>
+      			<% end %><br>
+      			<h2><%= @user.get_group.name %></h2></p>
+    			<% if @user == current_user %>
+       				<div class = "clickme editme" id="specialization"><h3><%= @user.specialization ? "Focus: #{@user.specialization}" : "Enter your research focus" %></h3></div>
+        	 		<div class = "hideonload editme_form">
+        	   		<%= form_for @user do |f| %>
+        	       			<%= f.text_field :specialization %>
+        	   		<% end %>
+        	   		<i>Press enter to save</i>
+        			</div>
+    			<% elsif @user.specialization %>
+       				<h3>Focus: <%= @user.specialization %></h3>
+    			<% end %>
+    	
+    			<p><h3>
+    			<% if @user == current_user %>
+       				<div class = "clickme editme" id="homepage">Edit Homepage Link</div> 
+        	 			<div class = "editme_form hideonload">
+        	   			<%= form_for @user do |f| %>
+        	       				<%= f.text_field :homepage %>
+        	   			<% end %>
+        	   			<i>Press enter to save</i>
+        			</div>
+        			• 
+      				<div class = "clickme editme" id="cv">Edit CV Link</div> 
+        	 		<div class = "editme_form hideonload">
+        	   		<%= form_for @user do |f| %>
+        	       			<%= f.text_field :cv %>
+        	   		<% end %>
+        	   		<i>Press enter to save</i>
+        			</div>
+        		</h3><p>
+       				<div class = "clickme editme"><h3>Change Password</h3></div> 
+        	 <div class = "editme_form hideonload">
+        	   		<%= form_for @user do |f| %>
+        	       			New Password: <%= f.password_field :password %><br>
+        	       			Confirmation: <%= f.password_field :password_confirmation %><br>
+        	       			<%= f.submit 'Change Password' %>
+        	   		<% end %>
+        	   		</div>
+     			<% else %>
+       				<h3><%= link_to "Homepage", @user.homepage %>
+       				<%= " • " if @user.cv && @user.homepage %> 
+       				<%= link_to "CV", @user.cv if @user.cv %></h3></p>
+     			<% end %>
+	
+    			<p><h3>Has recieved <%= pluralize(@user.votes_for_me.count,"Nod") %>.<br>
+      				Summaries posted: <%= @user.assertions.count %></h3></p>   
+		</td></tr></table>
+	</div>
+  	<div id="summary">
+		<h4>Recent Activity</h4>
+		<%= render 'recent_activity' %>
+	</div>
 </div>

@@ -8,5 +8,5 @@
     <% end %>
 </div>
 <div class = "share_confirmation hideonload">
-   Shared! Your <%= @group.category %>mates will be notified.
+   Shared! Your <%= @group.category %>mates will be notified by e-mail and on their feeds.
 </div>

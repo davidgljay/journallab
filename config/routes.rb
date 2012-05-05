@@ -10,6 +10,7 @@ Redcell::Application.routes.draw do
   resources :comments
    match '/comments(/:id)/reply',    :to => 'comments#reply'
    match 'comment_list',             :to => 'comments#list'
+   match 'quickform',			:to => 'comments#quickform'
 
   resources :votes
   resources :shares
@@ -36,7 +37,6 @@ Redcell::Application.routes.draw do
    match '/papers(/:id)/build_figs(/:num)', :to => 'papers#build_figs'
    match 'paper_show',               :to => 'papers#show'
    match '/papers(/:id)/m(/:m_id)', :to => 'papers#show_from_mail'
-
    match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
 

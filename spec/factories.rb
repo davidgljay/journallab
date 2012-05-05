@@ -3,7 +3,7 @@ Factory.sequence :email do |n|
 end
 
 Factory.sequence :pubmed_id do |n|
-  12345678 + 1
+  21228906 + 1
 end
 
 Factory.define :user do |user|
@@ -19,11 +19,12 @@ Factory.define :paper do |paper|
     paper.title     "The Smartest Science Ever"
     paper.pubmed_id rand(99999999) + 100
     paper.abstract  "Smart smart smartypants"
+    #paper.after_create { |p| Factory(:author, :papers => [p]) }
 end
 
 Factory.define :summarized_paper do |paper|
     paper.title     "The Smartest Science Ever"
-    paper.pubmed_id "1234567"
+    paper.pubmed_id "21228906"
     paper.abstract  "Smart smart smartypants"
     paper.save
     paper.buildout([3,3,2,1])
@@ -47,7 +48,7 @@ end
 Factory.define :comment do |comment|
     comment.text "Lorem ipsum."
     comment.association :user, :email => 'unique1@email.com'
-    comment.association :paper, :pubmed_id => rand(999999999) + 100, :title => "The Smartest Science Ever"
+    comment.association :paper, :pubmed_id => 12345678 + 100, :title => "The Smartest Science Ever"
     comment.association :assertion
     comment.form "comment"
 end
@@ -55,7 +56,7 @@ end
 Factory.define :question do |comment|
     comment.text "Lorem ipsum?"
     comment.association :user, :email => 'unique2@email.com'
-    comment.association :paper, :pubmed_id => rand(999999999) + 100, :title => "The Smartest Science Ever"
+    comment.association :paper, :pubmed_id => 12345678 + 100, :title => "The Smartest Science Ever"
     comment.association :assertion
 end
 
@@ -67,4 +68,10 @@ Factory.define :assertion do |assert|
     assert.text "This is grande!"
     assert.association :user
     assert.association :paper
+end
+
+Factory.define :author do |author|
+    author.firstname "Robert"
+    author.lastname "Judson"
+    author.initial "RJ"
 end

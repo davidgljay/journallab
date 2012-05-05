@@ -14,6 +14,8 @@ describe "Questions:" do
      a.is_public = true
      a.user = @user
      a.save
+     @fig = @paper.figs.first
+     @figsection = @fig.figsections.first
      @paper.figs.each do |f|
        a = f.assertions.build(:text => "Test", :method => "Test test")
        a.is_public = true
@@ -35,7 +37,7 @@ describe "Questions:" do
 
    describe "posting a Question" do
       it "adds a Question to a paper and lets you reply", :js => true do
-       click_button "Add a Question"
+       find('li.questionlink').click
        fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
        click_button 'Submit' 
        page.should have_selector('li.replylink')       
@@ -62,15 +64,15 @@ describe "Questions:" do
    end
 
      it "adds a Question to a figure and lets you reply", :js => true do
-       find('#fig1').click_button "Add a Question"
-       fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
-       click_button 'Submit' 
-       find('li.replylink').click
-       fill_in 'comment_text', :with => "That's so smart I'm commenting."
-       click_button 'Submit' 
-       find('li.answerlink').click
-       fill_in 'question_text', :with => "Here's an answer to your question."
-       click_button 'Submit' 
+       find('#fig' + @fig.id.to_s).find('li.questionlink').click
+       find('#fig' + @fig.id.to_s).fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
+       find('#fig' + @fig.id.to_s).click_button 'Submit' 
+       find('#fig' + @fig.id.to_s).find('li.replylink').click
+       find('#fig' + @fig.id.to_s).fill_in 'comment_text', :with => "That's so smart I'm commenting."
+       find('#fig' + @fig.id.to_s).click_button 'Submit' 
+       find('#fig' + @fig.id.to_s).find('li.answerlink').click
+       find('#fig' + @fig.id.to_s).fill_in 'question_text', :with => "Here's an answer to your question."
+       find('#fig' + @fig.id.to_s).click_button 'Submit' 
        page.should have_content("I have an incredibly intelligent thing to say.")
        page.should have_content("That's so smart I'm commenting.")
        page.should have_content("Here's an answer to your question.")
@@ -78,15 +80,15 @@ describe "Questions:" do
 
      it "adds a Question to a figure section and lets you reply", :js => true do
        find('div.figtoggle').click
-       find('#figsection1').click_button "Add a Question"
-       fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
-       click_button 'Submit' 
-       find('li.replylink').click
-       fill_in 'comment_text', :with => "That's so smart I'm commenting."
-       click_button 'Submit' 
-       find('li.answerlink').click
-       fill_in 'question_text', :with => "Here's an answer to your question."
-       click_button 'Submit' 
+       find('#figsection' + @figsection.id.to_s).find('li.questionlink').click
+       find('#figsection' + @figsection.id.to_s).fill_in 'question_text', :with => "I have an incredibly intelligent thing to say."
+       find('#figsection' + @figsection.id.to_s).click_button 'Submit' 
+       find('#figsection' + @figsection.id.to_s).find('li.replylink').click
+       find('#figsection' + @figsection.id.to_s).fill_in 'comment_text', :with => "That's so smart I'm commenting."
+       find('#figsection' + @figsection.id.to_s).click_button 'Submit' 
+       find('#figsection' + @figsection.id.to_s).find('li.answerlink').click
+       find('#figsection' + @figsection.id.to_s).fill_in 'question_text', :with => "Here's an answer to your question."
+       find('#figsection' + @figsection.id.to_s).click_button 'Submit' 
        page.should have_content("I have an incredibly intelligent thing to say.")
        page.should have_content("That's so smart I'm commenting.")
        page.should have_content("Here's an answer to your question.")

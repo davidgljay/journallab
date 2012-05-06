@@ -194,9 +194,10 @@ end
 		authors = []
 		authorlist = data.xpath('//Article/AuthorList')[i]
 		authorlist.xpath('Author').count.times do |i|
-		     	author = [authorlist.xpath('Author/ForeName')[i].text, authorlist.xpath('Author/LastName')[i].text, authorlist.xpath('Author/Initials')[i].text]
-			
-			authors << Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
+			firstname = authorlist.xpath('Author/ForeName')[i] ? authorlist.xpath('Author/ForeName')[i].text : '' 
+			lastname = authorlist.xpath('Author/LastName')[i] ? authorlist.xpath('Author/LastName')[i].text : ''
+			initials = authorlist.xpath('Author/Initials')[i] ? authorlist.xpath('Author/Initials')[i].text : ''
+			authors << Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
 		end
 		#paper.extract_authors(data.xpath('//Article/AuthorList')[i])
 	else

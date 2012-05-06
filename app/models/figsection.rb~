@@ -40,7 +40,7 @@ def heat
 end
 
 def get_paper
-   self.fig.paper
+   	self.fig.paper
 end
 
 def jquery_target

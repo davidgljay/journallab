@@ -597,6 +597,10 @@ td.comment_body, td.question_body {
 	font-weight: bold;
 }
 
+.quickform h3 {
+	text-align: left;
+}
+
 .quickform input#fig {
 	width: 50px;
 	font-size: 11px;

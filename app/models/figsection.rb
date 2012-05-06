@@ -35,6 +35,7 @@ def heat
    end
    questions.each do |q|
      heat += q.questions.count
+     heat += q.comments.count
    end
    heat
 end

@@ -585,12 +585,12 @@ td.comment_body, td.question_body {
 .quickform .figSelector div {
 	padding: 5px;
 	width: 225px;
-	border: 1px gray solid
+	border: 1px #9FCF67 solid
 }
 
 .quickform .selectPaper {
 	font-style: italic;
-	background: gray; 
+	background: #9FCF67; 
 }
 
 .quickform .selectFig {

@@ -1,0 +1,9 @@
+desc "Resets authors for each paper"
+
+task :reset_authors => :environment do
+	Paper.all.each do |paper|
+		paper.extract_authors
+		paper.lookup_info
+	end
+end
+

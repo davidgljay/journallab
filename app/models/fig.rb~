@@ -44,6 +44,7 @@ def heat
    end
    questions.each do |q|
      heat += q.questions.count
+     heat += q.comments.count
    end
    figsections.each do |f|
      heat += f.heat

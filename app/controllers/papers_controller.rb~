@@ -171,32 +171,28 @@ end
       url2 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
       data = Nokogiri::XML(open(url2))
       @search_results = []
-      data.xpath('//PubmedArticle').count.times do |i|
-        pid = data.xpath('//PMID')[i].text
+      data.xpath('//PubmedArticle').each do |article|
+        pid = article.xpath('MedlineCitation/PMID').text
         paper = Paper.find_by_pubmed_id(pid)
         if paper.nil?
-	        title = data.xpath('//Article/ArticleTitle')[i].text
-	        journal = data.xpath('//Journal/Title')[i].text
-	        pubdate = nil
-	        day = data.xpath('//PubDate/Day')[i].nil? ? nil : data.xpath('//PubDate/Day')[i].text.to_i
-	        month = data.xpath('//PubDate/Month')[i].nil? ? nil : monthhash[data.xpath('//PubDate/Month')[i].text]
-	        year = data.xpath('//PubDate/Year')[i].nil? ? nil : data.xpath('//PubDate/Year')[i].text.to_i
+	        title = article.xpath('MedlineCitation/Article/ArticleTitle').text
+	        journal = article.xpath('MedlineCitation/Article/Journal/Title').text
+	        day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
+	        month = artcile.xpath('MedlineCitation/DateCreated/Month').text.to_i
+	        year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
 		pubdate = Time.local(year, month, day) if year
-	        abstract = nil
-	        unless data.xpath('//Abstract/AbstractText')[i].nil?
-	        	abstract = data.xpath('//Abstract/AbstractText')[i].text
-	        end
+	        abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
         	paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
 	end
 
 	# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
 	if paper.authors.empty?
 		authors = []
-		authorlist = data.xpath('//Article/AuthorList')[i]
-		authorlist.xpath('Author').count.times do |i|
-			firstname = authorlist.xpath('Author/ForeName')[i] ? authorlist.xpath('Author/ForeName')[i].text : nil 
-			lastname = authorlist.xpath('Author/LastName')[i] ? authorlist.xpath('Author/LastName')[i].text : nil
-			initials = authorlist.xpath('Author/Initials')[i] ? authorlist.xpath('Author/Initials')[i].text : nil
+		authorlist = article.xpath('MedlineCitation/Article/AuthorList')
+		authorlist.xpath('Author').each do |a|
+			firstname = a.xpath('ForeName').text 
+			lastname = a.xpath('LastName').text
+			initials = a.xpath('Initials').text
 			authors << Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
 		end
 		#paper.extract_authors(data.xpath('//Article/AuthorList')[i])

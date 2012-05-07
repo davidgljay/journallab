@@ -60,13 +60,15 @@ def extract_authors(authorlist = nil)
     		data = Nokogiri::XML(open(url))
     		authorlist = data.xpath('//AuthorList')
 	end
-	authorlist.xpath('Author').count.times do |i|
-     		author = [authorlist.xpath('Author/ForeName')[i].text, authorlist.xpath('Author/LastName')[i].text, authorlist.xpath('Author/Initials')[i].text]
-       		a = Author.new(:firstname => author[0], :lastname => author[1], :initial => author[2])
+	authorlist.xpath('Author').each do |a|
+		firstname = a.xpath('ForeName').text 
+		lastname = a.xpath('LastName').text
+		initials = a.xpath('Initials').text
+		a =  Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
        		if a.save
           		self.authors << a
        		else 
-          		auth = Author.find(:last, :conditions=> {:firstname => author[0], :lastname => author[1]})  
+          		auth = Author.find(:last, :conditions=> {:firstname => firstname, :lastname => lastname})  
           		if !self.authors.include?(auth) 
             			self.authors << auth
           		end

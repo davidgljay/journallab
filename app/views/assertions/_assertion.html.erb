@@ -47,8 +47,8 @@
                	<%= hidden_field_tag :id, about.id %>
                	<%= hidden_field_tag :mode, @mode %>
 		<div class = 'navText'>
-               		<% if @group.filter_count(about.comments.all, current_user,@mode) > 0 %>
-                 		<%= pluralize(@group.filter_count(about.comments.all, current_user,@mode), "Comment") %>
+               		<% if about.comments.all.count > 0 %>
+                 		<%= pluralize(about.comments.all.count, "Comment") %>
                		<% else %>
                  		<%= "Add a Comment" %>
                		<% end %>
@@ -61,8 +61,8 @@
 		<%= hidden_field_tag :id, about.id %>
 		<%= hidden_field_tag :mode, @mode %>
 		<div class = 'navText'>
-               		<% if @group.filter_count(about.questions.all, current_user, @mode) > 0 %>
-                 		<%= pluralize(@group.filter_count(about.questions.all, current_user, @mode), "Question") %>
+               		<% if about.questions.all.count > 0 %>
+                 		<%= pluralize(about.questions.all.count, "Question") %>
                		<% else %>
                  		<%= "Add a Question" %>
                		<% end %>

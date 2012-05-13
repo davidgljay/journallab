@@ -4,6 +4,6 @@ class AddHeatmapToPapers < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :papers, :heatmap
+    remove_column :papers, :h_map
   end
 end

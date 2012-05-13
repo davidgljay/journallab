@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+validate :check_if_verified
+
+
   def new
      @title = "Sign in"
      @user = User.new
@@ -24,5 +27,14 @@ class SessionsController < ApplicationController
     flash[:success] = "You have been signed out."
     redirect_to root_path
   end
+
+
+  private
+
+  def check_if_verified
+    errors.add(:base, "You have not yet verified your account") unless attempted_record && attempted_record.verified
+  end
+
+end 
 
 end

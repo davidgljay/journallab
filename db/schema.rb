@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120426040246) do
+ActiveRecord::Schema.define(:version => 20120511175500) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -153,12 +153,13 @@ ActiveRecord::Schema.define(:version => 20120426040246) do
     t.text     "title"
     t.integer  "pubmed_id"
     t.text     "journal"
-    t.text     "abstract",   :default => ""
+    t.text     "abstract",           :default => ""
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "pdf_link"
     t.datetime "pubdate"
     t.text     "h_map"
+    t.text     "first_last_authors"
   end
 
   create_table "questions", :force => true do |t|
@@ -241,6 +242,7 @@ ActiveRecord::Schema.define(:version => 20120426040246) do
     t.string   "cv"
     t.string   "position"
     t.string   "institution"
+    t.boolean  "verified",           :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

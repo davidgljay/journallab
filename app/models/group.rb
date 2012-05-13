@@ -215,7 +215,7 @@ def feed
      items << u.comments
      items << u.questions
    end
-   items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(100) unless items.empty?
+   items.flatten!.sort!{|x,y| y.updated_at <=> x.updated_at}.first(40) unless items.empty?
 end
 
 def fix_visits

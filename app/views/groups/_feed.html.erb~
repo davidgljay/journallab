@@ -13,7 +13,7 @@
      <% if !item[5].nil? %>
       <div class = "sharetext">
 	<strong><%= item[0].firstname + ' ' + item[0].lastname.first + '.' %></strong> <%= item[1] %>
-        <strong>"</strong><strong> "</strong>
+        <strong>"</strong><%= render 'comments/linktext', :comment => item[5] %><strong> "</strong>
       </div>
      <% end %>
      <div id = "timestamp" class="small grey"><%= item[3].strftime('%B %d, %Y') %></div>

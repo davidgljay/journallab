@@ -4,6 +4,7 @@ describe "Assertions" do
    before(:each) do
 	@user = Factory(:user, :email => Factory.next(:email))
 	@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
+     	@paper.authors << Factory(:author)
 	@group = Factory(:group)
 	@paper.lookup_info
 	@paper.extract_authors

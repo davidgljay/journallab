@@ -5,7 +5,7 @@ before_filter :authenticate
     @owner = params[:owner].constantize.find(params[:id])
     @group = current_user.get_group
     @mode = params[:mode].to_i
-    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+    @questions = @owner.questions.all #.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     @owner_type = params[:owner]
     respond_to do |format|
         format.js
@@ -46,7 +46,7 @@ before_filter :authenticate
     elsif @mode == 1
        @group.make_public(@question)
     end
-    @questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+    @questions = @owner.questions.all #.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     respond_to do |format|
       if @question.save
          if !@question.question.nil?

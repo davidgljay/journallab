@@ -1,19 +1,20 @@
  <header>
        <div id='header'>
             <div id='utNav'>
-            <%= link_to "Home", root_path %>
             <% if signed_in? %>
               <% if current_user.admin? %>
-              <%= link_to "Add Users", bulksignup_path %>
-              <%= link_to "Reset Passwords", reset_password_path %>
               <%= link_to "Dashboard", dashboard_path %>
+              <%= link_to "Reset Passwords", reset_password_path %>
+              <%= link_to "Add Users", bulksignup_path %>
               <% end %>
-            <%= link_to "Profile", current_user %>
-            <%= link_to "Settings", edit_user_path(current_user) %>
 	    <%= link_to "Sign out", signout_path, :method => :delete %>
-            <% else %>                  
+            <%= link_to "Settings", edit_user_path(current_user) %>
+            <%= link_to "Profile", current_user %>
+            <% else %>
+	    <%= link_to "Register", "new_user_path %>
             <%= link_to "Sign in", signin_path %>
             <% end %>
+            <%= link_to "Home", root_path %>
 
             <% unless @title == 'Home' %>
 
@@ -22,7 +23,7 @@
 		      <tbody><tr>
         		<td>
                 	<%= form_tag('/lookup', :method => "get") do  %>
-                	<%= text_field_tag(:pubmed_id, "Search PubMed", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch" ) %> </td>
+                	<%= text_field_tag(:pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch" ) %> </td>
                 	<td><%= image_submit_tag("button_go.png") %></td>
                 	<% end %>
 			</td>

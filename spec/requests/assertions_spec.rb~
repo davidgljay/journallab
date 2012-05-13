@@ -4,10 +4,11 @@ describe "Assertions" do
    before(:each) do
 	@user = Factory(:user, :email => Factory.next(:email))
 	@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
+     	@paper.authors << Factory(:author)
 	@group = Factory(:group)
 	@paper.lookup_info
 	@paper.extract_authors
-	@group.add(@user)
+	#@group.add(@user)
 	@paper.buildout([3,3,2,1])
 	@fig = @paper.figs.first
 	@figsection = @fig.figsections.first
@@ -31,7 +32,6 @@ describe "Assertions" do
 	find('div.latest_assertion').click
 	fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	click_button "Submit"
-	within('tr.summary') { page.should have_content('OVERALL PAPER') }
 	within('body') { page.should have_content('Lorem ipsum cupcakes.') }
 end
 
@@ -113,7 +113,6 @@ end
 	find('p.method').click
 	fill_in "assertion_method_text", :with => "Aloe juice"
 	click_button "Submit"
-	within('tr.summary') { page.should have_content('OVERLL PAPER') }
 	within('body') { page.should have_content('Lorem ipsum cupcakes.') }
     end
 

@@ -177,64 +177,6 @@ describe UsersController do
      end
  end
 
- describe "GET 'index'" do
-
-    describe "for non-signed-in users" do
-      it "should deny access" do
-        get :index
-        response.should redirect_to(signin_path)
-        flash[:notice].should =~ /sign in/i
-      end
-    end
-
-    describe "for signed-in users" do
-
-      before(:each) do
-        @user = test_sign_in(Factory(:user))
-        second = Factory(:user, :firstname => "Bob", :lastname => "Benson", :email => "another@example.com")
-        third  = Factory(:user, :firstname => "Ben", :lastname => "Bobson", :email => "another@example.net")
-
-        @users = [@user, second, third]
-       30.times do
-	@users << Factory(:user, :email => Factory.next(:email))
-       end
-      end
-
-      it "should have an element for each user" do
-        get :index
-        @users[0..2].each do |user|
-          response.body.should have_selector("li", :content => user.name)
-        end
-      end
-
-      it "should paginate users" do
-        get :index
-        response.body.should have_selector("div.pagination")
-        response.body.should have_selector("span.disabled", :content => "Previous")
-        response.body.should have_selector("a", :href => "/users?page=2",
-                                           :content => "2")
-        response.body.should have_selector("a", :href => "/users?page=2",
-                                           :content => "Next")
-      end
-
-      it "should be successful" do
-        get :index
-        response.should be_success
-      end
-
-      it "should have the right title" do
-        get :index
-        response.body.should have_selector("title", :content => "All users")
-      end
-
-      it "should have an element for each user" do
-        get :index
-        @users.each do |user|
-          response.body.should have_selector("li", :content => user.name)
-        end
-      end
-    end
-  end
 
  describe "DELETE 'destroy'" do
 
@@ -284,20 +226,4 @@ describe UsersController do
     end
   end
 
-  describe "unsubscribe" do
-      before(:each) do
-        @user = Factory(:user, :email => Factory.next(:email))
-      end
-
-      it "should unsubscribe the user" do
-        test_sign_in(@user)
-        get :unsubscribe, :id => @user
-        @user.receive_mail?.should == false
-      end
-
-      it "should require the user to sign in" do
-        get :unsubscribe, :id => @user
-        response.should redirect_to(signin_path)
-      end
-   end
 end

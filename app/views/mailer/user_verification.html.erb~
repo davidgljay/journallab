@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Hello <%= @user.firstname %>,</h1>
+    <p>Please follow the link below to verify your account and get started on Journal Lab:</p>
+
+	<%= @url %>
+
+	If the above URL does not work try copying and pasting it into your browser.</br>
+	If you continue to have problem please email <a href = 'mailto:info@journallab.com'>info@journallab.com</a>.     </p>
+    <p>Best,</p>
+    <p>David Jay</p>
+  </body>
+</html>

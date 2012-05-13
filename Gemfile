@@ -41,18 +41,17 @@ end
 
 group :test do
   gem 'rspec', '2.6.0'
-  gem 'capybara'
+  gem 'capybara', '1.1.2'
   gem 'database_cleaner'
-  gem 'factory_girl_rails', '1.0'
+  gem 'factory_girl_rails'
 end
 
 group :redcell do
-  gem 'feedzirra'
+  gem 'authlogic', '2.1.6'
   gem 'jrails'
   gem 'rack-cache', :require => 'rack/cache'
   gem 'dragonfly', '~>0.9.8'
-  gem 'rmagick'
-  gem  'mini_magick'
+  gem 'rmagick', '2.13.1'
+  gem  'mini_magick', '3.4'
   gem 'fog'
-  gem 'fastercsv'
 end

@@ -1,19 +1,20 @@
  <header>
        <div id='header'>
             <div id='utNav'>
-            <%= link_to "Home", root_path %>
             <% if signed_in? %>
               <% if current_user.admin? %>
-              <%= link_to "Add Users", bulksignup_path %>
-              <%= link_to "Reset Passwords", reset_password_path %>
               <%= link_to "Dashboard", dashboard_path %>
+              <%= link_to "Reset Passwords", reset_password_path %>
+              <%= link_to "Add Users", bulksignup_path %>
               <% end %>
-            <%= link_to "Profile", current_user %>
-            <%= link_to "Settings", edit_user_path(current_user) %>
 	    <%= link_to "Sign out", signout_path, :method => :delete %>
-            <% else %>                  
+            <%= link_to "Settings", edit_user_path(current_user) %>
+            <%= link_to "Profile", current_user %>
+            <% else %>
+	    <%= link_to "Register", new_user_path %>
             <%= link_to "Sign in", signin_path %>
             <% end %>
+            <%= link_to "Home", root_path %>
 
             <% unless @title == 'Home' %>
 

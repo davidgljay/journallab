@@ -50,6 +50,11 @@ class Mailer < ActionMailer::Base
       mail(:to => to(@recipient), :subject => @user.name + " has shared something on J.lab: " + @short_sharetext)
   end 
 
+  def user_verification(@recipient)
+	@url = user_path(@user, :only_path => false ) + '/verify/#{user.perishable_token}'
+	mail(:to => to(@recipient), :subject => "Please verify your account on Journal Lab.")
+  end
+
   def rand_intro
     intros = ["Aren't you cool!", "Nice work!", "Hey there,", "Good news!", "You're making waves,"]
     intros[rand(intros.length)]

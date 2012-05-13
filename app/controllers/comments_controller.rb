@@ -4,14 +4,16 @@ before_filter :authenticate
 
  #Used to render a list in the papers view.
   def list
-    @owner = params[:owner].constantize.find(params[:id])
-    @group = current_user.get_group
-    @mode = params[:mode].to_i
-    @comments = @owner.comments.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
-    @owner_type = params[:owner]
-    respond_to do |format|
-        format.js 
-     end
+    	@owner = params[:owner].constantize.find(params[:id])
+    	@group = current_user.get_group
+    	@mode = params[:mode].to_i
+	
+	#Comments used to be visible only to groups. We're switching things so that they're always visible and just semi-anonymous. 
+ 	@comments = @owner.comments.all #.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+    	@owner_type = params[:owner]
+    	respond_to do |format|
+        	format.js 
+     	end
   end
 
   # POST /comments
@@ -47,7 +49,7 @@ before_filter :authenticate
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
     	@group.make_filter(@comment, params[:mode])
-    	@comments = @owner.comments.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+    	@comments = @owner.comments.all #.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     	respond_to do |format|
       		if @comment.save
          	#Send an e-mail if the comment is a reply

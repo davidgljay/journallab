@@ -6,6 +6,7 @@ describe "Shares:" do
      @user = Factory(:user)
      @paper = Factory(:paper)
      @paper.buildout([3,3,2,1])
+     @paper.authors << Factory(:author)
      @user2 = Factory(:user, :email => Factory.next(:email))
      @group = Factory(:group)
      @group.add(@user)

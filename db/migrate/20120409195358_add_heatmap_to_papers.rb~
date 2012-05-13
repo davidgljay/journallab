@@ -1,6 +1,6 @@
 class AddHeatmapToPapers < ActiveRecord::Migration
   def self.up
-    add_column :papers, :heatmap, :text
+    add_column :papers, :h_map, :text
   end
 
   def self.down

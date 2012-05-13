@@ -48,12 +48,12 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
       		@numfig_select << [(i+1).to_s, i+1 ]
    	end
 
-    #Are you viewing in group or public mode?
-	if params[:mode] == "public"
+    	#Private and group functionality is being disabled for now, all comments are public.
+	#if params[:mode] == "public"
        		@mode = 1
-    	else
-       		@mode = 2
-    	end
+    	#else
+       	#	@mode = 2
+    	#end
     	respond_to do |format|
       		format.html # show.html.erb
       		format.xml  { render :xml => @paper }
@@ -195,11 +195,12 @@ end
 			initials = a.xpath('Initials').text
 			authors << Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
 		end
+		paper.assign_first_and_last_authors(authors.first, authors.last)
 		#paper.extract_authors(data.xpath('//Article/AuthorList')[i])
 	else
 		authors = paper.authors
 	end
-        @search_results << [paper, authors]    
+        @search_results << [paper]    
       end
       respond_to do |format|
         format.html

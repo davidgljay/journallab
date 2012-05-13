@@ -18,7 +18,7 @@
 require 'digest'
 
 class User < ActiveRecord::Base
-	attr_accessor :password	
+	attr_accessor :password
 	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link, :position, :institution, :homepage, :cv, :image
 
         has_many :assertions
@@ -217,6 +217,11 @@ end
      activity
   end
 
+
+  def deliver_user_verification_instructions!
+    reset_perishable_token!
+    Mailer.deliver_user_verification_instructions(self)
+  end 
 
   private
 

@@ -1,9 +1,7 @@
 
-<h1>Sign Up</h1>
+<h1>Get Excited</h1>
 <%= form_for(@user) do |f| %>
   <%= render 'fields', :f => f %>
-    Please select your class if applicable: </br>
-<%= select_tag :group_id, options_from_collection_for_select(@groups, "id", "name") %>
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

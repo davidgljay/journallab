@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 before_filter :authenticate, :except => [:new, :create]
 before_filter :correct_user, :only => [:edit, :update, :unsubscribe, :image_upload]
-before_filter :admin_user,   :only => [:create, :new, :destroy]
+before_filter :admin_user,   :only => [:destroy]
   def index
     @title = "All users"
     @users = User.paginate(:page => params[:page])
@@ -10,18 +10,14 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
   def show
    @user = User.find(params[:id])
    @title = @user.name
-   @recent_visits = visited_papers.reverse.uniq.first(20)
+   @recent_visits = @user.visited_papers.reverse.uniq.first(20)
    @recent_activity = @user.recent_activity
   end
 
   def new
-   @title = "Sign up users"
+   @title = "Get Started"
    @user = User.new
    @groups = Group.all
-  end
-
-  def unsubscribe
-   User.find(params[:id]).unsubscribe
   end
 
   def reset_password
@@ -76,27 +72,34 @@ before_filter :admin_user,   :only => [:create, :new, :destroy]
    @user.generate_anon_name
    msg = ""
    @user.email.downcase!
-   if @user.save
-      sign_in @user
-      url = root_path
-      unless params[:group_id].nil? 
-        @group = Group.find(params[:group_id])
-        @user.groups << Group.find(params[:group_id])
-        msg = "You've been added to " + @group.name
-        url = @group
-      end
-      flash[:success] = "Welcome to the Journal Lab!" + msg
-      redirect_back_or root_path
-   elsif @user.errors[:anon_name] == ["has already been taken"]
-     10.times do 
-      @user.generate_anon_name
-      @user.save
-     end
-   else
-     @title = "Sign up"
-     @groups = Group.all
-     render "new"
-   end
+   	if @user.save
+      		sign_in @user
+      		url = root_path
+		email = true
+      		unless params[:group_id].nil? 
+        		@group = Group.find(params[:group_id])
+        		@user.groups << Group.find(params[:group_id])
+        		msg = " You've been added to " + @group.name
+        		url = @group
+      		end
+      		flash[:success] = "Welcome to Journal Lab!" + msg
+		if @user.email.last(9) != "@ucsf.edu"
+			flash[:error] = "For the time being, Journal Lab only accepts e-mail addresses ending in '@ucsf.edu'."
+			flash[:success] = nil
+			url = new_user_path
+			sign_out
+			@user.destroy
+			email = false
+			render "new"
+		else
+   			redirect_to root_path
+		end
+   	else
+     		@title = "Sign up"
+		render "new"
+	end
+	@user.deliver_user_verification_instructions! if email
+
   end
 
   def edit

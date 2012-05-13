@@ -4,6 +4,7 @@ require 'nokogiri'
 require 'open-uri'
 
 serialize :h_map
+serialize :first_last_authors
 
 #Associations
 has_many :authorships, :foreign_key => "paper_id",
@@ -74,6 +75,21 @@ def extract_authors(authorlist = nil)
           		end
        		end
      	end               
+end
+
+def assign_first_and_last_authors(f_author = nil, l_author = nil)
+	if f_author.nil?
+		f_author = authors.first
+	end
+	if l_author.nil?
+		l_author = authors.last
+	end
+	if f_author && l_author	
+		f = {:firstname => f_author.firstname, :lastname => f_author.lastname, :name => f_author.lastname + ', ' + f_author.firstname }
+		l = {:firstname => l_author.firstname, :lastname => l_author.lastname, :name => l_author.lastname + ', ' + l_author.firstname} 
+		self.first_last_authors = [f, l]
+		self.save
+	end
 end
 
 def count_figs

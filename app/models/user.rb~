@@ -18,7 +18,7 @@
 require 'digest'
 
 class User < ActiveRecord::Base
-	attr_accessor :password	
+	attr_accessor :password
 	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link, :position, :institution, :homepage, :cv, :image
 
         has_many :assertions
@@ -39,6 +39,7 @@ class User < ActiveRecord::Base
 
         image_accessor :image
 
+	acts_as_authentic
 
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -207,7 +208,7 @@ end
   # Generates a feed of the form [papers[],comments{}], where papers[] is a list of the 10 most recently viewed papers from most recent to least recent, and comments{} is a hash of the form {:paper_id => [comments on that paper]} 
   #
   def recent_activity
-     actions = (self.comments + self.questions + self.shares) 
+     actions = (self.comments.to_a + self.questions.to_a + self.shares.to_a) 
      activity = Hash.new
      actions.each do |a|
         p = a.get_paper
@@ -217,6 +218,11 @@ end
      activity
   end
 
+
+  def deliver_user_verification_instructions!
+    reset_perishable_token!
+    Mailer.deliver_user_verification_instructions(self)
+  end 
 
   private
 

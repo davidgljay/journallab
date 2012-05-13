@@ -1,7 +1,7 @@
 <div id = "updateFeed">
 <% @feed.each do |item| %>
 <div class = "search_results">
-	<table><tr><td width = "90%">
+	<table><tr><td width = "740">
 		<%= render '/papers/list', :paper => item[2], :authors => item[2].authors %>
 	</td>
 	<% if item[0].image %>

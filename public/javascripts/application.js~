@@ -50,7 +50,7 @@ $("div.most_viewed").live('click', function(){
 });
 
 //Search
-$(".inputSearch").live('click', function(){
+$(".searchreset").live('click', function(){
 	$(this).css('font-size', '14px');
 	$(this).css('color', '#000');
 	$(this).css('font-style', 'normal');	
@@ -102,7 +102,7 @@ $('.selectPaper').live('click', function(){
 	$(this).parent().find('.selectFig input').val('');
 });
 
-$("quickform form").live('submit', function(){
+$(".quickform form").live('submit', function(){
 	$.post($(this).attr("action"), $(this).serialize(), null, "script");
 	$(this).html('Just a sec...');
 	return false;
@@ -276,8 +276,9 @@ $("quickform form").live('submit', function(){
     });
 
 
-
+//
 //Submit comment or question
+//
 
    $("form.new_comment").live('submit', function(){
 	mpq.track("Comment entered");

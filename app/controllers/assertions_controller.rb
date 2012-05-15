@@ -1,5 +1,5 @@
 class AssertionsController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate_user!
 before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
 
   def list

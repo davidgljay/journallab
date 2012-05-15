@@ -1,18 +1,17 @@
  <header>
        <div id='header'>
             <div id='utNav'>
-            <% if signed_in? %>
+            <% if user_signed_in? %>
               <% if current_user.admin? %>
               <%= link_to "Dashboard", dashboard_path %>
               <%= link_to "Reset Passwords", reset_password_path %>
               <%= link_to "Add Users", bulksignup_path %>
               <% end %>
-	    <%= link_to "Sign out", signout_path, :method => :delete %>
-            <%= link_to "Settings", edit_user_path(current_user) %>
+	    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
             <%= link_to "Profile", current_user %>
             <% else %>
-	    <%= link_to "Register", "new_user_path %>
-            <%= link_to "Sign in", signin_path %>
+	    <%= link_to "Sign up", new_user_registration_path %>
+            <%= link_to "Sign in", new_user_session_path %>
             <% end %>
             <%= link_to "Home", root_path %>
 
@@ -23,7 +22,7 @@
 		      <tbody><tr>
         		<td>
                 	<%= form_tag('/lookup', :method => "get") do  %>
-                	<%= text_field_tag(:pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch" ) %> </td>
+                	<%= text_field_tag(:pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> </td>
                 	<td><%= image_submit_tag("button_go.png") %></td>
                 	<% end %>
 			</td>
@@ -39,7 +38,7 @@
 
 <% if Rails.env.production? %>
 <!-- start Mixpanel --><script type="text/javascript">var mpq=[];mpq.push(["init","3cb0b675b6f04afdcfe615a5461c5045"]);(function(){var b,a,e,d,c;b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=(document.location.protocol==="https:"?"https:":"http:")+"//api.mixpanel.com/site_media/js/api/mixpanel.js";a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);e=function(f){return function(){mpq.push([f].concat(Array.prototype.slice.call(arguments,0)))}};d=["init","track","track_links","track_forms","register","register_once","identify","name_tag","set_config"];for(c=0;c<d.length;c++){mpq[d[c]]=e(d[c])}})();
-<% if signed_in? %>
+<% if user_signed_in? %>
 mpq.identify('<%= current_user.id %>');
 mpq.name_tag('<%= current_user.name %>');
 <% end %>
@@ -60,7 +59,7 @@ mpq.name_tag('<%= current_user.name %>');
 </script>
 <% else %>
 <!-- start Mixpanel --><script type="text/javascript">var mpq=[];mpq.push(["init","bb8a02eccfc6f2c3fa37cec5876cbc07"]);(function(){var b,a,e,d,c;b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=(document.location.protocol==="https:"?"https:":"http:")+"//api.mixpanel.com/site_media/js/api/mixpanel.js";a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a);e=function(f){return function(){mpq.push([f].concat(Array.prototype.slice.call(arguments,0)))}};d=["init","track","track_links","track_forms","register","register_once","identify","name_tag","set_config"];for(c=0;c<d.length;c++){mpq[d[c]]=e(d[c])}})();
-<% if signed_in? %>
+<% if user_signed_in? %>
 mpq.identify('<%= current_user.id %>');
 mpq.name_tag('<%= current_user.name %>');
 <% end %>

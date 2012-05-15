@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate_user!
 
   def list
     @owner = params[:owner].constantize.find(params[:id])

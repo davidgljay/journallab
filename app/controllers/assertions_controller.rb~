@@ -1,5 +1,5 @@
 class AssertionsController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate_user!
 before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
 
   def list
@@ -141,7 +141,7 @@ end
     @assertion = Assertion.find(params[:id])
     @owner = @assertion.owner
     @paper = @owner.get_paper
-
+    @heatmap = @paper.heatmap
     @group = current_user.get_group
     respond_to do |format|
       if @assertion.update_attributes(params[:assertion])

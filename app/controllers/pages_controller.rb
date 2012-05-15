@@ -4,7 +4,7 @@ before_filter :admin_user,   :only => [:dashboard]
 
   def home
     @title = "Home"
-    if signed_in? && !current_user.groups.empty?
+    if user_signed_in? && !current_user.groups.empty?
       @group = current_user.groups.last
     else
       @group = Group.new

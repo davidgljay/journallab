@@ -50,8 +50,7 @@ $("div.most_viewed").live('click', function(){
 });
 
 //Search
-$(".inputSearch").live('click', function(){
-	$(this).css('font-size', '14px');
+$(".searchreset").live('click', function(){
 	$(this).css('color', '#000');
 	$(this).css('font-style', 'normal');	
 });
@@ -276,8 +275,9 @@ $(".quickform form").live('submit', function(){
     });
 
 
-
+//
 //Submit comment or question
+//
 
    $("form.new_comment").live('submit', function(){
 	mpq.track("Comment entered");

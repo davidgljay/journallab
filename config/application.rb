@@ -1,7 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-
+require 'devise'
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env) if defined?(Bundler)
@@ -43,6 +43,7 @@ module Redcell
 
     # Set default host
     config.action_mailer.default_url_options = { :host => "dev.thejournallab.com" }
+    config.secret_token = '535bea345eb532543ad20709110f0cf6c5adf0676852b33b25baa7238b49e0473da7a1dc953726a3353dac1b4798e4ab4040786ac822fd9303e304acd0207b8b'
 
   end
 end

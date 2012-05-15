@@ -18,6 +18,7 @@ h1, h2, h3, h4, h5 {
 	font-family: FuturaBT-Heavy, Arial, Helvetica, sans-serif;
 	color: #005997;
 	font-weight: normal;
+	margin-bottom: 5px;
 }
 h1 {
 	font-size: 24px;
@@ -76,6 +77,9 @@ img {
 
 .inputSearch {
 	width: 300px;
+}
+
+.searchreset {
 	color: gray;
 	font-style: italic;
 }
@@ -260,6 +264,8 @@ td#profileImage {
 	padding-left: 0px;
 	margin: 0px;
 }
+
+
 
 .sr_title   a {
 	color: #63a82a;
@@ -597,6 +603,10 @@ td.comment_body, td.question_body {
 	font-weight: bold;
 }
 
+.quickform h3 {
+	text-align: left;
+}
+
 .quickform input#fig {
 	width: 50px;
 	font-size: 11px;
@@ -610,6 +620,19 @@ td.comment_body, td.question_body {
 }
 
 
+/* Notices */
+
+.flash {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	color: white;
+	background-color: #63A82A;
+	margin-right: auto;
+	margin-left: auto;
+	padding: 5px;
+	float: left;
+}
 /* Classes related to javascript */
 
 .hideonload {

@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate_user!
 
 
  #Used to render a list in the papers view.

@@ -15,7 +15,7 @@
 
 <% end %>
 
-<% if signed_in? && @group.id != nil %>
+<% if user_signed_in? && @group.id != nil %>
 <div id = "homeFeed" class = "feed round">
   <h1><%= @group.name %></h1>
     <% if @group.category == "class" %>
@@ -31,7 +31,7 @@
       <%= render '/groups/class_papers' %>
     <% elsif @group.category == "lab" %>
       <%= render '/groups/nav' %>
-
+      <%= render '/groups/feed' %>
       <%= render '/groups/most_viewed_feed' %>
       <%= render '/groups/sumreq_feed' if !@group.sumreq_feed.nil? %>
     <% end %>

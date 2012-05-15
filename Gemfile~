@@ -47,8 +47,9 @@ group :test do
 end
 
 group :redcell do
-  gem 'authlogic', '2.1.6'
+  gem 'devise', '1.1.rc0'
   gem 'jrails'
+  gem 'dynamic_form'
   gem 'rack-cache', :require => 'rack/cache'
   gem 'dragonfly', '~>0.9.8'
   gem 'rmagick', '2.13.1'

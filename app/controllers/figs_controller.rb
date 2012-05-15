@@ -1,5 +1,5 @@
 class FigsController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate_user!
 
   def build_sections
     fig = Fig.find(params[:id])

@@ -9,7 +9,7 @@ before_filter :authenticate
 
   def image_upload
     fig = Fig.find(params[:id])
-    fig.image = params[:fig][:image]
+    fig.image = params[:fig][:fig_image]
     fig.save
     redirect_to fig.paper
   end

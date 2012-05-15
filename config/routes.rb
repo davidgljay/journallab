@@ -53,15 +53,16 @@ root :to => 'pages#home'
 
 
 #Session routes
-resources :sessions, :only => [:new, :create, :destroy]
-  match '/signin',    :to => 'sessions#new'
-  match '/signout',   :to => 'sessions#destroy'
+#resources :sessions, :only => [:new, :create, :destroy]
+#  match '/signin',    :to => 'sessions#new'
+#  match '/signout',   :to => 'sessions#destroy'
 
 #Users routes
 
+devise_for :users
 resources :users
-  match '/reset_password', :to => 'users#reset_password'
-  match '/signup',   :to => 'users#new'
+#  match '/reset_password', :to => 'users#reset_password'
+#  match '/signup',   :to => 'users#new'
   match '/bulksignup', :to => 'users#bulk_new', :via => :get 
   match '/bulksignup', :to => 'users#bulk_create', :via => :post 
   match '/users(/:id)/unsubscribe', :to => 'users#unsubscribe'

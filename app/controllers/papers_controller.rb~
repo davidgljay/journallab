@@ -1,5 +1,5 @@
 class PapersController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate_user!
 before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 
 

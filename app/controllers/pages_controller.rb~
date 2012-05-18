@@ -110,6 +110,8 @@ before_filter :admin_user,   :only => [:dashboard]
    # Turns [[[day1,x1], [day2,x2]],[[day1,y1]]] into [[day1, x1/y1],[day2,0]]
 
    def make_ratio_graph(array1, array2)
+     if array1.empty? || array2.empty?
+	ratio = [[Time.now],[0]] 
      days = dayrange([array1[0][0] + 1.day, array2[0][0] + 1.day].min,[array1[0][-1], array2[0][-1]].max)
      ratio = [days,[]]
      days.each do |day|

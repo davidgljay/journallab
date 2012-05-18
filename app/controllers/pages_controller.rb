@@ -112,15 +112,17 @@ before_filter :admin_user,   :only => [:dashboard]
    def make_ratio_graph(array1, array2)
      if array1.empty? || array2.empty?
 	ratio = [[Time.now],[0]] 
-     days = dayrange([array1[0][0] + 1.day, array2[0][0] + 1.day].min,[array1[0][-1], array2[0][-1]].max)
-     ratio = [days,[]]
-     days.each do |day|
-     # This may need to change due to change in array structure
-      x = array1[0].map{|a| a.midnight}.include?(day) ? array1[1][array1[0].index(day)] : 0
-      y = array2[0].map{|a| a.midnight}.include?(day) ? array2[1][array2[0].index(day)] : 0
-      float = y == 0 ? 0 : (x.to_f/y.to_f)
-      ratio[1] << [float]
-     end
+     else
+        days = dayrange([array1[0][0] + 1.day, array2[0][0] + 1.day].min,[array1[0][-1], array2[0][-1]].max)
+     	ratio = [days,[]]
+     	days.each do |day|
+     		# This may need to change due to change in array structure
+      		x = array1[0].map{|a| a.midnight}.include?(day) ? array1[1][array1[0].index(day)] : 0
+      		y = array2[0].map{|a| a.midnight}.include?(day) ? array2[1][array2[0].index(day)] : 0
+      		float = y == 0 ? 0 : (x.to_f/y.to_f)
+      		ratio[1] << [float]
+     	end
+      end
      ratio
    end
 

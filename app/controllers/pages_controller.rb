@@ -29,7 +29,7 @@ before_filter :admin_user,   :only => [:dashboard]
 	        end
 	   end
     # If it's a class
-    	if @group.category == "class"
+    	   if @group.category == "class"
        		@classdates = []
        		@general = []
        		@papers = []
@@ -43,7 +43,7 @@ before_filter :admin_user,   :only => [:dashboard]
          	elsif f.date.nil? && f.paper_id != nil
            		@general << f.paper
        		end
-       	end
+       	    end
        		@classdates.sort!{|x,y| x[1] + x[2].object_id.minutes <=> y[1] + y[2].object_id.minutes}
      	end
      end

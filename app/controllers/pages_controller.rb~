@@ -129,10 +129,10 @@ before_filter :admin_user,   :only => [:dashboard]
    #Accepts two arrays of integers and spits back a float ratio
 
    def make_ratio(array1, array2)
-     if array1.empty? || array2.empty?
+     if array1.empty? || array2.empty? || 
 	0 
      else
-        array1.inject(0){|sum, item| sum + item}.to_f/array2.inject(0){|sum, item| sum + item}.to_f
+        array1.compact.inject(0){|sum, item| sum + item}.to_f/array2.compact.inject(0){|sum, item| sum + item}.to_f
      end
    end
 

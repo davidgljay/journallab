@@ -138,7 +138,7 @@ before_filter :admin_user,   :only => [:dashboard]
    #Takes an array, returns a frequency array by day
    def graph_by_day(array)
      if array.empty?
-	graph = [Time.now, 0]
+	graph = [[Time.now, 0]]
      else
      	array.sort!{|x,y| x.created_at <=> y.created_at}
      	finish = array.last.created_at + 1.day

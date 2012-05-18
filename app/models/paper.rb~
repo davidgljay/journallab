@@ -82,7 +82,7 @@ def assign_first_and_last_authors(f_author = nil, l_author = nil)
 		f_author = authors.first
 	end
 	if l_author.nil?
-		l_author = authors.last
+		l_author = authors[1]
 	end
 	if f_author && l_author	
 		f = {:firstname => f_author.firstname, :lastname => f_author.lastname, :name => f_author.lastname + ', ' + f_author.firstname }

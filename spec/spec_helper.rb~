@@ -29,10 +29,6 @@ RSpec.configure do |config|
     sign_out(user)
   end
 
-  def signin_path
-     new_user_session_path
-  end
-
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

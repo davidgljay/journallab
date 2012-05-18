@@ -29,7 +29,7 @@ describe "Questions:" do
           a.save
        end
     end  
-     visit '/signin'
+     visit '/users/signin'
      fill_in "session_email", :with => @user.email
      fill_in "session_password", :with => @user.password
      click_button "Sign in"
@@ -54,7 +54,7 @@ describe "Questions:" do
        	page.should have_content("Here's an answer to your question.")
        	page.should have_content(@user.firstname)
        	click_link 'Sign out'
-       	visit '/signin'
+       	visit '/users/signin'
        	fill_in "session_email", :with => @user2.email
        	fill_in "session_password", :with => @user2.password
        	click_button "Sign in"

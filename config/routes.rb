@@ -61,6 +61,8 @@ root :to => 'pages#home'
 
 devise_for :users
 resources :users
+
+
 #  match '/reset_password', :to => 'users#reset_password'
 #  match '/signup',   :to => 'users#new'
   match '/bulksignup', :to => 'users#bulk_new', :via => :get 

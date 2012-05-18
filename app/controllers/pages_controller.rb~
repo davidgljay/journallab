@@ -4,35 +4,31 @@ before_filter :admin_user,   :only => [:dashboard]
 
   def home
     @title = "Home"
-    if signed_in? && !current_user.groups.empty?
-      @group = current_user.groups.last
-    else
-      @group = Group.new
-    end
-
-    @feed = []
-    if @group.category == "lab"
-      @group.feed.each do |item|
-        if item.class == Comment || item.class == Question
-            	text = item.owner.class == Paper ? "left a #{item.class.to_s.downcase} on the overall paper:":"left a #{item.class.to_s.downcase} on #{item.owner.shortname}:"		
-            	bold = false
-            	sharetext = item.text
-            	paper = item.get_paper
-         elsif item.class == Assertion
-        	text = item.owner.class == Paper ? "left a summary of the overall paper:":"left a summary of #{item.owner.shortname}:"		
-
-            	bold = false
-            	sharetext = item.text
-            	paper = item.get_paper
-         elsif item.class == Share
-            	text = reftext(item)
-            	sharetext = item.text
-            	bold = false
-            	paper = item.get_paper 
-         end
-        @feed << [item.user, text, paper, item.updated_at, bold, item]
-      end
-    end
+	if user_signed_in?
+	    @group = current_user.get_group
+	    @feed = []
+	    if @group.category == "lab"
+	    	@group.feed.each do |item|
+        		if item.class == Comment || item.class == Question
+            			text = item.owner.class == Paper ? "left a #{item.class.to_s.downcase} on the overall paper:":"left a #{item.class.to_s.downcase} on #{item.owner.shortname}:"		
+            			bold = false
+            			sharetext = item.text
+            			paper = item.get_paper
+         		elsif item.class == Assertion
+        			text = item.owner.class == Paper ? "left a summary of the overall paper:":"left a summary of #{item.owner.shortname}:"		
+            			bold = false
+				sharetext = item.text
+				paper = item.get_paper
+         		elsif item.class == Share
+            			text = reftext(item)
+            			sharetext = item.text
+            			bold = false
+            			paper = item.get_paper 
+         		end
+        	@feed << [item.user, text, paper, item.updated_at, bold, item]
+	        end
+	   end
+	end
     # If it's a class
     if @group.category == "class"
        @classdates = []

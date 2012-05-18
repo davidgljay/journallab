@@ -29,7 +29,7 @@ describe "Comments:" do
           a.save
        end
     end      
-     visit '/signin'
+     visit '/users/signin'
      fill_in "session_email", :with => @user.email
      fill_in "session_password", :with => @user.password
      click_button "Sign in"

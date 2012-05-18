@@ -42,29 +42,29 @@
 <div class="contribute">
   	<div><ul>
          <li class="commentlink clickme">  
-             <%= form_tag(:comment_list, :method => "get", :class => "commentlist") do  %>
+             <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
                	<%= hidden_field_tag :owner, about.class.to_s %>
                	<%= hidden_field_tag :id, about.id %>
                	<%= hidden_field_tag :mode, @mode %>
 		<div class = 'navText'>
                		<% if about.comments.all.count > 0 %>
-                 		<%= pluralize(about.comments.all.count, "Comment") %>
+                 		<%= submit_tag pluralize(about.comments.all.count, "Comment") %>
                		<% else %>
-                 		<%= "Add a Comment" %>
+                 		<%= submit_tag "Add a Comment", :class => "plainSubmit" %>
                		<% end %>
 		</div>
              <% end %>
           </li>
 	<li class="questionlink clickme">
-             <%= form_tag(:question_list, :method => "get", :class => "questionlist") do  %>
+             <%= form_tag(:question_list, :method => "get", :class => "questionlist", :remote => true) do  %>
    		<%= hidden_field_tag :owner, about.class.to_s %>
 		<%= hidden_field_tag :id, about.id %>
 		<%= hidden_field_tag :mode, @mode %>
 		<div class = 'navText'>
                		<% if about.questions.all.count > 0 %>
-                 		<%= pluralize(about.questions.all.count, "Question") %>
+                 		<%= submit_tag pluralize(about.questions.all.count, "Question"), :class => "plainSubmit" %>
                		<% else %>
-                 		<%= "Add a Question" %>
+                 		<%= submit_tag "Add a Question", :class => "plainSubmit" %>
                		<% end %>
 		</div>
              <% end %>

@@ -15,7 +15,7 @@
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
-	<h3><%= link_to("Download", "http://pubget.com/paper/" + @paper.pubmed_id.to_s) %> | <%= link_to("Pubmed", "http://www.ncbi.nlm.nih.gov/pubmed/" + @paper.pubmed_id.to_s) %> | <%= render '/shares/share_button' unless @group.id.nil? %> | <a class = 'quick_comment clickme'>Comment</a> | <a class = 'quick_question clickme'>Question</a></h3>
+	<h3><%= link_to("Download", "http://pubget.com/paper/" + @paper.pubmed_id.to_s) %> | <%= render '/shares/share_button' unless @group.id.nil? %> | <a class = 'quick_comment clickme'>Comment</a> | <a class = 'quick_question clickme'>Question</a></h3>
 	<div class = "sharebox"></div>
 		<span class="small grey">
 			<% if @paper.visits.count == 1 %>
@@ -29,7 +29,6 @@
 	<%= render '/comments/quickform', :form => 'question' %>
 </div>
 
-<%= render 'filters/class_options' %>
 <div class = "view_mode hideonload">
   <%= form_tag(:paper_show, :method => "get", :class => 'view_mode') do  %>
     <%= hidden_field_tag :id, @paper.id %>

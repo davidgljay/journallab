@@ -6,6 +6,7 @@
     <%= render 'layouts/stylesheets' %>
     <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js' %>
     <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'rails' %>
     <%= javascript_include_tag 'plugins' %>
   </head>
   <body>
@@ -15,7 +16,6 @@
           <div class="flash <%= key %>"><%= value %></div>
       <% end %>
       <div id='labTable'>
-           <div id='contentMain'>
            <%= yield %>
            </div>
        </div>

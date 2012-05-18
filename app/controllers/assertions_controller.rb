@@ -6,7 +6,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @owner = params[:owner].constantize.find(params[:id])
     @assertions = @owner.assertions.all
     @owner_type = params[:owner]
-    if signed_in? && !current_user.groups.empty? 
+    if user_signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
     else
       @group = Group.new
@@ -22,7 +22,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @mode = params[:mode]
     @assertion = @about.assertions.build
     @type = {'paper' => 'paper', 'fig' => 'figure', 'figsection' => 'section'}
-    if signed_in? && !current_user.groups.empty? 
+    if user_signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
     else
       @group = Group.new
@@ -118,7 +118,7 @@ end
     @paper = @owner.get_paper
     @paper.add_heat(@owner)
     @heatmap = @paper.heatmap
-    if signed_in? && !current_user.groups.empty? 
+    if user_signed_in? && !current_user.groups.empty? 
       @group = current_user.groups.last
     else
       @group = Group.new
@@ -171,6 +171,6 @@ end
 
   def authorized_user_or_admin
       @assertion = Assertion.find(params[:id])
-      redirect_to root_path unless current_user?(@assertion.user) || current_user.admin?
+      redirect_to root_path unless current_user == @assertion.user || current_user.admin?
   end
 end

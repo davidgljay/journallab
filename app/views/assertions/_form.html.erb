@@ -1,4 +1,4 @@
- <%= form_for assert, :class => "new_assertion"  do |f| %>
+ <%= form_for assert, :class => "new_assertion", :remote => true  do |f| %>
       <%= render 'shared/error_messages', :object => f.object %>
       <div class="field">
          <% if assert.owner.latest_assertion.nil? || (@group.category == "class" && !current_user.lead_of?(@group)) %>

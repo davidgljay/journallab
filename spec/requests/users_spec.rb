@@ -34,7 +34,7 @@ describe "Users" do
      @question.save
      v = @user.visits.build(:paper => @paper, :count => 1)
      v.save
-     visit '/signin'
+     visit '/users/signin'
      fill_in "session_email", :with => @user.email
      fill_in "session_password", :with => @user.password
      click_button "Sign in"

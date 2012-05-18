@@ -9,10 +9,10 @@
     <%= form_for item.sumreqs.create, :html => { :class => hide_my_sumreq(item) + 'inline'}, :remote => true do |f| %>
       <%= f.hidden_field :id, :value => item.id %>
       <%= f.hidden_field :type, :value => item.class.to_s %>
-      <% if signed_in? %>
+      <% if user_signed_in? %>
          <%= f.hidden_field :group, :value => current_user.get_group.id %>
       <% end %>
-      [+]
+      <%= f.submit "[+]", :class => "plainSubmit" %>
     <% end %>
    </div>
    <div class = "sumreq_confirm hideonload inline">

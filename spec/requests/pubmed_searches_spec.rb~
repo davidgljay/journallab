@@ -16,7 +16,7 @@ describe "Searches:" do
   describe "entering a pubmed id on the homepage" do
     it "loads the page for that paper" do
       visit root_path
-      fill_in "pubmed_id", :with => "12345678"
+      fill_in "pubmed_id", :with => "21228906"
       click_button 'search'
       within('body') { page.should have_content('Download') }
     end

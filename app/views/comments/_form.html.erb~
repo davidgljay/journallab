@@ -1,4 +1,4 @@
-<%= form_for(comment) do |f| %>
+<%= form_for(comment, :remote => true) do |f| %>
   <% if comment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
@@ -20,15 +20,15 @@
     <% end %>
     <%= f.text_area :text, :value => boxtext(reply_to), :onfocus => "if(this.value == '#{boxtext(reply_to)}') { this.value = ''; }" %>
   </div>
-    <% if owner.latest_assertion %>
-    	<%= f.hidden_field :assertion_id, :value => owner.latest_assertion.id %>
-    	<%= hidden_field_tag :owner_id, owner.id %>
-    	<%= hidden_field_tag :owner_class, owner.class.to_s %>  
+    <% if @owner.latest_assertion %>
+    	<%= f.hidden_field :assertion_id, :value => @owner.latest_assertion.id %>
+    	<%= hidden_field_tag :owner_id, @owner.id %>
+    	<%= hidden_field_tag :owner_class, @owner.class.to_s %>  
     <% else %>
-    	<%= hidden_field_tag :owner_id, owner.id %>
-    	<%= hidden_field_tag :owner_class, owner.class.to_s %>
+    	<%= hidden_field_tag :owner_id, @owner.id %>
+    	<%= hidden_field_tag :owner_class, @owner.class.to_s %>
     <% end %>
   <div class="actions">
-    <%= f.submit :value => "Submit" %>
+    <%= f.submit :value => "Submit", :class => "plainSubmit" %>
   </div>
 <% end %>

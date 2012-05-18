@@ -51,7 +51,6 @@ $("div.most_viewed").live('click', function(){
 
 //Search
 $(".searchreset").live('click', function(){
-	$(this).css('font-size', '14px');
 	$(this).css('color', '#000');
 	$(this).css('font-style', 'normal');	
 });
@@ -102,10 +101,11 @@ $('.selectPaper').live('click', function(){
 	$(this).parent().find('.selectFig input').val('');
 });
 
+// Good
 $(".quickform form").live('submit', function(){
-	$.post($(this).attr("action"), $(this).serialize(), null, "script");
+//	$.post($(this).attr("action"), $(this).serialize(), null, "script");
 	$(this).html('Just a sec...');
-	return false;
+//	return false;
 });
 
 //Hide/Show Discussion Map (known as 'overview' in the code)
@@ -231,68 +231,71 @@ $(".quickform form").live('submit', function(){
 
 // Vote Button
 
-   $("form#new_vote").live('click', function(){
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-// Forms to submit through jQuery
-   $("form.commentlist").live('click', function(){
-      mpq.track("Comments viewed");
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-   $("form.questionlist").live('click', function(){
-      mpq.track("Questions viewed");
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
-
-//   $("form.improvelist").live('submit', function(){
-//      mpq.track("Improve viewed");
+// Good
+//   $("form#new_vote").live('click', function(){
 //      $.post($(this).attr("action"), $(this).serialize(), null, "script");
 //      return false;
 //    });
 
-   $("div.share_form").find("form").live('click', function(){
-      mpq.track("Item shared");
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
+// Forms to submit through jQuery
 
-   $("div.sumreq_button").find("form").live('click', function(){
-      mpq.track("Summary Requested");
-      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-      return false;
-    });
+// Good
+//   $("form.commentlist").live('click', function(){
+//      mpq.track("Comments viewed");
+//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+//      return false;
+//    });
+
+// Good
+//   $("form.questionlist").live('click', function(){
+//      mpq.track("Questions viewed");
+//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+//      return false;
+//    });
+
+// Good
+//   $("div.share_form").find("form").live('click', function(){
+//      mpq.track("Item shared");
+//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+//      return false;
+//    });
+
+// Good
+//   $("div.sumreq_button").find("form").live('click', function(){
+//      mpq.track("Summary Requested");
+//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
+//      return false;
+//    });
 
 // Enter Assertion
 
-   $("form.new_assertion, form.edit_assertion").live('submit', function(){
-     mpq.track("Summary entered");
-     $.post($(this).attr("action"), $(this).serialize(), null, "script");  
-     return false;
-    });
+// Good
+//   $("form.new_assertion, form.edit_assertion").live('submit', function(){
+//     mpq.track("Summary entered");
+//     $.post($(this).attr("action"), $(this).serialize(), null, "script");  
+//     return false;
+//    });
 
 
 //
 //Submit comment or question
 //
 
-   $("form.new_comment").live('submit', function(){
-	mpq.track("Comment entered");
-      	$.post($(this).attr("action"), $(this).serialize(), null, "script");
-	$(this).html('Just a sec...');
-      	return false;
-    });
+// Good
+//   $("form.new_comment").live('submit', function(){
+//	mpq.track("Comment entered");
+//      	$.post($(this).attr("action"), $(this).serialize(), null, "script");
+//	$(this).html('Just a sec...');
+//      	return false;
+//    });
 
-   $("form.new_question").live('submit', function(){
-	mpq.track("Question entered");
-      	$.post($(this).attr("action"), $(this).serialize(), null, "script");
-	$(this).html('Just a sec...');
-      return false;
-    });
+// Good
+//   $("form.new_question").live('submit', function(){
+//	mpq.track("Question entered");
+//     	$.post($(this).attr("action"), $(this).serialize(), null, "script");
+//	$(this).html('Just a sec...');
+//      return false;
+//    });
 
 
 //

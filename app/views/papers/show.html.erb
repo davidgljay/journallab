@@ -29,7 +29,6 @@
 	<%= render '/comments/quickform', :form => 'question' %>
 </div>
 
-<%= render 'filters/class_options' %>
 <div class = "view_mode hideonload">
   <%= form_tag(:paper_show, :method => "get", :class => 'view_mode') do  %>
     <%= hidden_field_tag :id, @paper.id %>

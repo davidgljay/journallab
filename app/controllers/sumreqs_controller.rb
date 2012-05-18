@@ -1,5 +1,7 @@
 class SumreqsController < ApplicationController
 
+before_filter :authenticate_user!
+
   def create
     @item = params[:sumreq][:type].constantize.find(params[:sumreq][:id])
     @group = Group.find(params[:sumreq][:group])

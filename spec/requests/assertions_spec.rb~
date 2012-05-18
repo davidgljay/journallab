@@ -8,7 +8,7 @@ describe "Assertions" do
 	@group = Factory(:group)
 	@paper.lookup_info
 	@paper.extract_authors
-	#@group.add(@user)
+	@group.add(@user)
 	@paper.buildout([3,3,2,1])
 	@fig = @paper.figs.first
 	@figsection = @fig.figsections.first
@@ -16,10 +16,7 @@ describe "Assertions" do
 
   describe "inputting a core assertion" do
      before(:each) do
-	visit '/signin'
-	fill_in "session_email", :with => @user.email
-	fill_in "session_password", :with => @user.password
-	click_button "Sign in"
+	test_sign_in(@user)
 	visit '/papers/' + @paper.id.to_s
 
      end

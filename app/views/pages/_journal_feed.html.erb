@@ -1,0 +1,11 @@
+<% grab_journal(journal).each do |article| %>
+<div class = "search_results">
+<div class = "sr_title"><%= link_to article[:title], "http://dx.doi.org/" + article[:doi] %></div>
+	<div class = "sr_info2 small">Nature, 2012</div>
+	<% if article[:firstauthor] %>
+		<div class = "sr_info2 small grey">First Author: <%= link_to article[:firstauthor], '/lookup/' + article[:firstauthor].gsub(' ', '+') %> | Last Author: <%= link_to  article[:lastauthor], '/lookup/' + article[:lastauthor].gsub(' ', '+') %></div>
+	<% end %>
+<%= render 'papers/list_actions' %> 
+</div>
+<% end %>	
+

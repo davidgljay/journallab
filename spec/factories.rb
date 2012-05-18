@@ -12,6 +12,7 @@ Factory.define :user do |user|
      user.password		        "testingtesting123"
      user.password_confirmation 	"testingtesting123"
      user.email                         rand(100).to_s + "chick@email.com"
+     user.confirmed_at 			Time.now
 #     user.save
 end
 

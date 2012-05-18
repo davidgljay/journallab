@@ -16,7 +16,7 @@ describe "Assertions" do
 
   describe "inputting a core assertion" do
      before(:each) do
-	visit '/signin'
+	visit '/users/signin'
 	fill_in "session_email", :with => @user.email
 	fill_in "session_password", :with => @user.password
 	click_button "Sign in"

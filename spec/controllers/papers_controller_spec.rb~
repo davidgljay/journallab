@@ -25,6 +25,7 @@ describe PapersController do
     describe "GET show" do
       it "assigns the requested paper as @paper" do
         get :show, :id => @paper.id
+	response.should include "stuff"
         assigns(:paper).should == @paper
       end
 

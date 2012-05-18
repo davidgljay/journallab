@@ -1,15 +1,15 @@
 <div class = 'quickform quick_<%= form %> hideonload'>
-	<%= form_tag '/quickform', :method => :post do %>
+	<%= form_tag '/quickform', :method => :post, :remote => true do %>
 		<%= hidden_field_tag :paper, @paper.id %>
 		<%= hidden_field_tag :form, form %>
 		<%= hidden_field_tag :mode, @mode %>
-		<h3><%= form == 'comment' ? 'Leave a comment on' : 'Pose a questions about' %></h3>
+		<h3><%= form == 'comment' ? 'Leave a comment on' : 'Pose a questions about' %>:</h3>
 		<div class = 'figSelector'>
 			<div class = 'selectFig clickme' >
-				fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>:
+				fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
 			</div>
 			<div class = 'selectPaper clickme'>
-				the overall paper:
+				the overall paper
 			</div>
 		</div>
 		<div class = 'textfield'>

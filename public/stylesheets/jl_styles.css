@@ -506,6 +506,15 @@ form.new_vote {
 
 /* Comments and questions */
 
+.plainSubmit {
+	background: none;
+	border: none;
+	color: inherit;
+	font-size: inherit;
+	padding: 0px;
+	margin: 0px;
+}
+
 .commentbox, .questionbox {
 	padding: 15px;
 	border: 1px solid #025B98;
@@ -629,9 +638,9 @@ td.comment_body, td.question_body {
 	color: white;
 	background-color: #63A82A;
 	margin-right: auto;
-	margin-left: auto;
+	border-bottom-right-radius: 10px;
 	padding: 3px;
-	float: left;
+	width: 500px;
 }
 /* Classes related to javascript */
 

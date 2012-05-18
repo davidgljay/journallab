@@ -18,7 +18,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
   # GET /papers/1.xml
   def show
     	@paper = Paper.find(params[:id])
-    	if signed_in?
+    	if user_signed_in?
        		visit = Visit.where(:user_id => current_user.id, :paper_id => @paper.id).first
        		visit ||= Visit.create(:user_id => current_user.id, :paper_id => @paper.id, :count => 0)
        		visit.count ||= 0

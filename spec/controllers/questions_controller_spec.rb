@@ -47,7 +47,7 @@ describe QuestionsController do
       @answer.text.should == "Lorem ipsum reply"
       @answer.assertion.should == @assertion
       @answer.get_paper.should == @paper
-      @answer.user == @user2
+      @answer.user.should == @user2
       Maillog.last.about.should == @answer
       Maillog.all.count.should == 1
     end

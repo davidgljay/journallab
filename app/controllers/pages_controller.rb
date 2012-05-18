@@ -137,17 +137,21 @@ before_filter :admin_user,   :only => [:dashboard]
 
    #Takes an array, returns a frequency array by day
    def graph_by_day(array)
-     array.sort!{|x,y| x.created_at <=> y.created_at}
-     finish = array.last.created_at + 1.day
-     start = array.first.created_at -1.day
-     days = []
-     day = start.midnight
-      while day < finish.midnight
-       days << day
-       day += 1.day
-      end
-     graph = days.map{|day| [day, array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count]}
+     if array.empty?
+	graph = []
+     else
+     	array.sort!{|x,y| x.created_at <=> y.created_at}
+     	finish = array.last.created_at + 1.day
+     	start = array.first.created_at -1.day
+     	days = []
+     	day = start.midnight
+        while day < finish.midnight
+       		days << day
+       		day += 1.day
+        end
+        graph = days.map{|day| [day, array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count]}
      end
+    end
 
     #Histogram
     def histogram(array)

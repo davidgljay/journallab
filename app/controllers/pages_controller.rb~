@@ -28,24 +28,24 @@ before_filter :admin_user,   :only => [:dashboard]
         	@feed << [item.user, text, paper, item.updated_at, bold, item]
 	        end
 	   end
-	end
     # If it's a class
-    if @group.category == "class"
-       @classdates = []
-       @general = []
-       @papers = []
-       @group.papers.each do |p|
-           @papers[p.id] = p
-       end
-       @instructors = @group.memberships.all.select{|m| m.lead}.map{|m| m.user}
-       @group.filters.all.each do |f|
-         if f.paper_id != nil && f.date != nil
-           @classdates << [f.paper_id, f.date, f.supplementary]
-         elsif f.date.nil? && f.paper_id != nil
-           @general << f.paper
-         end
-       end
-       @classdates.sort!{|x,y| x[1] + x[2].object_id.minutes <=> y[1] + y[2].object_id.minutes}
+    	if @group.category == "class"
+       		@classdates = []
+       		@general = []
+       		@papers = []
+       		@group.papers.each do |p|
+           		@papers[p.id] = p
+       		end
+       		@instructors = @group.memberships.all.select{|m| m.lead}.map{|m| m.user}
+       		@group.filters.all.each do |f|
+         	if f.paper_id != nil && f.date != nil
+           		@classdates << [f.paper_id, f.date, f.supplementary]
+         	elsif f.date.nil? && f.paper_id != nil
+           		@general << f.paper
+       		end
+       	end
+       		@classdates.sort!{|x,y| x[1] + x[2].object_id.minutes <=> y[1] + y[2].object_id.minutes}
+     	end
      end
   end
   
@@ -137,17 +137,21 @@ before_filter :admin_user,   :only => [:dashboard]
 
    #Takes an array, returns a frequency array by day
    def graph_by_day(array)
-     array.sort!{|x,y| x.created_at <=> y.created_at}
-     finish = array.last.created_at + 1.day
-     start = array.first.created_at -1.day
-     days = []
-     day = start.midnight
-      while day < finish.midnight
-       days << day
-       day += 1.day
-      end
-     graph = days.map{|day| [day, array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count]}
+     if array.empty?
+	graph = []
+     else
+     	array.sort!{|x,y| x.created_at <=> y.created_at}
+     	finish = array.last.created_at + 1.day
+     	start = array.first.created_at -1.day
+     	days = []
+     	day = start.midnight
+        while day < finish.midnight
+       		days << day
+       		day += 1.day
+        end
+        graph = days.map{|day| [day, array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count]}
      end
+    end
 
     #Histogram
     def histogram(array)

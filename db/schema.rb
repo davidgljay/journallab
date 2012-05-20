@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520000132) do
+ActiveRecord::Schema.define(:version => 20120520012603) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -111,6 +111,15 @@ ActiveRecord::Schema.define(:version => 20120520000132) do
   add_index "filters", ["paper_id"], :name => "index_filters_on_paper_id"
   add_index "filters", ["question_id"], :name => "index_filters_on_question_id"
 
+  create_table "follows", :force => true do |t|
+    t.integer  "follow_id"
+    t.string   "follow_type"
+    t.integer  "user_id"
+    t.string   "search_term"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "groups", :force => true do |t|
     t.text     "name"
     t.text     "desc"
@@ -118,6 +127,15 @@ ActiveRecord::Schema.define(:version => 20120520000132) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "code"
+  end
+
+  create_table "journals", :force => true do |t|
+    t.text     "name"
+    t.string   "feedurl"
+    t.string   "url"
+    t.boolean  "open"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "maillogs", :force => true do |t|

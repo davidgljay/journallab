@@ -31,9 +31,8 @@
       <%= render '/groups/class_papers' %>
     <% elsif @group.category == "lab" %>
       <%= render '/groups/nav' %>
-      <%= render '/groups/feed' %>
-      <%= render '/groups/most_viewed_feed' %>
-      <%= render '/groups/sumreq_feed' unless @group.sumreqs.empty? %>
+      <div id='update_feed'><%= render '/groups/feed' %></div>
+      <div id='most_viewed_feed'></div>
     <% end %>
 </div>
 <% end %>

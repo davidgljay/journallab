@@ -2,6 +2,5 @@
 <ul>
 <li><div class="updates feed_nav_item">Latest Activity</div></li>
 <li><div class="most_viewed feed_nav_item">Popular Papers</div></li>
-<li><div class="sumreqs feed_nav_item"><%= pluralize(@group.sumreq_count, "Summary Request")%></div></li>
 </ul>
 </div>

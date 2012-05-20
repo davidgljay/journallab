@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
         has_many :maillogs
         has_many :subscriptions
         has_many :votes_for_me, :class_name => "Vote", :foreign_key => "vote_for_id"
+	has_many :follows
 
         image_accessor :image
 
@@ -219,6 +220,15 @@ class User < ActiveRecord::Base
     reset_perishable_token!
     Mailer.deliver_user_verification_instructions(self)
   end 
+
+#
+# Functions related to the homepage feeds
+#
+
+  def follow!(item)
+	self.follows.create(:follow => item) unless self.follows.map{|f| f.follow}.include?(item)
+  end
+
 
     def assign_anon_name
       if self.anon_name.nil?

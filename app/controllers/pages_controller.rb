@@ -7,6 +7,7 @@ before_filter :admin_user,   :only => [:dashboard]
 	if user_signed_in?
 	    @group = current_user.get_group
 	    @feed = []
+	    @journals = Journal.all
 	    if @group.category == "lab"
 	    	@group.feed.each do |item|
         		if item.class == Comment || item.class == Question

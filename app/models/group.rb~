@@ -23,6 +23,7 @@ has_many :sumreqs, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :maillogs, :as => :about
 
+validates :code, :unique => true, :allow_nil => true
 validates :category, :presence => true
 validates :name, :presence => true
 

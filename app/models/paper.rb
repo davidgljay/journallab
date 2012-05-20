@@ -9,7 +9,7 @@ serialize :first_last_authors
 #Associations
 has_many :authorships, :foreign_key => "paper_id",
                            :dependent => :destroy
-has_many :authors, :through => :authorships, :source => :author
+has_many :authors, :through => :authorships, :source => :author, :order => "authorships.created_at ASC"
 has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
 has_many :figs, :dependent => :destroy

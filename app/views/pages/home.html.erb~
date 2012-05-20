@@ -33,7 +33,7 @@
       <%= render '/groups/nav' %>
       <%= render '/groups/feed' %>
       <%= render '/groups/most_viewed_feed' %>
-      <%= render '/groups/sumreq_feed' %>
+      <%= render '/groups/sumreq_feed' unless @group.sumreqs.empty? %>
     <% end %>
 </div>
 <% end %>

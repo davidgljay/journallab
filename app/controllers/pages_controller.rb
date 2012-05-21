@@ -44,6 +44,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto = params[:switchto]
 		@follow = Follow.find(params[:switchto][7..-1].to_i)
 		@nav_language = @follow.name
+		@group = current_user.get_group
 	else
 		nav_language = {"most_viewed" => "Popular Papers", "updates" => "Latest Activity"}
 		@switchto = params[:switchto]

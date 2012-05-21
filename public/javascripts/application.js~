@@ -16,7 +16,7 @@ $(".loadingPrompt").live('click', function(){
 });
 
 $(".feedPlus").live('click', function(){
-	$('feed_nav_item').removeClass('feed_nav_selected');
+	$('input').removeClass('feed_nav_selected');
 	$(this).addClass('feed_nav_selected');
 	$('.homePageFeed').hide();
 	$('#follow_form').show();
@@ -35,6 +35,10 @@ $(".searchreset").live('click', function(){
 $("#abstract").live('click', function(){
     	$("#abstract_short").hide();
     	$("#abstract_long").slideToggle(300);
+});
+
+$(".abstract").live('click', function(){
+	$(this).parent().parent().find('.abstract_long').slideToggle(300);
 });
 
 //Quickform Expansion
@@ -88,7 +92,7 @@ $(".quickform form").live('submit', function(){
   });
 
 //Share Expansion
-  $("li.sharelink").live('click', function(){
+  $(".sharelink").live('click', function(){
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.question").hide("slow");
@@ -281,6 +285,10 @@ $(".quickform form").live('submit', function(){
       $(this).css('background', 'none')
     });
 
+   $(".deadLink").live('click', function(e){
+	e.preventDefault();
+	//return false;
+    });
 
 
 });

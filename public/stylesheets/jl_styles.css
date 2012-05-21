@@ -264,6 +264,10 @@ td#profileImage {
 
 /* Search Results, also used for feeds on profile page */
 
+.abstract_short, .abstract_long {
+	line-height: 18px;
+	font-size: 14px;
+}
 
 .search_results {
 	border-bottom-width: 1px;

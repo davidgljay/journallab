@@ -264,12 +264,6 @@ td#profileImage {
 
 /* Search Results, also used for feeds on profile page */
 
-.feed_nav_selected {
-	color: #fff;
-	background-color: #005997;
-}
-
-
 
 .search_results {
 	border-bottom-width: 1px;

@@ -37,6 +37,10 @@ $("#abstract").live('click', function(){
     	$("#abstract_long").slideToggle(300);
 });
 
+$(".abstract").live('click', function(){
+	$(this).parent().parent().find('.abstract_long').slideToggle(300);
+});
+
 //Quickform Expansion
 
 $('a.quick_comment').click(function(){
@@ -88,7 +92,7 @@ $(".quickform form").live('submit', function(){
   });
 
 //Share Expansion
-  $("li.sharelink").live('click', function(){
+  $(".sharelink").live('click', function(){
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.question").hide("slow");
@@ -281,6 +285,10 @@ $(".quickform form").live('submit', function(){
       $(this).css('background', 'none')
     });
 
+   $(".deadLink").live('click', function(e){
+	e.preventDefault();
+	//return false;
+    });
 
 
 });

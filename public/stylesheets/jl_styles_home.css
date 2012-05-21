@@ -33,15 +33,14 @@ body {
 }
 
 #homeFeed {
-	border: 2px solid #91C859;
-        background: #fff;
 	text-align: center;
-	padding-top: 0px;
-	padding-right: 0px;
-	padding-bottom: 10px;
-	padding-left: 0px;
 	margin: 0px;
 	margin-top: 30px;
+	padding: 5px;
+	border-radius: 10px;
+	background-color: #B5CFE3;
+	padding-bottom: 20px;
+
 }
 
 #homeFeed h1 {
@@ -53,7 +52,6 @@ body {
 }
 
 #feedNav {
-	height: 50px;
 	margin: 0px;
 }
 
@@ -66,6 +64,7 @@ body {
 
 #feedNav ul {
 	padding: 0px;
+	margin-bottom: 0px;
 	-webkit-padding-start: 0px;
 }
 
@@ -73,18 +72,43 @@ body {
 	list-style-type: none;
 	display: inline-block;
 	padding-top: 5px;
-	padding-bottom: 5px;
 	line-height: 20px;
 }
+
+
 
 #feedNav .feed_nav_item {
 	padding-top: 5px;
 	padding-bottom: 5px;
-	width: 300px;
+	width: 100px;
 	font-weight: bold;
+	color: #000;
+	background-color: #fff;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+#feedNav .feedPlus {
+	width: 35px;
+	padding: 2px;
+}
+
+#feedNav .feed_nav_selected {
+	color: #fff;
+	background-color: #005997;
+}
+
+#follow_form {
+	padding: 10px;
 }
 
 .feedInfo {
 	font-weight: bold;
 	color: #005997;
 }
+
+.homePageFeed {
+	background-color: #fff;
+}
+
+

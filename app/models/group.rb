@@ -210,13 +210,35 @@ end
 
 def feed
    items = []
+   feed = []
    items << shares
    users.each do |u|
-     items << u.assertions
+     items << u.assertions.map{|a| a.get_paper.id}.uniq.map{|p| Paper.find(p).meta_assertions.first}
      items << u.comments
      items << u.questions
    end
-   items.flatten!.sort!{|x,y| y.created_at <=> x.created_at}.first(40) unless items.empty?
+   items.flatten!.uniq.sort!{|x,y| y.created_at <=> x.created_at}.first(40) unless items.empty?
+   items.each do |item|
+        if item.class == Comment || item.class == Question
+        	text = item.owner.class == Paper ? "left a #{item.class.to_s.downcase} on the overall paper:":"left a #{item.class.to_s.downcase} on #{item.owner.shortname}:"		
+        	bold = false
+        	sharetext = item.text
+        	paper = item.get_paper
+        elsif item.class == Assertion
+		assertions = item.get_paper.meta_assertions
+		summaries_of = assertions.select{|a| a.user == item.user}.map{|a| a.owner.shortname} * ', '
+        	text = "summarized " + summaries_of + "." 
+        	bold = false
+		paper = item.get_paper
+        elsif item.class == Share
+        	text = "shared " + item.owner.shortname
+        	sharetext = item.text
+        	bold = false
+        	paper = item.get_paper 
+        end
+        feed << {:user => item.user, :text => text, :paper => paper, :created_at => item.created_at, :bold => bold, :item => item}
+   end
+   feed
 end
 
 def fix_visits

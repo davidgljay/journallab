@@ -25,15 +25,62 @@ has_many :groups, :through => :filters, :source => :group
 
 
 #Validations
-   validates :pubmed_id, :presence => true,
-                         :uniqueness => true
+   validates :pubmed_id, :uniqueness => true, :allow_nil => true
+   validates :doi, :uniqueness => true , :allow_nil => true
    validates_numericality_of :pubmed_id, :only_integer => true,
                          :less_than => 9999999999999,
-                         :greater_than => 0
+                         :greater_than => 0, :allow_nil => true
 
 def inspect
 	'paper' + id.to_s
 end
+
+
+def search_pubmed(search)
+	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").delete('"').delete("'")
+
+# Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
+
+      	#Get a list of pubmed IDs for the search terms
+      	url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch
+      	pids = Nokogiri::XML(open(url1)).xpath("//IdList/Id").map{|p| p.text} * ","
+      	url2 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
+      	data = Nokogiri::XML(open(url2))
+      	search_results = []
+      	data.xpath('//PubmedArticle').each do |article|
+        	pid = article.xpath('MedlineCitation/PMID').text
+        	paper = Paper.find_by_pubmed_id(pid)
+        	if paper.nil?
+	        	title = article.xpath('MedlineCitation/Article/ArticleTitle').text
+	        	journal = article.xpath('MedlineCitation/Article/Journal/Title').text
+	        	day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
+	        	month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
+	        	year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
+			pubdate = Time.local(year, month, day) if year
+	        	abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
+        		paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
+		end
+
+		# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
+		if paper.authors.empty?
+			authors = []
+			authorlist = article.xpath('MedlineCitation/Article/AuthorList')
+			authorlist.xpath('Author').each do |a|
+				firstname = a.xpath('ForeName').text 
+				lastname = a.xpath('LastName').text
+				initials = a.xpath('Initials').text
+				authors << Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
+			end
+			paper.assign_first_and_last_authors(authors.first, authors.last)
+			#paper.extract_authors(data.xpath('//Article/AuthorList')[i])
+		else
+			authors = paper.authors
+		end
+        	search_results << paper    
+	end
+	search_results
+  end
+	
 
 def lookup_info
   url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
@@ -91,6 +138,11 @@ def assign_first_and_last_authors(f_author = nil, l_author = nil)
 		self.save
 	end
 end
+
+def openxml(source)
+	Nokogiri::XML(open(source))
+end
+
 
 def count_figs
   url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s
@@ -234,6 +286,28 @@ def latest_assertion
      assert_list.sort!{|x,y| x.votes.count <=> y.votes.count}
      assert_list.last
 end
+
+def meta_assertions
+	asserts = [assertions]
+	figs.each do |f| 
+		asserts << f.assertions
+		f.figsections.each do |s|
+			asserts << s.assertions
+		end
+	end
+	asserts.flatten
+end
+
+def meta_latest_assertions
+	asserts = [latest_assertion]
+	figs.each do |f| 
+		asserts << f.latest_assertion
+		f.figsections.each do |s|
+			asserts << s.latest_assertion
+		end
+	end
+end
+
 
 def get_paper
     self

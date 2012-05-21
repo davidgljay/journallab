@@ -8,14 +8,27 @@
 <h1><%= @paper.title %></h1>
 	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
 	<h3><%= render '/authors/author_list', :paper => @paper %></h3>
-	<% unless @paper.abstract.nil? %>
+	<% if @paper.abstract.nil? || @paper.abstract.empty? %>
+		<% if @paper.description %>
+		<div>
+  			<h4>Description</h4>
+  			<p><%= @paper.description %></p>
+		</div>
+		<% end %>
+	<% else %>
 		<div id='abstract' class = "clickme">
   			<h4>Abstract</h4>
   			<p id='abstract_short'><%= @paper.short_abstract %></p>
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
-	<h3><%= link_to("Download", "http://pubget.com/paper/" + @paper.pubmed_id.to_s) %> | <%= render '/shares/share_button' unless @group.id.nil? %> | <a class = 'quick_comment clickme'>Comment</a> | <a class = 'quick_question clickme'>Question</a></h3>
+	<h3>
+	<% if @paper.pubmed_id %>
+		<%= link_to("Download", "http://pubget.com/paper/" + @paper.pubmed_id.to_s) %> | 
+	<% elsif @paper.doi %>
+		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s) %> | 
+	<% end %>
+	<a class = 'quick_comment clickme'>Comment</a> | <a class = 'quick_question clickme'>Question</a> | <%= render '/shares/share_button' unless @group.id.nil? %> </h3>
 	<div class = "sharebox"></div>
 		<span class="small grey">
 			<% if @paper.visits.count == 1 %>

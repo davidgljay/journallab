@@ -1,0 +1,8 @@
+$('.feed_nav_item').css('color', '#000');
+$('.feed_nav_item').css('background', '#fff');
+$('.homePageFeed').hide();
+$('<%= '.' + @switchto %>').val('<%= @nav_language %>')
+$('<%= '.' + @switchto %>').css('background', '#005997');
+$('<%= '.' + @switchto %>').css('color', '#fff');
+$('<%= '#' + @switchto + '_feed'%>').html('<%= escape_javascript(render('/feed/' + @switchto_render)) %>'); 
+$('<%= '#' + @switchto + '_feed'%>').show();

@@ -1,5 +1,7 @@
 Redcell::Application.routes.draw do
    
+  get "follows/create"
+
   get "sumreq/create"
 
   get "figs/build_sections"
@@ -40,6 +42,7 @@ Redcell::Application.routes.draw do
    match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
 
+   match '/followform', :to => 'follows#create'
 
 #Static pages
 
@@ -48,6 +51,7 @@ root :to => 'pages#home'
   match '/about',    :to => 'pages#about'
   match '/help',     :to => 'pages#help'
   match '/dashboard',    :to => 'pages#dashboard'
+  match '/feedswitch(/:switchto)',	 :to => 'pages#feedswitch'
 
 
 

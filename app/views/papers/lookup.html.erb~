@@ -2,7 +2,7 @@
 
 <% @search_results.each do |result| %>
 	<div class = "search_results">
-	<%= render 'list', :paper => result[0], :authors => result[1] %>
+	<%= render 'list', :paper => result %>
 	</div>
 <% end %>
 

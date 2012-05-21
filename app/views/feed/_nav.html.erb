@@ -1,0 +1,10 @@
+<div id = "feedNav">
+<ul>
+	<li><%= button_to "Latest Activity", {:action => "feedswitch", :switchto => "updates"},  :class => "updates feed_nav_item loadingPrompt plainSubmit feed_nav_selected clickme", :remote => true  %><%= render '/shared/loading' %></li>
+	<li><%= button_to "Popular Papers", {:action => "feedswitch",  :switchto => "most_viewed"}, :class => "most_viewed feed_nav_item loadingPrompt plainSubmit clickme", :remote => true %><%= render '/shared/loading' %></li>
+	<% @follows.each do |follow| %>
+		<li><%= button_to follow.name, {:action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme", :remote => true %><%= render '/shared/loading' %></li>
+	<% end %>
+	<li><div class = "feed_nav_item feedPlus clickme" >+</div></li>
+</ul>
+</div>

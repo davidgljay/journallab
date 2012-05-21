@@ -9,4 +9,8 @@ def inspect
 	"#{lastname}, #{firstname}"
 end
 
+def name
+	inspect
+end
+
 end

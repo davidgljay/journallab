@@ -28,11 +28,15 @@
        <% end %>
      <% end %>
      </strong>
-      <%= render '/groups/class_papers' %>
+      <%= render '/feed/class_papers' %>
     <% elsif @group.category == "lab" %>
-      <%= render '/groups/nav' %>
-      <div id='update_feed'><%= render '/groups/feed' %></div>
-      <div id='most_viewed_feed'></div>
+      <%= render '/feed/nav' %>
+      <div id='updates_feed' class = "homePageFeed"><%= render '/feed/updates' %></div>
+      <div id='most_viewed_feed' class = "homePageFeed"></div>
+      <% @follows.each do |follow| %>
+	<div id = <%= follow.classname + "_feed" %> class = "homePageFeed"></div>
+      <% end %>
+	<div id='follow_form' class = "homePageFeed hideonload"><% render '/feed/follow_form' %></div>
     <% end %>
 </div>
 <% end %>

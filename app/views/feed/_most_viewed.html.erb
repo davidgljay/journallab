@@ -1,4 +1,4 @@
-<div id="mostViewedFeed" class = "hideonload">
+<div id="mostViewedFeed">
 <% @group.most_viewed.each do |paper| %>
    <div class = "search_results">
    <div class="feedInfo"><%= pluralize(paper[1], "View") %></div>

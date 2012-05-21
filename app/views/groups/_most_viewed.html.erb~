@@ -1,0 +1,8 @@
+<div id="mostViewedFeed">
+<% @group.most_viewed.each do |paper| %>
+   <div class = "search_results">
+   <div class="feedInfo"><%= pluralize(paper[1], "View") %></div>
+   <%= render 'papers/list', :paper => paper[0], :authors => paper[0].authors %>
+  </div>
+<% end %>
+</div>

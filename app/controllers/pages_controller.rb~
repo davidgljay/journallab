@@ -6,28 +6,11 @@ before_filter :admin_user,   :only => [:dashboard]
     @title = "Home"
 	if user_signed_in?
 	    @group = current_user.get_group
-	    @feed = []
-	    @journals = Journal.all
+	    #@journals = Journal.all.select{|j| j.latest_issue}
+	    @follows  = current_user.follows
+	    @newfollow = current_user.follows.new
 	    if @group.category == "lab"
-	    	@group.feed.each do |item|
-        		if item.class == Comment || item.class == Question
-            			text = item.owner.class == Paper ? "left a #{item.class.to_s.downcase} on the overall paper:":"left a #{item.class.to_s.downcase} on #{item.owner.shortname}:"		
-            			bold = false
-            			sharetext = item.text
-            			paper = item.get_paper
-         		elsif item.class == Assertion
-        			text = item.owner.class == Paper ? "left a summary of the overall paper:":"left a summary of #{item.owner.shortname}:"		
-            			bold = false
-				sharetext = item.text
-				paper = item.get_paper
-         		elsif item.class == Share
-            			text = reftext(item)
-            			sharetext = item.text
-            			bold = false
-            			paper = item.get_paper 
-         		end
-        	@feed << [item.user, text, paper, item.created_at, bold, item]
-	        end
+	    	@feed = @group.feed
 	   end
     # If it's a class
     	   if @group.category == "class"
@@ -49,15 +32,29 @@ before_filter :admin_user,   :only => [:dashboard]
      	end
      end
   end
-  
-  def reftext(item)
-    if !item.paper.nil?
-     text = 'shared the paper'
-    elsif !item.fig.nil?
-     text = 'shared Figure ' + item.fig.num.to_s + ' of the paper'
-    elsif !item.figsection.nil?
-     text = 'shared Figure ' + item.figsection.fig.num.to_s + ', Section ' + item.figsection.letter(item.figsection.num) + ' of the paper'
-    end
+
+  def feedswitch
+	if params[:switchto].first(8) == "journal_"
+		@switchto_render = "journal"
+		@switchto = params[:switchto]
+		@journal = Journal.find_by_name(params[:switchto][8..-1])
+		@nav_language = @journal.name
+	elsif params[:switchto].first(7) == "follow_"
+		@switchto_render = "follow"
+		@switchto = params[:switchto]
+		@follow = Follow.find(params[:switchto][7..-1].to_i)
+		if @follow.search_term
+			@feed = Paper.new.search_pubmed(@follow.search_term)
+		end
+		@nav_language = @follow.name
+	else
+		nav_language = {"most_viewed" => "Popular Papers", "updates" => "Latest Activity"}
+		@switchto = params[:switchto]
+		@switchto_render = @switchto
+		@group = current_user.get_group
+		@feed = @group.feed
+		@nav_language = nav_language[@switchto]
+	end
   end
 
   def contact

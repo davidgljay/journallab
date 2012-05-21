@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520012603) do
+ActiveRecord::Schema.define(:version => 20120520224436) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(:version => 20120520012603) do
     t.string   "search_term"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
   end
 
   create_table "groups", :force => true do |t|
@@ -136,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20120520012603) do
     t.boolean  "open"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "latest_issue"
   end
 
   create_table "maillogs", :force => true do |t|
@@ -179,6 +181,8 @@ ActiveRecord::Schema.define(:version => 20120520012603) do
     t.datetime "pubdate"
     t.text     "h_map"
     t.text     "first_last_authors"
+    t.text     "description"
+    t.string   "doi"
   end
 
   create_table "questions", :force => true do |t|

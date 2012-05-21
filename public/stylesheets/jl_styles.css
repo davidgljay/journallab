@@ -231,7 +231,39 @@ td#profileImage {
 }
 
 
+/* Quick Style Elements */
+
+.small {
+	font-size: 11px;
+}
+
+.grey {
+	color: #888;
+}
+
+.inline {
+	display: inline;
+}
+
+.italic {
+	font-style: italic;
+}
+
+.bold 	{
+	font-weight: bold;
+} 
+
+.plainSubmit {
+	background: none;
+	border: none;
+	color: inherit;
+	font-size: inherit;
+	padding: 0px;
+	margin: 0px;
+}
+
 /* Search Results, also used for feeds on profile page */
+
 
 .search_results {
 	border-bottom-width: 1px;
@@ -370,28 +402,6 @@ input#share_text {
 	margin-left: 10px;
 }
 
-/* Quick Style Elements */
-
-.small {
-	font-size: 11px;
-}
-
-.grey {
-	color: #888;
-}
-
-.inline {
-	display: inline;
-}
-
-.italic {
-	font-style: italic;
-}
-
-.bold 	{
-	font-weight: bold;
-} 
-
 
 /* Heatmaps */
 
@@ -506,14 +516,6 @@ form.new_vote {
 
 /* Comments and questions */
 
-.plainSubmit {
-	background: none;
-	border: none;
-	color: inherit;
-	font-size: inherit;
-	padding: 0px;
-	margin: 0px;
-}
 
 .commentbox, .questionbox {
 	padding: 15px;

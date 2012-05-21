@@ -110,6 +110,10 @@ end
 # Feeds for grabbing Journals
 #
 
+#
+# Feeds for grabbing Journals
+#
+
 def grab_journal(journal)
 	urls = {:nature => "http://feeds.nature.com/NatureLatestResearch", :cell => "http://www.cell.com/current", :science => "http://www.sciencemag.org/content/current"}
 	html = Nokogiri::XML(open(urls[journal]))
@@ -117,12 +121,12 @@ def grab_journal(journal)
 		latest_issue = []
 		html.css('item').each do |article|
 			a = {}
-			a["title"] = article.css('title').text
-			a["doi"] =  article.attribute('about').text[18..-1]
-			a["description"] = article.css('description').text
+			a[:title] = article.css('title').text
+			a[:doi] =  article.attribute('about').text[18..-1]
+			a[:description] = article.css('description').text
 			if !article.xpath("a:creator", {"a" => "http://purl.org/dc/elements/1.1/"}).empty?
-				a["firstauthor"] = article.xpath("a:creator", {"a" => "http://purl.org/dc/elements/1.1/"}).first.text
-				a["lastauthor"] = article.xpath("a:creator", {"a" => "http://purl.org/dc/elements/1.1/"}).last.text
+				a[:firstauthor] = article.xpath("a:creator", {"a" => "http://purl.org/dc/elements/1.1/"}).first.text
+				a[:lastauthor] = article.xpath("a:creator", {"a" => "http://purl.org/dc/elements/1.1/"}).last.text
 			end
 			latest_issue << a
 		end
@@ -130,5 +134,6 @@ def grab_journal(journal)
 	latest_issue
 
   end
+
 
 end

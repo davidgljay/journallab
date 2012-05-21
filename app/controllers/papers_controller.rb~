@@ -161,52 +161,12 @@ end
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
-      cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+")
-
-# Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
-
-      #Get a list of pubmed IDs for the search terms
-      url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch
-      pids = Nokogiri::XML(open(url1)).xpath("//IdList/Id").map{|p| p.text} * ","
-      url2 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
-      data = Nokogiri::XML(open(url2))
-      @search_results = []
-      data.xpath('//PubmedArticle').each do |article|
-        pid = article.xpath('MedlineCitation/PMID').text
-        paper = Paper.find_by_pubmed_id(pid)
-        if paper.nil?
-	        title = article.xpath('MedlineCitation/Article/ArticleTitle').text
-	        journal = article.xpath('MedlineCitation/Article/Journal/Title').text
-	        day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
-	        month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
-	        year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
-		pubdate = Time.local(year, month, day) if year
-	        abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
-        	paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
-	end
-
-	# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
-	if paper.authors.empty?
-		authors = []
-		authorlist = article.xpath('MedlineCitation/Article/AuthorList')
-		authorlist.xpath('Author').each do |a|
-			firstname = a.xpath('ForeName').text 
-			lastname = a.xpath('LastName').text
-			initials = a.xpath('Initials').text
-			authors << Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
-		end
-		paper.assign_first_and_last_authors(authors.first, authors.last)
-		#paper.extract_authors(data.xpath('//Article/AuthorList')[i])
-	else
-		authors = paper.authors
-	end
-        @search_results << [paper]    
-      end
-      respond_to do |format|
-        format.html
-        format.xml
-      end
-     end
+      @search_results = Paper.new.search_pubmed(search)
+    end
+    respond_to do |format|
+      format.html
+      format.xml
+    end
   end    
 
 def monthhash

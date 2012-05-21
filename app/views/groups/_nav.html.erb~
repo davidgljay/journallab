@@ -1,6 +1,9 @@
 <div id = "feedNav">
 <ul>
-<li><div class="updates feed_nav_item">Latest Activity</div></li>
-<li><div class="most_viewed feed_nav_item">Popular Papers</div></li>
+	<li><%= button_to "Latest Activity", {:action => "feedswitch", :switchto => "updates"},  :class => "updates feed_nav_item loadingPrompt plainSubmit feed_nav_selected", :remote => true  %><%= render '/shared/loading' %></li>
+	<li><%= button_to "Popular Papers", {:action => "feedswitch",  :switchto => "most_viewed"}, :class => "most_viewed feed_nav_item loadingPrompt plainSubmit", :remote => true %><%= render '/shared/loading' %></li>
+	<% @journals.each do |journal| %>
+		<li><%= button_to journal.name, {:action => "feedswitch",  :switchto => journal.name}, :class => "most_viewed feed_nav_item loadingPrompt plainSubmit", :remote => true %><%= render '/shared/loading' %></li>
+	<% end %>
 </ul>
 </div>

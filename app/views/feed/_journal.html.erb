@@ -1,0 +1,7 @@
+<div id= <%= @journal.name.downcase + "Feed" %>>
+<% @journal.feed.each do |paper| %>
+   <div class = "search_results">
+   <%= render 'papers/list', :paper => paper %>
+  </div>
+<% end %>
+</div>

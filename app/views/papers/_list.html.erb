@@ -1,5 +1,11 @@
 	<div class = "sr_title"><%= link_to paper.title, paper %></div>
-	<div class = "sr_info2 small"><%= paper.journal %>, <%= paper.pubdate.year unless paper.pubdate == nil %> | <%= link_to("Download", "http://pubget.com/paper/" + paper.pubmed_id.to_s) %> | <%= link_to("Pubmed", "http://www.ncbi.nlm.nih.gov/pubmed/" + paper.pubmed_id.to_s) %></div>
+	<div class = "sr_info2 small"><%= paper.journal %>, <%= paper.pubdate.strftime('%B %d, %Y') unless paper.pubdate == nil %> | 
+
+	<% if paper.pubmed_id %>
+		<%= link_to("Download", "http://pubget.com/paper/" + paper.pubmed_id.to_s) %> | <%= link_to("Pubmed", "http://www.ncbi.nlm.nih.gov/pubmed/" + paper.pubmed_id.to_s) %>
+	<% elsif paper.doi %>
+		<%= link_to("View on " + paper.journal, "http://dx.doi.org/" + paper.doi.to_s) %>
+	<% end %></div>
 	<% if paper.first_last_authors %>
 		<div class = "sr_info2 small grey">First Author: <%= link_to paper.first_last_authors.first[:name], '/lookup/' + paper.first_last_authors.first[:firstname] + '+' + paper.first_last_authors.first[:lastname] %> | Last Author: <%= link_to  paper.first_last_authors.last[:name], '/lookup/' + paper.first_last_authors.last[:firstname] + '+' + paper.first_last_authors.last[:lastname] %></div>
 	<% end %>	

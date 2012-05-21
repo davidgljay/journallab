@@ -10,44 +10,19 @@ $(document).ready(function(){
 
 //Feed
 
- 
-$("div.updates").css('background', '#005997');
-$("div.updates").css('color', '#fff');
 
-$("div.updates").live('click', function(){
-   	$("#updateFeed").show();
-   	$("#sumreqFeed").hide();
-   	$("#mostViewedFeed").hide();
-   	$(this).css('background', '#005997');
-	$(this).css('color', '#fff');$("div.sumreqs").css('background', '#fff');
-   	$("div.sumreqs").css('color', '#000');
-  	$("div.most_viewed").css('background', '#fff');
-	$("div.most_viewed").css('color', '#000');
+$(".loadingPrompt").live('click', function(){
+	$(this).val("Just a sec..");
 });
 
-$("div.sumreqs").live('click', function(){
-   	$("#updateFeed").hide();
-   	$("#sumreqFeed").show();
-   	$("#mostViewedFeed").hide();
-   	$(this).css('background', '#005997');
-   	$(this).css('color', '#fff');
-   	$("div.updates").css('background', '#fff');
-	$("div.updates").css('color', '#000');
-   	$("div.most_viewed").css('background', '#fff');
-   	$("div.most_viewed").css('color', '#000');
+$(".feedPlus").live('click', function(){
+	$('feed_nav_item').removeClass('feed_nav_selected');
+	$(this).addClass('feed_nav_selected');
+	$('.homePageFeed').hide();
+	$('#follow_form').show();
 });
 
-$("div.most_viewed").live('click', function(){
-	$("#updateFeed").hide();
-	$("#sumreqFeed").hide();
-	$("#mostViewedFeed").show();
-	$(this).css('background', '#005997');
-	$(this).css('color', '#fff');
-	$("div.updates").css('background', '#fff');
-	$("div.updates").css('color', '#000');
-	$("div.sumreqs").css('background', '#fff');
-	$("div.sumreqs").css('color', '#000');
-});
+
 
 //Search
 $(".searchreset").live('click', function(){
@@ -101,12 +76,10 @@ $('.selectPaper').live('click', function(){
 	$(this).parent().find('.selectFig input').val('');
 });
 
-// Good
 $(".quickform form").live('submit', function(){
-//	$.post($(this).attr("action"), $(this).serialize(), null, "script");
 	$(this).html('Just a sec...');
-//	return false;
 });
+
 
 //Hide/Show Discussion Map (known as 'overview' in the code)
   $(".overview_open").live('click', function(){

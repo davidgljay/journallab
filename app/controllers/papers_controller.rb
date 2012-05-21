@@ -148,6 +148,7 @@ end
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
   def lookup
     search = params[:pubmed_id].strip
+    @group = current_user.get_group
     if search.to_i.to_s == search
       @paper = Paper.find_by_pubmed_id(search)
       if @paper.nil?

@@ -6,7 +6,7 @@
 	</td>
 	<% if item[:user].image %>
 		<td width="80">
-			<div class = "feedImage"><%= image_tag item[:user].image.thumb('80x80>').url, :alt => item[:user].name, :width => "80", :height => "80" %></div>
+			<div class = "feedImage"><%= image_tag item[0].image.thumb('80x80>').url, :alt => item[:user].name, :width => "80", :height => "80" %></div>
 		</td>
 	<% end %>
 	</tr></table>

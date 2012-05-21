@@ -10,10 +10,10 @@
 		| <%= link_to("Abstract", "#", :class => "abstract deadLink") %>
 	<% end %>
 	<% if @group %>
-		| <%= link_to("Share", '', :class => "deadLink") %>
+		| <%= link_to("Share", '', :class => "list_share deadLink") %>
 	<% end %></div>
 	<p class='abstract_long hideonload'><%= paper.abstract %></p>
-
+	<div class = "list_share hideonload"><%= render 'shares/share_form', :item => paper %></div>
 	<% if paper.first_last_authors %>
 		<div class = "sr_info2 small grey">First Author: <%= link_to paper.first_last_authors.first[:name], '/lookup/' + paper.first_last_authors.first[:firstname] + '+' + paper.first_last_authors.first[:lastname] %> | Last Author: <%= link_to  paper.first_last_authors.last[:name], '/lookup/' + paper.first_last_authors.last[:firstname] + '+' + paper.first_last_authors.last[:lastname] %></div>
 	<% end %>	

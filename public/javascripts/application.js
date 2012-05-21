@@ -100,14 +100,22 @@ $(".quickform form").live('submit', function(){
   });
 
   $("div.share_button_top").live('click', function(){
-    $(this).find("div.share_button_form").slideToggle(0);
+    $(this).find("div.share_button_form").slideToggle(300);
+  });
+
+  $("a.list_share").live('click', function(){
+    $(this).parent().parent().find("div.list_share").slideToggle(300);
   });
 
 
   $('div.share_form').find(':input').live('click', function(){
-     if( $(this).val() == "Check this out!")
+     if( $(this).val() == "Check this out!"){
         $(this).val('');
-     end
+     }
+     });
+
+  $('div.list_share').find('#share_submit').live('click', function(){
+	$(this).parent().html("<h3>Shared!</h3>");
      });
 
 //Toggle Figure sections

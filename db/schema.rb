@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120521010043) do
+ActiveRecord::Schema.define(:version => 20120521195355) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -25,10 +25,12 @@ ActiveRecord::Schema.define(:version => 20120521010043) do
     t.text     "method_text"
     t.boolean  "is_public"
     t.text     "alt_approach"
+    t.integer  "get_paper_id"
   end
 
   add_index "assertions", ["fig_id"], :name => "index_assertions_on_fig_id"
   add_index "assertions", ["figsection_id"], :name => "index_assertions_on_figsection_id"
+  add_index "assertions", ["get_paper_id"], :name => "index_assertions_on_get_paper_id"
   add_index "assertions", ["paper_id"], :name => "index_assertions_on_paper_id"
   add_index "assertions", ["user_id"], :name => "index_assertions_on_user_id"
 
@@ -65,10 +67,12 @@ ActiveRecord::Schema.define(:version => 20120521010043) do
     t.integer  "question_id"
     t.boolean  "is_public"
     t.boolean  "author"
+    t.integer  "get_paper_id"
   end
 
   add_index "comments", ["fig_id"], :name => "index_comments_on_fig_id"
   add_index "comments", ["figsection_id"], :name => "index_comments_on_figsection_id"
+  add_index "comments", ["get_paper_id"], :name => "index_comments_on_get_paper_id"
   add_index "comments", ["paper_id"], :name => "index_comments_on_paper_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
@@ -89,9 +93,11 @@ ActiveRecord::Schema.define(:version => 20120521010043) do
     t.integer  "num"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "get_paper_id"
   end
 
   add_index "figsections", ["fig_id"], :name => "index_figsections_on_fig_id"
+  add_index "figsections", ["get_paper_id"], :name => "index_figsections_on_get_paper_id"
 
   create_table "filters", :force => true do |t|
     t.integer  "group_id"
@@ -199,10 +205,12 @@ ActiveRecord::Schema.define(:version => 20120521010043) do
     t.datetime "updated_at"
     t.boolean  "is_public"
     t.boolean  "author"
+    t.integer  "get_paper_id"
   end
 
   add_index "questions", ["fig_id"], :name => "index_questions_on_fig_id"
   add_index "questions", ["figsection_id"], :name => "index_questions_on_figsection_id"
+  add_index "questions", ["get_paper_id"], :name => "index_questions_on_get_paper_id"
   add_index "questions", ["paper_id"], :name => "index_questions_on_paper_id"
   add_index "questions", ["user_id"], :name => "index_questions_on_user_id"
 
@@ -230,6 +238,8 @@ ActiveRecord::Schema.define(:version => 20120521010043) do
     t.datetime "updated_at"
   end
 
+  add_index "shares", ["get_paper_id"], :name => "index_shares_on_get_paper_id"
+
   create_table "subscriptions", :force => true do |t|
     t.string  "category"
     t.integer "user_id"
@@ -247,6 +257,8 @@ ActiveRecord::Schema.define(:version => 20120521010043) do
     t.datetime "updated_at"
     t.boolean  "summarized"
   end
+
+  add_index "sumreqs", ["get_paper_id"], :name => "index_sumreqs_on_get_paper_id"
 
   create_table "users", :force => true do |t|
     t.string   "firstname"
@@ -292,6 +304,9 @@ ActiveRecord::Schema.define(:version => 20120521010043) do
     t.integer  "count"
   end
 
+  add_index "visits", ["paper_id"], :name => "index_visits_on_paper_id"
+  add_index "visits", ["user_id"], :name => "index_visits_on_user_id"
+
   create_table "votes", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assertion_id"
@@ -300,8 +315,10 @@ ActiveRecord::Schema.define(:version => 20120521010043) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "vote_for_id"
+    t.integer  "get_paper_id"
   end
 
   add_index "votes", ["assertion_id"], :name => "index_votes_on_assertion_id"
+  add_index "votes", ["get_paper_id"], :name => "index_votes_on_get_paper_id"
 
 end

@@ -4,6 +4,7 @@ attr_accessible :text, :form, :paper_id, :fig_id, :figsection_id, :user_id, :ass
 
 belongs_to :user
 belongs_to :paper
+belongs_to :get_paper, :class_name => "Paper"
 belongs_to :fig
 belongs_to :figsection
 belongs_to :assertion
@@ -65,8 +66,10 @@ def linktext
    linktext
 end        
 
-def get_paper
-   owner.get_paper
+def set_get_paper
+	self.get_paper_id = owner.get_paper.id
+	self.save
+	get_paper
 end
 
 def owner

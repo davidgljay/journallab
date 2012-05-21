@@ -1,6 +1,7 @@
 class Assertion < ActiveRecord::Base
 attr_accessible :text, :method_text, :about, :alt_approach
 
+belongs_to :get_paper, :class_name => "Paper"
 belongs_to :paper
 belongs_to :user
 belongs_to :fig
@@ -39,14 +40,10 @@ def owner
   end
 end
 
-def get_paper
-  if paper_id
-    paper
-  elsif fig_id
-    fig.paper
-  elsif figsection_id
-    figsection.fig.paper
-  end
+def set_get_paper
+	self.get_paper_id = owner.get_paper.id
+	self.save
+	get_paper
 end
 
 def linktext

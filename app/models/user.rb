@@ -122,6 +122,7 @@ class User < ActiveRecord::Base
       elsif candidate.class == Assertion
         votes.create!(:assertion => candidate)
       end
+	vote.set_get_paper
   end
 
   def voted_for?(candidate)

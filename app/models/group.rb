@@ -237,6 +237,7 @@ def feed
         	paper = item.get_paper 
         end
         feed << {:user => item.user, :text => text, :paper => paper, :created_at => item.created_at, :bold => bold, :item => item}
+	feed.sort!{|x,y| y[:item].created_at <=> x[:item].created_at}
    end
    feed
 end

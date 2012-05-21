@@ -19,6 +19,10 @@ has_many :shares, :dependent => :destroy
 has_many :meta_shares, :class_name => "Share"
 has_many :sumreqs, :dependent => :destroy
 has_many :meta_sumreqs, :class_name => "Sumreq", :foreign_key => "get_paper_id"
+has_many :meta_comments, :class_name => "Comment", :foreign_key => "get_paper_id"
+has_many :meta_questions, :class_name => "Question", :foreign_key => "get_paper_id"
+has_many :meta_votes, :class_name => "Vote", :foreign_key => "get_paper_id"
+has_many :meta_assertions, :class_name => "Assertion", :foreign_key => "get_paper_id"
 has_many :filters, :foreign_key => "paper_id",
                            :dependent => :destroy
 has_many :groups, :through => :filters, :source => :group
@@ -36,13 +40,13 @@ def inspect
 end
 
 
-def search_pubmed(search)
+def search_pubmed(search, numresults = 20)
 	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").delete('"').delete("'")
 
 # Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
 
       	#Get a list of pubmed IDs for the search terms
-      	url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch
+      	url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch + '&retmax=' + numresults.to_s
       	pids = Nokogiri::XML(open(url1)).xpath("//IdList/Id").map{|p| p.text} * ","
       	url2 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
       	data = Nokogiri::XML(open(url2))
@@ -287,16 +291,7 @@ def latest_assertion
      assert_list.last
 end
 
-def meta_assertions
-	asserts = [assertions]
-	figs.each do |f| 
-		asserts << f.assertions
-		f.figsections.each do |s|
-			asserts << s.assertions
-		end
-	end
-	asserts.flatten
-end
+
 
 def meta_latest_assertions
 	asserts = [latest_assertion]

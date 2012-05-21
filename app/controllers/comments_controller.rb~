@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-#before_filter :authenticate_user!
+before_filter :authenticate_user!
 
 
  #Used to render a list in the papers view.
@@ -46,6 +46,7 @@ class CommentsController < ApplicationController
     	end
     	@comment.save
     	@paper = @owner.get_paper
+	@comment.get_paper_id = @paper
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
     	@group.make_filter(@comment, params[:mode])

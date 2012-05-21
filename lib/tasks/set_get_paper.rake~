@@ -1,0 +1,7 @@
+desc "Sets get_paper for every item that has it."
+
+task :set_get_paper => :environment do
+	everybody = Comments.all + Questions.all + Votes.all + Assertions.all + Shares.all + Sumreqs.all
+	everybody.each {|e| e.set_get_paper}
+end
+

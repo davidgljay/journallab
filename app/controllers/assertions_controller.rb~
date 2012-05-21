@@ -91,7 +91,7 @@ end
         @paper = @assertion.figsection.fig.paper
     end
     @mode = params[:assertion][:mode].to_i
-   
+    @assertion.get_paper_id = @paper.id
   #Check to make sure that something was entered.
     @assertion.text = @assertion.text.nil? || @assertion.text.include?('What is the core conclusion') ? nil : @assertion.text
     @assertion.method_text = @assertion.method_text.nil? || @assertion.method_text.include?('Separate methods with commas') ? nil : @assertion.method_text
@@ -171,6 +171,6 @@ end
 
   def authorized_user_or_admin
       @assertion = Assertion.find(params[:id])
-      redirect_to root_path unless current_user?(@assertion.user) || current_user.admin?
+      redirect_to root_path unless current_user == @assertion.user || current_user.admin?
   end
 end

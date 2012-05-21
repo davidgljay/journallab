@@ -8,6 +8,7 @@ class FollowsController < ApplicationController
 		follow.name = params[:journal]
 	end
 	follow.save
+	follow.update_feed
 	redirect_to root_path 
   end
 

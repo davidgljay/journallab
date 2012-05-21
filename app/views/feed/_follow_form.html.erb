@@ -4,6 +4,6 @@
 	<%= text_field_tag :journal %>
 	<h3>or a Pubmed search term</h3>
 	<%= f.text_field :search_term %>
-	<p><%= f.submit "Follow" %></p>
+	<p><%= f.submit "Follow", :class => 'loadingPrompt' %><%= render '/shared/loading' %></p>
 <% end %>
 

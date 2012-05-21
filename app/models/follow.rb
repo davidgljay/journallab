@@ -1,5 +1,7 @@
 class Follow < ActiveRecord::Base
 
+serialize :latest_search
+
 belongs_to :user
 belongs_to :follow, :polymorphic => true
 
@@ -11,6 +13,23 @@ end
 
 def inspect
 	name
+end
+
+def feed
+	feed = []
+	latest_search.each do |p|
+		feed << Paper.find(p)
+	end
+	feed
+end
+
+
+def update_feed
+	if search_term
+		self.latest_search = Paper.new.search_pubmed(search_term).map{|p| p.id}
+	end
+	self.save
+	latest_search
 end
 
 end

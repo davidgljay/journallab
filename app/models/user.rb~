@@ -116,13 +116,12 @@ class User < ActiveRecord::Base
 
   def vote!(candidate)
       if candidate.class == Comment
-        votes.create!(:comment => candidate)
+        v = votes.create!(:comment => candidate).set_get_paper
       elsif candidate.class == Question
-        votes.create!(:question => candidate)
+        v = votes.create!(:question => candidate).set_get_paper
       elsif candidate.class == Assertion
-        votes.create!(:assertion => candidate)
+        v = votes.create!(:assertion => candidate).set_get_paper
       end
-	vote.set_get_paper
   end
 
   def voted_for?(candidate)

@@ -30,7 +30,7 @@ before_filter :authenticate_user!
     end
     @mode = params[:mode].to_i
     @question.user = current_user
-    @question.set_get_paper
+    @question.save
     @question.assertion = params[:question][:assertion_id] ? Assertion.find(params[:question][:assertion_id]) : nil
     # Replies and answers are associated with assertions (for counting purposes), but NOT with figs, papers, etc.
     @paper = @question.get_paper

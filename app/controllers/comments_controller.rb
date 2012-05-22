@@ -76,7 +76,7 @@ def quickform
 	@form = params[:form]
 	if params[:fig].empty?
 		@owner = @paper
-		@reload = false
+		@reload = @paper.figs.empty? && @paper.comments.empty? && @paper.questions.empty?
 	elsif params[:fig].last.match('[a-z]').nil?
 		@reload = params[:fig].to_i > @paper.figs.count
 		@paper.build_figs(params[:fig].to_i)
@@ -103,7 +103,6 @@ def quickform
 		@group.make_filter(@comment, @mode)
 		@questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
 	end
-	@comment.set_get_paper
 	@paper.add_heat(@owner)
 	@heatmap = @paper.heatmap
 	respond_to do |format|

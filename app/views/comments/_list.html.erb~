@@ -13,7 +13,7 @@
          <li class="replylink clickme">
 	Reply
          </li>
-         <li id = "numvotes_<%= comment.id.to_s %>"><%= render 'votes/vote_form', :candidate => comment %>
+         <li id = "numvotes_<%= comment.id.to_s %>"><%= render 'votes/vote_form', :candidate => comment %></li>
         </ul>
       </div>
       <div> 	      

@@ -16,6 +16,8 @@ has_many :comments
 has_many :questions
 has_many :votes
 
+before_save :set_get_paper
+
 #Validations
 
    validates :user_id, :presence => true 
@@ -42,7 +44,6 @@ end
 
 def set_get_paper
 	self.get_paper_id = owner.get_paper.id
-	self.save
 	get_paper
 end
 

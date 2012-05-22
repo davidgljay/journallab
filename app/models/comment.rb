@@ -11,10 +11,11 @@ belongs_to :assertion
 belongs_to :comment
 belongs_to :question
 
-has_many :comments
+has_many :comments, :order => "created_at ASC"
 has_many :votes
 has_many :maillogs, :as => :about
 
+before_save :set_get_paper
 
 has_many :filters, :foreign_key => "comment_id",
                            :dependent => :destroy
@@ -68,7 +69,6 @@ end
 
 def set_get_paper
 	self.get_paper_id = owner.get_paper.id
-	self.save
 	get_paper
 end
 

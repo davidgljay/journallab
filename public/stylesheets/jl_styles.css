@@ -260,6 +260,7 @@ td#profileImage {
 	font-size: inherit;
 	padding: 0px;
 	margin: 0px;
+	cursor: pointer;
 }
 
 /* Search Results, also used for feeds on profile page */

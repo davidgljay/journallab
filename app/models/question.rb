@@ -16,6 +16,8 @@ has_many :questions
 has_many :comments
 has_many :votes
 
+before_save :set_get_paper
+
 has_many :filters, :foreign_key => "question_id",
                            :dependent => :destroy
 has_many :groups, :through => :filters, :source => :group
@@ -63,7 +65,6 @@ end
 
 def set_get_paper
 	self.get_paper_id = owner.get_paper.id
-	self.save
 	get_paper
 end
 

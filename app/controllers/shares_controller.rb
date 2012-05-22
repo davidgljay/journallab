@@ -7,7 +7,7 @@ before_filter :authenticate_user!
     @group = Group.find(params[:share][:group])
     @text = params[:share][:text] 
     @share = @item.shares.create!(:user=> current_user, :text => @text, :get_paper => @item.get_paper, :group => @group)
-    paper = @item.get_paper
+    @paper = @item.get_paper
     @numshares = @item.shares.count
     respond_to do |format|
       @group.users.each do |u|

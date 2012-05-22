@@ -109,14 +109,11 @@ $(".quickform form").live('submit', function(){
 
 
   $('div.share_form').find(':input').live('click', function(){
-     if( $(this).val() == "Check this out!")
+     if( $(this).val() == "Check this out!"){
         $(this).val('');
-     end
+     }
      });
 
-  $('div.list_share').find('#share_submit').live('click', function(){
-	$(this).parent().html("<h3>Shared!</h3>");
-     });
 
 //Toggle Figure sections
    $("div.figtoggle").live('click', function(){

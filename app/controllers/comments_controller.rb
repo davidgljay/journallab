@@ -44,9 +44,8 @@ before_filter :authenticate_user!
 			@comment.figsection = @owner
 		end
     	end
-    	@comment.save
     	@paper = @owner.get_paper
-	@comment.get_paper_id = @paper
+	@comment.get_paper = @paper
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
     	@group.make_filter(@comment, params[:mode])
@@ -104,6 +103,7 @@ def quickform
 		@group.make_filter(@comment, @mode)
 		@questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
 	end
+	@comment.set_get_paper
 	@paper.add_heat(@owner)
 	@heatmap = @paper.heatmap
 	respond_to do |format|

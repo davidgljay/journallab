@@ -5,7 +5,7 @@
       <%= f.hidden_field :type, :value => item.class.to_s %>
       <%= f.hidden_field :group, :value => @group.id %> 
       <%= f.text_field :text, :value=> "Check this out!" %>
-      <%= f.submit "Share with your " + @group.category %>
+      <%= f.submit "Share", :class => 'loadingPrompt' %>
     <% end %>
 </div>
 <div class = "share_confirmation hideonload">

@@ -114,9 +114,6 @@ $(".quickform form").live('submit', function(){
      }
      });
 
-  $('div.list_share').find('#share_submit').live('click', function(){
-	$(this).parent().html("<h3>Shared!</h3>");
-     });
 
 //Toggle Figure sections
    $("div.figtoggle").live('click', function(){

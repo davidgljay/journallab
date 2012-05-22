@@ -1,5 +1,6 @@
 class Vote < ActiveRecord::Base
 
+belongs_to :get_paper, :class_name => "Paper"
 belongs_to :user
 belongs_to :assertion
 belongs_to :question
@@ -16,6 +17,12 @@ def owner
     elsif assertion
        assertion
     end
+end
+
+def set_get_paper
+	self.get_paper_id = owner.get_paper.id
+	self.save
+	get_paper
 end
 
 end

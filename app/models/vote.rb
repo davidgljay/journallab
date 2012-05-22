@@ -1,5 +1,7 @@
 class Vote < ActiveRecord::Base
 
+attr_accessible :get_paper_id
+
 belongs_to :get_paper, :class_name => "Paper"
 belongs_to :user
 belongs_to :assertion

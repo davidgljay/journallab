@@ -7,8 +7,8 @@ en:
 
   devise:
     failure:
-      unauthenticated: 'You need to sign in or sign up before continuing.'
-      unconfirmed: 'You have to confirm your account before continuing.'
+      unauthenticated: 'Please sign in or sign up before continuing.'
+      unconfirmed: 'Please confirm your account before continuing.'
       locked: 'Your account is locked.'
       invalid: 'Invalid email or password.'
       invalid_token: 'Invalid authentication token.'
@@ -21,10 +21,10 @@ en:
       send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.'
       updated: 'Your password was changed successfully. You are now signed in.'
     confirmations:
-      send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
+      send_instructions: 'You will receive a confirmation email in the next few minutes.'
       confirmed: "You're in! Get started by clicking the '+' tab below..."
     registrations:
-      signed_up: 'You have signed up successfully.'
+      signed_up: 'Great, your account has been created.'
       updated: 'You updated your account successfully.'
       destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
     unlocks:

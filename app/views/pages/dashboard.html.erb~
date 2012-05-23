@@ -24,7 +24,13 @@ Actions per Pageview
 </table>
 
 <h1>Histograms</h1>
+<table>
+<tr>
+<td>
 <%= bar_graph(@nods_per_discussion, "Nods per Discussion") %>
+</td><td>
 <%= bar_graph(@replies_per_discussion, "Replies per Discussion") %>
-
+</td>
+</tr>
+</table>
 

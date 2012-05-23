@@ -29,10 +29,10 @@ def set_get_paper
 	get_paper
 end
 
-private
 
 def set_vote_for
-	vote_for = owner.user
+	self.vote_for = owner.user
+	vote_for
 end
 
 end

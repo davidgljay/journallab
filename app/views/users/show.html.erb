@@ -84,7 +84,7 @@
         	   		<% end %>
         	   		</div>
      			<% else %>
-       				<h3><%= link_to "Homepage", @user.homepage %>
+       				<h3><%= link_to "Homepage", @user.homepage if @user.homepage %>
        				<%= " • " if @user.cv && @user.homepage %> 
        				<%= link_to "CV", @user.cv if @user.cv %></h3></p>
      			<% end %>

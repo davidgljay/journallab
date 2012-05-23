@@ -3,7 +3,7 @@
 <div id="contentMain">
 <h1>Member Profile</h1>
 	<div id="profileInfo">
-		<table><tr id = 'profileImage'><td>
+		<table><tr><td id = 'profileImage'>
 			<% if @user == current_user %>
 				<% if @user.image %>
 					<%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :id => "profilephoto", :class => "profilePhoto clickme editme" %>
@@ -84,7 +84,7 @@
         	   		<% end %>
         	   		</div>
      			<% else %>
-       				<h3><%= link_to "Homepage", @user.homepage %>
+       				<h3><%= link_to "Homepage", @user.homepage if @user.homepage %>
        				<%= " • " if @user.cv && @user.homepage %> 
        				<%= link_to "CV", @user.cv if @user.cv %></h3></p>
      			<% end %>

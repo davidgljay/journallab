@@ -46,6 +46,7 @@ before_filter :authenticate_user!
     	end
     	@paper = @owner.get_paper
 	@comment.get_paper = @paper
+	@comment.save
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
     	@group.make_filter(@comment, params[:mode])
@@ -96,12 +97,12 @@ def quickform
 		@comment = @owner.comments.create!(:text => params[:text], :form => 'comment', :user_id => @user.id)
 		@comment.save
 		@group.make_filter(@comment, @mode)
-		@comments = @owner.comments.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+		@comments = @owner.comments.all#.select{|c| @group.let_through_filter?(c,current_user, @mode)}
 	elsif @form == 'question'
 		@comment = @owner.questions.create!(:text => params[:text], :user_id => @user.id)
 		@comment.save
 		@group.make_filter(@comment, @mode)
-		@questions = @owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+		@questions = @owner.questions.all#.select{|c| @group.let_through_filter?(c,current_user, @mode)}
 	end
 	@paper.add_heat(@owner)
 	@heatmap = @paper.heatmap

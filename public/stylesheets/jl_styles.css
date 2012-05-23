@@ -263,6 +263,10 @@ td#profileImage {
 	cursor: pointer;
 }
 
+.round	{
+	border-radius: 10px;
+}
+
 /* Search Results, also used for feeds on profile page */
 
 .abstract_short, .abstract_long {
@@ -607,16 +611,17 @@ td.comment_body, td.question_body {
 .quickform .figSelector div {
 	padding: 5px;
 	width: 225px;
-	border: 1px #9FCF67 solid
+	text-align: center;
 }
 
 .quickform .selectPaper {
 	font-style: italic;
-	background: #9FCF67; 
+
 }
 
 .quickform .selectFig {
 	font-weight: bold;
+	background: #9FCF67; 
 }
 
 .quickform h3 {

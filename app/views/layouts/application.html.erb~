@@ -23,5 +23,15 @@
     <%= render 'layouts/footer' %>
     <%= debug(params) if Rails.env.development? %>
     </div>
+<!-- start Us‪erVoice -->
+<script type="text/javascript">
+  var uvOptions = {};
+  (function() {
+    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/sRkfPpl2KABtPcCrux29w.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+  })();
+</script>
+<!-- end UserVoice -->
   </body>
 </html>

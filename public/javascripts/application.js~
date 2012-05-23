@@ -57,11 +57,11 @@ $('a.quick_question').click(function(){
 //Quickform Selection
 
 $('.selectFig').live('click', function(){
-	$(this).css('background-color', '#fff');
+	$(this).css('background-color', '#9FCF67');
 	$(this).css('font-weight', 'bold');	
 	$(this).css('font-style', 'normal');
 	$(this).parent().find('.selectPaper').css('font-style', 'italic');
-	$(this).parent().find('.selectPaper').css('background-color', '#9FCF67');
+	$(this).parent().find('.selectPaper').css('background-color', '#fff');
 	$(this).parent().find('.selectPaper').css('font-weight', 'normal');
 });
 
@@ -71,11 +71,11 @@ $('.selectFig input').live('click', function(){
 });
 
 $('.selectPaper').live('click', function(){
-	$(this).css('background-color', '#fff');
+	$(this).css('background-color', '#9FCF67');
 	$(this).css('font-weight', 'bold');	
 	$(this).css('font-style', 'normal');
 	$(this).parent().find('.selectFig').css('font-style', 'italic');
-	$(this).parent().find('.selectFig').css('background-color', '#9FCF67');
+	$(this).parent().find('.selectFig').css('background-color', '#fff');
 	$(this).parent().find('.selectFig').css('font-weight', 'normal');
 	$(this).parent().find('.selectFig input').val('');
 });
@@ -96,11 +96,11 @@ $(".quickform form").live('submit', function(){
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.question").hide("slow");
-    $(this).parent().parent().parent().find("div.sharebox").slideToggle(0);
+    $(this).parent().parent().parent().find("div.sharebox").slideToggle(300);
   });
 
-  $("div.share_button_top").live('click', function(){
-    $(this).find("div.share_button_form").slideToggle(300);
+  $("div.share_button_text").live('click', function(){
+    $(this).parent().find("div.share_button_form").slideToggle(300);
   });
 
   $("a.list_share").live('click', function(){

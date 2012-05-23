@@ -1,10 +1,6 @@
-$('.feed_nav_item').css('color', '#000');
-$('.feed_nav_item').css('background', '#fff');
+$('.feed_nav_item').removeClass('feed_nav_selected');
 $('.homePageFeed').hide();
 $('<%= '.' + @switchto %>').val('<%= @nav_language %>')
-$('<%= '.' + @switchto %>').css('background', '#005997');
-$('<%= '.' + @switchto %>').css('color', '#fff');
+$('<%= '.' + @switchto %>').addClass('feed_nav_selecte');
 $('<%= '#' + @switchto + '_feed'%>').html('<%= escape_javascript(render('/feed/' + @switchto_render)) %>'); 
 $('<%= '#' + @switchto + '_feed'%>').show();
-$('<%= '#' + @switchto + '_feed'%>').show(); 
-

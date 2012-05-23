@@ -1,19 +1,15 @@
 <div id="footerFloat">
 <div id="footer">
-<div id="footerNav"><%= link_to "About", about_path %>   <%= link_to "Feedback", 'http://jlab.uservoice.com' %></div>
-© 2012 Journal Lab, San Francisco, CA.</div>
+<div id="footerNav"><%= link_to "About", about_path %>   <a href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog (powered by UserVoice)">Report a Bug</a></div>
 </div>
 </div>
-
-<% if signed_in? && !Rails.env.test? %>
+<!-- start Us‪erVoice -->
 <script type="text/javascript">
   var uvOptions = {};
   (function() {
     var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/sRkfPpl2KABtPcCrux29w.js';
+    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/1Gr4j06X8p4QeZZ7HBSew.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
   })();
 </script>
-<% end %>
-
-
+<!-- end UserVoice -->

@@ -82,8 +82,8 @@ body {
 	padding-bottom: 5px;
 	width: 100px;
 	font-weight: bold;
-	color: #000;
-	background-color: #fff;
+	color: #fff;
+	background-color: #005997;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
 }
@@ -94,10 +94,13 @@ body {
 }
 
 #feedNav .feed_nav_selected {
-	color: #fff;
-	background-color: #005997;
+	color: #000;
+	background-color: #fff;
 }
 
+#follow_form {
+	padding: 10px;
+}
 
 .feedInfo {
 	font-weight: bold;
@@ -107,3 +110,8 @@ body {
 .homePageFeed {
 	background-color: #fff;
 }
+
+.fig_numselect {
+	margin: 5px;
+}
+

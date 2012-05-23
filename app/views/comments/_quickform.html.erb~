@@ -5,10 +5,10 @@
 		<%= hidden_field_tag :mode, @mode %>
 		<h3><%= form == 'comment' ? 'Leave a comment on' : 'Pose a questions about' %>:</h3>
 		<div class = 'figSelector'>
-			<div class = 'selectFig clickme' >
+			<div class = 'selectFig clickme round' >
 				fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
 			</div>
-			<div class = 'selectPaper clickme'>
+			<div class = 'selectPaper clickme round'>
 				the overall paper
 			</div>
 		</div>

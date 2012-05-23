@@ -40,25 +40,10 @@
 
 	<%= render '/comments/quickform', :form => 'comment' %>
 	<%= render '/comments/quickform', :form => 'question' %>
+	<%= render 'add_figs' %>
 </div>
 
-<div class = "view_mode hideonload">
-  <%= form_tag(:paper_show, :method => "get", :class => 'view_mode') do  %>
-    <%= hidden_field_tag :id, @paper.id %>
-    <% if @mode == 2 %>
-      <%= hidden_field_tag :mode, "public" %>
-      <%= submit_tag("Lab Discussion", :class => 'view_mode_label') %>      <%= image_tag 'testtube.jpg' %><br>
-      <%= submit_tag("Switch to Public", :class => 'view_mode_switch') %>
 
-
-    <% elsif @mode == 1 %>
-      <%= hidden_field_tag :mode, "group" %>
-      <%= submit_tag("Public Discussion" , :class => 'view_mode_label') %><%= image_tag 'globe.jpg' %><br>
-      <%= submit_tag("Switch to Lab", :class => 'view_mode_switch') %>
-
-    <% end %>    
-  <% end %>
-</div>
 <%= render 'overview' %>
 
 <p>

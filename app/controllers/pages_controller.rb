@@ -70,7 +70,7 @@ before_filter :admin_user,   :only => [:dashboard]
   def dashboard
     require 'groups_helper'
     @title = "Dashboard"
-    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ?', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ?', Time.now - 1.month))],["Unique Views", graph_by_day(Visit.where('created_at > ?', Time.now - 1.month))]]
+    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ?', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ?', Time.now - 1.month))],["Unique Views", graph_by_day(Visit.where('created_at > ?', Time.now - 1.month))],["Users", graph_by_day(User.where('created_at > ?', Time.now - 1.month))],["Custom Feeds", graph_by_day(Follow.where('created_at > ?', Time.now - 1.month))]]
     start = @vanity.map{|a| a[1].map{|coord| coord[0]}.min}.min
     finish = @vanity.map{|a| a[1].map{|coord| coord[0]}.max}.max
     # First, get the full range of days covered by the graph

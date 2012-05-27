@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
       #          :length => {:within => 6..40},
       #          :allow_blank => true,
       #          :on => :update
-	validates :anon_name,  :uniqueness => true
+	# validates :anon_name,  :uniqueness => true
 
 
 #Some functions for calling names
@@ -116,11 +116,11 @@ class User < ActiveRecord::Base
 
   def vote!(candidate)
       if candidate.class == Comment
-        v = votes.create!(:comment => candidate).set_get_paper
+        v = votes.create!(:comment => candidate)
       elsif candidate.class == Question
-        v = votes.create!(:question => candidate).set_get_paper
+        v = votes.create!(:question => candidate)
       elsif candidate.class == Assertion
-        v = votes.create!(:assertion => candidate).set_get_paper
+        v = votes.create!(:assertion => candidate)
       end
   end
 

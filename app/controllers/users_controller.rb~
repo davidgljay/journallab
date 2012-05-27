@@ -2,10 +2,10 @@ class UsersController < ApplicationController
 before_filter :authenticate_user!, :except => [:new, :create, :show]
 before_filter :correct_user, :only => [:edit, :update, :unsubscribe, :image_upload]
 before_filter :admin_user,   :only => [:destroy, :index]
-#  def index
-#    @title = "All users"
-#    @users = User.paginate(:page => params[:page])
-#  end
+  def index
+    @title = "All users"
+    @users = User.all.order{|x,y| y.created_at <=> x.created_at}.paginate(:page => params[:page])
+  end
 
   def show
    @user = User.find(params[:id])

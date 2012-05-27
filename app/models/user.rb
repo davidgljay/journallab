@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
       #          :length => {:within => 6..40},
       #          :allow_blank => true,
       #          :on => :update
-	validates :anon_name,  :uniqueness => true
+	# validates :anon_name,  :uniqueness => true
 
 
 #Some functions for calling names

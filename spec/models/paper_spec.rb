@@ -10,11 +10,6 @@ describe Paper do
     Paper.create!(@attr)
   end
 
-  it "should require a pubmed id" do
-    no_pubmed_paper = Paper.new(@attr.merge(:pubmed_id => ""))
-    no_pubmed_paper.should_not be_valid
-  end
-
   it "should require the pubmed id to be 12 characters" do
     long_pubmed_paper = Paper.new(@attr.merge(:pubmed_id => "12345678901234567"))
     long_pubmed_paper.should_not be_valid

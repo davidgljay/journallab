@@ -40,6 +40,7 @@ describe CommentsController do
     it "should create a reply which triggers an e-mail" do
       get :create, @attr
       @comment = Comment.last
+      test_sign_out @user1
       test_sign_in @user2
       @attr[:comment] = {:text => "Lorem ipsum reply", :form => "reply", :reply_to => @comment.id.to_s, :assertion_id => @assertion.id}
       get :create, @attr
@@ -71,9 +72,11 @@ describe CommentsController do
       @user3 = Factory(:user, :email => Factory.next(:email))   
       get :create, @attr
       @comment = Comment.last
+      test_sign_out @user1
       test_sign_in @user2
       @attr[:comment] = {:text => "Lorem ipsum reply", :form => "reply", :reply_to => @comment.id.to_s, :assertion_id => @assertion.id, :owner_id => @paper.id, :owner_type => @paper.class.to_s}
       get :create, @attr
+      test_sign_out @user2
       test_sign_in @user3
       @attr[:comment] = {:text => "Lorem ipsum pancakes", :form => "reply", :reply_to => @comment.id.to_s, :assertion_id => @assertion.id, :owner_id => @paper.id, :owner_type => @paper.class.to_s}
       get :create, @attr

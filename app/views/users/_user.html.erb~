@@ -4,5 +4,4 @@
 	| Signed up on:<%= user.created_at.strftime('%D') %>
 	| Papers visited: <%= user.visits.count %> 
 	| Actions Taken: <%= user.comments.count + user.assertions.count + user.votes.count + user.questions.count %>
-	| Nods Recieved: <%= user.votes_for_me.count %>
 </div>

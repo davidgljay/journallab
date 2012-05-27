@@ -2,8 +2,10 @@
 
 <%= will_paginate %>
 
+<ul class="users">
   <% @users.each do |user| %>
     <%= render user %>
   <% end %>
+</ll>
 
 <%= will_paginate %>

@@ -4,7 +4,7 @@ before_filter :correct_user, :only => [:edit, :update, :unsubscribe, :image_uplo
 before_filter :admin_user,   :only => [:destroy, :index]
   def index
     @title = "All users"
-    @users = User.all.sort{|x,y| y.created_at <=> x.created_at}
+    @users = User.all.sort{|x,y| y.created_at <=> x.created_at}.paginate(:page => params[:page])
   end
 
   def show

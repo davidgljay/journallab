@@ -1,11 +1,16 @@
 <h1>All users</h1>
 
 <%= will_paginate %>
-
+<table><tdbody>
+<tr><td><h3>Name</h3></td>
+<td width = '100'><h3>Signed up on</h3></td>
+<td width = '100'><h3>Papers Visited</h3></td>
+<td width = '100'><h3>Actions Taken</h3></td>
+<td width = '100'><h3>Nods Received</h3></td>
   <% @users.each do |user| %>
     <%= render user %>
   <% end %>
-
+</tbody></table>
 <%= will_paginate %>
 <br>
 <br>

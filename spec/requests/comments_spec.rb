@@ -29,17 +29,18 @@ describe "Comments:" do
           a.save
        end
     end      
-     visit '/users/signin'
-     fill_in "session_email", :with => @user.email
-     fill_in "session_password", :with => @user.password
-     click_button "Sign in"
+      visit '/users/sign_in'
+      fill_in "user_email", :with => @user.email
+      fill_in "user_password", :with => @user.password
+      click_button "Sign in"
+      visit '/papers/' + @paper.id.to_s
 
    end
 
    describe "posting a comment" do
       it "adds a comment to a paper and lets you reply", :js => true do
      	visit '/papers/' + @paper.id.to_s
-       	find('#paper' + @paper.id.to_s).find('form.commentlist').click
+       	find('#paper' + @paper.id.to_s).find('form.commentlist').find('input').click
        	fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
        	click_button 'Submit' 
        	find('li.replylink').click
@@ -53,7 +54,7 @@ describe "Comments:" do
      it "adds a comment to a figure and lets you reply", :js => true do
     	@group.remove(@user)
      	visit '/papers/' + @paper.id.to_s
-       	find('#fig' + @fig.id.to_s).find('form.commentlist').click
+       	find('#fig' + @fig.id.to_s).find('form.commentlist').find('input').click
        	fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
        	click_button 'Submit' 
        	find('li.replylink').click
@@ -66,7 +67,7 @@ describe "Comments:" do
      it "adds a comment to a figure section and lets you reply", :js => true do
      	visit '/papers/' + @paper.id.to_s
        	find('div.figtoggle').click
-       	find('#fig_1_sections').find('#figsection' + @figsection.id.to_s ).find('form.commentlist').click
+       	find('#fig_1_sections').find('#figsection' + @figsection.id.to_s ).find('form.commentlist').find('input').click
        	fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
        	click_button 'Submit' 
        	find('li.replylink').click

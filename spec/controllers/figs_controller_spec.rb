@@ -7,9 +7,11 @@ describe FigsController do
       @paper = Factory(:paper)
       @paper.build_figs(3)
       @fig = @paper.figs.first
-      test_sign_in(Factory(:user))
+      @user = Factory(:user, :email => Factory.next(:email))
+      test_sign_in(@user)
       get 'build_sections', :id => @fig.id.to_s, :num => '3'
-      response.should be_success
+      @fig.figsections.count.should == 3
+      response.should redirect_to @paper
     end
   end
 

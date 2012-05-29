@@ -49,7 +49,7 @@ describe SharesController do
 
     it "should e-mail the group" do
       lambda do
-         get 'create', :share => {:type => 'Paper', :id => @paper.id, :group => @group.id, :text => 'Check this out!!;'}
+         get 'create', :share => {:type => 'Paper', :id => @paper.id, :group => @group.id, :text => 'Check this out!!'}
       end.should change(ActionMailer::Base.deliveries,:size).by(4) 
       @mailed_users = Maillog.all.map{|m| m.user}
       @mailed_users.should include @user1

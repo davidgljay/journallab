@@ -14,7 +14,7 @@ before_filter :authenticate_user!
          Mailer.share_notification(@share, u).deliver if u.receive_mail?
       end
       format.js
-      format.html { redirect_to paper }
+      format.html { redirect_to @paper }
     end
   end
 

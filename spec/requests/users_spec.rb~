@@ -34,10 +34,10 @@ describe "Users" do
      @question.save
      v = @user.visits.build(:paper => @paper, :count => 1)
      v.save
-     visit '/signin'
-     fill_in "session_email", :with => @user.email
-     fill_in "session_password", :with => @user.password
-     click_button "Sign in"
+       visit '/users/sign_in'
+      fill_in "user_email", :with => @user.email
+      fill_in "user_password", :with => @user.password
+      click_button "Sign in"
      visit '/users/' + @user.id.to_s
      end
 

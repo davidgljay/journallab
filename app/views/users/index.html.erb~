@@ -1,7 +1,17 @@
 <h1>All users</h1>
 
-
+<%= will_paginate %>
+<table><tdbody>
+<tr><td><h3>Name</h3></td>
+<td width = '100'>Signed up on</td>
+<td width = '100'>Papers Visited</td>
+<td width = '100'>Actions Taken</td>
+<td width = '100'>Nods Received</td>
   <% @users.each do |user| %>
     <%= render user %>
   <% end %>
-
+</tbody></table>
+<%= will_paginate %>
+<br>
+<br>
+<br>

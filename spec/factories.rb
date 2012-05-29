@@ -18,7 +18,7 @@ end
 
 Factory.define :paper do |paper|
     paper.title     "The Smartest Science Ever"
-    paper.pubmed_id rand(99999999) + 100
+    paper.pubmed_id 21228906
     paper.abstract  "Smart smart smartypants"
     #paper.after_create { |p| Factory(:author, :papers => [p]) }
 end

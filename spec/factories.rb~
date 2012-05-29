@@ -12,12 +12,13 @@ Factory.define :user do |user|
      user.password		        "testingtesting123"
      user.password_confirmation 	"testingtesting123"
      user.email                         rand(100).to_s + "chick@email.com"
+     user.confirmed_at 			Time.now
 #     user.save
 end
 
 Factory.define :paper do |paper|
     paper.title     "The Smartest Science Ever"
-    paper.pubmed_id rand(99999999) + 100
+    paper.pubmed_id 21228906
     paper.abstract  "Smart smart smartypants"
     #paper.after_create { |p| Factory(:author, :papers => [p]) }
 end

@@ -16,11 +16,11 @@ describe "Assertions" do
 
   describe "inputting a core assertion" do
      before(:each) do
-	visit '/users/signin'
-	fill_in "session_email", :with => @user.email
-	fill_in "session_password", :with => @user.password
-	click_button "Sign in"
-	visit '/papers/' + @paper.id.to_s
+      visit '/users/sign_in'
+      fill_in "user_email", :with => @user.email
+      fill_in "user_password", :with => @user.password
+      click_button "Sign in"
+      visit '/papers/' + @paper.id.to_s
 
      end
 
@@ -99,9 +99,9 @@ end
           a.save
        end
       end
-      visit '/signin'
-      fill_in "session_email", :with => @user.email
-      fill_in "session_password", :with => @user.password
+      visit '/users/sign_in'
+      fill_in "user_email", :with => @user.email
+      fill_in "user_password", :with => @user.password
       click_button "Sign in"
       visit '/papers/' + @paper.id.to_s
      end

@@ -27,19 +27,19 @@ describe "Shares:" do
           a.save
        end
     end      
-     visit '/users/signin'
-     fill_in "session_email", :with => @user.email
-     fill_in "session_password", :with => @user.password
-     click_button "Sign in"
+      visit '/users/sign_in'
+      fill_in "user_email", :with => @user.email
+      fill_in "user_password", :with => @user.password
+      click_button "Sign in"
      visit '/papers/' + @paper.id.to_s
    end
 
   it "shares a paper.", :js => true do
       find('#paper' + @paper.id.to_s ).find('li.sharelink').click
       fill_in 'share_text', :with => "This is the bees stripes."
-      click_button 'Share with your lab'
+      click_button 'Share'
       page.should have_content("Shared!")
-      @group.feed.first.paper.should == @paper
+      @group.feed.first[:item].paper.should == @paper
   end
 
 end

@@ -7,6 +7,7 @@ Redcell::Application.routes.draw do
   get "figs/build_sections"
 
   resources :groups
+   match '/groups(/:id)/remove(:/u_id)', :to => 'groups#remove'
 
   resources :filters
   resources :comments
@@ -42,7 +43,7 @@ Redcell::Application.routes.draw do
    match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
 
-   match '/followform', :to => 'follows#create'
+  resources :follows
 
 #Static pages
 

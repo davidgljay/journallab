@@ -7,6 +7,7 @@ Redcell::Application.routes.draw do
   get "figs/build_sections"
 
   resources :groups
+   match '/groups(/:id)/remove(/:u_id)', :to => 'groups#remove'
 
   resources :filters
   resources :comments

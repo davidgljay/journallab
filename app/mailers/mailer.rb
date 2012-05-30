@@ -50,6 +50,16 @@ class Mailer < ActionMailer::Base
       mail(:to => to(@recipient), :subject => @user.name + " has shared something on J.lab: " + @short_sharetext)
   end 
 
+  #Notify the head of a group when a new member is added
+  def group_add_notification(group,recipient, newuser)
+	@group = group
+	@recipient = recipient
+	@newuser = newuser
+	@url = group_path(@group, :only_path => false) + '/remove/' + @newuser.id.to_s 
+	@maillog = Maillog.create!(:purpose => 'group_add_notification', :user => @recipient, :about => @group)
+      	mail(:to => to(@recipient), :subject => @newuser.name + " has joined the group " + @group.name )
+  end
+
   def user_verification(user)
 	@recipient = user
 	@url = user_path(@user, :only_path => false ) + '/verify/#{user.perishable_token}'

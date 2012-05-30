@@ -165,4 +165,17 @@ describe Group do
     end
    end
   end
+
+  describe "adding users" do
+	it "should send an e-mail to the group lead" do
+		@group = Factory(:group)
+		@lead = Factory(:user, :email => Factory.next(:email))
+		@newuser = Factory(:user, :email => Factory.next(:email))
+		@group.add(@lead)
+		@group.make_lead(@lead)
+		@group.add(@newuser)
+		Maillog.last.about.should == @group
+		Maillog.user_id.should == @lead.id
+	end
+  end
 end

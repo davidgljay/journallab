@@ -1,5 +1,6 @@
 class GroupsController < ApplicationController
-before_filter :authenticate
+before_filter :authenticate_user!
+before_filter :is_group_lead, :only => [:remove]
 
   def show
       @group = Group.find(params[:id])
@@ -32,9 +33,19 @@ before_filter :authenticate
       end
   end
 
+  def remove
+	@group = Group.find(params[:id])
+	@user = User.find(params[:user])
+	@group.remove(@user)
+	flash[:success] = @user.name + " has been removed from " + @group.name
+	redirect_to root_path
+  end
+
 private
-    def logged_in
-      redirect_to(signin_path) if not signed_in?
-    end
+   def is_group_lead
+	@group = Group.find(params[:id])
+	@group.leads.include?(current_user)
+   end
+   
 
 end

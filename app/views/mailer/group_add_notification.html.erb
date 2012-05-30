@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h2>Journal Lab</h2> 
+    <p><h4><%= "#{@newuser.name} (#{@newuser.email})" %> has joined the group <%= @group.name %></h4></p> 
+    <p>If <%= @newuser.firstname %> should not be a member of <%= @group.name %>, you may remove them by clicking the following link:</p>
+    <%= link_to @url, @url %>
+    <p>
+  </body>
+</html>

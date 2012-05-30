@@ -97,4 +97,40 @@ describe Mailer do
       Maillog.last.about.should == @share
     end
   end
+
+  describe "group add notification" do
+	before(:each) do
+		@user1 = Factory(:user, :email => Factory.next(:email))
+		@user2 = Factory(:user, :email => Factory.next(:email))
+		@group = Factory(:group)
+		@group.add(@user1)
+		@group.make_lead(@user1)
+		@email = Mailer.group_add_notification(@group, @user2)
+	end
+
+    it "should render and deliver successfully an e-mail" do
+      lambda { @email }.should_not raise_error
+      lambda { @email.deliver }.should_not raise_error
+      lambda { @email.deliver }.should change(ActionMailer::Base.deliveries,:size).by(1)
+    end
+
+    it "should deliver an e-mail to the leader of the group" do
+	@email.to.to_s.should == @user1.email
+	
+    end
+
+    it "should include the name of the new member and of the group" do
+      @email.body.parts[0].body.should include @user1.name
+      @email.body.parts[1].body.should include @user1.name
+      @email.body.parts[0].body.should include @group.name
+      @email.body.parts[1].body.should include @group.name
+    end
+
+    it "should leave a maillog" do
+      @email.deliver
+      Maillog.last.about.should == @group
+    end
+
+  end
+
 end

@@ -32,9 +32,12 @@ validates :name, :presence => true
 def add(user)
    unless users.include?(user)
      self.users << user
-   m = self.memberships.find_by_user_id(user.id)
-   m.lead = false
-   m.save     
+     m = self.memberships.find_by_user_id(user.id)
+     m.lead = false
+     m.save
+     leads.each do |lead|
+	Mailer.group_add_notification(self, lead, user).deliver
+     end
    end
 end
 
@@ -45,6 +48,10 @@ def make_lead(user)
    m = self.memberships.find_by_user_id(user.id)
    m.lead = true
    m.save
+end
+
+def leads
+   memberships.all.select{|m| m.lead}.map{|m| m.user}
 end
 
 def remove(user)

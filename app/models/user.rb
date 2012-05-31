@@ -150,7 +150,7 @@ class User < ActiveRecord::Base
 
   def get_group
      if !groups.empty?
-      groups.last
+      groups[-1]
      else
    #Right now users without groups behave strangly in the system. Later I should replace this with an overarching "public" group that has special behavior, but that can come after our lab tests...
       Group.new

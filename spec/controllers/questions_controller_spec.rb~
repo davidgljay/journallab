@@ -61,6 +61,7 @@ describe QuestionsController do
       test_sign_in @user2
       @attr = {:text => "Lorem ipsum answer", :format => "answer", :reply_to => @question.id.to_s, :assertion_id => @assertion.id}
       get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
+      test_sign_out @user2
       test_sign_in @user3
       @attr = {:text => "Lorem ipsum pancakes", :format => "answer", :reply_to => @question.id.to_s, :assertion_id => @assertion.id}
       get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s

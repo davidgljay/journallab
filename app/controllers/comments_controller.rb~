@@ -47,6 +47,7 @@ before_filter :authenticate_user!
     	@paper = @owner.get_paper
 	@comment.get_paper = @paper
 	@comment.save
+        current_user.get_group.feed_add(@comment)
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
     	@group.make_filter(@comment, params[:mode])

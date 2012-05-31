@@ -23,6 +23,7 @@ describe CommentsController do
     it "should create a comment" do
       lambda do
         get :create, @attr
+	@group.reload.feed.first[:item_type].should == "Comment"
       end.should change(Comment, :count).by(1)
     end
 
@@ -122,6 +123,8 @@ describe "quickform" do
 		@comment.text.should == "Lorem ipsum underpants"
 		@comment.user.should == @user1
 		@group.filter_state(@comment) == 1
+		@group.reload.feed.first[:item_type].should == "Comment"
+		@group.reload.feed.first[:item_id].should == @comment.id		
 	end
 
 	it "should create a comment for a paper" do

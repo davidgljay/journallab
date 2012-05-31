@@ -9,7 +9,7 @@
 <table>
 <tr>
 <td>
-<h1><%= @nod_discussion_ratio.nil?.to_s %></h1>
+<h1><%= @nod_discussion_ratio.to_s.first(4) %></h1>
 Nods per Discussion
 </td>
 <td>

@@ -49,7 +49,7 @@ end
 Factory.define :comment do |comment|
     comment.text "Lorem ipsum."
     comment.association :user, :email => 'unique1@email.com'
-    comment.association :paper, :pubmed_id => 12345678 + 100, :title => "The Smartest Science Ever"
+    comment.association :paper, :pubmed_id => 21228907, :title => "The Smartest Science Ever"
     comment.association :assertion
     comment.form "comment"
 end
@@ -57,7 +57,7 @@ end
 Factory.define :question do |comment|
     comment.text "Lorem ipsum?"
     comment.association :user, :email => 'unique2@email.com'
-    comment.association :paper, :pubmed_id => 12345678 + 100, :title => "The Smartest Science Ever"
+    comment.association :paper, :pubmed_id => 21228908, :title => "The Second Smartest Science Ever"
     comment.association :assertion
 end
 

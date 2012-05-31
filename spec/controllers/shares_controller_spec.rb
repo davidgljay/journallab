@@ -44,7 +44,7 @@ describe SharesController do
     it "should add to the group's feed" do
       get 'create', :share => {:type => 'Paper', :id => @paper.id, :group => @group.id, :text => 'Check this out!!;'}
       share = Share.last
-      @group.feed.first[:item].should == share
+      @group.reload.feed.first[:item].should == share
     end
 
     it "should e-mail the group" do

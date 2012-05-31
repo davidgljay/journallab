@@ -5,7 +5,10 @@ class Group < ActiveRecord::Base
 # Name: text - Name of group
 # Desc: text - Group description
 # Category: string - Type of group (class, lab, etc), affects filtering system used.
-# Connected to User class through memerships model
+# Connected to User class through memberships model
+
+serialize :feed
+serialize :most_viewed
 
 
 has_many :memberships, :foreign_key => "group_id",
@@ -32,9 +35,12 @@ validates :name, :presence => true
 def add(user)
    unless users.include?(user)
      self.users << user
-   m = self.memberships.find_by_user_id(user.id)
-   m.lead = false
-   m.save     
+     m = self.memberships.find_by_user_id(user.id)
+     m.lead = false
+     m.save
+     leads.each do |lead|
+	Mailer.group_add_notification(self, lead, user).deliver
+     end
    end
 end
 
@@ -212,19 +218,42 @@ def let_through_filter?(item, user, mode = 1)
    end
 end
 
-def feed
+#
+# Functions related to homepage feeds
+#
+
+def update_feed
    items = []
-   feed = []
+   self.feed = []
    items << shares
    users.each do |u|
-     items << u.assertions.map{|a| a.get_paper.id}.uniq.map{|p| Paper.find(p).meta_assertions.first}
+     items << u.assertions
      items << u.comments
      items << u.questions
    end
    items.flatten!.uniq.sort!{|x,y| y.created_at <=> x.created_at}.first(40) unless items.empty?
    items.each do |item|
-        if item.class == Comment || item.class == Question
-        	text = item.owner.class == Paper ? "left a #{item.class.to_s.downcase} on the overall paper:":"left a #{item.class.to_s.downcase} on #{item.owner.shortname}:"		
+        feed_add(item)
+   end
+   self.feed
+end
+
+def prep_feed
+	prepped_feed = feed
+	prepped_feed.each do |f|
+		f[:item] = f[:item_type].constantize.find(f[:item_id])
+		f[:paper] = Paper.find(f[:paper])
+		f[:user] = User.find(f[:user])
+	end
+	prepped_feed
+end
+
+def feed_add(item)
+	if self.feed.nil?
+		self.feed = []
+	end
+ 	if item.class == Comment || item.class == Question
+        	text = "left a #{item.class.to_s.downcase} on #{item.owner.shortname}:"		
         	bold = false
         	sharetext = item.text
         	paper = item.get_paper
@@ -234,16 +263,16 @@ def feed
         	text = "summarized " + summaries_of + "." 
         	bold = false
 		paper = item.get_paper
+		feed.delete_if{|i| i[:user] == item.user.id && i[:paper] == paper.id && i[:item_type] == "Assertion"}
         elsif item.class == Share
         	text = "shared " + item.owner.shortname
         	sharetext = item.text
         	bold = false
         	paper = item.get_paper 
         end
-        feed << {:user => item.user, :text => text, :paper => paper, :created_at => item.created_at, :bold => bold, :item => item}
-	feed.sort!{|x,y| y[:item].created_at <=> x[:item].created_at}
-   end
-   feed
+        self.feed << {:user => item.user.id, :text => text, :paper => paper.id, :created_at => item.created_at, :bold => bold, :item_type => item.class.to_s, :item_id => item.id}
+   	self.feed.sort!{|x,y| y[:created_at] <=> x[:created_at]}
+   	self.save
 end
 
 def fix_visits
@@ -261,10 +290,34 @@ end
 
 #Create a list of the most viewed papers
 
-def most_viewed
+def update_most_viewed
     visits = users.map{|u| u.visits}
     papers = visits.flatten!.map{|v| v.paper_id}.uniq.map{|id| Paper.find(id)}
-    papers.map{|paper| [paper, visits.select{|v| v.paper_id == paper.id}.map{|v| v.count.to_i }.inject(0){|sum, item| sum + item}]}.sort{|x,y| y[1]<=>x[1]}.first(30)
+    self.most_viewed = papers.map{|paper| [paper.id, visits.select{|v| v.paper_id == paper.id}.map{|v| v.count.to_i }.inject(0){|sum, item| sum + item}]}.sort{|x,y| y[1]<=>x[1]}.first(30)
+    self.save
+    self.most_viewed
+end
+
+def prep_most_viewed
+	prepped_mv = most_viewed
+	prepped_mv.each do |f|
+		f[0] = Paper.find(f[0])
+	end
+	prepped_mv
+end
+
+def most_viewed_add(paper)
+	if most_viewed
+		if most_viewed.map{|mv| mv[0]}.include?(paper.id)
+			spot = most_viewed.index{|mv| mv[0] == paper.id}
+			most_viewed[spot][1] += 1
+		else
+			most_viewed << [paper.id, 1]
+		end
+		self.most_viewed = most_viewed.sort{|x,y| y[1]<=>x[1]}.first(30)
+		self.save
+		most_viewed
+	end
 end
 
 # List of papers by summary request for the lab 

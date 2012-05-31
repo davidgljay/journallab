@@ -105,7 +105,7 @@ describe Mailer do
 		@group = Factory(:group)
 		@group.add(@user1)
 		@group.make_lead(@user1)
-		@email = Mailer.group_add_notification(@group, @user2)
+		@email = Mailer.group_add_notification(@group, @user1, @user2)
 	end
 
     it "should render and deliver successfully an e-mail" do

@@ -23,6 +23,7 @@ describe QuestionsController do
     it "should create a question" do
       lambda do
         get :create, :question => @attr, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s
+	@group.reload.feed.first[:item_type].should == "Question"
       end.should change(Question, :count).by(1)
     end
 

@@ -38,6 +38,7 @@ before_filter :authenticate_user!
     @group = current_user.get_group
     @paper.heatmap
     @paper.add_heat(@owner)
+    current_user.get_group.feed_add(@question)
     @heatmap = @paper.heatmap
     if @question.user.groups.empty?
        @question.is_public = true

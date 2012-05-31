@@ -98,6 +98,7 @@ end
     @assertion.is_public = true
    # @assertion.alt_approach = @assertion.alt_approach == 'What are alternate approaches?' ? nil : @assertion.alt_approach
     @assertion.save
+    current_user.get_group.feed_add(@assertion)
    # flash[:success] = 'Summary entered, thanks for your contribution.'
 
   # Add a privacy setting if the user is part of a class that's reading this paper.

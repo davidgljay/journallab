@@ -4,6 +4,7 @@ task :cron => :environment do
 
   if Time.now.hour == 0 # run at midnight
     Follow.each {|f| f.update_feed}
+    Group.each {|g| g.update_feed; g.update_most_viewed}
   end
 
 end

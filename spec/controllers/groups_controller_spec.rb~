@@ -20,7 +20,7 @@ describe GroupsController do
 		
 		it "should remove a user" do
 			test_sign_in(@lead)
-			@newuser.should_not be_nil
+			@newuser.id.should_not be_nil
 			get :remove, {:id => @group.id, :user => @newuser.id }
 			@newuser.member_of?(@group).should be false
 			response.should redirect_to root_path 

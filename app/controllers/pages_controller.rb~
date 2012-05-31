@@ -10,7 +10,7 @@ before_filter :admin_user,   :only => [:dashboard]
 	    @follows  = current_user.follows
 	    @newfollow = current_user.follows.new
 	    if @group.category == "lab"
-	    	@feed = @group.feed
+	    	@feed = @group.prep_feed
 	   end
     # If it's a class
     	   if @group.category == "class"
@@ -50,7 +50,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto = params[:switchto]
 		@switchto_render = @switchto
 		@group = current_user.get_group
-		@feed = @group.feed
+		@feed = @group.prep_feed
 		@nav_language = nav_language[@switchto]
 	end
   end
@@ -80,6 +80,8 @@ before_filter :admin_user,   :only => [:dashboard]
     @nod_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.votes.count}.inject{|sum, n| sum + n}, Question.where('created_at > ?', Time.now - 1.month).map{|c| c.votes.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ?', Time.now - 1.month).count])
     @reply_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count}.inject{|sum, n| sum + n}, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|c| c.comments.count + c.questions.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).count])
     @action_pageview__ratio = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('updated_at > ?', Time.now - 1.month).map{|v| v.count}.inject{|sum, n| sum + n}])
+    @total_users = [["Users",graph_total_by_day(User.where('created_at > ?', Time.now - 1.year))]]
+
   end
 
 #
@@ -126,10 +128,11 @@ before_filter :admin_user,   :only => [:dashboard]
 
    def make_ratio(array1, array2)
      if array1.empty? || array2.empty?
-	0 
+	result = 0 
      else
-        array1.compact.inject(0){|sum, item| sum + item}.to_f/array2.compact.inject(0){|sum, item| sum + item}.to_f
+        result = array1.compact.inject(0){|sum, item| sum + item}.to_f/array2.compact.inject(0){|sum, item| sum + item}.to_f
      end
+     result
    end
 
    #Takes a 2D array
@@ -155,6 +158,16 @@ before_filter :admin_user,   :only => [:dashboard]
         end
         graph = days.map{|day| [day, array.select{|object| object.created_at > day && object.created_at < day + 1.day}.count]}
      end
+    end
+
+    def graph_total_by_day(array)
+	total = graph_by_day(array)
+	yesterday = 0
+	total.each do |t|
+		t[1] += yesterday
+		yesterday = t[1]
+	end
+	total
     end
 
     #Histogram

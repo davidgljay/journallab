@@ -175,7 +175,7 @@ describe Group do
 		@group.make_lead(@lead)
 		@group.add(@newuser)
 		Maillog.last.about.should == @group
-		Maillog.user_id.should == @lead.id
+		Maillog.last.user_id.should == @lead.id
 	end
   end
 end

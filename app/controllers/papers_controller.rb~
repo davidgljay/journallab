@@ -24,6 +24,8 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
        		visit.count ||= 0
        		visit.count += 1 unless visit.updated_at > Time.now - 3.hours
        		visit.save
+		@group = current_user.get_group
+		@group.most_viewed_add(@paper)
     	end
 	if @paper.authors.empty? || @paper.authors.nil?
        		@paper.extract_authors

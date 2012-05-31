@@ -1,0 +1,5 @@
+desc "This task updates feeds"
+
+task :update_feeds => :environment do
+    Group.each {|g| g.update_feed; g.update_most_viewed}
+end

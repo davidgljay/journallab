@@ -197,8 +197,8 @@ class User < ActiveRecord::Base
     subscriptions.create!(:category => "all", :receive_mail => false)
   end
 
-  def receive_mail?
-    subscriptions.select{|s| s.category == "all" && !s.receive_mail}.empty?
+  def receive_mail?(category = "all")
+    subscriptions.select{|s| (s.category == "all" || s.category == category) && !s.receive_mail}.empty?
   end
 
   #

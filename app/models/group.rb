@@ -231,7 +231,7 @@ def update_feed
      items << u.comments
      items << u.questions
    end
-   items.flatten!.uniq.sort!{|x,y| y.created_at <=> x.created_at}.first(40) unless items.empty?
+   items.flatten!.uniq.sort!{|x,y| y.created_at <=> x.created_at}.first(20) unless items.empty?
    items.each do |item|
         feed_add(item)
    end

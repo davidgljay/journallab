@@ -72,8 +72,7 @@ describe Mailer do
   end
 
   describe "share notification" do 
-    before(:each) do
-      
+    before(:each) do      
       @user1 = Factory(:user, :email => Factory.next(:email))
       @paper = Factory(:paper)
       @group = Factory(:group)
@@ -99,14 +98,14 @@ describe Mailer do
   end
 
   describe "group add notification" do
-	before(:each) do
-		@user1 = Factory(:user, :email => Factory.next(:email))
-		@user2 = Factory(:user, :email => Factory.next(:email))
-		@group = Factory(:group)
-		@group.add(@user1)
-		@group.make_lead(@user1)
-		@email = Mailer.group_add_notification(@group, @user2)
-	end
+    before(:each) do
+	@user1 = Factory(:user, :email => Factory.next(:email))
+	@user2 = Factory(:user, :email => Factory.next(:email))
+	@group = Factory(:group)
+	@group.add(@user1)
+	@group.make_lead(@user1)
+	@email = Mailer.group_add_notification(@group, @user1, @user2)
+    end
 
     it "should render and deliver successfully an e-mail" do
       lambda { @email }.should_not raise_error
@@ -132,5 +131,33 @@ describe Mailer do
     end
 
   end
+
+  describe "share digest" do
+	it "should send a share digest" do
+		@user1 = Factory(:user, :email => Factory.next(:email))
+		@user2 = Factory(:user, :email => Factory.next(:email))
+		@group = Factory(:group)
+		@group.add(@user1)
+		@group.add(@user2)
+		@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
+		@paper.buildout([2,2,2])
+		@fig = @paper.figs.first
+		@share1 = @paper.shares.create!(:user => @user1, :group => @group, :text => "Check out this paper.")
+		@share2 = @fig.shares.create!(:user => @user2, :group => @group, :text => "Check out this figure.")
+		@share1.set_get_paper
+		@share2.set_get_paper
+		@email = Mailer.share_digest(@user1)
+		@email.body.parts[0].body.should include @user1.name
+		@email.body.parts[1].body.should include @user1.name
+		@email.body.parts[0].body.should include @user2.name
+		@email.body.parts[1].body.should include @user2.name
+		@email.body.parts[0].body.should include @share1.text
+		@email.body.parts[1].body.should include @share1.text
+		@email.body.parts[0].body.should include @share2.text
+		@email.body.parts[1].body.should include @share2.text
+      		@email.deliver
+		Maillog.last.about.should == @group
+	end
+   end
 
 end

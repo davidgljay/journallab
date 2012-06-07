@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h2>Journal Lab</h2> 
+    ------------------------------------------------
+    <% @shares.each do |share| %>
+    <p><h4>"<%= share[:text] %>"</h4> -<%= share[:user].name %></p> 
+    <p>For more information, you should check out <a href="<%= share[:m_url] %>"><strong><%= share[:item_name] %></strong></a>:</p>
+    <% if share[:item_summary] %>
+    <p><h3><%= share[:item_summary].text %></h3></br>
+    <em><%= share[:item_summary].method_text %></em></p>
+    <% end %>
+    <p>You can view the the paper here:</p></br>
+    <%= link_to share[:url], share[:m_url] %></br>
+    <p>
+    -------------------------------------------------
+    <% end %>
+    <%= render 'unsubscribe' %></p>
+
+  </body>
+</html>

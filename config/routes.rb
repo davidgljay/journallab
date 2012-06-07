@@ -73,6 +73,7 @@ resources :users
   match '/bulksignup', :to => 'users#bulk_new', :via => :get 
   match '/bulksignup', :to => 'users#bulk_create', :via => :post 
   match '/users(/:id)/unsubscribe', :to => 'users#unsubscribe'
+  match '/users(/:id)/share_digest', :to => 'users#share_digest'
   match '/users(/:id)/image_upload', :to => 'users#image_upload'
 
   # The priority is based upon order of creation:

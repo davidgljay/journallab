@@ -1,4 +1,4 @@
-<% if current_user.get_group.id %>
+<% if @group.id %>
 <div class = "share_form">
     <%= form_for item.shares.create, :remote => true do |f| %>
       <%= f.hidden_field :id, :value => item.id %>

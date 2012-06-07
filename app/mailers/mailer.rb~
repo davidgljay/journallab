@@ -50,12 +50,43 @@ class Mailer < ActionMailer::Base
       mail(:to => to(@recipient), :subject => @user.name + " has shared something on J.lab: " + @short_sharetext)
   end 
 
+  def share_digest(user)
+	@recipient = user
+	shares = user.groups.map{|g| g.shares}.flatten.select{|share| share.created_at > Time.now - 1.day}
+	@shares = []
+	@users = []
+	shares.each do |s|
+	      share = {}
+	      share[:user] = s.user
+	      share[:item] = s.owner
+	      share[:text] = s.text
+	      share[:paper] = s.get_paper
+	      share[:item_name] = share[:item].longname
+	      share[:item_summary] = share[:item].latest_assertion
+	      share[:url] = paper_path(share[:paper], :only_path => false )
+	      @shares << share
+	      @users << share[:user].firstname
+	end
+      if shares.count == 1
+        @short_sharetext = shares.first.text.split.first(6) * ' '
+        if shares.first.text.length > @short_sharetext.length
+           @short_sharetext << '...' 
+        end
+	@subject = @users.first + " has shared something on Journal Lab: " + @short_sharetext
+      else
+	@subject = "New papers shared by " + @users.first(5) * ', '
+      end
+      @maillog = Maillog.create!(:purpose => 'share_notification', :user => @recipient, :about => shares.first)
+      @shares.each{|share|  share[:m_url] = paper_path(share[:paper], :only_path => false ) + '/m/' + @maillog.id.to_s}
+      mail(:to => to(@recipient), :subject => @subject )
+  end
+
   #Notify the head of a group when a new member is added
   def group_add_notification(group,recipient, newuser)
 	@group = group
 	@recipient = recipient
 	@newuser = newuser
-	@url = groups_path(@group, :only_path => false) + '/remove/' + @newuser.id.to_s 
+	@url = group_path(@group, :only_path => false) + '/remove/' + @newuser.id.to_s 
 	@maillog = Maillog.create!(:purpose => 'group_add_notification', :user => @recipient, :about => @group)
       	mail(:to => to(@recipient), :subject => @newuser.name + " has joined the group " + @group.name )
   end

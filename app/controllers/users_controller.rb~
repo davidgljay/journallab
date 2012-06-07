@@ -2,9 +2,11 @@ class UsersController < ApplicationController
 before_filter :authenticate_user!, :except => [:new, :create, :show]
 before_filter :correct_user, :only => [:edit, :update, :unsubscribe, :image_upload]
 before_filter :admin_user,   :only => [:destroy, :index]
+
+
   def index
     @title = "All users"
-    @users = User.all.sort{|x,y| y.created_at <=> x.created_at}
+    @users = User.all.sort{|x,y| y.created_at <=> x.created_at}.paginate(:page => params[:page])
   end
 
   def show
@@ -111,7 +113,7 @@ before_filter :admin_user,   :only => [:destroy, :index]
   def destroy
     @user = User.find(params[:id])
     if @user.admin?
-       flash[:success]="You may not destroy another administrator."
+       flash[:error]="You may not destroy another administrator."
        redirect_to users_path
     else
       User.find(params[:id]).destroy
@@ -126,6 +128,22 @@ before_filter :admin_user,   :only => [:destroy, :index]
     @user.save
     redirect_to @user
   end
+
+  def unsubscribe
+    	@user = User.find(params[:id])
+	@user.subscriptions.create!(:category => "all", :receive_mail => false)
+	flash[:success] = "You have been unsubscribed from Journal Lab e-mail."
+	redirect_to root_path
+  end
+
+  def share_digest
+    	@user = User.find(params[:user][:id])
+	@user.subscriptions.create!(:category => "share_notification", :receive_mail => false)
+	@user.subscriptions.create!(:category => "share_digest", :receive_mail => true)
+	flash[:success] = "You will now recieve Journal Lab papers as a daily digest."
+	redirect_to root_path
+  end
+	
   
 
   private

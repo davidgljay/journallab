@@ -1,0 +1,21 @@
+Journal Lab
+
+------------------------------------------------
+<% @shares.each do |share| %>
+
+"<%= share[:text] %>" -<%= share[:user].name %>
+
+For more information, you should check out <%= share[:item_name] %>:
+
+<% if share[:item_summary] %>
+<%= share[:item_summary].text %>
+<%= share[:item_summary].method_text %>
+<% end %>
+
+You can view the the paper here:
+<%= link_to share[:url], share[:m_url] %>
+
+-------------------------------------------------
+<% end %>
+
+<%= render 'unsubscribe_text' %>

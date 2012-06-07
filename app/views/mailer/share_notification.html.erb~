@@ -9,12 +9,12 @@
     <p>For more information, you should check out <a href="<%= @m_url%>"><strong><%= @item_name %></strong></a>:</p>
     <% if @item_summary %>
     <p><h3><%= @item_summary.text %></h3></br>
-    <em><%= @item_summary.method %></em></p>
+    <em><%= @item_summary.method_text %></em></p>
     <% end %>
     <p>You can view the the paper here:</p></br>
     <%= link_to @url, @m_url %></br>
     <p>
-    <%= render 'unsubscribe' %></p>
+    <%= render 'share_unsubscribe' %></p>
 
   </body>
 </html>

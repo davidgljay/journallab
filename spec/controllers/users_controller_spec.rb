@@ -3,6 +3,28 @@ require 'spec_helper'
 describe UsersController do
   render_views
 
+ describe "unsubscribe" do
+
+   before(:each) do
+      	@user = Factory(:user)
+	test_sign_in(@user)
+   end
+
+   it "should unsubscribe the user" do
+	get :unsubscribe, :id => @user.id
+	@user.subscriptions.count.should == 1
+	@user.receive_mail?.should == false
+   end
+
+   it "should switch the user to daily digest" do
+	get :share_digest, :id => @user.id
+	@user.subscriptions.count.should == 2
+	@user.receive_mail?.should == true
+	@user.receive_mail?("share_notification").should == false
+	@user.subscriptions.select{|s| s.category == "share_digest" && s.receive_mail == true}.count.should == 1
+   end
+  end
+   	
 
  describe "DELETE 'destroy'" do
 

@@ -39,7 +39,7 @@ describe "Shares:" do
       fill_in 'share_text', :with => "This is the bees stripes."
       click_button 'Share'
       page.should have_content("Shared!")
-      @group.reload.feed.first[:item].paper.should == @paper
+      @group.reload.feed.first[:item_type].should == "Share"
   end
 
 end

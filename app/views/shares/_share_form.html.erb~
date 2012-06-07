@@ -1,11 +1,11 @@
-<% if current_user.get_group.id %>
+<% if @group.id %>
 <div class = "share_form">
     <%= form_for item.shares.create, :remote => true do |f| %>
       <%= f.hidden_field :id, :value => item.id %>
       <%= f.hidden_field :type, :value => item.class.to_s %>
       <%= f.hidden_field :group, :value => @group.id %> 
       <%= f.text_field :text, :value=> "Check this out!" %>
-      <%= f.submit "Share", :class => loadingPrompt %>
+      <%= f.submit "Share", :class => 'loadingPrompt' %>
     <% end %>
 </div>
 <div class = "share_confirmation hideonload">

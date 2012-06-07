@@ -1,5 +1,4 @@
 class PapersController < ApplicationController
-before_filter :authenticate_user!
 before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 
 
@@ -66,12 +65,12 @@ end
 
   # GET /papers/new
   # GET /papers/new.xml
-  def new
-    @paper = Paper.new
+  #def new
+  #  @paper = Paper.new
 
-    respond_to do |format|
-       format.html # new.html.erb
-       format.xml  { render :xml => @paper }
+  #  respond_to do |format|
+  #     format.html # new.html.erb
+  #     format.xml  { render :xml => @paper }
     end
   end
 

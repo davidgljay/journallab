@@ -25,7 +25,9 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
        		visit.count += 1 unless visit.updated_at > Time.now - 3.hours
        		visit.save
 		@group = current_user.get_group
-		@group.most_viewed_add(@paper)
+		#@group.most_viewed_add(@paper)
+		@group.save
+
     	end
 	if @paper.authors.empty? || @paper.authors.nil?
        		@paper.extract_authors
@@ -64,14 +66,14 @@ end
 
   # GET /papers/new
   # GET /papers/new.xml
-  def new
-    @paper = Paper.new
+  #def new
+  #  @paper = Paper.new
 
-    respond_to do |format|
-       format.html # new.html.erb
-       format.xml  { render :xml => @paper }
-    end
-  end
+  #  respond_to do |format|
+  #     format.html # new.html.erb
+  #     format.xml  { render :xml => @paper }
+  #  end
+  #end
 
   # GET /papers/1/m/1
   # For tracking links to paper from e-mail

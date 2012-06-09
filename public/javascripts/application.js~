@@ -196,6 +196,13 @@ $(".quickform form").live('submit', function(){
 
        });
 
+//
+// Redirect to signup if you get a 401 unauthentic error from a JS call
+//
+
+  $('body').bind("ajax:error", function(event, data, status, xhr) {
+    location.replace("/users/sign_up");
+  });
 
 //
 //Dynamic Loading of Elements

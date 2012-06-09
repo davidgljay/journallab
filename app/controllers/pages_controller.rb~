@@ -3,34 +3,13 @@ class PagesController < ApplicationController
 before_filter :admin_user,   :only => [:dashboard]
 
   def home
-    @title = "Home"
-	if user_signed_in?
-	    @group = current_user.get_group
-	    #@journals = Journal.all.select{|j| j.latest_issue}
-	    @follows  = current_user.follows
-	    @newfollow = current_user.follows.new
-	    if @group.category == "lab"
+    	@title = "Home"
+	@group = Group.find(1)
+	if signed_in?
 	    	@feed = @group.prep_feed
-	   end
-    # If it's a class
-    	   if @group.category == "class"
-       		@classdates = []
-       		@general = []
-       		@papers = []
-       		@group.papers.each do |p|
-           		@papers[p.id] = p
-       		end
-       		@instructors = @group.memberships.all.select{|m| m.lead}.map{|m| m.user}
-       		@group.filters.all.each do |f|
-         	if f.paper_id != nil && f.date != nil
-           		@classdates << [f.paper_id, f.date, f.supplementary]
-         	elsif f.date.nil? && f.paper_id != nil
-           		@general << f.paper
-       		end
-       	    end
-       		@classdates.sort!{|x,y| x[1] + x[2].object_id.minutes <=> y[1] + y[2].object_id.minutes}
-     	end
-     end
+		@follows  = current_user.follows
+		@newfollow = current_user.follows.new
+	end
   end
 
   def feedswitch
@@ -44,12 +23,12 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto = params[:switchto]
 		@follow = Follow.find(params[:switchto][7..-1].to_i)
 		@nav_language = @follow.name
-		@group = current_user.get_group
+		@group = Group.find(1)
 	else
-		nav_language = {"most_viewed" => "Popular Papers", "updates" => "Latest Activity"}
+		nav_language = {"most_viewed" => "Popular Papers", "updates" => "Latest Activity", "iccr" => "Welcome"}
 		@switchto = params[:switchto]
 		@switchto_render = @switchto
-		@group = current_user.get_group
+		@group = Group.find(1)
 		@feed = @group.prep_feed
 		@nav_language = nav_language[@switchto]
 	end

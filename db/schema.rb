@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120530064106) do
+ActiveRecord::Schema.define(:version => 20120609022446) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20120530064106) do
     t.boolean  "is_public"
     t.boolean  "author"
     t.integer  "get_paper_id"
+    t.boolean  "anonymous"
   end
 
   add_index "comments", ["fig_id"], :name => "index_comments_on_fig_id"
@@ -208,6 +209,7 @@ ActiveRecord::Schema.define(:version => 20120530064106) do
     t.boolean  "is_public"
     t.boolean  "author"
     t.integer  "get_paper_id"
+    t.boolean  "anonymous"
   end
 
   add_index "questions", ["fig_id"], :name => "index_questions_on_fig_id"

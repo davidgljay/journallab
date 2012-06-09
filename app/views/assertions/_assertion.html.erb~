@@ -11,7 +11,6 @@
 			</td>
 		<% elsif %>
 			<td width="180" align="center">
-		                  <%= render '/figs/image_upload', :fig => about %>
 			</td>
 		<% end %>
     	<td class = "sumright">
@@ -48,7 +47,7 @@
                	<%= hidden_field_tag :mode, @mode %>
 		<div class = 'navText'>
                		<% if about.comments.all.count > 0 %>
-                 		<%= submit_tag pluralize(about.comments.all.count, "Comment") %>
+                 		<%= submit_tag pluralize(about.comments.all.count, "Comment"), :class => "plainSubmit" %>
                		<% else %>
                  		<%= submit_tag "Add a Comment", :class => "plainSubmit" %>
                		<% end %>

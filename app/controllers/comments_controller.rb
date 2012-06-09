@@ -1,11 +1,10 @@
 class CommentsController < ApplicationController
 before_filter :authenticate_user!
 
-
  #Used to render a list in the papers view.
   def list
     	@owner = params[:owner].constantize.find(params[:id])
-    	@group = current_user.get_group
+    	@group = Group.find(1)
     	@mode = params[:mode].to_i
 	
 	#Comments used to be visible only to groups. We're switching things so that they're always visible and just semi-anonymous. 
@@ -19,14 +18,14 @@ before_filter :authenticate_user!
   # POST /comments
   # POST /comments.xml
   def create
-    	@comment = Comment.new(:text => params[:comment][:text])
+    	@comment = Comment.new(:text => params[:comment][:text], :anonymous => params[:comment][:anonymous])
     	@mode = params[:mode].to_i
 	if params[:comment][:assertion_id]
     		@comment.assertion = Assertion.find(params[:comment][:assertion_id])
     	end
     	@comment.user = current_user
     	@comment.form = params[:comment][:form]
-    	@group = current_user.get_group
+	@group = Group.find(1)
     	if params[:comment][:form] == "reply"
        		@comment.comment = Comment.find(params[:comment][:reply_to])
     		@owner = @comment.owner
@@ -47,7 +46,7 @@ before_filter :authenticate_user!
     	@paper = @owner.get_paper
 	@comment.get_paper = @paper
 	@comment.save
-        current_user.get_group.feed_add(@comment)
+        Group.find(1).feed_add(@comment)
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
     	@group.make_filter(@comment, params[:mode])
@@ -73,7 +72,7 @@ before_filter :authenticate_user!
 def quickform
 	@paper = Paper.find(params[:paper])
 	@user = current_user
-	@group = @user.get_group
+	@group = Group.find(1)
 	@mode = params[:mode].to_i
 	@form = params[:form]
 	if params[:fig].empty?
@@ -95,17 +94,17 @@ def quickform
 		@owner = fig.figsections.select{|s| s.num ==  sectnum}.first	
 	end		
 	if @form == 'comment'
-		@comment = @owner.comments.create!(:text => params[:text], :form => 'comment', :user_id => @user.id)
+		@comment = @owner.comments.create!(:text => params[:text], :form => 'comment', :user_id => @user.id, :anonymous => params[:anonymous])
 		@comment.save
 		@group.make_filter(@comment, @mode)
 		@comments = @owner.comments.all#.select{|c| @group.let_through_filter?(c,current_user, @mode)}
 	elsif @form == 'question'
-		@comment = @owner.questions.create!(:text => params[:text], :user_id => @user.id)
+		@comment = @owner.questions.create!(:text => params[:text], :user_id => @user.id, :anonymous => params[:anonymous])
 		@comment.save
 		@group.make_filter(@comment, @mode)
 		@questions = @owner.questions.all#.select{|c| @group.let_through_filter?(c,current_user, @mode)}
 	end
-        current_user.get_group.feed_add(@comment)
+        Group.find(1).feed_add(@comment)
 	@paper.add_heat(@owner)
 	@heatmap = @paper.heatmap
 	respond_to do |format|

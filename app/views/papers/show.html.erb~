@@ -1,7 +1,7 @@
 <%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
 <div id="contentMain">
 <script type="text/javascript">
-  mpq.track("Paper viewed",{'id':'<%= @paper.id.to_s %>', 'user':'<%= current_user.anon_name %>'});
+  mpq.track("Paper viewed",{'id':'<%= @paper.id.to_s %>'<% if user_signed_in? %>, 'user':'<%= current_user.anon_name %>'<% end %>});
 </script>
 
 <div id="paperInfo">
@@ -28,6 +28,7 @@
 	<% elsif @paper.doi %>
 		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s) %> | 
 	<% end %>
+	<% if user_signed_in? %>
 	<a class = 'quick_comment clickme'>Comment</a> | <a class = 'quick_question clickme'>Question</a> | <%= render '/shares/share_button' unless @group.id.nil? %> </h3>
 	<div class = "sharebox"></div>
 		<span class="small grey">
@@ -40,9 +41,10 @@
 
 	<%= render '/comments/quickform', :form => 'comment' %>
 	<%= render '/comments/quickform', :form => 'question' %>
-	<% if !@paper.figs.empty? %>
-		<%= render 'add_figs' %>
-	<% end %>
+	<%= render 'add_figs' %>
+        <% else %>
+	<a href = "/users/sign_up">Comment</a> | <a href = "/users/sign_up">Question</a></h3>
+
 </div>
 
 

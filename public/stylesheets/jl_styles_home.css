@@ -7,9 +7,7 @@ body {
 
 
 #homeLogo {
-	height: 190px;
 	text-align: center;
-	padding-top: 40px;
 }
 #homeSearch h1 {
 	color: #000000;
@@ -18,7 +16,6 @@ body {
 #homeSearch {
 	height: 300px;
 	text-align: center;
-	padding-top: 10px;
 }
 #homeSearch  .inputSearch {
 	width: 320px;
@@ -40,7 +37,6 @@ body {
 	border-radius: 10px;
 	background-color: #B5CFE3;
 	padding-bottom: 20px;
-
 }
 
 #homeFeed h1 {
@@ -102,6 +98,22 @@ body {
 	padding: 10px;
 }
 
+#iccr {
+
+}
+
+.signup_button {
+	font-size:22px;
+	padding: 20px;
+	margin: 10px;
+	background-color: #155E3A;
+	color: #fff;
+	width: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
 .feedInfo {
 	font-weight: bold;
 	color: #005997;
@@ -109,5 +121,8 @@ body {
 
 .homePageFeed {
 	background-color: #fff;
+	padding-top: 20px;
+	padding-bottom: 20px;
+
 }
 

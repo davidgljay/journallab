@@ -6,14 +6,15 @@
 		<h3><%= form == 'comment' ? 'Leave a comment on' : 'Pose a questions about' %>:</h3>
 		<div class = 'figSelector'>
 			<div class = 'selectFig clickme round' >
-				fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
+				Fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
 			</div>
 			<div class = 'selectPaper clickme round'>
-				the overall paper
+				The Overall Paper
 			</div>
 		</div>
 		<div class = 'textfield'>
 			<%= text_area_tag :text %><br>
+                        <p><%= check_box_tag :anonymous %> <em>Post Anonymously</em></p
 			<%= submit_tag 'Submit' %>
 		</div>
 	<% end %>

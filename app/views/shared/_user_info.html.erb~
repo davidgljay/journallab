@@ -1,17 +1,16 @@
 <div class="user_info">
-
-<% if user.anon?(current_user) %>
+<% if anonymous = anonymous || user.confirmed_at.nil? %>
     <span class="anon_name">
-      <%= user.anon_name %>
+      <strong>Anonymous (<%= user.anon_name %>)</strong>
     </span>
     <% if date %>
     	<div class = 'small inline' ><em><%= render 'shared/display_date', :date => date %></em></div>
     <% end %>
 <% else %>
   <a href="<%= user_path(user) %>">
-    <%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" %>
+    <%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" if user.image %>
     <span class="user_name">
-      <%= user.name %>
+      <%= user.name %>(<%= user.email.split('@').first %>)
     </span>
   </a>
     <% if date %>

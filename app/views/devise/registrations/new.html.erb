@@ -1,5 +1,5 @@
-<h2>Sign up</h2>
-
+<table><tr><td>
+<h1>Sign up</h1>
 <%= form_for(resource_name, resource, :url => registration_path(resource_name)) do |f| %>
   <%= f.error_messages %>
   <h3>First name</h3>
@@ -18,11 +18,22 @@
   <h3><%= f.label :password_confirmation %></h3>
   <p><%= f.password_field :password_confirmation %></p>
 
-  <h3>Group Code</h3>
-  <div class = "inline small grey">Optional, ignore this if you don't have one.</div>
-  <p><%= text_field_tag :group_code %></p>
+  <h3>Learn More?</h3>
+  <p><%= check_box_tag :subscribe, :checked => true %> <em>I'd like to be updated as this project progresses (less than one e-mail per month.)</em></p>
+
+  <%= hidden_field_tag :group_code, 'iccr' %></p>
 
   <p><%= f.submit "Sign up" %></p>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
+</td><td valign = "top">
+<h1>Here's the deal.</h1>
+<ul>
+<li><h3>We're testing systems for discussing published research online.</h3></li>
+<li><h3>This is one of them.</h3></li>
+<li><h3>You can use it to comment on the papers being discussed at ICCR.</h3></li>
+<li><h3>You can comment on specific figures or figure sections.</h3></li>
+<li><h3>You can comment anonymously if you like.</h3></li>
+</ul>
+</td></tr></table>

@@ -13,12 +13,13 @@
   <div class="field">
     <%= hidden_field_tag :mode, @mode %>
     <% if reply_to %>
-    <%= f.hidden_field :reply_to, :value => reply_to.id %>
-    <%= f.hidden_field :form, :value => 'reply' %>
+      <%= f.hidden_field :reply_to, :value => reply_to.id %>
+      <%= f.hidden_field :form, :value => 'reply' %>
     <% else %>
       <%= f.hidden_field :form, :value => 'comment' %>
     <% end %>
     <%= f.text_area :text, :value => boxtext(reply_to), :onfocus => "if(this.value == '#{boxtext(reply_to)}') { this.value = ''; }" %>
+    <p><%= f.check_box :anonymous %> <em>Post Anonymously</em></p>
   </div>
     <% if @owner.latest_assertion %>
     	<%= f.hidden_field :assertion_id, :value => @owner.latest_assertion.id %>

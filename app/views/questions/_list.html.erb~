@@ -6,7 +6,7 @@
     <td class = "question_body <%= 'author_comment_body' if question.author %> <% if question.author %> author_comment <% end %>">
       <div>
       <%= render 'questions/linktext', :comment => question %>
-      <%= render 'shared/user_info', :user => question.user, :date => question.created_at %>
+      <%= render 'shared/user_info', :user => question.user, :date => question.created_at, :anonymous => question.anonymous %>
       <% unless question.comments.empty? %>
       <div class = "qcomment">
       <% question.comments.all.each do |c| %>
@@ -29,8 +29,7 @@
          </li>
          <li id = "numvotes_<%= question.id.to_s %>"><%= render 'votes/vote_form', :candidate => question %></li>
         </ul>
-      </div>
-      </td></tr><tr><td>	      
+      </div>   
       <div class = "replyform hideonload">
       <%= render '/questions/form', :question => question.comments.build, :reply_to => question, :format => 'reply' %>
       </div>

@@ -7,7 +7,7 @@
     <td class = "<% if comment.comments.count > 0 %> has_reply <% end %> <% if comment.author %> author_comment <% end %> comment_body">
       <div class = "comment_body <%= 'author_comment_body' if comment.author %>">
       <%= render 'linktext', :comment => comment %>
-      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at %>
+      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous %>
       <div>
         <ul>
          <li class="replylink clickme">

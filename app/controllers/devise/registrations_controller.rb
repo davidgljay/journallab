@@ -30,6 +30,9 @@ class Devise::RegistrationsController < ApplicationController
       clean_up_passwords(resource)
       respond_with_navigational(resource) { render_with_scope :new }
     end
+    if params[:subscription]
+	resource.subscriptions.create!(:category => 'iccr_learnmore')
+    end
   end
 
   # GET /resource/edit

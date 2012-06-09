@@ -25,6 +25,7 @@
      	<%= f.hidden_field :format, :value => 'question' %>
     <% end %>
     <%= f.text_area :text, :value => boxtext, :onfocus => "if(this.value == '#{boxtext}') { this.value = ''; }" %>
+    <p><%= f.check_box :anonymous %> <em>Post Anonymously</em></p>
   </div>
     <% if @owner.latest_assertion %>
     	<%= f.hidden_field :assertion_id, :value => @owner.latest_assertion.id %>

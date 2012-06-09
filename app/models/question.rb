@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
 
-attr_accessible :text, :paper_id, :fig_id, :figsection_id, :user_id, :assertion_id, :get_paper_id, :question_id
+attr_accessible :text, :paper_id, :fig_id, :figsection_id, :user_id, :assertion_id, :get_paper_id, :question_id, :anonymous
 
 belongs_to :get_paper, :class_name => "Paper"
 belongs_to :user

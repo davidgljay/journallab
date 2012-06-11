@@ -4,7 +4,7 @@ require 'devise/encryptors/sha2'
 
 Devise.setup do |config|
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "David 'Journal Lab' Jay <david@journallab.com>"
+  config.mailer_sender = "Journal Lab <david@journallab.com>"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
@@ -18,7 +18,7 @@ Devise.setup do |config|
   # config.params_authenticatable = true
 
   # Tell if authentication through HTTP Basic Auth is enabled. True by default.
-  config.http_authenticatable = false
+  # config.http_authenticatable = true
 
   # The realm used in Http Basic Authentication
   # config.http_authentication_realm = "Application"

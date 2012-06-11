@@ -3,10 +3,10 @@
 <%= will_paginate %>
 <table><tdbody>
 <tr><td><h3>Name</h3></td>
-<td width = '100'>Signed up on</td>
-<td width = '100'>Papers Visited</td>
-<td width = '100'>Actions Taken</td>
-<td width = '100'>Nods Received</td>
+<td width = '100'><h3>Signed up on</h3></td>
+<td width = '100'><h3>Papers Visited</h3></td>
+<td width = '100'><h3>Actions Taken</h3></td>
+<td width = '100'><h3>Nods Received</h3></td>
   <% @users.each do |user| %>
     <%= render user %>
   <% end %>

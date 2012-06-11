@@ -1,5 +1,7 @@
 <h3>Questions</h3>
-<%= render 'questions/form', :question => @owner.questions.build, :owner => @owner, :reply_to => false, :format => 'question' %>
+<% if signed_in? %>
+	<%= render 'questions/form', :question => @owner.questions.build, :owner => @owner, :reply_to => false, :format => 'question' %>
+<% end %>
 <table class = "question discussion">
 <% @questions.each do |question| %>
   <tr>
@@ -31,10 +33,23 @@
         </ul>
       </div>   
       <div class = "replyform hideonload">
-      <%= render '/questions/form', :question => question.comments.build, :reply_to => question, :format => 'reply' %>
+	<% if signed_in? %> 
+	      	<%= render '/questions/form', :question => question.comments.build, :reply_to => question, :format => 'reply' %>
+	<% else %>
+		<br>
+		<br>
+		<h3><%= link_to "Sign up", new_user_registration_path %> to leave a comment.</h3>
+	<% end %>
       </div>
       <div class = "answerform hideonload">
-      <%= render '/questions/form', :question => question.questions.build, :reply_to => question, :format => 'answer' %>
+	<% if signed_in? %> 
+		<%= render '/questions/form', :question => question.questions.build, :reply_to => question, :format => 'answer' %>
+	<% else %>
+		<br>
+		<br>
+		<h3><%= link_to "Sign up", new_user_registration_path %> to give an answer.</h3>
+	<% end %>
+
       </div>
       </div>
     </td>

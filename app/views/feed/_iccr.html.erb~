@@ -1,6 +1,6 @@
 <div id = "iccr">
-<h1>Hi. We're doing a bit of an experiment.</h1>
-<h3>We're building and testing radically new ways to discuss published research online.</h3>
+<font size = '5' color = "black">Hi. We're doing a bit of an experiment.</font>
+<h3>We're building and testing novel ways to discuss published research online.</h3>
 <h3>This is one of our prototypes. We'd love your help in testing it.</h3>
 <%= link_to '<div class = "round signup_button clickme">Sign Up and Check It Out</div>'.html_safe, new_user_registration_path %>
 </div>

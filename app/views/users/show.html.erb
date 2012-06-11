@@ -8,7 +8,14 @@
 				<% if @user.image %>
 					<%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :id => "profilephoto", :class => "profilePhoto clickme editme" %>
 				<% else %>
-					<%= image_tag 'green_testube.jpg', :alt => "#{@user.firstname} has not uploaded a profile.", :width => "300", :height => "300", :class => "profilePhoto clickme editme" %>
+				<div class='upload_form'>
+					<h3>Upload a profile picture</h3>
+					<%= form_for @user, :url => "#{@user.id}/image_upload", :html => {:multipart => true} do |f| %>
+						<%= f.file_field :user_image %>
+						<%= f.hidden_field :id %><br>
+						<%= f.submit 'Upload' %>
+					<% end %>
+				</div>
 				<% end %>
 				<div class='upload_form hideonload'>
 					<h3>Upload a new profile picture</h3>

@@ -29,21 +29,22 @@
 		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s) %> | 
 	<% end %>
 	<% if user_signed_in? %>
-	<a class = 'quick_comment clickme'>Comment</a> | <a class = 'quick_question clickme'>Question</a> | <%= render '/shares/share_button' unless @group.id.nil? %> </h3>
-	<div class = "sharebox"></div>
-		<span class="small grey">
-			<% if @paper.visits.count == 1 %>
-  				<em><strong>1 person has visited this paper.</strong></em>
-			<% else %>
-	  			<em><strong><%= pluralize(@paper.visits.count,"People")%></strong> have visited this paper.</em>
-			<% end %>
-		</span>
+		<a class = 'quick_comment clickme'>Comment</a> | <a class = 'quick_question clickme'>Question</a> | <%= render '/shares/share_button' unless @group.id.nil? %> </h3>
+		<div class = "sharebox"></div>
+			<span class="small grey">
+				<% if @paper.visits.count == 1 %>
+  					<em><strong>1 person has visited this paper.</strong></em>
+				<% else %>
+		  			<em><strong><%= pluralize(@paper.visits.count,"People")%></strong> have visited this paper.</em>
+				<% end %>
+			</span>
 
-	<%= render '/comments/quickform', :form => 'comment' %>
-	<%= render '/comments/quickform', :form => 'question' %>
-	<%= render 'add_figs' %>
+		<%= render '/comments/quickform', :form => 'comment' %>
+		<%= render '/comments/quickform', :form => 'question' %>
+		<%= render 'add_figs' %>
         <% else %>
-	<a href = "/users/sign_up">Comment</a> | <a href = "/users/sign_up">Question</a></h3>
+		<a href = "/users/sign_up">Comment</a> | <a href = "/users/sign_up">Question</a> | <a href = "/users/sign_up">Share</a></h3>
+        <% end %>
 
 </div>
 

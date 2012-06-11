@@ -21,8 +21,10 @@
       <%= render '/feed/nav' %>
       <% if !signed_in? %>
 	<div id='iccr_feed' class = "homePageFeed round"><%= render '/feed/iccr' %></div>
+        <div id='updates_feed' class = "homePageFeed round hideonload"></div>
+      <% else %>
+        <div id='updates_feed' class = "homePageFeed round"><%= render '/feed/updates'%></div>
       <% end %>
-      <div id='updates_feed' class = "homePageFeed round hideonload"><%= render '/feed/updates' if signed_in? %></div>
       <div id='most_viewed_feed' class = "homePageFeed round hideonload"></div>
       <% if signed_in? %>
         <% @follows.each do |follow| %>

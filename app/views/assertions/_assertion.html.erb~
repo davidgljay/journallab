@@ -24,12 +24,20 @@
 			<p>
        			<div class = 'latest_assertion clickme editme'><%= new_if_nil(about.latest_assertion).text.to_s.empty? ? 'Click to enter summary' : about.latest_assertion.text %></div>
 			<div class = "hideonload editme_form">
-				<%= render '/assertions/summary_form' , :assert => about.latest_assertion, :owner => about %>
+				<% if signed_in? %>
+					<%= render '/assertions/summary_form' , :assert => about.latest_assertion, :owner => about %>
+				<% else %>
+					<h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
+				<% end %>
         		</div><br>
          		<p class="method clickme editme"><%= new_if_nil(about.latest_assertion).method_text.to_s.empty? ? 'Click to list methods' : about.latest_assertion.method_text %>
 			</p>
 			<div class = "hideonload editme_form">
-				<%= render '/assertions/methods_form' , :assert => about.latest_assertion, :owner => about %>
+				<% if signed_in? %>
+					<%= render '/assertions/methods_form' , :assert => about.latest_assertion, :owner => about %>
+				<% else %>
+					<h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
+				<% end %>
 			</div>
 			<%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at if about.latest_assertion %>
 			<%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
@@ -72,13 +80,14 @@
         <li class = "sharelink clickme">
         	Share
         </li>
-	<li>
-	       	<%= render 'sumreqs/sumreq_button', :item => about %>
-	</li>
         <% end %>
 	</ul></div>
         <div class = "sharebox hideonload", id = <%= 'share_' + about.class.to_s + '_' + about.id.to_s %>>
-        	<%= render 'shares/share_form', :item => about %>
+				<% if signed_in? %>
+			        	<%= render 'shares/share_form', :item => about %>
+				<% else %>
+					<h3><%= link_to "Sign up", new_user_registration_path %> to share.</h3>
+				<% end %>
         </div>
 
 </div> <br><br>

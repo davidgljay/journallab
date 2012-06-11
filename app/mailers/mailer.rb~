@@ -21,6 +21,7 @@ class Mailer < ActionMailer::Base
         @type = "question"
       end     
       @commenter = response.user
+      @anon = repsonse.anonymous
       @reply = response.text
       @paper = response.get_paper
       @owner = o.class == Paper ? " " : " " + o.shortname + " of " 
@@ -76,7 +77,7 @@ class Mailer < ActionMailer::Base
       else
 	@subject = "New papers shared by " + @users.first(5) * ', '
       end
-      @maillog = Maillog.create!(:purpose => 'share_notification', :user => @recipient, :about => shares.first)
+      @maillog = Maillog.create!(:purpose => 'share_digest', :user => @recipient, :about => shares.first)
       @shares.each{|share|  share[:m_url] = paper_path(share[:paper], :only_path => false ) + '/m/' + @maillog.id.to_s}
       mail(:to => to(@recipient), :subject => @subject )
   end

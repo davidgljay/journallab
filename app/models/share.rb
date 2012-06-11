@@ -74,5 +74,9 @@ def linktext
    linktext
 end        
 
+def anonymous
+	nil
+end
+
 
 end

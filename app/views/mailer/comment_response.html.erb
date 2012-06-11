@@ -6,7 +6,7 @@
   <body>
     <h2>Journal Lab</h2> 
     <h3><%= @intro %></h3>
-    <p><%= @commenter.name %> has replied to your <%= @type%> about<%= @owner %><a href="<%= @m_url%>"><strong><%= @paper.title %></strong></a>:</p>
+    <p><%= @anon ? "An anonymous user" : @commenter.name %> has replied to your <%= @type%> about<%= @owner %><a href="<%= @m_url%>"><strong><%= @paper.title %></strong></a>:</p>
     <p><em><%= @reply %></em></p>
     <p>You can view the reply here:</p></br>
     <%= link_to @url, @m_url %></br>

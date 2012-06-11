@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-before_filter :authenticate_user!
+before_filter :authenticate_user!, :except => [:list]
 
  #Used to render a list in the papers view.
   def list

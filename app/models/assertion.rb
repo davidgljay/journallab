@@ -51,4 +51,8 @@ def linktext
   text ? [text] : [method_text]
 end
 
+def anonymous
+	nil
+end
+
 end

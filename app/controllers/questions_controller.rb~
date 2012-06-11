@@ -14,7 +14,7 @@ before_filter :authenticate_user!
 
   def create
     if params[:question][:format] == 'question'
-       @question = Question.new(:text => params[:question][:text], :anonymous => params[:anonymous])
+       @question = Question.new(:text => params[:question][:text], :anonymous => params[:question][:anonymous])
        @owner = params[:owner_class].constantize.find(params[:owner_id])
 	 if @owner.class == Paper
 	 	@question.paper = @owner

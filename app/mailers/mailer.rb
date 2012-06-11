@@ -21,6 +21,7 @@ class Mailer < ActionMailer::Base
         @type = "question"
       end     
       @commenter = response.user
+      @anon = response.anonymous
       @reply = response.text
       @paper = response.get_paper
       @owner = o.class == Paper ? " " : " " + o.shortname + " of " 

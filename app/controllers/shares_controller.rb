@@ -12,7 +12,8 @@ before_filter :authenticate_user!
     @numshares = @item.shares.count
     respond_to do |format|
       @group.users.each do |u|
-         Mailer.share_notification(@share, u).deliver if u.receive_mail?("share_notification")
+# Disabling share mailer for ISSCR 
+#         Mailer.share_notification(@share, u).deliver if u.receive_mail?("share_notification")
       end
       format.js
       format.html { redirect_to @paper }

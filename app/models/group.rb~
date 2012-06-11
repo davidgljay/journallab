@@ -245,6 +245,7 @@ def prep_feed
 	end		
 	prepped_feed.each do |f|
 		f[:item] = f[:item_type].constantize.find(f[:item_id])
+		f[:anon] = f[:item].anonymous
 		f[:paper] = Paper.find(f[:paper])
 		f[:user] = User.find(f[:user])
 	end

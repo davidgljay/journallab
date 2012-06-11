@@ -4,14 +4,18 @@
 	<table><tr><td width = "740">
 		<%= render '/papers/list', :paper => item[:paper] %>
 	</td>
-	<% if item[:user].image %>
+	<% if item[:user].image && !item[:anon] %>
 		<td width="80">
 			<div class = "feedImage"><%= image_tag item[:user].image.thumb('80x80>').url, :alt => item[:user].name, :width => "80", :height => "80" %></div>
 		</td>
 	<% end %>
 	</tr></table>
       <div class = "sharetext">
-	<strong><%= item[:user].firstname + ' ' + item[:user].lastname.first + '.' %></strong> <%= item[:text] %>
+	<% if item[:anon] %>
+		<strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= item[:user].anon_name %>) <%= item[:text] %>
+	<% else %>
+		<strong><%= item[:user].firstname + ' ' + item[:user].lastname %></strong> <%= item[:text] %>
+	<% end %>
 	<% if item[:item].class != Assertion %>
 	        <strong>"</strong><%= render 'comments/linktext', :comment => item[:item] %><strong> "</strong>
 	<% end %>

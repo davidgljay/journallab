@@ -8,7 +8,7 @@
     <p><%= @commenter.name %> has replied to your question about <%= @owner %> <a href="<%= @url%>"><strong><%= @paper.title %></strong></a>:</p>
     <p><em><%= @reply %></em></p>
     <p>You can view the reply here:</p></br>
-    <a href="<%= @url%>"><%= @url%></a></br>
+    <%= link_to @paper %></br>
      
     <p>Best,</p>
     <p>The Journal Lab Team</p>

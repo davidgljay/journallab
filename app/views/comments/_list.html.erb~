@@ -1,5 +1,7 @@
 <h3>Comments</h3>
-<%= render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment' %>
+<% if user_signed_in? %>
+	<%= render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment' %>
+<% end %>
 
 <table class = "comment discussion">
 <% @comments.each do |comment| %>
@@ -18,7 +20,13 @@
       </div>
       <div> 	      
         <div class = "replyform hideonload">
-          <%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply' %>
+		<% if user_signed_in? %>	
+			<%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply' %>
+		<% else %>
+			<br>
+			<br>
+			<div><h3><%= link_to "Sign up", new_user_registration_path %> to give an answer.</h3></div>
+		<% end %>
         </div>
       </div>
       </div>

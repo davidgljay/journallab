@@ -1,7 +1,7 @@
 <tr><td>
   <%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" if user.image %>
   <%= link_to user.name, user %> 
-</td><td align = "center"><%= user.mail.split('@').first %>
+</td><td align = "center"><%= user.email.split('@').first %>
 </td><td align = "center"><%= user.created_at.strftime('%D') %>
 </td><td align = "center"><%= user.visits.count %> 
 </td><td align = "center"><%= user.comments.count + user.assertions.count + user.votes.count + user.questions.count %>

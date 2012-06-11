@@ -169,10 +169,13 @@ def count_figs
   #  url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
   #  oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
   #  unless oai.css('error').attribute("code").value == "idDoesNotExist"
-    imagearray.count.times do |n|
-      self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
-      self.figs[n].save
-    end 
+  #
+  #  Disabling this autoextraction for ISSCR, not worth the risk
+  #
+  #  imagearray.count.times do |n|
+  #    self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
+  #    self.figs[n].save
+  #  end 
   end
 end
 
@@ -290,7 +293,6 @@ def latest_assertion
      assert_list.sort!{|x,y| x.votes.count <=> y.votes.count}
      assert_list.last
 end
-
 
 
 def meta_latest_assertions

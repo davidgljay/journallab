@@ -12,7 +12,7 @@ has_many :authorships, :foreign_key => "paper_id",
 has_many :authors, :through => :authorships, :source => :author, :order => "authorships.created_at ASC"
 has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
-has_many :figs, :dependent => :destroy
+has_many :figs, :dependent => :destroy, :order => "figs.num ASC"
 has_many :questions, :dependent => :destroy
 has_many :visits, :dependent => :destroy
 has_many :shares, :dependent => :destroy
@@ -339,6 +339,13 @@ def build_figs(numfigs)
      			self.figs.create(:num => (self.figs.count+1))
    		end
 		reset_heatmap
+	elsif newfigs < 0
+		(newfigs * -1).times do		
+			f = self.figs.last
+			if f.comments.empty? && f.figsections.empty? && f.questions.empty? && f.assertions.empty?
+				f.destroy
+			end
+		end
 	end
    	numfigs
 end

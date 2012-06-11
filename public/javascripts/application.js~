@@ -162,6 +162,12 @@ $(".quickform form").live('submit', function(){
 	$(this).find('img').toggle();
      });
 
+//Add/Remove figs in a paper
+    $("div#add_figs_link").live('click', function(){
+	$(this).hide(300);
+	$("div#add_figs").show(300);
+     });	
+
 //Image upload for admins
     $(".fig_upload").live('click', function(){
       $(this).parent().find('div.upload_form').show();

@@ -1,3 +1,4 @@
+<% if @paper.figs.empty? %>
 <div class = 'addFigs'>
 	<h5>How many figures are in this paper?</h5>
 	<% 30.times do |i| %>
@@ -6,4 +7,4 @@
 		</div>
 	<% end %>
 </div>
-
+<% end %>

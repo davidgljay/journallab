@@ -31,7 +31,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 	@heatmap = @paper.heatmap
 	@heatmap_overview = @paper.heatmap_overview
 	@group = Group.find(1)
-	#@group.most_viewed_add(@paper)
+	@group.most_viewed_add(@paper)
 	@group.save
    # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
     #@classdates = []

@@ -1,5 +1,5 @@
 <div class="user_info">
-<% if anonymous = anonymous || user.confirmed_at.nil? %>
+<% if anonymous = anonymous %>
     <span class="anon_name">
       <strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= user.anon_name %></font>)
     </span>

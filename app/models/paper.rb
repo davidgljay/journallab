@@ -341,10 +341,11 @@ def build_figs(numfigs)
 		reset_heatmap
 	elsif newfigs < 0
 		(newfigs * -1).times do		
-			f = self.figs.last
+			f = self.figs[-1]
 			if f.comments.empty? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.shares.empty?
 				f.destroy
 			end
+			self.reload
 		end
 	end
    	numfigs

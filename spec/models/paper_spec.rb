@@ -76,5 +76,36 @@ describe "heatmap_overview" do
 	end 
 
 end
-	
+
+describe "build figs" do
+	before(:each) do
+		@paper = Factory(:paper)
+		@paper.build_figs(4)
+		@fig = @paper.figs[0]
+	end		
+
+	it "should add figs" do
+		@paper.figs.count.should == 4
+	end
+
+	it "should remove figs unless there is a comment on them." do
+		@fig.comments.build(:text => 'Comment', :form => 'comment', :user => @user)
+		@paper.build_figs(1)
+		@paper.figs.count.should == 1
+	end	
+
+	it "should remove figs unless there is a question on them." do
+		@fig.questions.build(:text => 'Question', :user => @user)
+		@paper.build_figs(1)
+		@paper.figs.count.should == 1
+	end	
+
+
+	it "should remove figs unless there is a summary on them." do
+		@fig.assertions.build(:text => 'Summary', :user => @user)
+		@paper.build_figs(1)
+		@paper.figs.count.should == 1
+	end	
+end
+
 end

@@ -42,13 +42,14 @@ describe "Comments:" do
      	visit '/papers/' + @paper.id.to_s
        	find('#paper' + @paper.id.to_s).find('form.commentlist').find('input').click
        	fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
+	check_box 'anonymous'
        	click_button 'Submit' 
        	find('li.replylink').click
        	fill_in 'comment_text', :with => "That's so smart I'm replying."
        	click_button 'Submit' 
        	page.should have_content("I have an incredibly intelligent thing to say.")
        	page.should have_content("That's so smart I'm replying.")
-       	page.should have_content(@user.firstname)
+       	page.should_not have_content(@user.firstname)
      end
 
      it "adds a comment to a figure and lets you reply", :js => true do

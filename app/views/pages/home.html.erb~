@@ -1,35 +1,42 @@
 <%= stylesheet_link_tag 'jl_styles_home', :media => 'screen' %>
 
-<div id="homeLogo"><%= image_tag 'jl_logo_trans_M.png', :id => 'mainlogo' %></div>
+<div id="homeLogo"><%= image_tag 'journal_lab_logo.gif', :id => 'mainlogo' %></div>
 
-<% if signed_in? %>
 <div id="homeSearch">
 <%= form_tag('/lookup', :method => "get") do  %>
-   <h1><%= label_tag :pubmed_id, 'Figure by Figure Discussion of Published Research.' %></h1>
+   <h1><%= label_tag :pubmed_id, 'Discuss Published Science With Smart People.' %></h1>
     <table border="0" align="center" cellpadding="0" cellspacing="0">
       <tbody><tr>
         <td>
-   	<%= text_field_tag :pubmed_id, '', :class => "inputSearch searchreset" %>
+   	<%= text_field_tag :pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" %>
 	</td>
-<td valign="middle" class = "Search">   <%= submit_tag "Search Pubmed", :id => 'search' %></tb></tr></table>
+<td valign="middle" class = "Search">   <%= image_submit_tag "button_go.png", :id => 'search' %></tb></tr></table>
   
 
 <% end %>
-<% end %>
+
+<% if user_signed_in? && @group.id != nil %>
 <div id = "homeFeed" class = "feed round">
   <h1><%= @group.name %></h1>
+    <% if @group.category == "class" %>
+    <strong>
+     Instructors: 
+     <% @instructors.each do |i| %>
+       <%= i.lastname %>, <%= i.firstname %> 
+       <% unless i == @instructors.last %>
+       | 
+       <% end %>
+     <% end %>
+     </strong>
+      <%= render '/feed/class_papers' %>
+    <% elsif @group.category == "lab" %>
       <%= render '/feed/nav' %>
-      <% if !signed_in? %>
-	<div id='iccr_feed' class = "homePageFeed round"><%= render '/feed/iccr' %></div>
-        <div id='updates_feed' class = "homePageFeed round hideonload"></div>
-      <% else %>
-        <div id='updates_feed' class = "homePageFeed round"><%= render '/feed/updates'%></div>
+      <div id='updates_feed' class = "homePageFeed"><%= render '/feed/updates' %></div>
+      <div id='most_viewed_feed' class = "homePageFeed"></div>
+      <% @follows.each do |follow| %>
+	<div id = <%= follow.classname + "_feed" %> class = "homePageFeed"></div>
       <% end %>
-      <div id='most_viewed_feed' class = "homePageFeed round hideonload"></div>
-      <% if signed_in? %>
-        <% @follows.each do |follow| %>
-  	  <div id = <%= follow.classname + "_feed" %> class = "homePageFeed round hideonload"></div>
-        <% end %>
-	  <div id='follow_form' class = "homePageFeed hideonload"><%= render '/feed/follow_form' %></div>
-      <% end %>
+	<div id='follow_form' class = "homePageFeed hideonload"><%= render '/feed/follow_form' %></div>
+    <% end %>
 </div>
+<% end %>

@@ -48,8 +48,8 @@ def search_pubmed(search, numresults = 20)
       	#Get a list of pubmed IDs for the search terms
       	url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch + '&retmax=' + numresults.to_s
       	pids = Nokogiri::XML(open(url1)).xpath("//IdList/Id").map{|p| p.text} * ","
-      	url2 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
-      	data = Nokogiri::XML(open(url2))
+      	url2 = pids.empty? ? 'http://www.google.com' : 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
+      	data = Nokogiri::XML(open(url2)) 
       	search_results = []
       	data.xpath('//PubmedArticle').each do |article|
         	pid = article.xpath('MedlineCitation/PMID').text

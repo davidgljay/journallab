@@ -3,7 +3,7 @@ before_filter :authenticate_user!, :except => [:list]
 
   def list
     @owner = params[:owner].constantize.find(params[:id])
-    @group = Group.find(1)
+    @group = current_user.get_group
     @mode = params[:mode].to_i
     @questions = @owner.questions.all #.select{|c| @group.let_through_filter?(c,current_user, @mode)}
     @owner_type = params[:owner]
@@ -35,10 +35,10 @@ before_filter :authenticate_user!, :except => [:list]
     # Replies and answers are associated with assertions (for counting purposes), but NOT with figs, papers, etc.
     @paper = @question.get_paper
     @owner = @question.owner
-    @group = Group.find(1)
+    @group = current_user.get_group
     @paper.heatmap
     @paper.add_heat(@owner)
-    Group.find(1).feed_add(@question)
+    current_user.get_group.feed_add(@question)
     @heatmap = @paper.heatmap
     if @question.user.groups.empty?
        @question.is_public = true

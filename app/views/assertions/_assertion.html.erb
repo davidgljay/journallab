@@ -9,8 +9,9 @@
 			<td width="180" align="center">
 		               <%= image_tag about.image.thumb('150x150').url, :class => 'thumbnail clickme'%>
 			</td>
-		<% elsif %>
+		<% else %>
 			<td width="180" align="center">
+		                  <%= render '/figs/image_upload', :fig => about %>
 			</td>
 		<% end %>
     	<td class = "sumright">

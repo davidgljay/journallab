@@ -86,6 +86,7 @@
 				<% if signed_in? %>
 			        	<%= render 'shares/share_form', :item => about %>
 				<% else %>
+					<br><br>
 					<h3><%= link_to "Sign up", new_user_registration_path %> to share.</h3>
 				<% end %>
         </div>

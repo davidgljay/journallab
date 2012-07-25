@@ -10,6 +10,7 @@ belongs_to :figsection
 belongs_to :assertion
 belongs_to :comment
 belongs_to :question
+has_many :reactions
 
 has_many :comments, :order => "created_at ASC"
 has_many :votes

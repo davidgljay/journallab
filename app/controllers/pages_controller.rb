@@ -4,8 +4,8 @@ before_filter :admin_user,   :only => [:dashboard]
 
   def home
     	@title = "Home"
-	@group = current_user.get_group
 	if signed_in?
+		@group = current_user.get_group
 	    	@feed = @group.prep_feed
 		@follows  = current_user.follows
 		@newfollow = current_user.follows.new
@@ -23,12 +23,12 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto = params[:switchto]
 		@follow = Follow.find(params[:switchto][7..-1].to_i)
 		@nav_language = @follow.name
-		@group = current_user.get_group
+		@group = current_user.get_group if signed_in?
 	else
 		nav_language = {"most_viewed" => "Popular Papers", "updates" => "Latest Activity", "iccr" => "Welcome"}
 		@switchto = params[:switchto]
 		@switchto_render = @switchto
-		@group = current_user.get_group
+		@group = current_user.get_group if signed_in?
 		@feed = @group.prep_feed
 		@nav_language = nav_language[@switchto]
 	end

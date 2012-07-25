@@ -30,6 +30,7 @@ validates :code, :uniqueness => true, :allow_nil => true
 validates :category, :presence => true
 validates :name, :presence => true
 
+
 #Functions for adding and removing users
 
 def add(user)

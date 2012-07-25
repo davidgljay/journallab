@@ -26,7 +26,8 @@ has_many :meta_assertions, :class_name => "Assertion", :foreign_key => "get_pape
 has_many :filters, :foreign_key => "paper_id",
                            :dependent => :destroy
 has_many :groups, :through => :filters, :source => :group
-
+has_many :meta_reactions, :class_name => "Reaction", :foreign_key => "get_paper_id"
+has_many :reactions, :as => :about
 
 #Validations
    validates :pubmed_id, :uniqueness => true, :allow_nil => true

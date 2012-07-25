@@ -1,5 +1,9 @@
 Redcell::Application.routes.draw do
    
+  get "reactions/create"
+
+  get "reactions/destroy"
+
   get "follows/create"
 
   get "sumreq/create"
@@ -44,7 +48,7 @@ Redcell::Application.routes.draw do
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
 
   resources :follows
-
+  resources :reactions
 #Static pages
 
 root :to => 'pages#home'

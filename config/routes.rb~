@@ -1,5 +1,9 @@
 Redcell::Application.routes.draw do
    
+  get "reactions/create"
+
+  get "reactions/destroy"
+
   get "follows/create"
 
   get "sumreq/create"

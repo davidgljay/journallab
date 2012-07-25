@@ -29,7 +29,7 @@
 		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s) %> | 
 	<% end %>
 	<% if user_signed_in? %>
-		<a class = 'quick_comment clickme'>Comment</a> | <a class = 'quick_question clickme'>Question</a> | <%= render '/shares/share_button' unless @group.id.nil? %> </h3>
+		<%= render '/shares/share_button' unless @group.id.nil? %> </h3>
 		<div class = "sharebox"></div>
 			<span class="small grey">
 				<% if @paper.visits.count == 1 %>
@@ -40,7 +40,6 @@
 			</span>
 
 		<%= render '/comments/quickform', :form => 'comment' %>
-		<%= render '/comments/quickform', :form => 'question' %>
 		<%= render 'add_figs' if @paper.figs.empty? %>
         <% else %>
 		<a href = "/users/sign_up">Comment</a> | <a href = "/users/sign_up">Question</a> | <a href = "/users/sign_up">Share</a></h3>

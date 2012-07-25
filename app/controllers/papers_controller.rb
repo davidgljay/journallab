@@ -28,11 +28,14 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
        		@paper.extract_authors
        		@paper.count_figs
 	end
+	@default_reactions = ["Solid Science", "Skeptical", "Clarifying Question", "Conclusion does not match data"]
 	@heatmap = @paper.heatmap
 	@heatmap_overview = @paper.heatmap_overview
-	@group = current_user.get_group
-	@group.most_viewed_add(@paper)
-	@group.save
+	if signed_in?
+		@group = current_user.get_group
+		@group.most_viewed_add(@paper)
+		@group.save
+	end
    # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
     #@classdates = []
     #@group.filters.each do |f|

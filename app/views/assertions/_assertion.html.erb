@@ -47,38 +47,25 @@
 		        <div class="improve">
          		</div><br>
 <div class="contribute">
-  	<div><ul>
-         <li class="commentlink clickme">  
+	<%= render '/reactions/reaction_list', :about => about %>
+  	<div>
              <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
                	<%= hidden_field_tag :owner, about.class.to_s %>
                	<%= hidden_field_tag :id, about.id %>
                	<%= hidden_field_tag :mode, @mode %>
 		<div class = 'navText'>
                		<% if about.comments.all.count > 0 %>
-                 		<%= submit_tag pluralize(about.comments.all.count, "Comment"), :class => "plainSubmit" %>
-               		<% else %>
-                 		<%= submit_tag "Add a Comment", :class => "plainSubmit" %>
+                 		<%= submit_tag "View " + pluralize(about.comments.all.count, "Comment"), :class => "plainSubmit" %>
                		<% end %>
 		</div>
              <% end %>
+
+	<ul>
+
+         <li class="commentlink clickme">  
           </li>
-	<li class="questionlink clickme">
-             <%= form_tag(:question_list, :method => "get", :class => "questionlist", :remote => true) do  %>
-   		<%= hidden_field_tag :owner, about.class.to_s %>
-		<%= hidden_field_tag :id, about.id %>
-		<%= hidden_field_tag :mode, @mode %>
-		<div class = 'navText'>
-               		<% if about.questions.all.count > 0 %>
-                 		<%= submit_tag pluralize(about.questions.all.count, "Question"), :class => "plainSubmit" %>
-               		<% else %>
-                 		<%= submit_tag "Add a Question", :class => "plainSubmit" %>
-               		<% end %>
-		</div>
-             <% end %>
-	</li>
         <% unless @group.id.nil? %>
         <li class = "sharelink clickme">
-        	Share
         </li>
         <% end %>
 	</ul></div>
@@ -93,8 +80,6 @@
 
 </div> <br><br>
          <div class = "commentbox hideonload", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
-         </div>
-         <div class = "questionbox hideonload", id = <%= 'questions_' + about.class.to_s + '_' + about.id.to_s %>>
          </div>
      <% if about.class == Fig %>
        <% unless about.image.nil? %>

@@ -1,0 +1,18 @@
+  	<div>
+	<h4>What is your reaction to <%= about.shortname %>?</h4>	
+	<ul>
+	<% @default_reactions.each do |r| %>
+         <li class="reactionlink clickme">  
+             <%= form_tag :reaction, :method => "post", :class => "reaction", :remote => true do  %>
+               	<%= hidden_field_tag :about_type, about.class.to_s %>
+               	<%= hidden_field_tag :about_id, about.id %>
+               	<%= hidden_field_tag :user_id, current_user.id %>
+		<%= hidden_field_tag :name, r %>
+		<div class = 'navText'>
+                 	<%= submit_tag r, :class => "plainSubmit" %>
+		</div>
+             <% end %>
+          </li>
+        <% end %>
+	</ul></div>
+

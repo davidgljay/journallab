@@ -1,0 +1,9 @@
+class ReactionsController < ApplicationController
+  def create
+	@reaction = params[:reaction] 
+  end
+
+  def destroy
+  end
+
+end

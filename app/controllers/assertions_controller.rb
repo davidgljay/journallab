@@ -6,7 +6,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @owner = params[:owner].constantize.find(params[:id])
     @assertions = @owner.assertions.all
     @owner_type = params[:owner]
-    @group = Group.find(1)
+    @group = current_user.get_group
     respond_to do |format|
         format.js 
      end
@@ -18,7 +18,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @mode = params[:mode]
     @assertion = @about.assertions.build
     @type = {'paper' => 'paper', 'fig' => 'figure', 'figsection' => 'section'}
-    @group = Group.find(1)
+    @group = current_user.get_group
     respond_to do |format|
       format.js 
    end
@@ -89,7 +89,7 @@ end
     @assertion.is_public = true
    # @assertion.alt_approach = @assertion.alt_approach == 'What are alternate approaches?' ? nil : @assertion.alt_approach
     @assertion.save
-    Group.find(1).feed_add(@assertion)
+    current_user.get_group.feed_add(@assertion)
    # flash[:success] = 'Summary entered, thanks for your contribution.'
 
   # Add a privacy setting if the user is part of a class that's reading this paper.
@@ -134,7 +134,7 @@ end
     @owner = @assertion.owner
     @paper = @owner.get_paper
     @heatmap = @paper.heatmap
-    @group = Group.find(1)
+    @group = current_user.get_group
     respond_to do |format|
       if @assertion.update_attributes(params[:assertion])
 	format.js { render :create }

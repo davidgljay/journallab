@@ -34,6 +34,8 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 		@group = current_user.get_group
 		@group.most_viewed_add(@paper)
 		@group.save
+	else
+		@group = Group.new
 	end
    # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
     #@classdates = []

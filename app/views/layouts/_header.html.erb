@@ -18,10 +18,9 @@
                 <div id = 'contentSearch'>
 		<table border="0" align="right" cellpadding="0" cellspacing="0">
 		      <tbody><tr>
-        		<td>
+        		<td >
                 	<%= form_tag('/lookup', :method => "get") do  %>
-                	<%= text_field_tag(:pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> </td>
-                	<td><%= image_submit_tag("button_go.png") %></td>
+                	<%= text_field_tag(:pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> <%= submit_tag "GO", :class => 'btn-tiny btn-warning round', :style => "vertical-align: top; margin-top: 2px;"%></td>
                 	<% end %>
 			</td>
       			</tr>

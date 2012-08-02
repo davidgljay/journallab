@@ -1,18 +1,22 @@
-  	<div>
+
 	<h5>What is your reaction to <%= about.shortname %>?</h5>	
-	<ul>
-	<% @default_reactions.each do |r| %>
-         <li class="reactionlink clickme">  
-             <%= form_tag :reaction, :method => "post", :class => "reaction", :remote => true do  %>
-               	<%= hidden_field_tag :about_type, about.class.to_s %>
-               	<%= hidden_field_tag :about_id, about.id %>
-               	<%= hidden_field_tag :user_id, current_user.id %>
-		<%= hidden_field_tag :name, r %>
-		<div class = 'navText'>
-                 	<%= submit_tag r, :class => "plainSubmit" %>
-		</div>
+	<ul class = "nomargin nopadding">
+	<% @reaction_map[about.inspect].each do |r| %>
+         <li class="reactionlink clickme badge <%= r[1] > 0 ? 'badge-success' : 'badge-info' %>">  
+             <%= form_for(about.reactions.new, :class => "reaction", :remote => true) do |f| %>
+		<% if signed_in? %>
+	               	<%= hidden_field_tag :about_type, about.class.to_s %>
+        	       	<%= hidden_field_tag :about_id, about.id %>
+			<%= f.hidden_field :name, :value => r[0] %>
+		<% end %>
+		<% if r[1] > 0 %>
+                 	<%= submit_tag r[0] + ' x' + r[1].to_s, :class => "plainSubmit", :id => r[0] %>
+		<% else %>
+			<%= submit_tag r[0] , :class => "plainSubmit", :id => r[0] %>
+		<% end %>
              <% end %>
           </li>
         <% end %>
-	</ul></div>
+	  <%= render '/reactions/custom_reaction', :about => about %>
+	</ul>
 

@@ -1,16 +1,17 @@
 <%= stylesheet_link_tag 'jl_styles_home', :media => 'screen' %>
 
-<div id="homeLogo"><%= image_tag 'journal_lab_logo.gif', :id => 'mainlogo' %></div>
+<div id="homeLogo"><%= image_tag 'jl_logo_trans_M.png', :id => 'mainlogo' %></div>
 
 <div id="homeSearch">
 <%= form_tag('/lookup', :method => "get") do  %>
-   <h1><%= label_tag :pubmed_id, 'Discuss Published Science With Smart People.' %></h1>
+   <br>
+   <h1>Discuss Published Science With Smart People.</h1>
     <table border="0" align="center" cellpadding="0" cellspacing="0">
       <tbody><tr>
         <td>
    	<%= text_field_tag :pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" %>
 	</td>
-<td valign="middle" class = "Search">   <%= image_submit_tag "button_go.png", :id => 'search' %></tb></tr></table>
+<td style = "vertical-align: top; margin-top: 2px;">   <%= submit_tag "GO", :class => 'btn-tiny btn-warning round'%></tb></tr></table>
   
 
 <% end %>

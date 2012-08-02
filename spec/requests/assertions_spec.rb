@@ -21,7 +21,6 @@ describe "Assertions" do
       fill_in "user_password", :with => @user.password
       click_button "Sign in"
       visit '/papers/' + @paper.id.to_s
-
      end
 
   describe "for the paper" do
@@ -35,10 +34,10 @@ describe "Assertions" do
 	within('body') { page.should have_content('Lorem ipsum cupcakes.') }
 end
 
-    it "processes a summary request", :js => true do
-	find('#paper' + @paper.id.to_s).find('form#new_sumreq').click
-	within('#paper' + @paper.id.to_s) { page.should have_content('Got it!') }
-    end
+#    it "processes a summary request", :js => true do
+#	find('#paper' + @paper.id.to_s).find('form#new_sumreq').click
+#	within('#paper' + @paper.id.to_s) { page.should have_content('Got it!') }
+#    end
 
     it "fails if nothing is entered", :js => true do
 	find('div.latest_assertion').click
@@ -64,8 +63,8 @@ end
   describe "for the section" do
     it "adds an assertion to the section", :js => true do
 	find('div.figtoggle').click
-	find('#fig' + @fig.id.to_s ).find('form#new_sumreq').click
-	within('#fig' + @fig.id.to_s ) { page.should have_content('Got it!') }
+	#find('#fig' + @fig.id.to_s ).find('form#new_sumreq').click
+	#within('#fig' + @fig.id.to_s ) { page.should have_content('Got it!') }
 	find('#fig' + @fig.id.to_s ).find('div.latest_assertion').click
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
@@ -130,8 +129,8 @@ end
 
     it "works for a figsection", :js => true do
 	find('div.figtoggle').click
-	find('#fig' + @fig.id.to_s ).find('form#new_sumreq').click
-	within('#fig' + @fig.id.to_s ) { page.should have_content('Got it!') }
+	#find('#fig' + @fig.id.to_s ).find('form#new_sumreq').click
+	#within('#fig' + @fig.id.to_s ) { page.should have_content('Got it!') }
 	find('#fig' + @fig.id.to_s ).find('div.latest_assertion').click
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#fig' + @fig.id.to_s ).click_button "Submit"

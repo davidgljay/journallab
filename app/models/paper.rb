@@ -5,6 +5,7 @@ require 'open-uri'
 
 serialize :h_map
 serialize :first_last_authors
+serialize :reaction_map
 
 #Associations
 has_many :authorships, :foreign_key => "paper_id",
@@ -35,6 +36,8 @@ has_many :reactions, :as => :about
    validates_numericality_of :pubmed_id, :only_integer => true,
                          :less_than => 9999999999999,
                          :greater_than => 0, :allow_nil => true
+
+before_save :set_reaction_map
 
 def inspect
 	'paper' + id.to_s
@@ -159,27 +162,28 @@ def count_figs
     end
   end
   self.build_figs(imagearray.count)
-  
+  self.grab_figs(doc)
+end
+
+def grab_figs(doc)
   #
   #Slightly more liberal, extract images if it's free on PMC.
   #
 
   if doc.css('a.status_icon').text == "Free PMC Article"
-  #pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
-  #unless pmcid == ' '
-  #  url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
-  #  oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
-  #  unless oai.css('error').attribute("code").value == "idDoesNotExist"
-  #
-  #  Disabling this autoextraction for ISSCR, not worth the risk
-  #
-  #  imagearray.count.times do |n|
-  #    self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
-  #    self.figs[n].save
-  #  end 
+  pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
+  unless pmcid == ' '
+    url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
+    oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
+    	unless oai.css('error').attribute("code").value == "idDoesNotExist"
+    		imagearray.count.times do |n|
+      			self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
+      			self.figs[n].save
+    		end 
+  	end
   end
 end
-
+end
 
 #Grab images
 def grab_images
@@ -214,6 +218,53 @@ def monthhash
       'Dec' => 12
       }
 end
+
+#Map reactions to the overall paper and to individual figures and figure sections and store it as a hash text, that way we don't have to run a ton of SQL queries every time the page loads
+
+def set_reaction_map
+	rm = {}
+	rm[self.inspect] = add_reaction_defaults(check_reactions(self))
+	figs.each do |f|
+		rm[f.inspect] = add_reaction_defaults(check_reactions(f))
+		f.figsections.each do |s|
+			rm[s.inspect] = add_reaction_defaults(check_reactions(s))
+		end
+	end
+	self.reaction_map = rm
+	reaction_map
+end
+
+#Wipe and reset the reaction map
+
+def reset_reaction_map
+	reaction_map = nil
+	set_reaction_map
+end
+
+#Check to see what reactions an object has had and record them to the reaction map
+
+def check_reactions(object)
+	object.reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
+end
+
+
+#Add default reactions. In the future these should live in some central language file.
+
+def add_reaction_defaults(reacts)
+	defaults = Reaction.new.defaults
+	defaults.each {|d| reacts << [d,0] unless reacts.map{|o| o[0]}.include?(d)}
+	reacts
+end
+
+#Generate a version of the reaction map w/out the defaults for analysis purposes
+
+def remove_zero_reactions
+	nonzero = {}
+	reaction_map.keys.each do |obj|
+		nonzero[obj] = reaction_map[obj].select{|r| r[1] > 0}
+	end
+	nonzero
+end	
 
 #Map how much discussion is going on in each part of the paper.
 def heatmap
@@ -259,6 +310,7 @@ def heat
    heat = comments.count
    heat += questions.count
    heat += assertions.count
+   heat += reactions.count
    comments.each do |c|
      heat += c.comments.count
    end

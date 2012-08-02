@@ -55,4 +55,6 @@ group :redcell do
   gem 'rmagick', '2.13.1'
   gem  'mini_magick', '3.4'
   gem 'fog'
+  gem 'delayed_job_active_record'
+  gem 'daemons'
 end

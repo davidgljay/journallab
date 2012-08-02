@@ -3,17 +3,24 @@ require 'spec_helper'
 describe ReactionsController do
 
   describe "GET 'create'" do
-    it "should be successful" do
-      get 'create'
-      response.should be_success
-    end
-  end
+	before(:each) do
+		@paper = Factory(:paper)
+		@paper.build_figs(3)
+		@fig = @paper.figs.first
+		@user = Factory(:user, :email => Factory.next(:email))
+		test_sign_in(@user)
+	end
 
-  describe "GET 'destroy'" do
-    it "should be successful" do
-      get 'destroy'
-      response.should be_success
-    end
+	it "should be successful and flag @newreaction as true" do
+		get 'create', :about_id => @paper.id.to_s, :about_type => 'Fig', :reaction => {:user_id => @user, :name => "Solid Science"}
+		assigns(:newreaction).should == true	
+       end
+	
+	it "should fail if that user has already given that reaction" do
+		@fig.reactions.create(:name => "Solid Science", :user => @user)
+		get 'create', :about_id => @fig.id.to_s, :about_type => 'Fig', :reaction => {:user_id => @user, :name => "Solid Science"}
+		assigns(:newreaction).should == false	
+	end
   end
 
 end

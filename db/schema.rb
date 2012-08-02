@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725025851) do
+ActiveRecord::Schema.define(:version => 20120730040746) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -76,6 +76,22 @@ ActiveRecord::Schema.define(:version => 20120725025851) do
   add_index "comments", ["get_paper_id"], :name => "index_comments_on_get_paper_id"
   add_index "comments", ["paper_id"], :name => "index_comments_on_paper_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "figs", :force => true do |t|
     t.integer  "paper_id"
@@ -193,6 +209,7 @@ ActiveRecord::Schema.define(:version => 20120725025851) do
     t.text     "first_last_authors"
     t.text     "description"
     t.string   "doi"
+    t.text     "reaction_map"
   end
 
   create_table "questions", :force => true do |t|

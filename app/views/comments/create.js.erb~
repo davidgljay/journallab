@@ -1,8 +1,9 @@
-
-$('<%= @owner.jquery_target %>').find('form.commentlist').first().find('div.navText').text('<%= pluralize(@comments.count,'Comment') %>');  
+$('<%= @owner.jquery_target %>').find('div.navText').first().html('<%= escape_javascript(
+	submit_tag "View " + pluralize(@owner.comments.all.count, "Comment"), :class => "linkSubmit small"
+)%>');
 $('<%= @owner.jquery_target %>').addClass('heatBox<%= @heatmap[@owner.inspect][1] %>');
 $('<%= @owner.jquery_target %>').find('div.commentbox').first().html('<%= escape_javascript(render '/comments/list') %>'); 
 <% if @comment.form == 'qcomment' %> 
-$('<%= @owner.jquery_target %>').find('div.questionbox').first().html('<%= escape_javascript(render '/questions/list') %>');  
+	$('<%= @owner.jquery_target %>').find('div.questionbox').first().html('<%= escape_javascript(render '/questions/list') %>');  
 <% end %>
-$('<%= @owner.jquery_target %>').find('form.new_comment').hide();
+$('<%= @owner.jquery_target %>').find('div.comment_form').hide();

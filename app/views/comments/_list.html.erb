@@ -1,8 +1,3 @@
-<h3>Comments</h3>
-<% if user_signed_in? %>
-	<%= render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment' %>
-<% end %>
-
 <table class = "comment discussion">
 <% @comments.each do |comment| %>
   <tr >
@@ -10,7 +5,8 @@
       <div class = "comment_body <%= 'author_comment_body' if comment.author %>">
       <%= render 'linktext', :comment => comment %>
       <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous %>
-      <div>
+      <%= render 'reactions/comment_reactions', :comment => comment %>
+      <div class = 'subMenu'>
         <ul>
          <li class="replylink clickme">
 	Reply

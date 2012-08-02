@@ -17,7 +17,7 @@ Redcell::Application.routes.draw do
   resources :comments
    match '/comments(/:id)/reply',    :to => 'comments#reply'
    match 'comment_list',             :to => 'comments#list'
-   match 'quickform',			:to => 'comments#quickform'
+
 
   resources :votes
   resources :shares
@@ -49,6 +49,8 @@ Redcell::Application.routes.draw do
 
   resources :follows
   resources :reactions
+   match 'quickform',			:to => 'reactions#quickform'
+
 #Static pages
 
 root :to => 'pages#home'

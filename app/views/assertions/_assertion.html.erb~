@@ -9,8 +9,9 @@
 			<td width="180" align="center">
 		               <%= image_tag about.image.thumb('150x150').url, :class => 'thumbnail clickme'%>
 			</td>
-		<% elsif %>
+		<% else %>
 			<td width="180" align="center">
+		                  <%= render '/figs/image_upload', :fig => about %>
 			</td>
 		<% end %>
     	<td class = "sumright">
@@ -46,34 +47,27 @@
 			<% end %>
 		        <div class="improve">
          		</div><br>
-<div class="contribute">
-	<%= render '/reactions/reaction_list', :about => about %>
-  	<div><ul>
-         <li class="commentlink clickme">  
+
+	<div class = "reaction_list">
+		<%= render '/reactions/reaction_list', :about => about %>
+	</div>
+	<br>
+	<div class = 'comment_form hideonload'>
+	</div>
+	<div class="contribute">
              <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
                	<%= hidden_field_tag :owner, about.class.to_s %>
                	<%= hidden_field_tag :id, about.id %>
                	<%= hidden_field_tag :mode, @mode %>
+
 		<div class = 'navText'>
                		<% if about.comments.all.count > 0 %>
-                 		<%= submit_tag "View " + pluralize(about.comments.all.count, "Comment"), :class => "plainSubmit" %>
+                 		<%= submit_tag "View " + pluralize(about.comments.all.count, "Comment"), :class => "linkSubmit small" %>
                		<% end %>
 		</div>
              <% end %>
-          </li>
-        <% unless @group.id.nil? %>
-        <li class = "sharelink clickme">
-        </li>
-        <% end %>
-	</ul></div>
-        <div class = "sharebox hideonload", id = <%= 'share_' + about.class.to_s + '_' + about.id.to_s %>>
-				<% if signed_in? %>
-			        	<%= render 'shares/share_form', :item => about %>
-				<% else %>
-					<br><br>
-					<h3><%= link_to "Sign up", new_user_registration_path %> to share.</h3>
-				<% end %>
-        </div>
+         </div>
+
 
 </div> <br><br>
          <div class = "commentbox hideonload", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>

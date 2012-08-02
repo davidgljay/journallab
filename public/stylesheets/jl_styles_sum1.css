@@ -35,6 +35,25 @@
 	font-size: 11px;
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+td.sumright .reaction_list ul {
+	width:450px;
+}
+
+.custom_reaction {
+	font-size: 10px;
+	margin-top: 3px;
+}
+
+.custom_reaction input[type = "text"] {
+	width: 80px;
+	font-size: 10px
+}
+
+.custom_reaction_submit {
+	font-size: 9px;
+} 
+
 .summaryBox {
 	margin-left: 20px;
 	border-left-width: 10px;
@@ -53,6 +72,10 @@
 	line-height: 18px;
 	margin: 0px;
 	padding: 0px;
+}
+
+.comment_form textarea {
+	width: 500px;
 }
 
 .fig_upload {
@@ -116,9 +139,8 @@
 	margin: 0px;
 	padding: 0px;
 }
-.contribute li, .commentbox li, .questionbox li {
-	display: block;
-	float: left;
+.subMenu li {
+	display: inline-block;
 	list-style-type: none;
 	margin: 5px;
 	color: #666666;

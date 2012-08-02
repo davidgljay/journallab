@@ -1,0 +1,10 @@
+	<ul class = "nomargin nopadding">
+	<% Reaction.new.defaults.each do |r| %>
+         <li class="reactionlink clickme badge badge-info">  
+		<%= form_tag '/quickform', :method => :post, :remote => true do %>
+			<%= hidden_field_tag :name, r %>
+			<%= submit_tag r , :class => "plainSubmit", :id => r %>
+             	<% end %>
+          </li>
+        <% end %>
+	</ul>

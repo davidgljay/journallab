@@ -134,7 +134,7 @@ end
     @owner = @assertion.owner
     @paper = @owner.get_paper
     @heatmap = @paper.heatmap
-    @group = Group.find(1)
+    @group = current_user.get_group
     respond_to do |format|
       if @assertion.update_attributes(params[:assertion])
 	format.js { render :create }

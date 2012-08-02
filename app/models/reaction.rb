@@ -1,7 +1,6 @@
 class Reaction < ActiveRecord::Base
 
 belongs_to :user
-belongs_to :comment
 belongs_to :about, :polymorphic => true
 belongs_to :get_paper, :class_name => "Paper"
 
@@ -16,5 +15,9 @@ def set_get_paper
 	get_paper
 end
 
+
+def defaults
+	["Solid Science", "Novel", "Conclusion matches data",  "Interesting hypothesis", "Skeptical", "Missing Controls", "Conclusion does not match data", "I have a question"]
+end
 
 end

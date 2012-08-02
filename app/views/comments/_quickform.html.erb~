@@ -1,9 +1,7 @@
-<div class = 'quickform quick_<%= form %> hideonload'>
+<div class = 'quickform quick_<%= form %>'>
 	<%= form_tag '/quickform', :method => :post, :remote => true do %>
 		<%= hidden_field_tag :paper, @paper.id %>
-		<%= hidden_field_tag :form, form %>
-		<%= hidden_field_tag :mode, @mode %>
-		<h3><%= form == 'comment' ? 'Leave a comment on' : 'Pose a questions about' %>:</h3>
+		<h3>What do you think?</h3>
 		<div class = 'figSelector'>
 			<div class = 'selectFig clickme round' >
 				Fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
@@ -12,11 +10,9 @@
 				The Overall Paper
 			</div>
 		</div>
-		<div class = 'textfield'>
-			<%= text_area_tag :text %><br>
-                        <p><%= check_box_tag :anonymous %> <em>Post Anonymously</em></p
-			<%= submit_tag 'Submit' %>
-		</div>
+	<div class = "reaction_list">
+		<%= render '/reactions/quickform_list', :about => about %>
+	<div>
 	<% end %>
 </div>
 

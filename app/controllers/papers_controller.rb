@@ -28,23 +28,17 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
        		@paper.extract_authors
        		@paper.count_figs
 	end
-	@default_reactions = ["Solid Science", "Skeptical", "Clarifying Question", "Conclusion does not match data"]
 	@heatmap = @paper.heatmap
 	@heatmap_overview = @paper.heatmap_overview
+	@reaction_map = @paper.reaction_map
 	if signed_in?
 		@group = current_user.get_group
 		@group.most_viewed_add(@paper)
 		@group.save
+	else
+		@group = Group.new
 	end
-   # For now I'll assume that users are only in one group. If they aren't then I'll use a generic empty group to stop things from breaking.
-    #@classdates = []
-    #@group.filters.each do |f|
-    #  unless f.date.nil?
-    #    @classdates << f.date
-    #  end
-    #end
-    #@classdates.sort!{|x,y| x <=> y}.uniq! unless @classdates.nil?
-  
+
     #Prep the selection dropdown for selection the # of figs in the paper.  
     	@numfig_select = Array.new
     	30.times do |i| 
@@ -194,7 +188,8 @@ end
 
   def build_figs
       @paper = Paper.find(params[:id])
-      @paper.build_figs(params[:num]) 
+      @paper.build_figs(params[:num])
+      @paper.save
       redirect_to @paper
   end
      

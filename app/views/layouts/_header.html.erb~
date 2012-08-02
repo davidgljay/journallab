@@ -4,7 +4,6 @@
             <% if user_signed_in? %>
               <% if current_user.admin? %>
               <%= link_to "Dashboard", dashboard_path %>
-              <%= link_to "Add Users", bulksignup_path %>
               <% end %>
 	    <%= link_to "Sign out", destroy_user_session_path %>
             <%= link_to "Profile", current_user %>
@@ -19,10 +18,9 @@
                 <div id = 'contentSearch'>
 		<table border="0" align="right" cellpadding="0" cellspacing="0">
 		      <tbody><tr>
-        		<td>
+        		<td >
                 	<%= form_tag('/lookup', :method => "get") do  %>
-                	<%= text_field_tag(:pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> </td>
-                	<td><%= image_submit_tag("button_go.png") %></td>
+                	<%= text_field_tag(:pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> <%= submit_tag "GO", :class => 'btn-tiny btn-warning round', :style => "style = "vertical-align: top; margin-top: 2px;"%></td>
                 	<% end %>
 			</td>
       			</tr>

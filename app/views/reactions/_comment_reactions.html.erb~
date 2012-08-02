@@ -1,0 +1,5 @@
+<ul class = "nomargin">
+	<% comment.reactions.each do |r| %>
+		<li class="reactionlink clickme badge badge-success"><%= r[0] %></li>
+	<% end %>
+</ul>  

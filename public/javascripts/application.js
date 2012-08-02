@@ -56,13 +56,9 @@ $('a.quick_question').click(function(){
 
 //Quickform Selection
 
-$('.selectFig').live('click', function(){
-	$(this).css('background-color', '#9FCF67');
-	$(this).css('font-weight', 'bold');	
-	$(this).css('font-style', 'normal');
-	$(this).parent().find('.selectPaper').css('font-style', 'italic');
-	$(this).parent().find('.selectPaper').css('background-color', '#fff');
-	$(this).parent().find('.selectPaper').css('font-weight', 'normal');
+$('.figSelector div').live('click', function(){
+	$('.figSelector div').removeClass('selectFig');
+	$(this).addClass('selectFig');
 });
 
 $('.selectFig input').live('click', function(){
@@ -70,18 +66,10 @@ $('.selectFig input').live('click', function(){
 	$(this).css('font-style', 'normal');
 });
 
-$('.selectPaper').live('click', function(){
-	$(this).css('background-color', '#9FCF67');
-	$(this).css('font-weight', 'bold');	
-	$(this).css('font-style', 'normal');
-	$(this).parent().find('.selectFig').css('font-style', 'italic');
-	$(this).parent().find('.selectFig').css('background-color', '#fff');
-	$(this).parent().find('.selectFig').css('font-weight', 'normal');
-	$(this).parent().find('.selectFig input').val('');
-});
 
 $(".quickform form").live('submit', function(){
-	$(this).html('Just a sec...');
+	$(this).parent().hide();
+	$(this).parent().next().show();
 });
 
 

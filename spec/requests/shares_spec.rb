@@ -35,7 +35,7 @@ describe "Shares:" do
    end
 
   it "shares a paper.", :js => true do
-      find('#paper' + @paper.id.to_s ).find('li.sharelink').click
+      find('div.share_button_text').click
       fill_in 'share_text', :with => "This is the bees stripes."
       click_button 'Share'
       page.should have_content("Shared!")

@@ -1,0 +1,7 @@
+	<ul class = "nomargin nopadding">
+	<% Reaction.new.defaults.each do |r| %>
+         <li class="reactionlink clickme badge badge-info">  
+		<%= submit_tag r , :class => "plainSubmit", :id => r %>
+          </li>
+        <% end %>
+	</ul>

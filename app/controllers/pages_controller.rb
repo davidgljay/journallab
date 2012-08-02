@@ -4,6 +4,7 @@ before_filter :admin_user,   :only => [:dashboard]
 
   def home
     	@title = "Home"
+	@group = Group.new
 	if signed_in?
 		@group = current_user.get_group
 	    	@feed = @group.prep_feed

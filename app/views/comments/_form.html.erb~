@@ -1,3 +1,5 @@
+<h5><%= boxtext(reply_to) %></h5>
+
 <%= form_for(comment, :remote => true) do |f| %>
   <% if comment.errors.any? %>
     <div id="error_explanation">
@@ -18,8 +20,8 @@
     <% else %>
       <%= f.hidden_field :form, :value => 'comment' %>
     <% end %>
-    <%= f.text_area :text, :value => boxtext(reply_to), :onfocus => "if(this.value == '#{boxtext(reply_to)}') { this.value = ''; }" %>
-    <%= f.check_box :anonymous %> <em>Post Anonymously</em>
+    <%= f.text_area :text, :rows => 10 %>
+    <h5><%= f.check_box :anonymous %> Post Anonymously</h5>
   </div>
     <% if @owner.latest_assertion %>
     	<%= f.hidden_field :assertion_id, :value => @owner.latest_assertion.id %>

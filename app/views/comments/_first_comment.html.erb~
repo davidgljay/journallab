@@ -1,16 +1,28 @@
 <table class = "comment discussion">
-<% @comments.each do |comment| %>
   <tr >
     <td class = "<% if comment.comments.count > 0 %> has_reply <% end %> <% if comment.author %> author_comment <% end %> comment_body">
       <div class = "comment_body <%= 'author_comment_body' if comment.author %>">
-      <% if comment.owner != @owner %>
+      <% if comment.owner != owner %>
 	<h5>Regarding <%= comment.owner.shortname%>:</h5>
       <% end %> 
-      <%= render 'linktext', :linktext => comment.linktext %>
+      <%= render 'comments/linktext', :linktext => comment.linktext(comment.short_text) %>
       <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous %>
       <%= render 'reactions/comment_reactions', :comment => comment %>
       <div class = 'subMenu'>
         <ul>
+	<% if comment.text.length > 500 || (owner.comments + comment.owner.comments).uniq.count > 1 %>
+         <li class="readmore clickme">
+
+             <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
+               	<%= hidden_field_tag :owner, comment.owner.class.to_s %>
+               	<%= hidden_field_tag :id, comment.owner.id %>
+               	<%= hidden_field_tag :mode, @mode %>
+		<%= submit_tag "Read More", :class => 'plainSubmit'%>
+
+             <% end %>
+
+         </li>
+	<% end %>
          <li class="replylink clickme">
 	Reply
          </li>
@@ -20,7 +32,7 @@
       <div> 	      
         <div class = "replyform hideonload">
 		<% if user_signed_in? %>	
-			<%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply', :owner => @owner %>
+			<%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply', :owner => comment.owner %>
 		<% else %>
 			<br>
 			<br>
@@ -31,7 +43,4 @@
       </div>
     </td>
   </tr>
-    <%= render 'comments/replies', :comment => comment %>
-<% end %>   
 </table>
-

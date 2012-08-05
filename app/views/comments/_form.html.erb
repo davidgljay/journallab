@@ -23,13 +23,13 @@
     <%= f.text_area :text, :rows => 10 %>
     <h5><%= f.check_box :anonymous %> Post Anonymously</h5>
   </div>
-    <% if @owner.latest_assertion %>
-    	<%= f.hidden_field :assertion_id, :value => @owner.latest_assertion.id %>
-    	<%= hidden_field_tag :owner_id, @owner.id %>
-    	<%= hidden_field_tag :owner_class, @owner.class.to_s %>  
+    <% if owner.latest_assertion %>
+    	<%= f.hidden_field :assertion_id, :value => owner.latest_assertion.id %>
+    	<%= hidden_field_tag :owner_id, owner.id %>
+    	<%= hidden_field_tag :owner_class, owner.class.to_s %>  
     <% else %>
-    	<%= hidden_field_tag :owner_id, @owner.id %>
-    	<%= hidden_field_tag :owner_class, @owner.class.to_s %>
+    	<%= hidden_field_tag :owner_id, owner.id %>
+    	<%= hidden_field_tag :owner_class, owner.class.to_s %>
     <% end %>
   <div class="actions">
     <%= f.submit :value => "Submit", :class => 'btn' %>

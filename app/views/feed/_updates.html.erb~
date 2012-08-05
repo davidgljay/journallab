@@ -14,10 +14,10 @@
 	<% if item[:anon] %>
 		<strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= item[:user].anon_name %>) <%= item[:text] %>
 	<% else %>
-		<strong><%= item[:user].firstname + ' ' + item[:user].lastname + '.' %></strong> <%= item[:text] %>
+		<strong><%= item[:user].firstname + ' ' + item[:user].lastname %></strong> <%= item[:text] %>
 	<% end %>
 	<% if item[:item].class != Assertion %>
-	        <strong>"</strong><%= render 'comments/linktext', :comment => item[:item] %><strong> "</strong>
+	        <strong>"</strong><%= render 'comments/linktext', :linktext => item[:item].short_text %><strong> "</strong>
 	<% end %>
       </div>
      <div id = "timestamp" class="small grey"><%= item[:created_at].strftime('%B %d, %Y') %></div>

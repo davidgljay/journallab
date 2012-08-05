@@ -10,14 +10,12 @@ belongs_to :figsection
 belongs_to :assertion
 belongs_to :comment
 belongs_to :question
-has_many :reactions
 
 has_many :comments, :order => "created_at ASC"
 has_many :votes
 has_many :maillogs, :as => :about
 
 before_save :set_get_paper
-before_save :add_reactions
 
 has_many :filters, :foreign_key => "comment_id",
                            :dependent => :destroy
@@ -32,8 +30,8 @@ has_many :groups, :through => :filters, :source => :group
 # Create a way to link to other papers using a [pubmed id]
 # If this works it should be fairly straightforward to implement direct links to figures, etc.
 
-def linktext
-   comment = text.split(/[\[\]]/)
+def linktext (message = self.text)
+   comment = message.split(/[\[\]]/)
    linktext = []
    comment.each do |phrase|
       if phrase.to_i.to_s == phrase 
@@ -69,15 +67,21 @@ def linktext
    linktext
 end        
 
+def short_text
+	if text.length > 500
+		self.text.first(500) + ...
+	else
+		text
+	end
+end	
+
 def set_get_paper
 	self.get_paper_id = owner.get_paper.id
 	get_paper
 end
 
-def add_reactions
-	if form == "comment"
-		self.reactions = owner.reactions.select{|r| r.user == user}
-	end
+def reactions
+	owner.reactions.select{|r| r.user == self.user}
 end
 
 def owner

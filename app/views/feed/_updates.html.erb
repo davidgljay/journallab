@@ -17,7 +17,7 @@
 		<strong><%= item[:user].firstname + ' ' + item[:user].lastname %></strong> <%= item[:text] %>
 	<% end %>
 	<% if item[:item].class != Assertion %>
-	        <strong>"</strong><%= render 'comments/linktext', :comment => item[:item] %><strong> "</strong>
+	        <strong>"</strong><%= render 'comments/linktext', :linktext => item[:item].linktext %><strong> "</strong>
 	<% end %>
       </div>
      <div id = "timestamp" class="small grey"><%= item[:created_at].strftime('%B %d, %Y') %></div>

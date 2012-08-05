@@ -7,7 +7,7 @@
 <div id="paperInfo">
 <h1><%= @paper.title %></h1>
 	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
-	<h3><%= render '/authors/author_list', :paper => @paper %></h3>
+	<%= render '/authors/author_list', :paper => @paper %>
 	<% if @paper.abstract.nil? || @paper.abstract.empty? %>
 		<% if @paper.description %>
 		<div>
@@ -38,11 +38,7 @@
 		| <a href = "/users/sign_up">Share</a></h3>
         <% end %>
 
-</div>
-
-
-<%= render 'overview' %>
-
+</
 <p>
 <% if !@paper.figs.empty? || !@paper.comments.empty? || !@paper.questions.empty? %>
   <%= render 'summary' %>

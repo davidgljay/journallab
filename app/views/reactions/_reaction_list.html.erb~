@@ -1,15 +1,15 @@
 
-	<h5>What is your reaction to <%= about.shortname %>?</h5>	
+	<% if @reaction_map[about.inspect][1] > 0 %>
+		<h5>Reactions to <%= about.shortname %>:</h5>
+	<% end %>
+	<h5 class = "hideonload">What is your reaction?</h5>
 	<ul class = "nomargin nopadding">
 	<% @reaction_map[about.inspect].each do |r| %>
-         <li class="reactionlink clickme badge <%= r[1] > 0 ? 'badge-success' : 'badge-info' %>">  
+         <li class="reactionlink clickme badge <%= r[1] > 0 ? 'badge-success' : 'hideonload toggle' %>">  
              <%= form_for(about.reactions.new, :class => "reaction", :remote => true) do |f| %>
-		<% if signed_in? %>
 	               	<%= hidden_field_tag :about_type, about.class.to_s %>
         	       	<%= hidden_field_tag :about_id, about.id %>
-        	       	<%= f.hidden_field :user_id, :value => current_user.id %>
 			<%= f.hidden_field :name, :value => r[0] %>
-		<% end %>
 		<% if r[1] > 0 %>
                  	<%= submit_tag r[0] + ' x' + r[1].to_s, :class => "plainSubmit", :id => r[0] %>
 		<% else %>
@@ -18,6 +18,7 @@
              <% end %>
           </li>
         <% end %>
-	  <%= render '/reactions/custom_reaction', :about => about %>
+	  <li class = 'reactionlink leave_reaction clickme badge'>Give your reaction</li>
+	  
 	</ul>
 

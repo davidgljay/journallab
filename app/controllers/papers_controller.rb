@@ -33,8 +33,8 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 	@reaction_map = @paper.reaction_map
 	if signed_in?
 		@group = current_user.get_group
-		@group.most_viewed_add(@paper)
-		@group.save
+		@group.delay.most_viewed_add(@paper)
+		@group.delay.save
 	else
 		@group = Group.new
 	end

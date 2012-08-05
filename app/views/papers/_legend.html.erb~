@@ -1,0 +1,29 @@
+	<table id = 'legend'>
+			<tr><td>
+			<td><div class='legendWord'>High Discussion</div></td><td>		
+			<div class='heat10'></div>
+			</td><td>
+			<div class='heat9'> </div>
+			</td><td>
+			<div class='heat8'> </div>
+			</td><td>
+			<div class='heat7'> </div>
+			</td><td>
+			<div class='heat6'> </div>
+			</td><td>
+			<div class='heat5'> </div>
+			</td><td>
+			<div class='heat4'> </div>
+			</td><td>
+			<div class='heat3'> </div>
+			</td><td>
+			<div class='heat2'> </div>
+			</td><td>
+			<div class='heat1'> </div>
+			</td><td>
+			<div class='heat0'></div>
+			</td><td>
+			<div class='legendWord'>Low Discussion</div>
+			</td></tr>
+		</table>
+

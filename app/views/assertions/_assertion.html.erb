@@ -55,22 +55,14 @@
 	<div class = 'comment_form hideonload'>
 	</div>
 	<div class="contribute">
-             <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
-               	<%= hidden_field_tag :owner, about.class.to_s %>
-               	<%= hidden_field_tag :id, about.id %>
-               	<%= hidden_field_tag :mode, @mode %>
 
-		<div class = 'navText'>
-               		<% if about.comments.all.count > 0 %>
-                 		<%= submit_tag "View " + pluralize(about.comments.all.count, "Comment"), :class => "linkSubmit small" %>
-               		<% end %>
-		</div>
-             <% end %>
          </div>
 
 
 </div>
-         <div class = "commentbox hideonload", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
+	<% comments = about.class == Fig ? about.meta_comments : about.comments %>
+         <div class = "commentbox <%= 'hideonload' if comments.empty? %>", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
+		<%= render('/comments/first_comment', :comment => comments.first, :owner => about) unless comments.empty? %>
          </div>
      <% if about.class == Fig %>
        <% unless about.image.nil? %>
@@ -89,7 +81,6 @@
 			<img src="/images/arrow_closed_sm.png" alt="closed" width="10" height="10">
 			<%= about.nosections ? nil:'Sections A-'+ about.figsections.first.letter(about.figsections.count) %>
 		</div>
-	<% end %>
 	<div id="<%= "fig_" + about.num.to_s + "_sections"%>" class = "fig_sections hideonload">	
 		<% about.figsections.each do |section| %>
 			<div class = 'summaryBox heatBox<%= @heatmap['figsection' + section.id.to_s][1] %>' id = 'figsection<%= section.id.to_s %>'>
@@ -101,4 +92,5 @@
 			</div>
 		<% end %>
 	</div>
+        <% end %>
 <% end %>

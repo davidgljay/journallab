@@ -8,7 +8,11 @@ before_filter :authenticate_user!, :except => [:list]
     	@mode = params[:mode].to_i
 	
 	#Comments used to be visible only to groups. We're switching things so that they're always visible and just semi-anonymous. 
- 	@comments = @owner.comments.all #.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+	if @owner.class == Fig
+	    	@comments = @owner.meta_comments
+	else
+	   	@comments = @owner.comments.all
+	end
     	@owner_type = params[:owner]
     	respond_to do |format|
         	format.js 
@@ -50,7 +54,11 @@ before_filter :authenticate_user!, :except => [:list]
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
     	@group.make_filter(@comment, params[:mode])
-    	@comments = @owner.comments.all #.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+	if @owner.class == Fig
+	    	@comments = @owner.meta_comments.all
+	else
+	   	@comments = @owner.comments.all
+	end
     	respond_to do |format|
       		if @comment.save
          	#Send an e-mail if the comment is a reply

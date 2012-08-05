@@ -638,9 +638,7 @@ td.comment_body, td.question_body {
 }
 
 .quickform .figSelector div {
-	padding: 5px;
-	width: 225px;
-	text-align: center;
+	width: 120px;
 }
 
 .quickform .selectPaper {
@@ -651,7 +649,7 @@ td.comment_body, td.question_body {
 .quickform .selectFig {
 	font-weight: bold;
 	color: #fff;
-	background: #005997; 
+	background: #3A87AD; 
 }
 
 

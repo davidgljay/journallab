@@ -162,7 +162,7 @@ def count_figs
     end
   end
   self.build_figs(imagearray.count)
-  self.grab_figs(doc)
+  self.delay.grab_figs(doc)
 end
 
 def grab_figs(doc)
@@ -244,7 +244,14 @@ end
 #Check to see what reactions an object has had and record them to the reaction map
 
 def check_reactions(object)
-	object.reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
+	if object.class == Fig
+		fig_reactions = []
+		fig_reactions << object.reactions
+		object.figsections.each{|s| s.reactions << fig_reactions}
+		reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
+	else
+		object.reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
+	end
 end
 
 

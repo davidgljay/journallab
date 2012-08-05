@@ -1,14 +1,14 @@
 <div class = 'quickform'>
 	<%= form_tag '/quickform', :method => :post, :remote => true do %>
 
-		<h3>What do you think?</h3>
+		<h3>What's your reaction?</h3>
 		<div class = 'figSelector'>
 			<h5>This is a reaction to:</h5>
-			<div class = 'selectFig clickme round' >
-				Fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
+			<div>
+				<%= radio_button_tag 'fig', '', :checked => 'checked' %> The overall paper
 			</div>
-			<div class = 'selectPaper clickme round'>
-				The Overall Paper
+			<div>
+				<%= radio_button_tag 'empty', 'empty' %>Fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
 			</div>
 		</div>
 	<div class = "reaction_list">
@@ -16,11 +16,11 @@
 				<%= hidden_field_tag :paper, @paper.id %>
 
 		<% Reaction.new.defaults.each do |r| %>
-           		<li class="reactionlink clickme badge badge-info">  
+           		<li class="reactionlink clickme badge">  
 				<%= submit_tag r , :class => "plainSubmit", :id => r %>
           		</li>
         	<% end %>
-        	 <li class="reactionlink custom_reaction clickme badge badge-info">  
+        	 <li class="reactionlink custom_reaction clickme badge">  
 		     	Other:
 			<%= text_field_tag :name %>
 			<%= submit_tag 'Submit', :class => 'custom_reaction_submit' %>

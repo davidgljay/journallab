@@ -56,12 +56,8 @@ $('a.quick_question').click(function(){
 
 //Quickform Selection
 
-$('.figSelector div').live('click', function(){
-	$('.figSelector div').removeClass('selectFig');
-	$(this).addClass('selectFig');
-});
 
-$('.selectFig input').live('click', function(){
+$('.quickform input').live('click', function(){
 	$(this).css('color', '#000');
 	$(this).css('font-style', 'normal');
 });
@@ -71,6 +67,14 @@ $(".quickform form").live('submit', function(){
 	$(this).parent().hide();
 	$(this).parent().next().show();
 });
+
+// Reveal reactions when clicking "Give your reaction"
+
+$(".leave_reaction").click(function() {
+	$(this).hide();
+	$(this).parent().parent().find('h5').toggle();
+	$(this).parent().parent().find('.toggle').css('display', 'inline-block');
+  });
 
 
 //Hide/Show Discussion Map (known as 'overview' in the code)
@@ -136,12 +140,6 @@ $(".quickform form").live('submit', function(){
     $(this).parent().next().find("img.fullfig").slideToggle();
     });
 
-//Class options expansion
-   $("div#instructor_options").live('click', function(){
-      mpq.track("Instructor options");
-     $(this).hide();
-     $('div.class_options').show();
-   });
 
 //Select # of figures and figsections expansion
     $("div.add_figs_and_sections").live('click', function(){
@@ -160,16 +158,6 @@ $(".quickform form").live('submit', function(){
     $(".fig_upload").live('click', function(){
       $(this).parent().find('div.upload_form').show();
      });
-
-//Close when you click colored area on the right
-//   $("td.sumleft").live('click', function(){
-//    $("div.improve").hide("slow");
-//    $("div.commentbox").hide("slow");
-//    $("div.questionbox").hide("slow"); 
-//    $("div.sharebox").hide("slow");
-//    $("form.new_assertion").hide("slow");
-//   $("form.enter_assertion").show("slow");
-//    });
 
 //Click to reveal a form.
    $(".editme").live('click', function(){
@@ -198,87 +186,7 @@ $(".quickform form").live('submit', function(){
     location.replace("/users/sign_up");
   });
 
-//
-//Dynamic Loading of Elements
-//
 
-//Load Summary Form
-//$("form.enter_assertion").live('click', function(){
-//$("form.enter_assertion").mouseover(function(){
-//      $(this).hide();
-//      mpq.track("Summary form called");
-//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-//      return false;
-//    });
-
-
-// Vote Button
-
-// Good
-//   $("form#new_vote").live('click', function(){
-//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-//      return false;
-//    });
-
-// Forms to submit through jQuery
-
-// Good
-//   $("form.commentlist").live('click', function(){
-//      mpq.track("Comments viewed");
-//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-//      return false;
-//    });
-
-// Good
-//   $("form.questionlist").live('click', function(){
-//      mpq.track("Questions viewed");
-//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-//      return false;
-//    });
-
-// Good
-//   $("div.share_form").find("form").live('click', function(){
-//      mpq.track("Item shared");
-//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-//      return false;
-//    });
-
-// Good
-//   $("div.sumreq_button").find("form").live('click', function(){
-//      mpq.track("Summary Requested");
-//      $.post($(this).attr("action"), $(this).serialize(), null, "script");
-//      return false;
-//    });
-
-// Enter Assertion
-
-// Good
-//   $("form.new_assertion, form.edit_assertion").live('submit', function(){
-//     mpq.track("Summary entered");
-//     $.post($(this).attr("action"), $(this).serialize(), null, "script");  
-//     return false;
-//    });
-
-
-//
-//Submit comment or question
-//
-
-// Good
-//   $("form.new_comment").live('submit', function(){
-//	mpq.track("Comment entered");
-//      	$.post($(this).attr("action"), $(this).serialize(), null, "script");
-//	$(this).html('Just a sec...');
-//      	return false;
-//    });
-
-// Good
-//   $("form.new_question").live('submit', function(){
-//	mpq.track("Question entered");
-//     	$.post($(this).attr("action"), $(this).serialize(), null, "script");
-//	$(this).html('Just a sec...');
-//      return false;
-//    });
 
 
 //

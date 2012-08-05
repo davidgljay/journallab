@@ -1,4 +1,4 @@
-      <% comment.linktext.each do |w| %>
+      <% linktext.each do |w| %>
           <% if w.class == Paper %>
              <%= link_to "("+ w.authors.first.lastname + ", " + w.journal + ' ' + w.pubdate.year.to_s + ")", w %>
           <% elsif w.class == Fig %>

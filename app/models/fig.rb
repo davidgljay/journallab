@@ -16,10 +16,21 @@ validates :paper_id, :presence => true
 image_accessor :image
 
 def latest_assertion
-     assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
+     assert_list = self.assertions.sort{|x,y| x.created_at <=> y.created_at}
      assert_list.sort!{|x,y| x.votes.count <=> y.votes.count}
      assert_list.last
 end
+
+def meta_comments
+	meta_comments = []
+	meta_comments << self.comments
+	figsections.each do |s|
+		meta_comments << s.comments
+	end
+	meta_comments.flatten!
+        meta_comments.sort!{|x,y| x.created_at <=> y.created_at}
+	meta_comments.sort!{|x,y| y.votes.count <=> x.votes.count}
+end 
 
 def build_figsections(numsections)
    	if numsections == 0

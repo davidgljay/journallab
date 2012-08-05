@@ -3,10 +3,13 @@
   <tr >
     <td class = "<% if comment.comments.count > 0 %> has_reply <% end %> <% if comment.author %> author_comment <% end %> comment_body">
       <div class = "comment_body <%= 'author_comment_body' if comment.author %>">
-      <%= render 'linktext', :comment => comment %>
+      <% if comment.owner != @owner %>
+	<h4>Regarding <%= comment.owner.shortname%>:</h4>
+      <% end %> 
+      <%= render 'linktext', :linktext => comment.linktext %>
       <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous %>
       <%= render 'reactions/comment_reactions', :comment => comment %>
-      <div>
+      <div class = 'subMenu'>
         <ul>
          <li class="replylink clickme">
 	Reply
@@ -17,7 +20,7 @@
       <div> 	      
         <div class = "replyform hideonload">
 		<% if user_signed_in? %>	
-			<%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply' %>
+			<%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply', :owner => @owner %>
 		<% else %>
 			<br>
 			<br>

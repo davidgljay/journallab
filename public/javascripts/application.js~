@@ -57,7 +57,7 @@ $('a.quick_question').click(function(){
 //Quickform Selection
 
 
-$('.selectFig input').live('click', function(){
+$('.quickform input').live('click', function(){
 	$(this).css('color', '#000');
 	$(this).css('font-style', 'normal');
 });
@@ -70,7 +70,7 @@ $(".quickform form").live('submit', function(){
 
 // Reveal reactions when clicking "Give your reaction"
 
-$(".leave_reaction").click(function() {
+$(".leave_reaction").live('click', function() {
 	$(this).hide();
 	$(this).parent().parent().find('h5').toggle();
 	$(this).parent().parent().find('.toggle').css('display', 'inline-block');
@@ -109,14 +109,12 @@ $(".leave_reaction").click(function() {
 
 //Toggle Figure sections
    $("div.figtoggle").live('click', function(){
-     mpq.track("Sections expanded");
      $(this).next().toggle(300);
      $(this).find('img').toggle();
     });
 
 //Reply box expansion
   $("li.replylink").live('click', function(){
-      mpq.track("Reply box opened");
     $("div.answerform").hide("slow");
     $(this).parent().parent().parent().find("div.replyform").slideToggle(300);
     //$(this).html('It works!');
@@ -124,7 +122,6 @@ $(".leave_reaction").click(function() {
 
 //Answer box expansion
   $("nav li.answerlink").live('click', function(){
-      mpq.track("Answer box opened");
     $("div.replyform").hide("slow");
     $(this).parent().parent().parent().find("div.answerform").slideToggle();
   });
@@ -132,7 +129,6 @@ $(".leave_reaction").click(function() {
 //Image expansion
   
    $(".summary img.thumbnail").live('click', function(){
-      mpq.track("Image expanded");
     $("div.improve").hide("slow");
     $("div.commentbox").hide("slow");
     $("div.questionbox").hide("slow");
@@ -143,7 +139,6 @@ $(".leave_reaction").click(function() {
 
 //Select # of figures and figsections expansion
     $("div.add_figs_and_sections").live('click', function(){
-	mpq.track("Section menu expanded");
 	$(this).parent().find('div.numselect').slideToggle();
 	$(this).find('img').toggle();
      });

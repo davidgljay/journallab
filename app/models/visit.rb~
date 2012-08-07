@@ -1,27 +1,34 @@
+require 'csv'
 class Visit < ActiveRecord::Base
 
-   after_initialize :init
+after_initialize :init
+
+
 
 belongs_to :user
 belongs_to :paper
 
 validates :user_id,  :presence => true
-validates :paper_id, :presence => true
-validates_uniqueness_of :user_id, :scope => [:paper_id]
+belongs_to :about, :polymorphic => true
+validated :about_id, :presence => true
+validated :about_type, :presence => true
 
   def init
     count ||= 0
   end
 
+
+
+
 #These live here temporarily until I can figure out why helpers don't work in the heroku console
 
 #Takes a 2D array
 def export_data(array, name = "data")
-  FasterCSV.open("/public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
-
+   CSV.open("public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
     csv << array
   end
 end
+
 
 #Takes an array, returns a frequency array by day
 

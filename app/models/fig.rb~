@@ -11,6 +11,7 @@ has_many :questions, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :sumreqs, :dependent => :destroy
 has_many :reactions, :as => :about, :dependent => :destroy
+has_many :visits, :as => :about, :dependent => :destroy
 validates :paper_id, :presence => true
 
 image_accessor :image
@@ -27,6 +28,7 @@ def meta_comments
 	figsections.each do |s|
 		meta_comments << s.comments
 	end
+	meta_comments.flatten!
         meta_comments.sort!{|x,y| x.created_at <=> y.created_at}
 	meta_comments.sort!{|x,y| y.votes.count <=> x.votes.count}
 end 

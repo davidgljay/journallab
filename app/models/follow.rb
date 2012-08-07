@@ -3,6 +3,7 @@ class Follow < ActiveRecord::Base
 serialize :latest_search
 
 belongs_to :user
+has_many :visits, :as => :about, :dependent => :destroy
 belongs_to :follow, :polymorphic => true
 
 validates :name, :presence => true

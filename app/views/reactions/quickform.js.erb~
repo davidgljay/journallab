@@ -3,7 +3,7 @@
 <% end %>
 
 $('div.quickform').show();
-
+$('div.quickform').next().hide();
 
 
 <% if @owner.class == Figsection %>

@@ -15,7 +15,7 @@ has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
 has_many :figs, :dependent => :destroy, :order => "figs.num ASC"
 has_many :questions, :dependent => :destroy
-has_many :visits, :dependent => :destroy
+has_many :visits, :as => :about, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :meta_shares, :class_name => "Share"
 has_many :sumreqs, :dependent => :destroy
@@ -247,8 +247,8 @@ def check_reactions(object)
 	if object.class == Fig
 		fig_reactions = []
 		fig_reactions << object.reactions
-		object.figsections.each{|s| s.reactions << fig_reactions}
-		reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
+		object.figsections.each{|s| fig_reactions << s.reactions}
+		fig_reactions.flatten.map{|r| [r.name, fig_reactions.flatten.select{|r2| r2.name == r.name}.count]}.uniq
 	else
 		object.reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
 	end
@@ -333,9 +333,9 @@ def heatmap_overview
 	overview = [[['Paper', heatmap['paper' + id.to_s][1], 'paper' + id.to_s]] + [nil] * max_sections]
 	figs.sort{|x,y| x.num <=> y.num}.each do |fig|
 		figrow = [['Fig ' + fig.num.to_s, heatmap['fig' + fig.id.to_s][1], 'fig' + fig.id.to_s]]
-		fig.figsections.each do |section|
-			figrow << [fig.num.to_s + section.letter, heatmap['figsection' + section.id.to_s][1], 'figsection' + section.id.to_s]
-		end
+		#fig.figsections.each do |section|
+		#	figrow << [fig.num.to_s + section.letter, heatmap['figsection' + section.id.to_s][1], 'figsection' + section.id.to_s]
+		#end
 		overview << figrow + [nil] * (max_sections - fig.figsections.count)
 	end
 	overview

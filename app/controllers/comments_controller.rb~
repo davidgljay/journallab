@@ -6,7 +6,9 @@ before_filter :authenticate_user!, :except => [:list]
     	@owner = params[:owner].constantize.find(params[:id])
     	@group = current_user.get_group
     	@mode = params[:mode].to_i
-	
+	if signed_in? || 
+		@owner.visits.create(:user => current_user, :type => 'comment')
+	end
 	#Comments used to be visible only to groups. We're switching things so that they're always visible and just semi-anonymous. 
 	if @owner.class == Fig
 	    	@comments = @owner.meta_comments
@@ -55,7 +57,7 @@ before_filter :authenticate_user!, :except => [:list]
     	@heatmap = @paper.heatmap
     	@group.make_filter(@comment, params[:mode])
 	if @owner.class == Fig
-	    	@comments = @owner.meta_comments.all
+	    	@comments = @owner.meta_comments
 	else
 	   	@comments = @owner.comments.all
 	end

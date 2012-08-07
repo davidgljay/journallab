@@ -62,7 +62,7 @@
 </div>
 	<% comments = about.class == Fig ? about.meta_comments : about.comments %>
          <div class = "commentbox <%= 'hideonload' if comments.empty? %>", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
-		<%= render('/comments/first_comment', :comment => comments.first, :about => about) unless comments.empty? %>
+		<%= render('/comments/first_comment', :comment => comments.first, :owner => about) unless comments.empty? %>
          </div>
      <% if about.class == Fig %>
        <% unless about.image.nil? %>
@@ -83,6 +83,9 @@
 		</div>
 	<div id="<%= "fig_" + about.num.to_s + "_sections"%>" class = "fig_sections hideonload">	
 		<% about.figsections.each do |section| %>
+  		<table style = 'border-spacing: 0px;'><tr><td>
+		<table style = 'border-spacing: 0px;'><tr><td></td><tr><td class = 'summaryGap heat<%= @heatmap['figsection' + fig.id.to_s][1] %>'></td></tr><tr><td></td></tr></table>
+		</td><td>
 			<div class = 'summaryBox heatBox<%= @heatmap['figsection' + section.id.to_s][1] %>' id = 'figsection<%= section.id.to_s %>'>
 				<table width="95%" border="0" cellspacing="0" cellpadding="5">
 					<tbody><tr><td>
@@ -90,6 +93,7 @@
 					</td></tr></tbody>
 				</table>
 			</div>
+		    </tr></td></table>
 		<% end %>
 	</div>
         <% end %>

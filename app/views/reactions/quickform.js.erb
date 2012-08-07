@@ -14,6 +14,10 @@ $('<%= @owner.jquery_target %>').find('div.reaction_list').first().html('<%= esc
 	render '/reactions/reaction_list', :about => @owner
 )%>');
 
+$('<%= @owner.jquery_target %>').find('div.comment_form').first().html('<%= escape_javascript(
+	render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment'
+)%>');
+
 $('<%= @owner.jquery_target %>').addClass('heatBox<%= @heatmap[@owner.inspect][1] %>');	
 $(window).scrollTop($('<%= @owner.jquery_target %>').position().top)
 $('<%= @owner.jquery_target %>').find('div.comment_form').first().show(300);

@@ -30,6 +30,7 @@ validates :code, :uniqueness => true, :allow_nil => true
 validates :category, :presence => true
 validates :name, :presence => true
 
+
 #Functions for adding and removing users
 
 def add(user)
@@ -295,9 +296,9 @@ end
 #Create a list of the most viewed papers
 
 def update_most_viewed
-    visits = users.map{|u| u.visits}
-    papers = visits.flatten!.map{|v| v.paper_id}.uniq.map{|id| Paper.find(id)}
-    self.most_viewed = papers.map{|paper| [paper.id, visits.select{|v| v.paper_id == paper.id}.map{|v| v.count.to_i }.inject(0){|sum, item| sum + item}]}.sort{|x,y| y[1]<=>x[1]}.first(30)
+    visits = users.map{|u| u.visits}.flatten.select{|v| v.about.class == Paper}
+    papers = visits.map{|v| v.about}.uniq
+    self.most_viewed = papers.map{|paper| [paper.id, visits.select{|v| v.about.id == paper.id}.count ]}.sort{|x,y| y[1]<=>x[1]}.first(30)
     self.save
     self.most_viewed
 end

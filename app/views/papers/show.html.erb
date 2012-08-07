@@ -43,6 +43,7 @@
 
 <p>
 <% if !@paper.figs.empty? || !@paper.comments.empty? || !@paper.questions.empty? %>
+  <%= render 'overview' %>
   <%= render 'summary' %>
   <div id = "add_figs_link"><a  class = "small clickme">Add/Remove Figures</a></div>
   <div id = "add_figs" class = "hideonload">

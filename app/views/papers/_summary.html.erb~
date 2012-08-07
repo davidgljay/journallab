@@ -1,6 +1,4 @@
 <div id='summary'>
-<h4>Summary</h4>
-<%= render 'legend' %>
 <div class = 'summaryBox heatBox<%= @heatmap['paper' + @paper.id.to_s][1] %>' id = 'paper<%= @paper.id.to_s %>'>
 <table width="95%" border="0" cellspacing="0" cellpadding="5">
 	<tbody><tr>
@@ -11,7 +9,12 @@
 </table>
 
 <% @paper.figs.sort{|x,y| x.num <=> y.num}.each do |fig| %>
+<table><tr><td>
+<table style = 'border-spacing: 0px;'><tr><td></td><tr><td class = 'summaryGap heat<%= @heatmap['fig' + fig.id.to_s][1] %>'></td></tr><tr><td></td></tr></table>
+</td><td>
 <div class = 'summaryBox heatBox<%= @heatmap['fig' + fig.id.to_s][1] %>' id = 'fig<%= fig.id.to_s %>'>
+
+
 <table width="95%" border="0" cellspacing="0" cellpadding="5">
 	<tbody><tr>
 		<td>
@@ -20,6 +23,7 @@
 	</tr></tbody>
 </table>
 </div>
+</tr></td></table>
 <% end %>
 </table>
 </div>

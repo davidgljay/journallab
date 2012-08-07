@@ -4,7 +4,7 @@ before_filter :admin_user,   :only => [:dashboard]
 
   def home
     	@title = "Home"
-
+	@group = Group.new
 	if signed_in?
 		@group = current_user.get_group
 	    	@feed = @group.prep_feed
@@ -23,6 +23,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto_render = "follow"
 		@switchto = params[:switchto]
 		@follow = Follow.find(params[:switchto][7..-1].to_i)
+		@follow.visits.create(:user => current_user, :visit_type => 'feed') if signed_in?
 		@nav_language = @follow.name
 		@group = current_user.get_group if signed_in?
 	else
@@ -50,16 +51,17 @@ before_filter :admin_user,   :only => [:dashboard]
   def dashboard
     require 'groups_helper'
     @title = "Dashboard"
-    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ?', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ?', Time.now - 1.month))],["Unique Views", graph_by_day(Visit.where('created_at > ?', Time.now - 1.month))],["Users", graph_by_day(User.where('created_at > ?', Time.now - 1.month))],["Custom Feeds", graph_by_day(Follow.where('created_at > ?', Time.now - 1.month))]]
-    start = @vanity.map{|a| a[1].map{|coord| coord[0]}.min}.min
-    finish = @vanity.map{|a| a[1].map{|coord| coord[0]}.max}.max
-    # First, get the full range of days covered by the graph
-    @range = dayrange(start, finish)
+
+    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ?', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ?', Time.now - 1.month))],["Users", graph_by_day(User.where('created_at > ?', Time.now - 1.month))],["Custom Feeds", graph_by_day(Follow.where('created_at > ?', Time.now - 1.month))]]
+
+    @views = [["Papers", graph_by_day(Visit.where("created_at > ? AND visit_type = 'paper'", Time.now - 1.month))], ["Comments", graph_by_day(Visit.where("created_at > ? AND visit_type = 'comment'", Time.now - 1.month))], ["Feeds", graph_by_day(Visit.where("created_at > ? AND visit_type = 'feed'", Time.now - 1.month))]]
+
+
     @nods_per_discussion = histogram(Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.votes.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.votes.count})
     @replies_per_discussion =  histogram(Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.comments.count + q.questions.count})
     @nod_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.votes.count}.inject{|sum, n| sum + n}, Question.where('created_at > ?', Time.now - 1.month).map{|c| c.votes.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ?', Time.now - 1.month).count])
     @reply_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count}.inject{|sum, n| sum + n}, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|c| c.comments.count + c.questions.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).count])
-    @action_pageview__ratio = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('updated_at > ?', Time.now - 1.month).map{|v| v.count}.inject{|sum, n| sum + n}])
+    @action_pageview__ratio = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('created_at > ?', Time.now - 1.month).count])
     @total_users = [["Users",graph_total_by_day(User.where('created_at > ?', Time.now - 1.year))]]
 
   end
@@ -129,7 +131,7 @@ before_filter :admin_user,   :only => [:dashboard]
      else
      	array.sort!{|x,y| x.created_at <=> y.created_at}
      	finish = array.last.created_at + 1.day
-     	start = array.first.created_at -1.day
+     	start = array.first.created_at - 1.day
      	days = []
      	day = start.midnight
         while day < finish.midnight

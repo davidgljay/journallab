@@ -31,7 +31,7 @@ def quickform
 		@reload = @paper.figs.empty? && @paper.comments.empty? && @paper.questions.empty?
 	elsif params[:fig].last.match('[a-z]').nil?
 		@reload = params[:fig].to_i > @paper.figs.count
-		@paper.build_figs(params[:fig].to_i)
+		@paper.build_figs(params[:fig].to_i) if @reload
 		@owner = @paper.figs.select{|f| f.num ==  params[:fig].to_i}.first
 	else
 		fignum = params[:fig].chop.to_i
@@ -50,7 +50,6 @@ def quickform
 		@newreaction = true
 		@paper = @reaction.get_paper
 		@paper.add_heat(@owner)
-		@paper.save
 
 	else
 		@newreaction = false

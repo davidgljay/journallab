@@ -1,9 +1,7 @@
 <% if @reload %>
 	location.reload();
 <% end %>
-$('div.quickform').html(<%= escape_javascript(
-	render '/reactions/quickform'
-)%>');
+
 
 <% if @owner.class == Figsection %>
 	$('<%= @owner.fig.jquery_target %>').find('div.fig_sections').show();
@@ -11,6 +9,9 @@ $('div.quickform').html(<%= escape_javascript(
 
 $('<%= @owner.jquery_target %>').addClass('heatBox<%= @heatmap[@owner.inspect][1] %>');	
 $(window).scrollTop($('<%= @owner.jquery_target %>').position().top)
+$('<%= @owner.jquery_target %>').find('div.comment_form').first().html('<%= escape_javascript(
+	render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment'
+)%>');
 $('<%= @owner.jquery_target %>').find('div.comment_form').first().show(300);
 
 

@@ -1,11 +1,4 @@
 <% if @heatmap.count > 1 || @heatmap.first[1][1] > 0 %> 
-<div class = 'overview_open clickme'>
-<h4><img src="/images/arrow_open.gif" alt="open" width="15" height="15" class = 'hideonload'>
-<img src="/images/arrow_closed.gif" alt="open" width="15" height="15" >
-Heatmap</h4>
-
-</div>
-	<div class = 'hideonload'>
 <%= render 'legend' %>
 <table id = 'overview' class = 'heatTable'><tr>
 <% @heatmap_overview.first.length.times do |i| %>
@@ -17,5 +10,4 @@ Heatmap</h4>
 	</tr>
 <% end %>
 </table>
-</div>
 <% end %>

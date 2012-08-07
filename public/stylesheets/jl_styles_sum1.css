@@ -54,16 +54,25 @@ td.sumright .reaction_list ul {
 	font-size: 9px;
 } 
 
+.summaryGap {
+	width: 10px;
+	height: 3px;
+	display: inline-block;
+}
+
 .summaryBox {
-	margin-left: 20px;
 	border-left-width: 10px;
 	border-left-style: solid;
 	border-left-color: #025B98;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	padding-left: 10px;
 	margin-bottom: 5px;
 	clear: both;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	display: inline-block;
 }
 
 .summaryBox h1 {
@@ -88,48 +97,52 @@ td.sumright .reaction_list ul {
 }
 
 .heatBox0{
-	background-color: #fff;
+	border-color: #999;
+	border-left-width: 1px; 
 }
 	
 .heatBox1{
-	background-color: #D1D6D8;
+	border-color: #D1D6D8;
 }
 .heatBox2{
-	background-color: #e2eaee;
-	border-left-width: 10px;
-	border-left-style: solid;
-	border-left-color: #a6c3d4;
+	border-color: #BED4E1;
 }
 .heatBox3{
-	background-color: #A9D6EC;
+	border-color: #A9D6EC;
 }
 .heatBox4{
-	background-color: #8CD4F6;
+	border-color: #8CD4F6;
 }
 .heatBox5{
-	background-color: #94D2C7;
+	border-color: #94D2C7;
 }
 .heatBox6{
-	background-color: #9CD098;
+	border-color: #9CD098;
 }
 .heatBox7{
-	background-color: #A0CF67;
+	border-color: #A0CF67;
 }
 .heatBox8{
-	background-color: #e6ebca;
-	border-left-width: 10px;
-	border-left-style: solid;
-	border-left-color: #aac854;
+	border-color: #C3D666;
 }
 .heatBox9{
-	background-color: #E3DD64;
+	border-color: #E3DD64;
 }
 .heatBox10{
-	background-color: #fbefcb;
-	border-left-width: 10px;
-	border-left-style: solid;
-	border-left-color: #ffdc47;
+	border-color: #FFE564;
 }
+
+.heatBox0{
+	border-color: #999;
+	border-left-width: 1px; 
+}
+
+
+.summaryGap.heat0{
+	background-color: #999;
+	height: 1px;
+}
+
 
 .contribute {
 	margin: 0px;

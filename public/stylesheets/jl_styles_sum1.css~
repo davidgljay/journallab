@@ -19,11 +19,17 @@
 	width: 450px;
 }
 
+#paperMenu {
+	float: right;
+	margin-right: 10px;
+	text-align: right;
+}
+
 .paperNav {
 	color: #63A82A;
 	font-weight: bold;
-	font-size: 14px;
 	padding-bottom: 10px;
+	display: block;
 }
 
 .visits {

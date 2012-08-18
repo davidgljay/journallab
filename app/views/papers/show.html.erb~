@@ -1,16 +1,38 @@
 <%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
 <div id="contentMain">
-<script type="text/javascript">
-  mpq.track("Paper viewed",{'id':'<%= @paper.id.to_s %>'<% if user_signed_in? %>, 'user':'<%= current_user.anon_name %>'<% end %>});
-</script>
 
-<div id="paperInfo">
+<div style = "text-align: right;">
+<span class="small grey">
+<% if @paper.visits.count == 1 %>
+	<em><strong>1 person has visited this paper.</strong></em>
+<% else %>
+	<em><strong><%= pluralize(@numvisits,"Person")%></strong> <%= @numvisits > 1 ? 'have' : 'has' %> visited this paper.</em>
+<% end %>
+</span>
+</div>
+
+<div id="paperInfo" class = "round">
+
+<div id="paperMenu">
+<% if @paper.pubmed_id %>
+		<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav') do %>Get PDF <i class = 'icon-download'></i> <% end %>
+	<% elsif @paper.doi %>
+		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
+	<% end %>
+	<% if user_signed_in? %>
+		<%= render '/shares/share_button' unless @groups.empty? %> 
+		<div class = "sharebox"></div>
+        <% else %>
+		| <a href = "/users/sign_up">Share</a></h3>
+        <% end %>
+</div>
+
 <h1><%= @paper.title %></h1>
 	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
-	<%= render '/authors/author_list', :paper => @paper %>
+	<div><%= render '/authors/author_list', :paper => @paper %></div>
 	<% if @paper.abstract.nil? || @paper.abstract.empty? %>
 		<% if @paper.description %>
-		<div>
+
   			<h4>Description</h4>
   			<p><%= @paper.description %></p>
 		</div>
@@ -22,20 +44,10 @@
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
-	<% if @paper.pubmed_id %>
-		<%= link_to("Download", "http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav') %> | 
-	<% elsif @paper.doi %>
-		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %> | 
-	<% end %>
 	<% if user_signed_in? %>
-		<%= render '/shares/share_button' unless @groups.empty? %> 
-		<div class = "sharebox"></div>
-
 		<%= render '/reactions/quickform'%>
 		<%= render 'add_figs' if @paper.figs.empty? %>
-        <% else %>
-		| <a href = "/users/sign_up">Share</a></h3>
-        <% end %>
+	<% end %> 
 
 </div>
 
@@ -51,12 +63,5 @@
 <% end %>
 
 </p>
-			<span class="small grey">
-				<% if @paper.visits.count == 1 %>
-  					<em><strong>1 person has visited this paper.</strong></em>
-				<% else %>
-		  			<em><strong><%= pluralize(@paper.visits.count,"People")%></strong> have visited this paper.</em>
-				<% end %>
-			</span>
 
 </div>

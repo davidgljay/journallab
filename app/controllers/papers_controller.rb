@@ -25,6 +25,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 	@heatmap = @paper.heatmap
 	@heatmap_overview = @paper.heatmap_overview
 	@reaction_map = @paper.reaction_map
+	@numvisits = @paper.visits.map{|v| v.user}.uniq.count
 	if signed_in?
 		@groups = current_user.groups
 		@groups.delay.each {|g| g.most_viewed_add(@paper); g.save;}

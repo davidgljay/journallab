@@ -26,7 +26,7 @@ has_many :meta_votes, :class_name => "Vote", :foreign_key => "get_paper_id"
 has_many :meta_assertions, :class_name => "Assertion", :foreign_key => "get_paper_id"
 has_many :filters, :foreign_key => "paper_id",
                            :dependent => :destroy
-has_many :groups, :through => :filters, :source => :group
+has_many :groups, :through => :discussions, :source => :group
 has_many :meta_reactions, :class_name => "Reaction", :foreign_key => "get_paper_id"
 has_many :reactions, :as => :about
 
@@ -248,7 +248,8 @@ def check_reactions(object)
 		fig_reactions = []
 		fig_reactions << object.reactions
 		object.figsections.each{|s| fig_reactions << s.reactions}
-		fig_reactions.flatten.map{|r| [r.name, fig_reactions.flatten.select{|r2| r2.name == r.name}.count]}.uniq
+		fig_reactions.flatten!
+		fig_reactions.map{|r| [r.name, fig_reactions.select{|r2| r2.name == r.name}.count]}.uniq
 	else
 		object.reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
 	end

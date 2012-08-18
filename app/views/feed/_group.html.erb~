@@ -1,0 +1,3 @@
+<div id= '<%= @group.inspect + "Feed" %>'>
+<h2><%= @group.name %></h2>
+</div>

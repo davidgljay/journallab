@@ -19,9 +19,12 @@
 	width: 450px;
 }
 
-.share_button_top {
+.paperNav {
 	color: #63A82A;
 	font-weight: bold;
+	font-size: 14px;
+	padding-bottom: 10px;
+	display: inline-block;
 }
 
 .visits {

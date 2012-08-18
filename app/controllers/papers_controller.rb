@@ -26,11 +26,8 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 	@heatmap_overview = @paper.heatmap_overview
 	@reaction_map = @paper.reaction_map
 	if signed_in?
-		@group = current_user.get_group
-		@group.delay.most_viewed_add(@paper)
-		@group.delay.save
-	else
-		@group = Group.new
+		@groups = current_user.groups
+		@groups.delay.each {|g| g.most_viewed_add(@paper); g.save;}
 	end
 
     #Prep the selection dropdown for selection the # of figs in the paper.  

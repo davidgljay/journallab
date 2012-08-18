@@ -18,18 +18,19 @@ has_many :users, :through => :memberships, :source => :user
 #Filter Associations
 has_many :filters, :foreign_key => "group_id",
                            :dependent => :destroy
-has_many :papers, :through => :filters, :source => :paper
+has_many :discussions, :dependent => :destroy
+has_many :papers, :through => :discussions, :source => :paper
 has_many :comments, :through => :filters, :source => :comment
 has_many :questions, :through => :filters, :source => :question
 has_many :assertions, :through => :filters, :source => :assertion
 has_many :sumreqs, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :maillogs, :as => :about
+has_many :visits, :as => :about, :dependent => :destroy, :order => 'created_at DESC'
 
 validates :code, :uniqueness => true, :allow_nil => true
 validates :category, :presence => true
 validates :name, :presence => true
-
 
 #Functions for adding and removing users
 
@@ -45,6 +46,17 @@ def add(user)
    end
 end
 
+def shortname
+	if name.length > 17
+		name.first(17) + "..."
+	else
+		name
+	end
+end
+
+def inspect
+	"group" + id.to_s
+end
 def make_lead(user)
    unless users.include?(user)
       self.users << user
@@ -341,6 +353,41 @@ end
   
 def sumreq_count
    sumreqs.select{|s| !s.summarized}.count
+end
+
+
+# Does this group have any new shares? (In which case we should send out an e-mail)
+def newshares?
+	!shares.select{|share| share.created_at > Time.now - 1.day}.empty?
+end
+
+# Functions related to Journal clubs
+def current_discussion
+	discussions.select{|d| d.starttime <= Time.now}.sort{|x,y| y.starttime <=> x.starttime}.first
+end
+
+def set_newcount
+	if category == 'jclub'
+		p = current_discussion.paper
+		lastvisit = visits.empty? ? Date.new(1900,1,1) : visits.first.created_at 
+		self.newcount = p.meta_comments.select{|c| c.created_at > lastvisit}.count
+		if current_discussion.starttime > lastvisit
+			self.newcount += 1
+		end
+	else
+		self.newcount = nil
+	end
+	self.newcount
+	self.save
+end
+
+def nofityGroup
+end
+
+def remindGroup
+end
+
+def emailAuthor
 end
 
 end

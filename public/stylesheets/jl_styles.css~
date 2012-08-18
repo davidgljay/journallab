@@ -551,7 +551,6 @@ form.new_vote {
 
 .commentbox, .questionbox {
 	padding: 15px;
-	border: 1px solid #025B98;
 	padding-top: 5px;
 	background: #fff;
 	width: 500px;
@@ -627,7 +626,7 @@ td.comment_body, td.question_body {
 }
 
 .quickform ul {
-	width: 680px;
+	width: 630px;
 }
 
 
@@ -635,6 +634,7 @@ td.comment_body, td.question_body {
 	float: left;
 	text-align: left;
 	font-size: 11px;
+	margin-right: 50px;
 }
 
 .quickform .figSelector div {

@@ -17,7 +17,7 @@ end
 
 
 def defaults
-	["Solid Science", "Novel", "Conclusion matches data",  "Interesting hypothesis", "Skeptical", "Missing Controls", "Conclusion does not match data", "I have a question"]
+	["Solid Science", "Novel", "Interesting hypothesis", "Conclusion matches data",   "I'm Skeptical", "Missing Controls", "Conclusion does not match data", "I have a question"]
 end
 
 end

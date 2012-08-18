@@ -24,9 +24,9 @@ has_many :meta_comments, :class_name => "Comment", :foreign_key => "get_paper_id
 has_many :meta_questions, :class_name => "Question", :foreign_key => "get_paper_id"
 has_many :meta_votes, :class_name => "Vote", :foreign_key => "get_paper_id"
 has_many :meta_assertions, :class_name => "Assertion", :foreign_key => "get_paper_id"
-has_many :filters, :foreign_key => "paper_id",
+has_many :discussions, :foreign_key => "paper_id",
                            :dependent => :destroy
-has_many :groups, :through => :filters, :source => :group
+has_many :groups, :through => :discussions, :source => :group
 has_many :meta_reactions, :class_name => "Reaction", :foreign_key => "get_paper_id"
 has_many :reactions, :as => :about
 

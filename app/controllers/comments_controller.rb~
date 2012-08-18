@@ -7,7 +7,7 @@ before_filter :authenticate_user!, :except => [:list]
     	@group = current_user.get_group
     	@mode = params[:mode].to_i
 	if signed_in? || 
-		@owner.visits.create(:user => current_user, :type => 'comment')
+		@owner.visits.create(:user => current_user, :visit_type => 'comment')
 	end
 	#Comments used to be visible only to groups. We're switching things so that they're always visible and just semi-anonymous. 
 	if @owner.class == Fig
@@ -22,7 +22,7 @@ before_filter :authenticate_user!, :except => [:list]
   end
 
   # POST /comments
-  # POST /comments.xml
+  # Activates create.js which makes the comment appear w/out a page reload.
   def create
     	@comment = Comment.new(:text => params[:comment][:text], :anonymous => params[:comment][:anonymous])
     	@mode = params[:mode].to_i
@@ -31,14 +31,15 @@ before_filter :authenticate_user!, :except => [:list]
     	end
     	@comment.user = current_user
     	@comment.form = params[:comment][:form]
-	@group = current_user.get_group
+	@groups = current_user.groups
     	if params[:comment][:form] == "reply"
        		@comment.comment = Comment.find(params[:comment][:reply_to])
     		@owner = @comment.owner
-    	elsif params[:comment][:form] == "qcomment"
-       		@comment.question = Question.find(params[:comment][:reply_to])
-       		@questions = @comment.owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
-    		@owner = @comment.owner
+	# Old code for independent comments, bring back if I bring them back.
+    	#elsif params[:comment][:form] == "qcomment"
+       	#	@comment.question = Question.find(params[:comment][:reply_to])
+       	#	@questions = @comment.owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
+    	#	@owner = @comment.owner
     	else
 		@owner = params[:owner_class].constantize.find(params[:owner_id])
 		if @owner.class == Paper
@@ -52,10 +53,9 @@ before_filter :authenticate_user!, :except => [:list]
     	@paper = @owner.get_paper
 	@comment.get_paper = @paper
 	@comment.save
-        current_user.get_group.feed_add(@comment)
+        @groups.each {|g| g.delay.feed_add(@comment); g.delay.set_newcount;}
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
-    	@group.make_filter(@comment, params[:mode])
 	if @owner.class == Fig
 	    	@comments = @owner.meta_comments
 	else

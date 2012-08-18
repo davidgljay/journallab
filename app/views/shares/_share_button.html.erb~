@@ -1,5 +1,5 @@
-<div class='share_button_top clickme'>
-<div class = 'share_button_text'>Share</div>
+<div class='share_button_top clickme inline'>
+<div class = 'share_button_text inline'>Share</div>
 <div class = 'share_button_form hideonload'>
  <%= render '/shares/share_form', :item => @paper %>
 </div>

@@ -3,18 +3,19 @@ before_filter :authenticate_user!
 
 
   def create
-    @item = params[:share][:type].constantize.find(params[:share][:id])
-    @group = Group.find(params[:share][:group])
+    @item = params[:share][:type].constantize.find(params[:share][:id].to_i)
+    @groups = params[:group].to_a.delete_if{|g| g[1] == "0"}.map {|g| Group.find(g[0].to_i)}
     @text = params[:share][:text] 
-    @share = @item.shares.create!(:user=> current_user, :text => @text, :get_paper => @item.get_paper, :group => @group)
-    @group.feed_add(@share)
     @paper = @item.get_paper
-    @numshares = @item.shares.count
+    @groups.each do |g|
+       @share = @item.shares.create!(:user=> nil, :text => @text, :get_paper => @item.get_paper, :group => g)
+       g.feed_add(@share)
+       #g.users.each do |u|
+       # Disabling share mailer for ISSCR 
+       #  Mailer.delay.share_notification(@share, u).deliver if u.receive_mail?("share_notification")
+       #end
+    end
     respond_to do |format|
-      @group.users.each do |u|
-# Disabling share mailer for ISSCR
-#         Mailer.share_notification(@share, u).deliver if u.receive_mail?("share_notification")
-      end
       format.js
       format.html { redirect_to @paper }
     end

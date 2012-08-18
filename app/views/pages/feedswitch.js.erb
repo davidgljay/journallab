@@ -2,5 +2,6 @@ $('.feed_nav_item').removeClass('feed_nav_selected');
 $('.homePageFeed').hide();
 $('<%= '.' + @switchto %>').val('<%= @nav_language %>')
 $('<%= '.' + @switchto %>').addClass('feed_nav_selected');
-$('<%= '#' + @switchto + '_feed'%>').html('<%= escape_javascript(render('/feed/' + @switchto_render)) %>'); 
+$('<%= '.' + @switchto %>').parent().parent().prev().addClass('hideonload');
+$('<%= '#' + @switchto + '_feed'%>').html('<%= escape_javascript(render '/feed/' + @switchto_render, :group => @group) %>'); 
 $('<%= '#' + @switchto + '_feed'%>').show();

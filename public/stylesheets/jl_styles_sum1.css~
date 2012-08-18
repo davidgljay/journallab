@@ -19,9 +19,11 @@
 	width: 450px;
 }
 
-.share_button_top {
+.paperNav {
 	color: #63A82A;
 	font-weight: bold;
+	font-size: 14px;
+	padding-bottom: 10px;
 }
 
 .visits {
@@ -64,8 +66,8 @@ td.sumright .reaction_list ul {
 	border-left-width: 10px;
 	border-left-style: solid;
 	border-left-color: #025B98;
-	border-top-width: 1px;
-	border-top-style: solid;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	margin-bottom: 5px;

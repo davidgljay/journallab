@@ -14,7 +14,6 @@ body {
 	font-size: 22px;
 }
 #homeSearch {
-	height: 300px;
 	text-align: center;
 }
 #homeSearch  .inputSearch {
@@ -30,22 +29,16 @@ body {
 }
 
 #homeFeed {
-	text-align: center;
 	margin: 0px;
 	margin-top: 30px;
-	padding: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
 	border-radius: 10px;
 	background-color: #B5CFE3;
 	padding-bottom: 20px;
 }
 
-#homeFeed h1 {
-	font-size: 24px;
-	line-height: 24px;
-	color: #155E3A;
-	margin-right: 20px;
-	margin-left: 20px;
-}
+
 
 #feedNav {
 	margin: 0px;
@@ -74,6 +67,7 @@ body {
 
 
 #feedNav .feed_nav_item {
+	text-align: center;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	width: 100px;
@@ -121,5 +115,8 @@ body {
 
 .homePageFeed {
 	background-color: #fff;
+	padding-top: 20px;
+	padding-bottom: 20px;
+
 }
 

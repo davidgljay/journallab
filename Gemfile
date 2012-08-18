@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.3'
+gem 'rake', '0.9.2.2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -21,10 +22,15 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
-gem 'delayed_job_active_record'
-gem 'devise', '1.5.3'
-gem 'fog'
+
+  gem 'devise', '1.5.3'
+  gem 'dragonfly', '0.9.12'
+  gem 'rmagick', '2.13.1'
+  gem  'mini_magick', '3.4' 
+  gem 'fog', '1.5.0'
+  gem 'delayed_job', '3.0.3'
+  gem 'delayed_job_active_record', '0.3.2'
+  gem 'daemons'
 
 
 # To use ActiveModel has_secure_password
@@ -57,15 +63,7 @@ group :test do
 end
 
 group :redcell do
-  gem 'devise', '1.5.3'
   gem 'jrails'
   gem 'dynamic_form'
   gem 'rack-cache', :require => 'rack/cache'
-  gem 'dragonfly'
-  gem 'rmagick'
-  gem  'mini_magick'
-  gem 'fog'
-  gem 'delayed_job'
-  gem 'delayed_job_active_record'
-  gem 'daemons'
 end

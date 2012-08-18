@@ -9,11 +9,11 @@
 	<% if !paper.abstract.empty? %>
 		| <%= link_to("Abstract", "#", :class => "abstract deadLink") %>
 	<% end %>
-	<% if user_signed_in? %>
+	<% if user_signed_in? && false %>
 		| <%= link_to("Share", '', :class => "list_share deadLink") %>
 	<% end %></div>
 	<p class='abstract_long hideonload'><%= paper.abstract %></p>
-	<% if user_signed_in? %>
+	<% if user_signed_in? && false %>
 		<div id = "<%= "list_share_" + paper.id.to_s %>" class = "list_share hideonload"><%= render 'shares/share_form', :item => paper %></div>
 	<% end %>
 	<% if paper.first_last_authors %>

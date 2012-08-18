@@ -1,10 +1,7 @@
 <%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
 <div id="contentMain">
-<script type="text/javascript">
-  mpq.track("Paper viewed",{'id':'<%= @paper.id.to_s %>'<% if user_signed_in? %>, 'user':'<%= current_user.anon_name %>'<% end %>});
-</script>
 
-<div id="paperInfo">
+<div id="paperInfo" class = "round">
 <h1><%= @paper.title %></h1>
 	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
 	<%= render '/authors/author_list', :paper => @paper %>
@@ -22,14 +19,13 @@
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
-	<h3>
 	<% if @paper.pubmed_id %>
-		<%= link_to("Download", "http://pubget.com/paper/" + @paper.pubmed_id.to_s) %> | 
+		<%= link_to("Download", "http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav') %> | 
 	<% elsif @paper.doi %>
-		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s) %> | 
+		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %> | 
 	<% end %>
 	<% if user_signed_in? %>
-		<%= render '/shares/share_button' unless @group.id.nil? %> </h3>
+		<%= render '/shares/share_button' unless @groups.empty? %> 
 		<div class = "sharebox"></div>
 
 		<%= render '/reactions/quickform'%>

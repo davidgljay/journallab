@@ -35,7 +35,7 @@ before_filter :is_group_lead, :only => [:remove]
 
   def remove
 	@group = Group.find(params[:id])
-	@user = User.find(params[:user])
+	@user = User.find(params[:u_id])
 	@group.remove(@user)
 	flash[:success] = @user.name + " has been removed from " + @group.name
 	redirect_to root_path

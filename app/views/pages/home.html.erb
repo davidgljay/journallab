@@ -1,4 +1,6 @@
+<%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
 <%= stylesheet_link_tag 'jl_styles_home', :media => 'screen' %>
+
 
 <div id="homeLogo"><%= image_tag 'jl_logo_trans_M.png', :id => 'mainlogo' %></div>
 
@@ -15,29 +17,16 @@
   
 
 <% end %>
-
-<% if user_signed_in? && @group.id != nil %>
+</div>
+<% if user_signed_in? %>
 <div id = "homeFeed" class = "feed round">
-  <h1><%= @group.name %></h1>
-    <% if @group.category == "class" %>
-    <strong>
-     Instructors: 
-     <% @instructors.each do |i| %>
-       <%= i.lastname %>, <%= i.firstname %> 
-       <% unless i == @instructors.last %>
-       | 
-       <% end %>
-     <% end %>
-     </strong>
-      <%= render '/feed/class_papers' %>
-    <% elsif @group.category == "lab" %>
       <%= render '/feed/nav' %>
-      <div id='updates_feed' class = "homePageFeed"><%= render '/feed/updates' %></div>
-      <div id='most_viewed_feed' class = "homePageFeed"></div>
+      <% @groups.each do |g| %>
+	<div id= '<%= g.inspect + '_feed' %>' class = "homePageFeed"><%= render '/feed/discussion', :group => g %></div>
+      <% end %>
       <% @follows.each do |follow| %>
 	<div id = <%= follow.classname + "_feed" %> class = "homePageFeed"></div>
       <% end %>
-	<div id='follow_form' class = "homePageFeed hideonload"><%= render '/feed/follow_form' %></div>
-    <% end %>
+      <div id='follow_form' class = "homePageFeed hideonload"><%= render '/feed/follow_form' %></div>
 </div>
 <% end %>

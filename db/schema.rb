@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120805034459) do
+ActiveRecord::Schema.define(:version => 20120818050011) do
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -93,6 +93,17 @@ ActiveRecord::Schema.define(:version => 20120805034459) do
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
+  create_table "discussions", :force => true do |t|
+    t.string   "name"
+    t.integer  "paper_id"
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "starttime"
+    t.datetime "endtime"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "figs", :force => true do |t|
     t.integer  "paper_id"
     t.integer  "num"
@@ -143,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20120805034459) do
     t.datetime "updated_at"
     t.string   "name"
     t.text     "latest_search"
+    t.integer  "newcount",      :default => 0
   end
 
   create_table "groups", :force => true do |t|
@@ -154,6 +166,8 @@ ActiveRecord::Schema.define(:version => 20120805034459) do
     t.string   "code"
     t.text     "feed"
     t.text     "most_viewed"
+    t.boolean  "public"
+    t.integer  "newcount",    :default => 0
   end
 
   create_table "journals", :force => true do |t|

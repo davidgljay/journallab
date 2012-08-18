@@ -1,0 +1,9 @@
+<div class = "tenmargin">
+<% if group.currentDiscussion %>
+<h4>Current topic of discussion:</h4>
+<h2><%= @paper.title%></h2>
+<%= render '/papers/summary' %>
+<% else %>
+<h2>This group is not currently discussing a paper, suggest one.</h2>
+<% end %>
+</div>

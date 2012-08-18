@@ -31,7 +31,7 @@
 					<h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
 				<% end %>
         		</div><br>
-         		<p class="method clickme editme"><%= new_if_nil(about.latest_assertion).method_text.to_s.empty? ? 'Click to list methods' : about.latest_assertion.method_text %>
+         		<p class="method clickme editme"><%= new_if_nil(about.latest_assertion).method_text.to_s.empty? ? 'Click to list methods' : 'Methods: ' + about.latest_assertion.method_text %>
 			</p>
 			<div class = "hideonload editme_form">
 				<% if signed_in? %>
@@ -84,7 +84,7 @@
 	<div id="<%= "fig_" + about.num.to_s + "_sections"%>" class = "fig_sections hideonload">	
 		<% about.figsections.each do |section| %>
   		<table style = 'border-spacing: 0px;'><tr><td>
-		<table style = 'border-spacing: 0px;'><tr><td></td><tr><td class = 'summaryGap heat<%= @heatmap['figsection' + fig.id.to_s][1] %>'></td></tr><tr><td></td></tr></table>
+		<table style = 'border-spacing: 0px;'><tr><td></td><tr><td class = 'summaryGap heat<%= @heatmap['figsection' + section.id.to_s][1] %>'></td></tr><tr><td></td></tr></table>
 		</td><td>
 			<div class = 'summaryBox heatBox<%= @heatmap['figsection' + section.id.to_s][1] %>' id = 'figsection<%= section.id.to_s %>'>
 				<table width="95%" border="0" cellspacing="0" cellpadding="5">

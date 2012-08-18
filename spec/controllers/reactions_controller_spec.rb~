@@ -8,7 +8,7 @@ describe ReactionsController do
 		@paper.build_figs(3)
 		@fig = @paper.figs.first
 		@user = Factory(:user, :email => Factory.next(:email))
-		sign_in_as(@user)
+		test_sign_in(@user)
 	end
 
 	it "should be successful and flag @newreaction as true" do

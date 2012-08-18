@@ -53,7 +53,7 @@ class Mailer < ActionMailer::Base
 
   def share_digest(user)
 	@recipient = user
-	shares = user.groups.map{|g| g.shares}.flatten.select{|share| share.created_at > Time.now - 1.day}
+	shares = user.groups.map{|g| g.shares}.flatten.select{|share| share.created_at > Time.now - 1.day}.uniq
 	@shares = []
 	@users = []
 	shares.each do |s|

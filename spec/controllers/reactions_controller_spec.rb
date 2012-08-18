@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe ReactionsController do
 
+
   describe "GET 'create'" do
 	before(:each) do
 		@paper = Factory(:paper)

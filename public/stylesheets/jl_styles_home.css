@@ -68,9 +68,7 @@ body {
 
 #feedNav .feed_nav_item {
 	text-align: center;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	width: 100px;
+	padding: 5px;
 	font-weight: bold;
 	color: #fff;
 	background-color: #005997;

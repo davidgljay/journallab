@@ -47,8 +47,8 @@ def add(user)
 end
 
 def shortname
-	if name.length > 17
-		name.first(17) + "..."
+	if name.length > 25
+		name.first(25) + "..."
 	else
 		name
 	end

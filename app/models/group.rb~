@@ -32,8 +32,6 @@ validates :code, :uniqueness => true, :allow_nil => true
 validates :category, :presence => true
 validates :name, :presence => true
 
-before_save :set_newcount
-
 #Functions for adding and removing users
 
 def add(user)
@@ -49,8 +47,8 @@ def add(user)
 end
 
 def shortname
-	if name.length > 17
-		name.first(17) + "..."
+	if name.length > 25
+		name.first(25) + "..."
 	else
 		name
 	end
@@ -380,6 +378,7 @@ def set_newcount
 		self.newcount = nil
 	end
 	self.newcount
+	self.save
 end
 
 def nofityGroup

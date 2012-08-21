@@ -3,7 +3,7 @@
     <tr class = "summary" id = <%= about.class.to_s.downcase + about.id.to_s %> >
 	<% if about.class == Paper %>
 	    	<td class = "sumright">
-	    		<h1>Overall Paper</h1>
+	    		<h1>Summary of The Overall Paper</h1>
 	<% elsif about.class == Fig %>
 		<% if about.image %>
 			<td width="180" align="center">
@@ -62,6 +62,7 @@
 </div>
 	<% comments = about.class == Fig ? about.meta_comments : about.comments %>
          <div class = "commentbox <%= 'hideonload' if comments.empty? %>", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
+		<h4>Comments</h4>
 		<%= render('/comments/first_comment', :comment => comments.first, :owner => about) unless comments.empty? %>
          </div>
      <% if about.class == Fig %>

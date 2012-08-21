@@ -62,6 +62,7 @@
 </div>
 	<% comments = about.class == Fig ? about.meta_comments : about.comments %>
          <div class = "commentbox <%= 'hideonload' if comments.empty? %>", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
+		<h5>Comments</h5>
 		<%= render('/comments/first_comment', :comment => comments.first, :owner => about) unless comments.empty? %>
          </div>
      <% if about.class == Fig %>

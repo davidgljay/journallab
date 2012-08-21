@@ -1,6 +1,6 @@
-         <li class="reactionlink custom_reaction clickme badge badge-info">  
-	     Other:
+         <li class="reactionlink custom_reaction clickme badge hideonload toggle">  
              <%= form_for(about.reactions.new, :class => "reaction", :remote => true) do |f| %>
+	     Other:
                	<%= hidden_field_tag :about_type, about.class.to_s %>
                	<%= hidden_field_tag :about_id, about.id %>
                	<%= f.hidden_field :user_id, :value => current_user.id %>

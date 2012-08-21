@@ -1,4 +1,4 @@
-         <li class="reactionlink custom_reaction clickme badge badge-info">  
+         <li class="reactionlink custom_reaction clickme badge hideonload toggle">  
              <%= form_for(about.reactions.new, :class => "reaction", :remote => true) do |f| %>
 	     Other:
                	<%= hidden_field_tag :about_type, about.class.to_s %>

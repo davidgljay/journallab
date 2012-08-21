@@ -23,6 +23,15 @@ group :assets do
 end
 
 
+  gem 'devise', '1.5.3'
+  gem 'dragonfly', '0.9.12'
+  gem 'rmagick', '2.13.1'
+  gem  'mini_magick', '3.4' 
+  gem 'fog', '1.5.0'
+  gem 'delayed_job', '3.0.3'
+  gem 'delayed_job_active_record', '0.3.2'
+  gem 'daemons'
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -54,15 +63,7 @@ group :test do
 end
 
 group :redcell do
-  gem 'devise', '1.5.3'
   gem 'jrails'
   gem 'dynamic_form'
   gem 'rack-cache', :require => 'rack/cache'
-  gem 'dragonfly', '0.9.12'
-  gem 'rmagick', '2.13.1'
-  gem  'mini_magick', '3.4' 
-  gem 'fog', '1.5.0'
-  gem 'delayed_job', '3.0.3'
-  gem 'delayed_job_active_record', '0.3.2'
-  gem 'daemons'
 end

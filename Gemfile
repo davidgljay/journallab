@@ -31,7 +31,7 @@ end
   gem 'delayed_job', '3.0.3'
   gem 'delayed_job_active_record', '0.3.2'
   gem 'daemons'
-
+  gem 'activerecord-postgresql-adapter'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

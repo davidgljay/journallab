@@ -21,11 +21,13 @@
 <% if user_signed_in? %>
 <div id = "homeFeed" class = "feed round">
       <%= render '/feed/nav' %>
-      <% @groups.each do |g| %>
-	<div id= '<%= g.inspect + '_feed' %>' class = "homePageFeed"><%= render '/feed/discussion', :group => g %></div>
+      <% @groups.each_with_index do |g, i| %>
+	<div id= '<%= g.inspect + '_feed' %>' class = "homePageFeed"><%= render '/feed/discussion', :group => g if i == 0 %></div>
       <% end %>
-      <% @follows.each do |follow| %>
-	<div id = <%= follow.classname + "_feed" %> class = "homePageFeed"></div>
+      <% @follows.each_with_index do |follow, i| %>
+	<div id = <%= follow.classname + "_feed" %> class = "homePageFeed">
+	<%= render '/feed/follow' if i == 0 && @groups.empty? %>
+	</div>
       <% end %>
       <div id='follow_form' class = "homePageFeed hideonload"><%= render '/feed/follow_form' %></div>
 </div>

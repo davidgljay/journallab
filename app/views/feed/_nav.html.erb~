@@ -1,20 +1,23 @@
 <div id = "feedNav">
 <ul>
+<li><%= @groups.empty? %></li>
 <% if signed_in? %>
 	<% @groups.each_with_index do |group, i| %>
 		<li>
-			<%= button_to group.shortname , {:action => "feedswitch",  :switchto => group.inspect}, :class => group.inspect + " feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 ? 'feed_nav_selected' : '') , :remote => true %><%= render '/shared/loading' %>
 			<% if group.newcount > 0 %> 	
 				<div class = 'badge badge-important feedNotice'><%= group.newcount %></div>		
 			<% end %> 	
+			<%= button_to group.shortname , {:action => "feedswitch",  :switchto => group.inspect}, :class => group.inspect + " feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 ? 'feed_nav_selected' : '') , :remote => true %><%= render '/shared/loading' %>
+
 		</li>
 	<% end %>
-	<% @follows.each do |follow| %>
+	<% @follows.each_with_index do |follow, i| %>
 		<li>
-			<%= button_to follow.name, {:action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme", :remote => true %><%= render '/shared/loading' %>
 			<% if follow.newcount > 0 %> 			
 				<div class = 'badge badge-warning feedNotice'><%= follow.newcount%></div>
 			<% end %>
+			<%= button_to follow.name, {:action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme" + (@groups.empty? ? 'feed_nav_selected' : ''), :remote => true %><%= render '/shared/loading' %>
+
 		</li>
 	<% end %>	
 	<li><div class = "feed_nav_item feedPlus clickme" >+</div></li>

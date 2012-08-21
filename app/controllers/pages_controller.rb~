@@ -7,11 +7,13 @@ before_filter :admin_user,   :only => [:dashboard]
 	@group = Group.new
 	if signed_in?
 		@groups = current_user.groups.select{|g| g.category == 'jclub'}
-		@paper = @groups.first.current_discussion.paper
-		@groups.first.visits.create(:user => current_user, :visit_type => 'feed')
-		@heatmap = @paper.heatmap
-		@reaction_map = @paper.reaction_map
-	    	@feed = @groups.first.prep_feed
+		if !@groups.empty?
+			@paper = @groups.first.current_discussion.paper
+			@groups.first.visits.create(:user => current_user, :visit_type => 'feed')
+			@heatmap = @paper.heatmap
+			@reaction_map = @paper.reaction_map
+		    	@feed = @groups.first.prep_feed
+		end
 		@follows  = current_user.follows.all
 		@newfollow = current_user.follows.new
 	end

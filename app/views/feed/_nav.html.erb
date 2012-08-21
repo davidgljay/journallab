@@ -10,12 +10,12 @@
 
 		</li>
 	<% end %>
-	<% @follows.each do |follow| %>
+	<% @follows.each_with_index do |follow, i| %>
 		<li>
 			<% if follow.newcount > 0 %> 			
 				<div class = 'badge badge-warning feedNotice'><%= follow.newcount%></div>
 			<% end %>
-			<%= button_to follow.name, {:action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme", :remote => true %><%= render '/shared/loading' %>
+			<%= button_to follow.name, {:action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 && @groups.empty? ? 'feed_nav_selected' : ''), :remote => true %><%= render '/shared/loading' %>
 
 		</li>
 	<% end %>	

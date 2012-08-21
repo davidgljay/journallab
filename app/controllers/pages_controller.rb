@@ -15,6 +15,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		    	@feed = @groups.first.prep_feed
 		end
 		@follows  = current_user.follows.all
+		@follow = @follows.first
 		@newfollow = current_user.follows.new
 	end
   end

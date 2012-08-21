@@ -39,6 +39,8 @@ before_filter :admin_user,   :only => [:dashboard]
 		@group.delay.set_newcount
 		@nav_language = @group.shortname
 		@paper = @group.current_discussion.paper
+		@heatmap = @paper.heatmap
+		@reaction_map = @paper.reaction_map
 		@groups = current_user.groups if signed_in?		
 	end
   end

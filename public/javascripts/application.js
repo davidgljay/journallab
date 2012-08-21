@@ -30,6 +30,11 @@ $(".searchreset").live('click', function(){
 	$(this).css('font-style', 'normal');	
 });
 
+//Overlay Close
+$(".lightbox").find("i.icon-remove").live('click', function(){
+	$(this).parent().hide();
+	$('div.overlay').hide();
+});
 
 //Abstract Expansion
 $("#abstract").live('click', function(){
@@ -85,14 +90,13 @@ $(".leave_reaction").live('click', function() {
 
 //Share Expansion
   $(".sharelink").live('click', function(){
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $("div.question").hide("slow");
-    $(this).parent().parent().parent().find("div.sharebox").slideToggle(300);
+    $(this).parent().parent().parent().find("div.sharebox").show();
+
   });
 
   $("div.share_button_text").live('click', function(){
-    $(this).parent().find("div.share_button_form").slideToggle(300);
+    $(this).parent().find("div.share_button_form").show();
+    $('div.overlay').show('');
   });
 
   $("a.list_share").live('click', function(){

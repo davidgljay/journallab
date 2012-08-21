@@ -1,9 +1,47 @@
 <div class = "tenmargin">
+
 <% if group.current_discussion %>
+
+
 <h4>Current topic of discussion:</h4>
+<div style = "float: left; width:64px; height:40px;"></div>
+<div id="paperMenu">
+<% if @paper.pubmed_id %>
+		<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav') do %>Get PDF <i class = 'icon-download'></i> <% end %>
+	<% elsif @paper.doi %>
+		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
+	<% end %>
+	<% if user_signed_in? %>
+		<%= render '/shares/share_button' unless @groups.select{|g| g.category == 'lab'}.empty? %> 
+        <% else %>
+		| <a href = "/users/sign_up">Share</a></h3>
+        <% end %>
+</div>
+<div align = "center">
 <h2><%= @paper.title%></h2>
+
+	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
+	<div><%= render '/authors/author_list', :paper => @paper %></div>
+	<% if @paper.abstract.nil? || @paper.abstract.empty? %>
+		<% if @paper.description %>
+
+  			<h4>Description</h4>
+  			<p><%= @paper.description %></p>
+		</div>
+		<% end %>
+	<% else %>
+		<div align = "left">
+ 			<strong>Abstract: </strong><%= @paper.abstract %>
+		</div>
+	<% end %>
+	<br>
+</div>
+
+
 <%= render '/papers/summary' %>
-<% else %>
-<h2>This group is not currently discussing a paper, suggest one.</h2>
+  <div id = "add_figs_link"><a  class = "small clickme">Add/Remove Figures</a></div>
+  <div id = "add_figs" class = "hideonload">
+	<%= render '/papers/add_figs' %>
+  </div>
 <% end %>
 </div>

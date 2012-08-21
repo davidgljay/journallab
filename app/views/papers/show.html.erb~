@@ -12,7 +12,7 @@
 </div>
 
 <div id="paperInfo" class = "round">
-
+<div style = "float: left; width:64px; height:40px;"></div>
 <div id="paperMenu">
 <% if @paper.pubmed_id %>
 		<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav') do %>Get PDF <i class = 'icon-download'></i> <% end %>

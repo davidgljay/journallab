@@ -1,9 +1,8 @@
-$('<%= @item.jquery_target %>').find('div.share_form').hide();
-$('<%= @item.jquery_target %>').find('div.share_confirmation').show();
-
-
 $('div.share_button_top').find('div.share_form').hide();
-$('div.share_button_top').find('div.share_confirmation').show();
-$('div.share_button_top').removeClass('clickme');
+$('<%= @item.jquery_target %>').find('div.share_form').hide();
+$('.flash').hide();
+$("<div class='flash notice'>Shared!</div>").insertAfter('header');
 
-$('<%= "#list_share_" + @paper.id.to_s %>').html('<h3>Shared!</h3>'); 
+$('div.overlay').hide();
+
+

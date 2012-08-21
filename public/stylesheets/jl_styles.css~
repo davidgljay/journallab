@@ -284,6 +284,34 @@ td#profileImage {
 	border-radius: 10px;
 }
 
+/* Full Page Overlays */
+
+.overlay {
+    	position: absolute;
+    	width: 100%;
+	height: 5000px;
+    	z-index: 50;
+    	background: #fff;
+    	opacity: 0.5;
+	filter: alpha(opacity = 50); /* required for opacity to work in IE */
+}
+
+.lightbox {
+	position:absolute;
+    	top: 150px;
+    	left: 30%;
+	right: 30%;
+        z-index:51;
+        background: #fff;
+        padding: 8px;
+	border: 1px solid #9FCF67;
+	text-align: center;
+}
+
+.lightbox i.icon-remove {
+	float: right;
+}
+
 /* Search Results, also used for feeds on profile page */
 
 .abstract_short, .abstract_long {
@@ -695,6 +723,10 @@ td.comment_body, td.question_body {
 
 .twomargin {
 	margin: 0px;
+}
+
+.tenmargin {
+	margin: 10px;
 }
 
 .nopadding {

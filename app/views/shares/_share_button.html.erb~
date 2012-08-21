@@ -1,5 +1,5 @@
-<div class='share_button_top clickme inline'>
-<div class = 'share_button_text inline paperNav'>Share <i class = 'icon-share'></i></div>
+<div class='share_button_top inline'>
+<div class = 'share_button_text clickme inline paperNav'>Share <i class="icon-share"></i></div>
 <div class = 'share_button_form hideonload'>
  <%= render '/shares/share_form', :item => @paper %>
 </div>

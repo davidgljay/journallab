@@ -1,5 +1,6 @@
 <% if @follows.empty? && @groups.empty? %>
 <h1>Get started!</h1>
+<% end %>
 <h2>Follow a Pubmed Search Term:</h2>
 <%= form_for(Follow.new) do |f| %>
 	<%= f.hidden_field :user_id, :value => current_user.id %>

@@ -1,3 +1,4 @@
+<div align = "center">
 <% if @follows.empty? && @groups.empty? %>
 <h1>Get started!</h1>
 <% end %>
@@ -7,4 +8,4 @@
 	<%= f.text_field :search_term %>
 	<p><%= f.submit "Follow", :class => 'loadingPrompt' %><%= render '/shared/loading' %></p>
 <% end %>
-
+</div>

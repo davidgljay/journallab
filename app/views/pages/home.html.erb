@@ -11,7 +11,7 @@
     <table border="0" align="center" cellpadding="0" cellspacing="0">
       <tbody><tr>
         <td>
-   	<%= text_field_tag :pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" %>
+   	<%= text_field_tag :pubmed_id, "Find a paper to discuss.", :onfocus =>  "if(this.value == 'Find a paper to discuss.') { this.value = ''; }", :class => "inputSearch searchreset" %>
 	</td>
 <td valign="top" class = "Search">   <%= submit_tag "GO", :class => 'btn-tiny btn-warning round'%></tb></tr></table>
   
@@ -29,6 +29,6 @@
 	<%= render '/feed/follow' if i == 0 && @groups.empty? %>
 	</div>
       <% end %>
-      <div id='follow_form' class = "homePageFeed hideonload"><%= render '/feed/follow_form' %></div>
+      <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @groups.empty? %>"><%= render '/feed/follow_form' %></div>
 </div>
 <% end %>

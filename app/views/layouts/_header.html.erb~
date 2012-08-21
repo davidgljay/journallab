@@ -1,5 +1,5 @@
  <header>
-     <div id="overlay" class="hideonload"></div>
+     <div class="hideonload overlay"></div>
        <div id='header'>
             <div id='utNav'>
             <% if user_signed_in? %>
@@ -21,7 +21,7 @@
 		      <tbody><tr>
         		<td >
                 	<%= form_tag('/lookup', :method => "get") do  %>
-                	<%= text_field_tag(:pubmed_id, "Search PubMed with style.", :onfocus =>  "if(this.value == 'Search PubMed with style.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> <%= submit_tag "GO", :class => 'btn-tiny btn-warning round', :style => "vertical-align: top; margin-top: 2px;"%></td>
+                	<%= text_field_tag(:pubmed_id, "Find a paper to discuss.", :onfocus =>  "if(this.value == 'Find a paper to discuss.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> <%= submit_tag "GO", :class => 'btn-tiny btn-warning round', :style => "vertical-align: top; margin-top: 2px;"%></td>
                 	<% end %>
 			</td>
       			</tr>

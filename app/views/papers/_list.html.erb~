@@ -2,7 +2,7 @@
 	<div class = "sr_info2 small"><%= paper.journal %>, <%= paper.pubdate.strftime('%B %d, %Y') unless paper.pubdate == nil %> | 
 
 	<% if paper.pubmed_id %>
-		<%= link_to("Download", "http://pubget.com/paper/" + paper.pubmed_id.to_s) %>
+		<%= link_to("http://pubget.com/paper/" + paper.pubmed_id.to_s) do %>Get PDF <i class = 'icon-download'></i><% end %>
 	<% elsif paper.doi %>
 		<%= link_to("View on " + paper.journal, "http://dx.doi.org/" + paper.doi.to_s) %>
 	<% end %>

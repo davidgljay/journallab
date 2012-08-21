@@ -1,5 +1,5 @@
 
-	<% if @reaction_map[about.inspect][1] > 0 %>
+	<% if @reaction_map[about.inspect][0][1] > 0 %>
 		<h5>Reactions to <%= about.shortname %>:</h5>
 	<% end %>
 	<h5 class = "hideonload">What is your reaction?</h5>
@@ -18,7 +18,7 @@
              <% end %>
           </li>
         <% end %>
-	  <li class = 'reactionlink leave_reaction clickme badge'>Give your reaction</li>
+	  <li class = 'reactionlink leave_reaction clickme badge'>Leave a Comment</li>
 	  
 	</ul>
 

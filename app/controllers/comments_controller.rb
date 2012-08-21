@@ -55,7 +55,7 @@ before_filter :authenticate_user!, :except => [:list]
 	@comment.save
         @groups.each do |g| 
 		g.delay.feed_add(@comment)
-		g.delay.set_newcount if @paper == g.current_discussion.paper
+		g.delay.set_newcount if g.category == 'jclub'
 	end
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap

@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
         has_many :questions
         has_many :votes
         has_many :shares
+	has_many :reactions
         has_many :visits, :foreign_key => "user_id",
                           :dependent => :destroy
         has_many :visited_papers, :through => :visits, :source => :paper

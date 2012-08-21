@@ -53,7 +53,10 @@ before_filter :authenticate_user!, :except => [:list]
     	@paper = @owner.get_paper
 	@comment.get_paper = @paper
 	@comment.save
-        @groups.each {|g| g.delay.feed_add(@comment); g.delay.set_newcount;}
+        @groups.each do |g| 
+		g.delay.feed_add(@comment)
+		g.delay.set_newcount if @paper == g.current_discussion.paper
+	end
     	@paper.add_heat(@owner)
     	@heatmap = @paper.heatmap
 	if @owner.class == Fig

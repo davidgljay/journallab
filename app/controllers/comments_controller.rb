@@ -4,7 +4,7 @@ before_filter :authenticate_user!, :except => [:list]
  #Used to render a list in the papers view.
   def list
     	@owner = params[:owner].constantize.find(params[:id])
-    	@group = current_user.get_group
+    	@groups = current_user.groups
     	@mode = params[:mode].to_i
 	if signed_in? || 
 		@owner.visits.create(:user => current_user, :visit_type => 'comment')

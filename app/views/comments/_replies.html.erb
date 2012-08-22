@@ -2,7 +2,7 @@
   <tr>
     <td> <div class = "reply <% unless r == comment.comments.all.last %> more_replies <% end %> <% if r.author %> author_comment <% end %>">
       	<div class = "comment_body <%= 'author_comment_body' if r.author %>">
-       	<%= render 'comments/linktext', :comment => r %>
+       	<%= render 'comments/linktext', :linktext => r.linktext %>
       	</div>
 	<%= render 'shared/user_info', :user => r.user, :date => r.created_at %>
 	</div>

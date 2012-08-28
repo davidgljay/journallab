@@ -1,7 +1,11 @@
 <div class="user_info">
 <% if anonymous = anonymous || user.anon?(current_user)%>
     <span class="anon_name">
-      <strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= user.anon_name %></font>)
+	<% if @paper %>
+	      <strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= user.anon_name(@paper) %></font>)
+	<% else %> 
+	      <strong>Anonymous</strong>
+	<% end %>
     </span>
     <% if date %>
     	<div class = 'small inline' ><em><%= render 'shared/display_date', :date => date %></em></div>

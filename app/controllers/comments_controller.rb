@@ -25,10 +25,11 @@ before_filter :authenticate_user!, :except => [:list]
   # Activates create.js which makes the comment appear w/out a page reload.
   def create
     	@comment = Comment.new(:text => params[:comment][:text], :anonymous => params[:comment][:anonymous])
-    	@mode = params[:mode].to_i
-	if params[:comment][:assertion_id]
-    		@comment.assertion = Assertion.find(params[:comment][:assertion_id])
-    	end
+	# Disabled until I bring back more complex privacy
+    	#@mode = params[:mode].to_i
+	#if params[:comment][:assertion_id]
+    	#	@comment.assertion = Assertion.find(params[:comment][:assertion_id])
+    	#end
     	@comment.user = current_user
     	@comment.form = params[:comment][:form]
 	@groups = current_user.groups
@@ -42,6 +43,7 @@ before_filter :authenticate_user!, :except => [:list]
     	#	@owner = @comment.owner
     	else
 		@owner = params[:owner_class].constantize.find(params[:owner_id])
+	# At some point, come in and make comments polymorphic so that this can be avoided
 		if @owner.class == Paper
 			@comment.paper = @owner
 		elsif @owner.class == Fig
@@ -52,6 +54,7 @@ before_filter :authenticate_user!, :except => [:list]
     	end
     	@paper = @owner.get_paper
 	@comment.get_paper = @paper
+	current_user.assign_anon_name(@paper)
 	@comment.save
         @groups.each do |g| 
 		g.delay.feed_add(@comment)

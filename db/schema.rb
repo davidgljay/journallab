@@ -10,7 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120818050011) do
+ActiveRecord::Schema.define(:version => 20120824192253) do
+
+  create_table "anons", :force => true do |t|
+    t.string   "name"
+    t.integer  "paper_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "assertions", :force => true do |t|
     t.text     "text"
@@ -315,7 +323,6 @@ ActiveRecord::Schema.define(:version => 20120818050011) do
     t.string   "encrypted_password"
     t.string   "password_salt"
     t.boolean  "admin",                :default => false
-    t.string   "anon_name"
     t.text     "specialization"
     t.string   "profile_link"
     t.string   "image_uid"

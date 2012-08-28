@@ -29,6 +29,7 @@ has_many :discussions, :foreign_key => "paper_id",
 has_many :groups, :through => :discussions, :source => :group
 has_many :meta_reactions, :class_name => "Reaction", :foreign_key => "get_paper_id"
 has_many :reactions, :as => :about
+has_many :anons
 
 #Validations
    validates :pubmed_id, :uniqueness => true, :allow_nil => true
@@ -278,14 +279,16 @@ end
 def heatmap
     if h_map.nil?
       heatmap = {}
-      heatmap["paper" + id.to_s] = [heat]
       figs.each do |fig|
         heatmap["fig" + fig.id.to_s] = [fig.heat]
         fig.figsections.each do |s|
           heatmap["figsection" + s.id.to_s] = [s.heat]
         end
       end
-      calc_heat(heatmap)     
+      heatmap = calc_heat(heatmap)
+      heatmap["paper" + id.to_s] = [heat, [heat, 10].min]
+      self.h_map = heatmap
+      self.save
     end
     h_map
 end  
@@ -293,6 +296,7 @@ end
 #Calculate the relative heat of each element, with 0 being cool and 100 being warm
 
 def calc_heat(heatmap)
+   
    #Find the maximum number of comments
    max = heatmap.values.map{|h| h[0]}.max
    if max == 0
@@ -304,9 +308,7 @@ def calc_heat(heatmap)
      float = h.to_f/max * 10
      heatmap[id] = [h, float.to_i]
    end
-   self.h_map = heatmap
-   self.save     
-   self.h_map
+   heatmap
 end
 
 def add_heat(item)
@@ -315,18 +317,7 @@ def add_heat(item)
 end
 
 def heat
-   heat = comments.count
-   heat += questions.count
-   heat += assertions.count
-   heat += reactions.count
-   comments.each do |c|
-     heat += c.comments.count
-   end
-   questions.each do |q|
-     heat += q.questions.count
-     heat += q.comments.count
-   end
-   heat
+   (self.meta_reactions + self.meta_comments).map{|c| c.user}.uniq.count
 end
 
 def heatmap_overview

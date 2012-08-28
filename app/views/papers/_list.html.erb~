@@ -1,8 +1,10 @@
+<table><tr><td width = "10px" class = "<%= "heat" + paper.heatmap[paper.inspect][1].to_s %>"></td>
+<td>
 	<div class = "sr_title"><%= link_to paper.title, paper %></div>
 	<div class = "sr_info2 small"><%= paper.journal %>, <%= paper.pubdate.strftime('%B %d, %Y') unless paper.pubdate == nil %> | 
 
 	<% if paper.pubmed_id %>
-		<%= link_to("http://pubget.com/paper/" + paper.pubmed_id.to_s) do %>Get PDF <i class = 'icon-download'></i><% end %>
+		<%= link_to("http://pubget.com/paper/" + paper.pubmed_id.to_s, :target => '_blank') do %>Get PDF <i class = 'icon-download'></i><% end %>
 	<% elsif paper.doi %>
 		<%= link_to("View on " + paper.journal, "http://dx.doi.org/" + paper.doi.to_s) %>
 	<% end %>
@@ -19,4 +21,6 @@
 	<% if paper.first_last_authors %>
 		<div class = "sr_info2 small grey">First Author: <%= link_to paper.first_last_authors.first[:name], '/lookup/' + paper.first_last_authors.first[:firstname] + '+' + paper.first_last_authors.first[:lastname] %> | Last Author: <%= link_to  paper.first_last_authors.last[:name], '/lookup/' + paper.first_last_authors.last[:firstname] + '+' + paper.first_last_authors.last[:lastname] %></div>
 	<% end %>	
-
+</td>
+</tr>
+</table>

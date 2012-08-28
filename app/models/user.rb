@@ -27,8 +27,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link, :position, :institution, :homepage, :cv, :image, :remember_me
 
-        before_validation :assign_anon_name
-
 
         has_many :assertions
         has_many :comments
@@ -47,7 +45,9 @@ class User < ActiveRecord::Base
         has_many :maillogs
         has_many :subscriptions
         has_many :votes_for_me, :class_name => "Vote", :foreign_key => "vote_for_id"
-	has_many :follows
+	has_many :follows, :dependent => :destroy
+	has_many :anons, :dependent => :destroy
+	has_many :share_visits, :class_name => "Visit", :as => :about, :dependent => :destroy, :order => 'created_at DESC'
 
         image_accessor :image
 
@@ -159,20 +159,19 @@ class User < ActiveRecord::Base
      end
   end
 
+
   def colors
 
     colors = ["Aqua","Aquamarine","Azure","Beige","Bisque","Black","Blue","Brown","Chartreuse","Chocolate","Coral","Cornflower Blue","Cornsilk","Crimson","Cyan","Forest Green","Fuchsia", "Ghost White","Gold","Goldenrod","Gray","Green","Grey","Hot Pink","Indigo ","Ivory","Khaki","Lavender","Lemon Chiffon","Light Blue","Lime Green","Linen","Magenta","Maroon","Olive","Orange","Orchid","Pink","Plum","Powder Blue","Purple","Red","Royal Blue","Salmon","Sandy Brown","Sea Green","Sienna","Silver","Sky Blue","Snow","Steel Blue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","White Smoke","Yellow"]
 
   end
 
-# Functionality related to semin-anonymous names for users
-  def generate_anon_name
 
-    animals = ["Aardvark","Alligator","Buffalo","Ant","Anteater","Antelope","Ape","Armadillo","Donkey","Baboon","Badger","Barracuda","Bat","Bear","Beaver","Bee","Bison","Boar","Buffalo","Butterfly","Camel","Caribou","Cat","Caterpillar","Cow","Chamois","Cheetah","Chicken","Chimpanzee","Cobra","Cormorant","Coyote","Crab","Crane","Crocodile","Crow","Deer","Dog","Dogfish","Dolphin","Donkey","Dove","Dragonfly","Duck","Dugong","Eagle","Echidna","Eel","Eland","Elephant","Elephant seal","Elk","Falcon","Ferret","Finch","Fly","Fox","Frog","Gaur","Gazelle","Gerbil","Giraffe","Gnu","Goat","Goose","Gorilla","Guanaco","Guinea fowl","Guinea pig","Gull","Hamster","Hare","Hawk","Hedgehog","Heron","Hippopotamus","Hornet","Horse","Human","Hyena","Iguana","Jackal","Jaguar","Jellyfish","Kangaroo","Koala","Komodo dragon","Kouprey","Kudu","Lark","Lemur","Leopard","Lion","Llama","Lobster","Lyrebird","Magpie","Mallard","Manatee","Meerkat","Mink","Mole","Monkey","Moose","Mosquito","Mouse","Mule","Narwhal","Nightingale","Okapi","Oryx","Ostrich","Otter","Owl","Ox","Oyster","Panda","Panther","Partridge","Peafowl","Pelican","Penguin","Pigeon","Platypus","Pony","Porcupine","Quelea","Rabbit","Raccoon","Ram","Raven","Reindeer","Rhinoceros","Salamander","Sea lion","Seahorse","Seal","Seastar","Shark","Sheep","Shrew","Snail","Snake","Spider","Squid","Squirrel","Swan","Tapir","Tiger","Toad","Turkey","Turtle","Walrus","Water Buffalo","Whale","Wolf","Wombat","Yak","Zebra"]
-   
-    self.anon_name = self.colors[rand(self.colors.length - 1)] + ' ' + animals[rand(animals.length - 1)]
+  def anon_name(paper)
+	self.anons.select{|a| a.paper == paper}.first.name 
   end
-   
+
+
   def anon?(user)
     # Users can see themselves
     if self == user
@@ -232,11 +231,28 @@ class User < ActiveRecord::Base
   end
 
 
-    def assign_anon_name
-      if self.anon_name.nil?
-         self.anon_name = self.generate_anon_name
-      end
-    end
+  def assign_anon_name(paper)
+  	if self.anons.select{|a| a.paper == paper}.empty?
+		a = self.anons.new(:paper => paper)
+		a.generate
+	end 
+  end
+
+#
+# Functions relates to share feed
+#
+  def new_shares
+	groups.map{|g| g.shares}.flatten.select{|s| s.created_at > share_visits.first.created_at}.count
+  end
+
+  def shares_feed
+	feed = []
+	lastvisit = share_visits.empty? ? Date.new(1900,1,1) : share_visits.first.created_at 
+	shares = groups.map{|g| g.shares}.flatten.sort{|x,y| y.created_at <=> x.created_at}
+	shares.first(20).each do |s|
+		feed << [s, s.created_at > share_visits.first.created_at]
+	end
+  end
 
   private
 

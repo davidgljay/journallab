@@ -6,7 +6,7 @@
 <h4>Current topic of discussion:</h4>
 <%= render 'papers/paper_menu' %>
 <div align = "center">
-<h2><%= @paper.title%></h2>
+<h2><%= link_to @paper.title, @paper, :style => "font-weight:normal;" %></h2>
 
 	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
 	<div><%= render '/authors/author_list', :paper => @paper %></div>

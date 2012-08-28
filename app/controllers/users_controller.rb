@@ -56,7 +56,8 @@ before_filter :admin_user,   :only => [:destroy, :index]
       u.email.downcase!
       u.password = password
       u.password_confirmation = password
-      u.generate_anon_name
+      u.verified = true
+      u.confirmed_at = Time.now
       if u.save
         @passwords << password
         @group.users << u

@@ -1,7 +1,7 @@
+<table><tr><td>
 <h2>Sign up</h2>
 
 <%= form_for( resource, :url => registration_path(resource_name)) do |f| %>
-  <%= f.error_messages %>
   <h3>First name</h3>
   <%= f.text_field :firstname %> 
 

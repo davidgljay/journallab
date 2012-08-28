@@ -41,8 +41,8 @@
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
-	<% if user_signed_in? %>
 		<%= render '/reactions/quickform'%>
+	<% if user_signed_in? %>
 		<%= render 'add_figs' if @paper.figs.empty? %>
 	<% end %> 
 

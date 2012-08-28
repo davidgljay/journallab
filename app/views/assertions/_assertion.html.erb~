@@ -48,9 +48,11 @@
 		        <div class="improve">
          		</div><br>
 
+	<% if signed_in? %>
 	<div class = "reaction_list">
 		<%= render '/reactions/reaction_list', :about => about %>
 	</div>
+	<% end %>
 	<br>
 	<div class = 'comment_form hideonload'>
 	</div>
@@ -62,7 +64,7 @@
 </div>
 	<% comments = about.class == Fig ? about.meta_comments : about.comments %>
          <div class = "commentbox <%= 'hideonload' if comments.empty? %>", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
-		<h4>Comments</h4>
+		<h5>Comments</h5>
 		<%= render('/comments/first_comment', :comment => comments.first, :owner => about) unless comments.empty? %>
          </div>
      <% if about.class == Fig %>

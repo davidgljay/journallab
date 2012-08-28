@@ -48,9 +48,11 @@
 		        <div class="improve">
          		</div><br>
 
+	<% if signed_in? %>
 	<div class = "reaction_list">
 		<%= render '/reactions/reaction_list', :about => about %>
 	</div>
+	<% end %>
 	<br>
 	<div class = 'comment_form hideonload'>
 	</div>

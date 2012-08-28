@@ -1,7 +1,7 @@
 <div id = "feedNav">
 <ul>
 <% if signed_in? %>
-	<% @groups.each_with_index do |group, i| %>
+	<% @jclubs.each_with_index do |group, i| %>
 		<li>
 			<% if group.newcount > 0 %> 	
 				<div class = 'badge badge-important feedNotice'><%= group.newcount %></div>		
@@ -15,7 +15,7 @@
 			<% if follow.newcount > 0 %> 			
 				<div class = 'badge badge-warning feedNotice'><%= follow.newcount%></div>
 			<% end %>
-			<%= button_to follow.name, {:action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 && @groups.empty? ? 'feed_nav_selected' : ''), :remote => true %><%= render '/shared/loading' %>
+			<%= button_to follow.name, {:action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 && @jclubs.empty? ? 'feed_nav_selected' : ''), :remote => true %><%= render '/shared/loading' %>
 
 		</li>
 	<% end %>	

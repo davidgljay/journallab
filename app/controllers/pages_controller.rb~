@@ -4,17 +4,17 @@ before_filter :admin_user,   :only => [:dashboard]
 
   def home
     	@title = "Home"
-	@group = Group.new
 	if signed_in?
-		@groups = current_user.groups.select{|g| g.category == 'jclub'}
-		if !@groups.empty?
-			@paper = @groups.first.current_discussion.paper
-			@groups.first.visits.create(:user => current_user, :visit_type => 'feed')
+		@jclubs = current_user.groups.select{|g| g.category == 'jclub'}
+		if !@jclubs.empty?
+			@paper = @jclubs.first.current_discussion.paper
+			@jclubs.first.visits.create(:user => current_user, :visit_type => 'feed')
 			@heatmap = @paper.heatmap
 			@reaction_map = @paper.reaction_map
-		    	@feed = @groups.first.prep_feed
 		end
+		@groups = current_user.groups.all
 		@follows  = current_user.follows.all
+		@follow = @follows.first
 		@newfollow = current_user.follows.new
 	end
   end

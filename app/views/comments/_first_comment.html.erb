@@ -6,7 +6,7 @@
 	<h5>Regarding <%= comment.owner.shortname%>:</h5>
       <% end %> 
       <%= render 'comments/linktext', :linktext => comment.linktext(comment.short_text) %>
-      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous %>
+      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous, :checkanon => true %>
       <%= render 'reactions/comment_reactions', :comment => comment %>
       <div class = 'subMenu'>
         <ul>

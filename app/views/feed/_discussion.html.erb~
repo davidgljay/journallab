@@ -4,19 +4,7 @@
 
 
 <h4>Current topic of discussion:</h4>
-<div style = "float: left; width:64px; height:40px;"></div>
-<div id="paperMenu">
-<% if @paper.pubmed_id %>
-		<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav') do %>Get PDF <i class = 'icon-download'></i> <% end %>
-	<% elsif @paper.doi %>
-		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
-	<% end %>
-	<% if user_signed_in? %>
-		<%= render '/shares/share_button' unless @groups.select{|g| g.caterogy == 'lab'}.empty? %> 
-        <% else %>
-		| <a href = "/users/sign_up">Share</a></h3>
-        <% end %>
-</div>
+<%= render 'paper_menu' %>
 <div align = "center">
 <h2><%= @paper.title%></h2>
 

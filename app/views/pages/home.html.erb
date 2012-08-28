@@ -21,14 +21,14 @@
 <% if user_signed_in? %>
 <div id = "homeFeed" class = "feed round">
       <%= render '/feed/nav' %>
-      <% @groups.each_with_index do |g, i| %>
+      <% @jclubs.each_with_index do |g, i| %>
 	<div id= '<%= g.inspect + '_feed' %>' class = "homePageFeed"><%= render '/feed/discussion', :group => g if i == 0 %></div>
       <% end %>
       <% @follows.each_with_index do |follow, i| %>
 	<div id = <%= follow.classname + "_feed" %> class = "homePageFeed">
-	<%= render '/feed/follow' if i == 0 && @groups.empty? %>
+	<%= render '/feed/follow' if i == 0 && @jclubs.empty? %>
 	</div>
       <% end %>
-      <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @groups.empty? %>"><%= render '/feed/follow_form' %></div>
+      <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @jclubs.empty? %>"><%= render '/feed/follow_form' %></div>
 </div>
 <% end %>

@@ -1,6 +1,6 @@
 <% @recent_visits.each do |p| %>
   <div class="search_results2">
-  <h3><%= link_to p.title, p %></h3>
+  <div class="sr_title"><%= link_to p.title, p %></div>
   <div class="sr_info2">
   <%= p.journal %> | <%= p.pubdate.year %> <br>
   </div>

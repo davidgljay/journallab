@@ -1,5 +1,6 @@
 <div class="user_info">
-<% if anonymous = anonymous || user.anon?(current_user ||= User.new)%>
+<% if signed_in? %>
+  <% if (anonymous || user.anon?(current_user)) && checkanon %>
     <span class="anon_name">
 	<% if @paper %>
 	      <strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= user.anon_name(@paper) %></font>)
@@ -10,7 +11,7 @@
     <% if date %>
     	<div class = 'small inline' ><em><%= render 'shared/display_date', :date => date %></em></div>
     <% end %>
-<% else %>
+  <% else %>
   <a href="<%= user_path(user) %>">
     <%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" if user.image %>
     <span class="user_name">
@@ -20,5 +21,18 @@
     <% if date %>
 	    <div class = 'small inline'><em><%= render 'shared/display_date', :date => date %></em></div>
     <% end %>
+  <% end %>
+<% else %>
+    <span class="anon_name">
+	<% if @paper %>
+	      <strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= user.anon_name(@paper) %></font>)
+	<% else %> 
+	      <strong>Anonymous</strong>
+	<% end %>
+    </span>
+    <% if date %>
+    	<div class = 'small inline' ><em><%= render 'shared/display_date', :date => date %></em></div>
+    <% end %>
 <% end %>
+
 </div>

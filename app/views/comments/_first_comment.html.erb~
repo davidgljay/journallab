@@ -14,8 +14,8 @@
          <li class="readmore clickme">
 
              <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
-               	<%= hidden_field_tag :owner, comment.owner.class.to_s %>
-               	<%= hidden_field_tag :id, comment.owner.id %>
+               	<%= hidden_field_tag :owner, owner.class.to_s %>
+               	<%= hidden_field_tag :id, owner.id %>
                	<%= hidden_field_tag :mode, @mode %>
 		<%= submit_tag "Read More", :class => 'plainSubmit'%>
 

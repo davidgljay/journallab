@@ -1,15 +1,15 @@
-<table><tr><td width = "10px" class = "<%= "heat" + paper.heatmap[paper.inspect][1].to_s %>"></td>
+<table><tr><td width = "7px" class = "<%= "heat" + paper.heatmap[paper.inspect][1].to_s %>"></td>
 <td>
-	<div class = "sr_title"><%= link_to paper.title, paper %></div>
-	<div class = "sr_info2 small"><%= paper.journal %>, <%= paper.pubdate.strftime('%B %d, %Y') unless paper.pubdate == nil %> | 
-
-	<% if paper.pubmed_id %>
-		<%= link_to("http://pubget.com/paper/" + paper.pubmed_id.to_s, :target => '_blank') do %>Get PDF <i class = 'icon-download'></i><% end %>
+	<div class = "sr_title"><%= link_to paper.title, paper %>	<% if paper.pubmed_id %>
+		<%= link_to("http://pubget.com/paper/" + paper.pubmed_id.to_s, :target => '_blank') do %><%= image_tag 'pdf.png'%><% end %>
 	<% elsif paper.doi %>
 		<%= link_to("View on " + paper.journal, "http://dx.doi.org/" + paper.doi.to_s) %>
 	<% end %>
+	</div>
+	<div class = "sr_info2 small"><%= paper.journal %>, <%= paper.pubdate.strftime('%B %d, %Y') unless paper.pubdate == nil %>
+
 	<% if !paper.abstract.empty? %>
-		| <%= link_to("Abstract", "#", :class => "abstract deadLink") %>
+		<%= link_to("Abstract", "#", :class => "abstract deadLink") %>
 	<% end %>
 	<% if user_signed_in? && false %>
 		| <%= link_to("Share", '', :class => "list_share deadLink") %>

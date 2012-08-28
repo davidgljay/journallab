@@ -12,17 +12,6 @@
 </div>
 
 <div id="paperInfo" class = "round">
-<div style = "float: left; width:64px; height:40px;"></div>
-<div id="paperMenu">
-<% if @paper.pubmed_id %>
-		<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav', :target => '_blank') do %><%= image_tag 'pdf.png'%><i class = 'icon-download' style = "position: relative; bottom: 5px;"></i><% end %>
-	<% elsif @paper.doi %>
-		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
-	<% end %>
-	<% if user_signed_in? %>
-		<%= render '/shares/share_button' unless @groups.empty? %> 
-        <% end %>
-</div>
 
 <h1><%= @paper.title %></h1>
 	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
@@ -41,8 +30,8 @@
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
-	<% if user_signed_in? %>
 		<%= render '/reactions/quickform'%>
+	<% if user_signed_in? %>
 		<%= render 'add_figs' if @paper.figs.empty? %>
 	<% end %> 
 

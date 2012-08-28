@@ -15,14 +15,12 @@
 <div style = "float: left; width:64px; height:40px;"></div>
 <div id="paperMenu">
 <% if @paper.pubmed_id %>
-		<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav', :target => '_blank') do %><%= image_tag 'pdf.png'%><i class = 'icon-download' style = "position: relative; bottom: 2px;"></i><% end %>
+		<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav', :target => '_blank') do %><%= image_tag 'pdf.png'%><i class = 'icon-download' style = "position: relative; bottom: 5px;"></i><% end %>
 	<% elsif @paper.doi %>
 		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
 	<% end %>
 	<% if user_signed_in? %>
 		<%= render '/shares/share_button' unless @groups.empty? %> 
-        <% else %>
-		| <a href = "/users/sign_up">Share</a></h3>
         <% end %>
 </div>
 

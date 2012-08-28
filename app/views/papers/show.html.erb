@@ -21,8 +21,6 @@
 	<% end %>
 	<% if user_signed_in? %>
 		<%= render '/shares/share_button' unless @groups.empty? %> 
-        <% else %>
-		| <a href = "/users/sign_up">Share</a></h3>
         <% end %>
 </div>
 

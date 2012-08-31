@@ -1,6 +1,14 @@
 class SharesController < ApplicationController
 before_filter :authenticate_user!
 
+  def list
+    @user = User.find(params[:id])
+    @user.visits.create(:about_type => 'User', :about_id => @user.id, :visit_type => 'share')
+    respond_to do |format|
+      format.js
+    end
+
+  end
 
   def create
     @item = params[:share][:type].constantize.find(params[:share][:id].to_i)

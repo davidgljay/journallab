@@ -1,0 +1,11 @@
+<div id = 'shareFeed'> 
+<h3>Shares</h3>
+<%= current_user.shares_feed.each do |s| %>
+	<div class = 'shareList'>
+		<strong><%= s.user.name %></strong> shared:<br>
+		<%= link_to s.get_paper.title, s.get_paper %><br>
+		<div class = "sharetext"><strong>"</strong><%= s.text %><strong>"</strong></div>
+	</div>
+<% end %>
+</div>
+

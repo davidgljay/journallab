@@ -1,0 +1,17 @@
+<div id = 'shareFeed' class = "lightbox hideonload"> 
+<table>
+<% current_user.shares_feed.each do |s| %>
+<tr>
+<% if s[1] %>
+<td width = "7px" style = "background-color: #B94A48;" class = "round"></td>
+<% end %>
+<td>
+	<div class = 'shareList'>
+		<strong><%= s[0].user.name %></strong> shared a paper: <div class = 'bigquote'>“</div><%= s[0].text %><div class = 'bigquote'>”</div><br>
+		<%= link_to s[0].get_paper.title, s[0].get_paper %>
+	</div>
+</td></tr>
+<% end %>
+</table>
+</div>
+

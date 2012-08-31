@@ -8,6 +8,12 @@
               <% end %>
 	    <%= link_to "Sign out", destroy_user_session_path %>
             <%= link_to "Profile", current_user %>
+	    <%= link_to 'History','/users/' + current_user.id.to_s + '/history', :id => 'historyFeedLink', :remote => true if !current_user.visits.empty? %>
+	    <%= link_to '/users/' + current_user.id.to_s + '/sharefeed', :id => 'shareFeedLink', :remote => true do %>Inbox
+	    <% if current_user.new_shares > 0 %>
+		<div class = "badge badge-important" style = "display: inline-block;"><%= current_user.new_shares.to_s %></div>
+	    <% end %>
+	    <% end %>
             <% else %>
 	    <%= link_to "Sign up", new_user_registration_path %>
             <%= link_to "Sign in", new_user_session_path %>

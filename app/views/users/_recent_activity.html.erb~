@@ -1,3 +1,4 @@
+<div id = 'historyFeed' class = "lightbox hideonload"> 
 <% @recent_visits.each do |p| %>
   <div class="search_results2">
   <div class="sr_title"><%= link_to p.title, p %></div>
@@ -5,7 +6,8 @@
   <%= p.journal %> | <%= p.pubdate.year %> <br>
   </div>
   <% @recent_activity[p].to_a.each do |a| %>
-     <div class = 'sharetext'><b><%= a.class.to_s %></b>: <div class = 'bigquote'>“</div><%= render 'comments/linktext', :comment => a %><div class='bigquote'>”</div></div>
+     <div class = 'sharetext'><b><%= a.class.to_s %></b>: <div class = 'bigquote'>“</div><%= render 'comments/linktext', :linktext => a.linktext %><div class='bigquote'>”</div></div>
   <% end %>
   </div>
 <% end %>
+</div>

@@ -1,0 +1,13 @@
+<div id = 'historyFeed' class = "lightbox hideonload"> 
+<% @recent_visits.each do |paper| %>
+  <div class="search_results2">
+  <%= link_to paper.title, paper %>
+  <div class="sr_info2">
+  <%= paper.journal %> | <%= paper.pubdate.year %> 
+  <% if paper.first_last_authors %>
+		| <div class = "inline grey"> First Author: <%= link_to paper.first_last_authors.first[:name], '/lookup/' + paper.first_last_authors.first[:firstname] + '+' + paper.first_last_authors.first[:lastname] %> | Last Author: <%= link_to  paper.first_last_authors.last[:name], '/lookup/' + paper.first_last_authors.last[:firstname] + '+' + paper.first_last_authors.last[:lastname] %></div>
+  <% end %>
+  </div>
+  </div>
+<% end %>
+</div>

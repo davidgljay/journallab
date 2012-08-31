@@ -30,7 +30,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto = params[:switchto]
 		@follow = Follow.find(params[:switchto][7..-1].to_i)
 		@follow.visits.create(:user => current_user, :visit_type => 'feed') if signed_in?
-		@follow.delay.save
+		@follow.save
 		@nav_language = @follow.name
 		@groups = current_user.groups if signed_in?
 	elsif params[:switchto].first(5) == "group"

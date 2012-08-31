@@ -1,0 +1,12 @@
+$('div.lightbox').hide();
+$('#shareFeedLink').find('div.badge').hide();
+$('<%= escape_javascript(render 'shares/share_feed') %>').insertAfter('#shareFeedLink')
+$('div#shareFeed').show(300);
+
+   $("#shareFeedLink").click(function(){
+	$('div#shareFeed').toggle(300);
+	return false;
+    });
+
+
+

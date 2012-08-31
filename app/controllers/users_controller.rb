@@ -12,8 +12,7 @@ before_filter :admin_user,   :only => [:destroy, :index]
   def show
    @user = User.find(params[:id])
    @title = @user.name
-   @recent_visits = @user.visited_papers.reverse.uniq.first(20)
-   @recent_activity = @user.recent_activity
+
   end
 
 #  def new
@@ -145,7 +144,10 @@ before_filter :admin_user,   :only => [:destroy, :index]
 	redirect_to root_path
   end
 	
-  
+  def history
+   @recent_visits = current_user.visited_papers.reverse.uniq.first(20)
+	#runs /users/history.js.erb to make the history feed appear on from the top menu.
+  end
 
   private
 

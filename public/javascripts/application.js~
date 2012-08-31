@@ -31,7 +31,7 @@ $(".searchreset").live('click', function(){
 });
 
 //Overlay Close
-$(".lightbox i.icon-remove").live('click', function(){
+$(".lightbox").find("i.icon-remove").live('click', function(){
 	$(this).parent().hide();
 	$('div.overlay').hide();
 });
@@ -108,6 +108,14 @@ $(".leave_reaction").live('click', function() {
      if( $(this).val() == "Check this out!"){
         $(this).val('');
      }
+     });
+
+
+//Share Feed
+
+   $('#shareFeedLink').click(function(){
+	$('div#shareFeed').toggle('300');
+	$(this).find('div.badge').hide();
      });
 
 

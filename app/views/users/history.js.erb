@@ -1,0 +1,11 @@
+$('div.lightbox').hide();
+$('<%= escape_javascript(render 'history') %>').insertAfter('#historyFeedLink')
+$('div#historyFeed').show(300);
+
+   $("#historyFeedLink").click(function(){
+	$('div#historyFeed').toggle(300);
+	return false;
+    });
+
+
+

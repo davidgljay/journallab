@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120824192253) do
+ActiveRecord::Schema.define(:version => 20120831163028) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -153,6 +153,14 @@ ActiveRecord::Schema.define(:version => 20120824192253) do
   add_index "filters", ["paper_id"], :name => "index_filters_on_paper_id"
   add_index "filters", ["question_id"], :name => "index_filters_on_question_id"
 
+  create_table "folders", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "follows", :force => true do |t|
     t.integer  "follow_id"
     t.string   "follow_type"
@@ -217,6 +225,16 @@ ActiveRecord::Schema.define(:version => 20120824192253) do
   end
 
   add_index "microposts", ["user_id"], :name => "index_microposts_on_user_id"
+
+  create_table "notes", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "about_id"
+    t.string   "about_type"
+    t.text     "text"
+    t.integer  "folder_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "papers", :force => true do |t|
     t.text     "title"

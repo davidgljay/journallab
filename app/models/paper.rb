@@ -30,6 +30,7 @@ has_many :groups, :through => :discussions, :source => :group
 has_many :meta_reactions, :class_name => "Reaction", :foreign_key => "get_paper_id"
 has_many :reactions, :as => :about
 has_many :anons
+has_many :notes
 
 #Validations
    validates :pubmed_id, :uniqueness => true, :allow_nil => true

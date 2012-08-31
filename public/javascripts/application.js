@@ -111,6 +111,14 @@ $(".leave_reaction").live('click', function() {
      });
 
 
+//Share Feed
+
+//   $('#shareFeedLink').click(function(){
+//	$('div#shareFeed').toggle('300');
+//	$(this).find('div.badge').hide();
+//     });
+
+
 //Toggle Figure sections
    $("div.figtoggle").live('click', function(){
      $(this).next().toggle(300);

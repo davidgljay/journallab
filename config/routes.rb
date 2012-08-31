@@ -21,6 +21,7 @@ Redcell::Application.routes.draw do
 
   resources :votes
   resources :shares
+   match '/users(/:id)/sharefeed',	:to => 'shares#list'
   resources :sumreqs
 
 
@@ -72,6 +73,7 @@ root :to => 'pages#home'
 
 devise_for :users
 resources :users
+   match '/users(/:id)/history',	:to => 'users#history'
 
 
 #  match '/reset_password', :to => 'users#reset_password'

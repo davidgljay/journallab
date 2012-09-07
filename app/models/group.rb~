@@ -26,7 +26,7 @@ has_many :assertions, :through => :filters, :source => :assertion
 has_many :sumreqs, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :maillogs, :as => :about
-has_many :visits, :as => :about, :dependent => :destroy, :order => 'created_at DESC'
+
 
 validates :code, :uniqueness => true, :allow_nil => true
 validates :category, :presence => true
@@ -367,18 +367,11 @@ def current_discussion
 end
 
 def set_newcount
-	if category == 'jclub'
-		p = current_discussion.paper
-		lastvisit = visits.empty? ? Date.new(1900,1,1) : visits.first.created_at 
-		self.newcount = p.meta_comments.select{|c| c.created_at > lastvisit}.count
-		if current_discussion.starttime > lastvisit
-			self.newcount += 1
-		end
-	else
-		self.newcount = nil
-	end
-	self.newcount
-	self.save
+	memberships.each{|m| m.set_newcount}
+end
+
+def newcount
+	memberships.select{|m| m.user == current_user}.first.newcount
 end
 
 def nofityGroup

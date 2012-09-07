@@ -54,7 +54,6 @@ before_filter :authenticate_user!, :except => [:list]
     	end
     	@paper = @owner.get_paper
 	@comment.get_paper = @paper
-	current_user.assign_anon_name(@paper)
 	@comment.save
         @groups.each do |g| 
 		g.delay.feed_add(@comment)

@@ -72,13 +72,13 @@ end
     @assertion = Assertion.new(params[:assertion])
     @assertion.user_id = current_user.id
     if @assertion.about == "paper"
-        @assertion.paper = Paper.find(params[:assertion][:owner_id])
+        @assertion.paper = Paper.find(params[:owner_id])
         @paper = @assertion.paper
     elsif @assertion.about == "fig"
-        @assertion.fig = Fig.find(params[:assertion][:owner_id])
+        @assertion.fig = Fig.find(params[:owner_id])
         @paper = @assertion.fig.paper
     elsif @assertion.about == "figsection"
-        @assertion.figsection = Figsection.find(params[:assertion][:owner_id])
+        @assertion.figsection = Figsection.find(params[:owner_id])
         @paper = @assertion.figsection.fig.paper
     end
     @mode = params[:assertion][:mode].to_i

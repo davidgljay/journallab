@@ -4,7 +4,7 @@
     <title><%= title %></title>
     <%= csrf_meta_tag %>
     <%= render 'layouts/stylesheets' %>
-    <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js' %>
+    <%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js' %>
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'bootstrap' %>
     <%= javascript_include_tag 'rails' %>
@@ -12,7 +12,7 @@
   </head>
   <body>
     <%= render 'layouts/header' %> 
-    <section class="round">
+    <section>
       <% flash.each do |key, value| %>
           <div class="flash <%= key %>"><%= value %></div>
       <% end %>

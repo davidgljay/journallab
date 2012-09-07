@@ -49,6 +49,8 @@ class User < ActiveRecord::Base
 	has_many :folders
 	has_many :notes
 
+	after_save :create_to_read
+
         image_accessor :image
 
 
@@ -256,6 +258,13 @@ class User < ActiveRecord::Base
 	feed
   end
 
+# Search user history
+
+def history_search(search_term)
+	visited_papers.select{|p| p.title.include?(search_term) || p.abstract.include?(search_term) || p.meta_assertions.map{|a| a.text.to_s + ' ' + a.method_text.to_s }.include?(search_term) || p.meta_comments.map{|c| c.text}.to_s.include?(search_term)}
+end
+
+
   private
 
 #    def encrypt_password
@@ -277,5 +286,9 @@ class User < ActiveRecord::Base
 #    def secure_hash(string)
 #      Digest::SHA2.hexdigest(string)
 #    end
+
+def create_to_read
+    self.folders.create(:name => "To Read") if self.folders.empty?
+end
 
 end

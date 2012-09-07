@@ -137,9 +137,9 @@ end
 
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
   def lookup
-    search = params[:pubmed_id].strip
+    search = params[:search].strip
     if signed_in?	
-	@group = current_user.get_group
+	@groups = current_user.groups
     end
     if search.to_i.to_s == search
       @paper = Paper.find_by_pubmed_id(search)
@@ -149,7 +149,10 @@ end
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
-      @search_results = Paper.new.search_pubmed(search)
+      @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search)).uniq
+      @history_results = @search_results & current_user.visited_papers
+      @search_results= @search_results - @history_results
+      @search_results.sort!{|x,y| y.latest_activity <=> x.latest_activity}
     end
     if @paper
         redirect_to @paper

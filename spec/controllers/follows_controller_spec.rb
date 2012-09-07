@@ -4,7 +4,5 @@ describe FollowsController do
 
      pending "add search term following functionality to #{__FILE__}"
 
-     pending "add journal following functionality to #{__FILE__}"
-
 
 end

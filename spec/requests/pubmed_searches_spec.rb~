@@ -17,7 +17,7 @@ describe "Searches:" do
     it "loads the page for that paper" do
       visit root_path
       fill_in "pubmed_id", :with => "21228906"
-      click_button 'search'
+      click_button 'GO'
       within('body') { page.should have_content('Download') }
     end
   end
@@ -26,7 +26,7 @@ describe "Searches:" do
     it "loads search results" do
      visit root_path
      fill_in "pubmed_id", :with => "judson, robert"
-     click_button 'search'
+     click_button 'GO'
      within('body') { page.should have_content('Search Results') }
      click_link 'Multiple targets of miR-302 and miR-372 promote reprogramming of human fibroblasts to induced pluripotent stem cells.'
      page.should have_content('Judson')

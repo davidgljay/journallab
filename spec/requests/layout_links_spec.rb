@@ -18,7 +18,7 @@ describe "LayoutLinks" do
   describe "when not signed in" do
     it "should have a signin link" do
       visit root_path
-      within('div#utNav') { page.should have_content('Sign in') }
+      within('div#utNav') { page.should have_content('Sign In') }
     end
   end
 
@@ -34,7 +34,7 @@ describe "LayoutLinks" do
 
     it "should have a signout link" do
       visit root_path
-      within('div#utNav') { page.should have_content('Sign out') }
+      within('div#utNav') { page.should have_content('Sign Out') }
     end
 
     it "should have a profile link" do 

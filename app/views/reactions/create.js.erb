@@ -2,6 +2,7 @@
 	$('<%= @owner.jquery_target %>').find('div.reaction_list').first().html('<%= escape_javascript(
 		render '/reactions/reaction_list', :about => @owner
 	)%>');
+	$('<%= @owner.jquery_target %>').find('div.reaction_list').show();
         $('<%= @owner.jquery_target %>').addClass('heatBox<%= @heatmap[@owner.inspect][1] %>');
 
 <% end %>

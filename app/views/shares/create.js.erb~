@@ -2,7 +2,10 @@ $('div.share_button_top').find('div.share_form').hide();
 $('<%= @item.jquery_target %>').find('div.share_form').hide();
 $('.flash').hide();
 $("<div class='flash notice'>Shared!</div>").insertAfter('header');
-
 $('div.overlay').hide();
+$('.flash').delay('5000').fadeOut('slow');
+
+
+
 
 

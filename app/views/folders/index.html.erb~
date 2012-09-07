@@ -1,0 +1,16 @@
+<div id = 'contentMain'>
+<div id = 'paperInfo' class = "round" style = "text-align:left; padding: 10px;"> 
+ <%= image_tag @user.image.thumb('50x50>').url, :alt => @user.name if @user.image %><h1 class = "inline" valign = "top"> <%= @user.name %>'s Folders</h1>
+<% @folders.each do |folder| %>
+	<h3><div class = "inline"><icon class = "icon-folder-open"></icon></div><%= folder[0].name%></h3>
+	<table>
+	<% folder[1].each do |paper| %>
+	<tr id= '<%= "f#{folder[0].id.to_s}_p#{paper.id.to_s}" %>'>
+		<td><%= render '/papers/list', :paper => paper %></td>
+		<td valign = "center"><%= link_to 'folders/' + folder[0].id.to_s + '/remove/' + paper.id.to_s, :method => :delete, :remote => true do %><icon class = "icon-remove-sign"></icon><% end %>
+	</tr>
+	<% end %>
+	</table>
+<% end %>	
+</div>
+</div>

@@ -2432,7 +2432,7 @@ table .span24 {
   border-bottom: 1px solid #ffffff;
 }
 
-.dropdown-menu a {
+.dropdown-menu a, .dropdown-menu input[type="submit"] {
   display: block;
   padding: 3px 15px;
   clear: both;
@@ -2444,7 +2444,8 @@ table .span24 {
 
 .dropdown-menu li > a:hover,
 .dropdown-menu .active > a,
-.dropdown-menu .active > a:hover {
+.dropdown-menu .active > a:hover,
+.dropdown-menu input[type="submit"]:hover {
   color: #ffffff;
   text-decoration: none;
   background-color: #0088cc;

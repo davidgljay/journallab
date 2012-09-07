@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831163028) do
+ActiveRecord::Schema.define(:version => 20120904152021) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -183,7 +183,6 @@ ActiveRecord::Schema.define(:version => 20120831163028) do
     t.text     "feed"
     t.text     "most_viewed"
     t.boolean  "public"
-    t.integer  "newcount",    :default => 0
   end
 
   create_table "journals", :force => true do |t|
@@ -213,6 +212,7 @@ ActiveRecord::Schema.define(:version => 20120831163028) do
     t.boolean  "lead"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "newcount"
   end
 
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
@@ -250,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20120831163028) do
     t.text     "description"
     t.string   "doi"
     t.text     "reaction_map"
+    t.datetime "latest_activity"
   end
 
   create_table "questions", :force => true do |t|

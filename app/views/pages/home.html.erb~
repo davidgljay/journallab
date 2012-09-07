@@ -29,6 +29,6 @@
 	<%= render '/feed/follow' if i == 0 && @jclubs.empty? %>
 	</div>
       <% end %>
-      <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @groups.empty? %>"><%= render '/feed/follow_form' %></div>
+      <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @jclubs.empty? %>"><%= render '/feed/follow_form' %></div>
 </div>
 <% end %>

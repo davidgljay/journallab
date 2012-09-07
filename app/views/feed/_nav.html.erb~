@@ -3,8 +3,8 @@
 <% if signed_in? %>
 	<% @jclubs.each_with_index do |group, i| %>
 		<li>
-			<% if group.newcount > 0 %> 	
-				<div class = 'badge badge-important feedNotice'><%= group.newcount %></div>		
+			<% if group.newcount(current_user) > 0 %> 	
+				<div class = 'badge badge-important feedNotice'><%= group.newcount(current_user) %></div>		
 			<% end %> 	
 			<%= button_to group.shortname , {:action => "feedswitch",  :switchto => group.inspect}, :class => group.inspect + " feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 ? 'feed_nav_selected' : '') , :remote => true %><%= render '/shared/loading' %>
 

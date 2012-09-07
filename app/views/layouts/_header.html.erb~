@@ -6,10 +6,11 @@
               <% if current_user.admin? %>
               <%= link_to "Dashboard", dashboard_path %>
               <% end %>
-	    <%= link_to "Sign out", destroy_user_session_path %>
-            <%= link_to "Profile", current_user %>
-	    <%= link_to 'History','/users/' + current_user.id.to_s + '/history', :id => 'historyFeedLink', :remote => true if !current_user.visits.empty? %>
-	    <%= link_to '/users/' + current_user.id.to_s + '/sharefeed', :id => 'shareFeedLink', :remote => true do %>Inbox
+	    <%= link_to destroy_user_session_path do %><div class = "inline floatright"> <icon class = "icon-remove-sign"></icon></div> Sign Out<% end %>
+            <%= link_to current_user do %><div class = "inline"> <icon class = "icon-user"></icon></div> Profile<% end %>
+	    <%= link_to '/users/' + current_user.id.to_s + '/history', :id => 'historyFeedLink', :remote => true do %><div class = "inline"> <icon class = "icon-list"></icon></div> History<% end %>
+	    <%= link_to '/folders' do %><div class = "inline"> <icon class = "icon-folder-open"></icon></div> Folders<% end %>
+	    <%= link_to '/users/' + current_user.id.to_s + '/sharefeed', :id => 'shareFeedLink', :remote => true do %><div class = "inline"> <icon class = "icon-inbox"></icon></div> Inbox
 	    <% if current_user.new_shares > 0 %>
 		<div class = "badge badge-important" style = "display: inline-block;"><%= current_user.new_shares.to_s %></div>
 	    <% end %>
@@ -18,7 +19,7 @@
 	    <%= link_to "Sign up", new_user_registration_path %>
             <%= link_to "Sign in", new_user_session_path %>
             <% end %>
-            <%= link_to "Home", root_path %>
+            <%= link_to root_path do %><div class = "inline"> <icon class = "icon-home"></icon></div> Home<% end %>
 
             <% unless @title == 'Home' %>
 
@@ -27,7 +28,7 @@
 		      <tbody><tr>
         		<td >
                 	<%= form_tag('/lookup', :method => "get") do  %>
-                	<%= text_field_tag(:pubmed_id, "Discuss any paper on PubMed.", :onfocus =>  "if(this.value == 'Discuss any paper on PubMed.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> <%= submit_tag "GO", :class => 'btn-tiny btn-warning round', :style => "vertical-align: top; margin-top: 2px;"%></td>
+                	<%= text_field_tag(:search, "Discuss any paper on PubMed.", :onfocus =>  "if(this.value == 'Discuss any paper on PubMed.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> <%= submit_tag "GO", :class => 'btn-tiny btn-warning round', :style => "vertical-align: top; margin-top: 2px;"%></td>
                 	<% end %>
 			</td>
       			</tr>

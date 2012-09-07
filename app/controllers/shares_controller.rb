@@ -10,6 +10,15 @@ before_filter :authenticate_user!
 
   end
 
+  def new
+    @paper = Paper.find(params[:paper])
+    @groups = current_user.groups
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
   def create
     @item = params[:share][:type].constantize.find(params[:share][:id].to_i)
     @groups = params[:group].to_a.delete_if{|g| g[1] == "0"}.map {|g| Group.find(g[0].to_i)}

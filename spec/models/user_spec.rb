@@ -10,34 +10,14 @@ describe User do
 		:password_confirmation => "funstuff" 
 		}
    end
-   
-  describe "recent activity feed" do
-
-# Can't get this to build multiple questions and comments properly, spent over 2 hours on it, seems like it's not worth the time..
- 
-#    before(:each) do
-#      @user = Factory(:user, :email => Factory.next(:email))
-#      @paper1 = Factory(:paper)
-      #@comment = @user.comments.build(:text => "Comment!", :paper => @paper1, :form => "comment")
-      #@comment.save
-      #@question = @user.questions.build(:text => "Question?", :paper => @paper1)
-      #@question.save
-#      @paper2 = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
-      #@share = @user.shares.build(:paper => @paper1)
-      #@share.save
-#      @paper2.buildout([2,2,2])
-      #@comment2 = @user.comments.build(:fig => @paper2.figs.first, :text => "Comment.", :form => "comment")
-#    end
-
-#    it "should list comments, questions, and shares for each paper" do
-#      @ra = @user.recent_activity
-#      @ra[@paper1].should == [@comment, @share]
-#      @ra[@paper2].should == [@question, @comment2]
-#    end
-  end
 
     it "should create a new instance given valid attributes" do
 	User.create!(@attr)
+    end
+ 
+    it "should automatically create a To Read folder" do
+	@user = User.create!(@attr)
+	@user.folders.map{|f| f.name}.should include "To Read"
     end
 
   it "should require a name" do

@@ -30,9 +30,11 @@ end
 
 def update_feed
 	if search_term
-		self.latest_search = Paper.new.search_pubmed(search_term,40).map{|p| p.id}
+		pubmed_search = Paper.new.search_pubmed(search_term,40).map{|p| [p.id, p.pubdate]}
+		activity_search = Paper.new.search_activity(search_term).map{|p| [p.id, p.updated_at]}
+		self.latest_search = (pubmed_search + activity_search).sort{|x,y| y[1] <=> x[1]}
 	end
-	latest_search
+	self.latest_search
 end
 
 def set_newcount

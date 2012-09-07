@@ -3,8 +3,8 @@ Factory.sequence :email do |n|
 end
 
 Factory.sequence :pubmed_id do |n|
-  21228906 + 1
-end
+  21230106 + 1
+end	
 
 Factory.define :user do |user|
      user.firstname			"David"

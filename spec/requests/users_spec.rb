@@ -47,9 +47,6 @@ describe "Users" do
         fill_in "user[position]", :with => "stuff and things"
         find('#user_position').native.send_key(:enter)
 	page.should have_content("stuff and things")
-	page.should have_content(@paper.title)
-	page.should have_content(@comment.text)
-	page.should have_content(@question.text)
      end
   end
 

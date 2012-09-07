@@ -16,6 +16,7 @@ has_many :votes
 has_many :maillogs, :as => :about
 
 before_save :set_get_paper
+before_save :generate_anon_name
 
 has_many :filters, :foreign_key => "comment_id",
                            :dependent => :destroy
@@ -69,7 +70,7 @@ end
 
 def short_text
 	if text.length > 500
-		self.text.first(500) + ...
+		text.first(500) + '...'
 	else
 		text
 	end
@@ -82,6 +83,10 @@ end
 
 def reactions
 	owner.reactions.select{|r| r.user == self.user}
+end
+
+def generate_anon_name
+	self.user.assign_anon_name(self.get_paper)
 end
 
 def owner

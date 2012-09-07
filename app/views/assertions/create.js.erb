@@ -4,7 +4,7 @@ $('<%= @owner.jquery_target %>').find('div.latest_assertion').first().html('<%= 
 $('<%= @owner.jquery_target %>').find('p.method').first().html('<%= escape_javascript(@assertion.method_text.to_s.empty? ? 'Click to list methods' : @assertion.method_text) %>');
 
 
-$('<%= @owner.jquery_target %>').find('div.user_info').first().html('<%= escape_javascript(render '/shared/user_info', :user => @assertion.user, :date => @assertion.created_at) %>');
+$('<%= @owner.jquery_target %>').find('div.user_info').first().html('<%= escape_javascript(render '/shared/user_info', :user => @assertion.user, :date => @assertion.created_at, :anonymous => false, :checkanon => false) %>');
 
 $('<%= @owner.jquery_target %>').find('div.summary_form').first().html('<%= escape_javascript(render '/assertions/summary_form', :assert => @assertion, :owner => @owner) %>');
 $('<%= @owner.jquery_target %>').find('div.methods_form').first().html('<%= escape_javascript(render '/assertions/methods_form', :assert => @assertion, :owner => @owner) %>');

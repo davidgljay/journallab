@@ -1,5 +1,15 @@
 <h1>Search Results</h1>
 
+<% if !@history.results.empty? %>
+<h4>Papers You've Visited</h4>
+<% @history_results.each do |result| %>
+	<div class = "search_results">
+	<%= render 'list', :paper => result %>
+	</div>
+<% end %>
+
+<h4>All other papers</h4>
+<% end %>
 <% @search_results.each do |result| %>
 	<div class = "search_results">
 	<%= render 'list', :paper => result %>

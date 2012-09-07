@@ -1,5 +1,5 @@
 <div class = 'summary_form'>
-<%= form_for new_or_edit(assert), :class => "new_assertion summary_form"  do |f| %>
+<%= form_for new_or_edit(assert), :class => "new_assertion summary_form", :remote => true do |f| %>
       <div class="field">
          <% if assert.nil? || new_if_nil(assert).text.to_s.empty? %>
            	<%= f.text_area :text, :value =>  "What is the core conclusion of " + owner.shortname + "?", :rows => 5 %><br>
@@ -10,8 +10,8 @@
          <% end %>
         </div>
         <%= f.hidden_field :about, :value => owner.class.to_s.downcase %>
-        <%= f.hidden_field :owner_id, :value => owner.id.to_s %>
-        <%= f.hidden_field :mode, :value => @mode %>
+        <%= hidden_field_tag :owner_id, owner.id.to_s %>
+        <%= hidden_field_tag :mode, @mode %>
 
       <% end %>
 </div>

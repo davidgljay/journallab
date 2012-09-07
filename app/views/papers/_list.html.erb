@@ -1,4 +1,4 @@
-<table><tr><td width = "7px" class = "<%= "heat" + paper.heatmap[paper.inspect][1].to_s %>"></td>
+<table><tr><td width = "7px" class = "<%= "heat" + paper.heatmap[paper.inspect][1].to_s unless paper.visits.empty? %>"></td>
 <td>
 	<div class = "sr_title"><%= link_to paper.title, paper %>	<% if paper.pubmed_id %>
 		<%= link_to("http://pubget.com/paper/" + paper.pubmed_id.to_s, :target => '_blank') do %><%= image_tag 'pdf.png'%><% end %>
@@ -7,17 +7,22 @@
 	<% end %>
 	</div>
 	<div class = "sr_info2 small"><%= paper.journal %>, <%= paper.pubdate.strftime('%B %d, %Y') unless paper.pubdate == nil %>
+	<% if user_signed_in? %>
+		| Add to 
+		<div class="dropdown inline">
+  			<div class = "inline"><icon class = 'icon-folder-open'></icon></div> 
+			<%= link_to "Folder", '/folders/add/' + paper.id.to_s, :id => "folder_list_" + paper.id.to_s, :class => "dropdown-toggle", :remote => true %>
+		</div>
+	<% end %>
 
+	<% if user_signed_in? && @groups %>
+		| <%= link_to('/shares/new/' +  paper.id.to_s, :id => 'shares_new_' + paper.id.to_s, :class => "list_share", :remote => true) do %><icon class = 'icon-share'></icon>Share<% end %> with Lab
+	<% end %>
 	<% if !paper.abstract.empty? %>
-		| <%= link_to("Abstract", "#", :class => "abstract deadLink") %>
-	<% end %>
-	<% if user_signed_in? && false %>
-		| <%= link_to("Share", '', :class => "list_share deadLink") %>
-	<% end %></div>
+		| View <div class = "inline"><icon class = 'icon-book'></i></div><%= link_to("Abstract", "#", :class => "abstract deadLink") %></div>
 	<p class='abstract_long hideonload'><%= paper.abstract %></p>
-	<% if user_signed_in? && false %>
-		<div id = "<%= "list_share_" + paper.id.to_s %>" class = "list_share hideonload"><%= render 'shares/share_form', :item => paper %></div>
 	<% end %>
+
 	<% if paper.first_last_authors %>
 		<div class = "sr_info2 small grey">First Author: <%= link_to paper.first_last_authors.first[:name], '/lookup/' + paper.first_last_authors.first[:firstname] + '+' + paper.first_last_authors.first[:lastname] %> | Last Author: <%= link_to  paper.first_last_authors.last[:name], '/lookup/' + paper.first_last_authors.last[:firstname] + '+' + paper.first_last_authors.last[:lastname] %></div>
 	<% end %>	

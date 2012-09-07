@@ -50,7 +50,7 @@ def quickform
 		@newreaction = true
 		@paper = @reaction.get_paper
 		@paper.add_heat(@owner)
-
+		@paper.save
 	else
 		@newreaction = false
 	end

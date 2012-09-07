@@ -1,0 +1,5 @@
+$('.flash').hide();
+$('.dropdown').hide();
+$("<div class='flash notice'>Paper saved in <%= @folder.name %> folder.</div>").insertAfter('header');
+$('div.overlay').hide();
+$('.flash').delay('5000').fadeOut('slow');

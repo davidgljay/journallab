@@ -5,13 +5,14 @@
       	<%= f.hidden_field :type, :value => item.class.to_s %>
 	<% if groups.count > 1 %>
 		<h3>Share with:</h3>
-		<% groups.each do |g| %>
-      			<%= check_box :group, g.id.to_s, {:class => 'groupSelect'} %> <%= g.name %>
+		<% groups.each do |group| %>
+      			<%= check_box :group, group.id.to_s, {:class => 'groupSelect'} %> 
+			<%= group.name %>
 		<% end %>
 		<br>
 	<% else %>
 		<h2>Share with <%= groups.first.name %>
-		<%= check_box :group, @groups.first.id.to_s, {:class => 'groupSelect hideonload', :checked => 'checked'} %>
+		<%= check_box :group, groups.first.id.to_s, {:class => 'groupSelect hideonload', :checked => 'checked'} %>
 	<% end %>
       	<%= f.text_field :text, :value=> "Check this out!" %>
       	<%= f.submit "Share", :class => 'loadingPrompt' %>

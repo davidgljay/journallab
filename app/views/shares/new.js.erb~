@@ -1,0 +1,5 @@
+$('<%= escape_javascript(render 'shares/share_form', :item => @paper, :groups => @groups)%>').insertAfter('<%= '#shares_new_' + @paper.id.to_s %>');
+$('div.overlay').show('');
+$('<%= '#shares_new_' + @paper.id.to_s %>').next().show();
+
+

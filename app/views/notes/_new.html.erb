@@ -1,0 +1,23 @@
+
+  <ul class="dropdown-menu">
+  <% current_user.folders.each do |folder| %> 
+   <li>
+	<%= form_for(folder.notes.new, :class => "note", :remote => true) do |f| %>
+	               	<%= f.hidden_field :about_type, :value => paper.class.to_s %>
+        	       	<%= f.hidden_field :about_id, :value =>  paper.id %>
+        	       	<%= f.hidden_field :folder_id, :value =>  folder.id %>
+                 	<%= submit_tag folder.name, :class => "plainSubmit folderSelect"%>
+        <% end %>
+</li>
+  <% end %>
+  <li class="divider"></li>
+  <li>
+	<%= form_for(Note.new, :class => "note", :remote => true) do |f| %>
+	               	<%= f.hidden_field :about_type, :value => paper.class.to_s %>
+        	       	<%= f.hidden_field :about_id, :value =>  paper.id %>
+        	       	<%= text_field_tag :folder, "New Folder", :onfocus =>  "if(this.value == 'New Folder') { this.value = ''; }", :class => "small new_folder_text" %>
+                 	<%= submit_tag "+", :class => "inline new_folder_submit"%>
+        <% end %>
+</li>
+</ul>
+</div>

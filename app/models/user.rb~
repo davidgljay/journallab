@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
         has_many :shares
 	has_many :reactions
 	has_many :discussions
-        has_many :visits, :foreign_key => "user_id",
+        has_many :visits, :foreign_key => "user_id"
         has_many :visited_papers, :through => :visits, :source => :paper
         has_many :memberships, :foreign_key => "user_id"
         has_many :groups, :through => :memberships, :source => :group
@@ -45,9 +45,11 @@ class User < ActiveRecord::Base
         has_many :votes_for_me, :class_name => "Vote", :foreign_key => "vote_for_id"
 	has_many :follows
 	has_many :anons
-	has_many :share_visits, :class_name => "Visit", :as => :about, :dependent => :destroy, :order => 'created_at DESC'
+	has_many :share_visits, :class_name => "Visit", :as => :about, :order => 'created_at DESC'
 	has_many :folders
 	has_many :notes
+
+	after_save :create_to_read
 
         image_accessor :image
 
@@ -256,6 +258,13 @@ class User < ActiveRecord::Base
 	feed
   end
 
+# Search user history
+
+def history_search(search_term)
+	visited_papers.select{|p| p.title.include?(search_term) || p.abstract.include?(search_term) || p.meta_assertions.map{|a| a.text.to_s + ' ' + a.method_text.to_s }.include?(search_term) || p.meta_comments.map{|c| c.text}.to_s.include?(search_term)}
+end
+
+
   private
 
 #    def encrypt_password
@@ -277,5 +286,9 @@ class User < ActiveRecord::Base
 #    def secure_hash(string)
 #      Digest::SHA2.hexdigest(string)
 #    end
+
+def create_to_read
+    self.folders.create(:name => "To Read") if self.folders.empty?
+end
 
 end

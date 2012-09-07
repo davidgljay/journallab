@@ -7,5 +7,4 @@ describe FollowsController do
      pending "add journal following functionality to #{__FILE__}"
 
 
-
 end

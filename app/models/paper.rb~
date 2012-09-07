@@ -30,6 +30,7 @@ has_many :groups, :through => :discussions, :source => :group
 has_many :meta_reactions, :class_name => "Reaction", :foreign_key => "get_paper_id"
 has_many :reactions, :as => :about
 has_many :anons
+has_many :notes, :as => :about
 
 #Validations
    validates :pubmed_id, :uniqueness => true, :allow_nil => true
@@ -39,6 +40,8 @@ has_many :anons
                          :greater_than => 0, :allow_nil => true
 
 before_save :set_reaction_map
+before_save :set_latest_activity
+
 
 def inspect
 	'paper' + id.to_s
@@ -65,13 +68,18 @@ def search_pubmed(search, numresults = 20)
 	        	day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
 	        	month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
 	        	year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
-			pubdate = Time.local(year, month, day) if year
+			if year
+				pubdate = Time.local(year, month, day) 
+				latest_activity = pubdate
+			else
+				latest_activity = Time.now - 1.month
+			end
 	        	abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
-        		paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract)
+        		paper = Paper.new(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity)
 		end
 
 		# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
-		if paper.authors.empty?
+		if paper.first_last_authors
 			authors = []
 			authorlist = article.xpath('MedlineCitation/Article/AuthorList')
 			authorlist.xpath('Author').each do |a|
@@ -81,14 +89,18 @@ def search_pubmed(search, numresults = 20)
 				authors << Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
 			end
 			paper.assign_first_and_last_authors(authors.first, authors.last)
-			#paper.extract_authors(data.xpath('//Article/AuthorList')[i])
-		else
-			authors = paper.authors
+			#paper.delay.extract_authors(authors)
 		end
         	search_results << paper    
 	end
 	search_results
   end
+
+def search_activity(search_term) 
+	comment_papers = Paper.joins("INNER JOIN 'comments' ON 'papers'.'id' = 'comments'.'get_paper_id'").where("comments.text LIKE '%" + search_term + "%'")
+	summary_papers = Paper.joins("INNER JOIN 'assertions' ON 'papers'.'id' = 'assertions'.'get_paper_id'").where("assertions.text LIKE '%" + search_term + "%' OR assertions.method_text LIKE '%" + search_term + "%'")
+	(summary_papers + comment_papers).uniq
+end
 	
 
 def lookup_info
@@ -220,6 +232,12 @@ def monthhash
       }
 end
 
+#Check to see when the last comment or summary was left on the paper. Used for ranking in search results.
+
+def set_latest_activity
+   activity = (self.meta_comments + self.meta_assertions).map{|p| p.created_at}
+   self.latest_activity = (activity << pubdate).max
+end
 #Map reactions to the overall paper and to individual figures and figure sections and store it as a hash text, that way we don't have to run a ton of SQL queries every time the page loads
 
 def set_reaction_map
@@ -318,6 +336,10 @@ end
 
 def heat
    (self.meta_reactions + self.meta_comments).map{|c| c.user}.uniq.count
+end
+
+def my_heat
+    h_map[self.inspect][0]
 end
 
 def heatmap_overview

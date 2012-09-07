@@ -1,5 +1,9 @@
 Redcell::Application.routes.draw do
    
+  get "folders/show"
+
+  get "notes/create"
+
   get "reactions/create"
 
   get "reactions/destroy"
@@ -39,7 +43,7 @@ Redcell::Application.routes.draw do
   resources :authors
 
   resources :papers
-   match '/lookup(/:pubmed_id)', :to => 'papers#lookup'
+   match '/lookup(/:search)', :to => 'papers#lookup'
    match '(/:about)(/:id)/discussion', :to => 'papers#discussion'
    match '/grab_images(/:id)', :to => 'papers#grab_images'
    match '/papers(/:id)/build_figs(/:num)', :to => 'papers#build_figs'
@@ -50,8 +54,12 @@ Redcell::Application.routes.draw do
 
   resources :follows
   resources :reactions
+  resources :notes
+  resources :folders
+   match '/folders(/:folder_id)/remove(/:paper_id)', :to => 'notes#destroy', :via => :delete
+   match '/folders/add(/:paper)',	:to => 'folders#list'
    match 'quickform',			:to => 'reactions#quickform'
-
+   match 'shares/add(/:paper)',		:to => 'shares#new'
 #Static pages
 
 root :to => 'pages#home'
@@ -73,7 +81,7 @@ root :to => 'pages#home'
 
 devise_for :users
 resources :users
-   match '/users(/:id)/historyfeed',	:to => 'users#history'
+   match '/users(/:id)/history',	:to => 'users#history'
 
 
 #  match '/reset_password', :to => 'users#reset_password'

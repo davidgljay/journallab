@@ -8,7 +8,8 @@ before_filter :admin_user,   :only => [:dashboard]
 		@jclubs = current_user.groups.select{|g| g.category == 'jclub'}
 		if !@jclubs.empty?
 			@paper = @jclubs.first.current_discussion.paper
-			@jclubs.first.visits.create(:user => current_user, :visit_type => 'feed')
+			@jclubs.delay.each do |j|
+				j.memberships.select{|m| m.user == current_user}.first.visits.create(:user => current_user, :visit_type => 'feed')			end
 			@heatmap = @paper.heatmap
 			@reaction_map = @paper.reaction_map
 		end
@@ -37,7 +38,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto_render = "discussion"
 		@switchto = params[:switchto]
 		@group = Group.find(@switchto[5..-1].to_i)
-		@group.visits.create(:user => current_user, :visit_type => 'feed') if signed_in?
+		@group.memberships.select{|m| m.user == current_user}[0].visits.create(:user => current_user, :visit_type => 'feed') if signed_in?
 		@group.delay.set_newcount
 		@nav_language = @group.shortname
 		@paper = @group.current_discussion.paper

@@ -286,6 +286,13 @@ td#profileImage {
 	border-radius: 10px;
 }
 
+/* Lighten Icons */
+
+icon {
+	opacity:0.6;
+	filter:alpha(opacity=60); /* For IE8 and earlier */
+}
+
 /* Full Page Overlays */
 
 .overlay {
@@ -365,6 +372,7 @@ td#profileImage {
 /* Sharing */
 
 
+
 input#share_text {
 	width: 390px;
 	margin-top: 10px;
@@ -374,6 +382,10 @@ input#share_text {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	line-height: 20px;
+}
+
+.share_form {
+	left: 50%;
 }
 
 .sharetext {
@@ -479,7 +491,19 @@ input#share_text {
 	margin-left: 10px;
 }
 
+/* Notes and Folders */
 
+.new_folder_submit {
+	padding: 2px;
+	display: inline;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.new_folder_text {
+	width: 110px;
+	margin-left: 15px;
+}
 /* Heatmaps */
 
 #legend {
@@ -729,6 +753,9 @@ td.comment_body, td.question_body {
 	border-bottom-right-radius: 10px;
 	padding: 3px;
 	width: 500px;
+	position: fixed;
+	top: 0px;
+	left: 0px;
 }
 /* Classes related to javascript */
 

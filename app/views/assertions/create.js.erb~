@@ -1,5 +1,3 @@
-$('title').html('Stampi');
-
 $('<%= @owner.jquery_target %>').find('div.latest_assertion').first().html('<%= escape_javascript(@assertion.text.to_s.empty? ? 'Click to enter summary' : @assertion.text) %>');
 
 

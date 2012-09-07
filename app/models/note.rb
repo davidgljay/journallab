@@ -1,5 +1,5 @@
 class Note < ActiveRecord::Base
-  attr_accessible :about_id, :about_type, :text, :user_id, :folder_id
+  attr_accessible  :text, :about, :about_type, :about_id, :user_id, :folder_id, :user, :folder
 
   belongs_to :about, :polymorphic => true
   belongs_to :user

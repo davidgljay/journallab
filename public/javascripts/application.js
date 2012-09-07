@@ -6,6 +6,7 @@ jQuery.ajaxSetup({
    'beforeend': function(xhr) {xhr.setRequestHeader("Accept", "text/javascript")}
 });
 
+
 $(document).ready(function(){
 
 //Feed
@@ -99,10 +100,6 @@ $(".leave_reaction").live('click', function() {
     $('div.overlay').show('');
   });
 
-  $("a.list_share").live('click', function(){
-    $(this).parent().parent().find("div.list_share").slideToggle(300);
-  });
-
 
   $('div.share_form').find(':input').live('click', function(){
      if( $(this).val() == "Check this out!"){
@@ -194,6 +191,11 @@ $(".leave_reaction").live('click', function() {
   });
 
 
+// Dropdown menus
+
+$('a.dropdown-toggle').live('click', function(){
+	$(this).next().toggle('300');
+  });
 
 
 //
@@ -208,8 +210,12 @@ $(".leave_reaction").live('click', function() {
 
    $(".deadLink").live('click', function(e){
 	e.preventDefault();
-	//return false;
+	return false;
     });
+
+$('.flash').delay('5000').fadeOut('slow');
+
+
 
 
 });

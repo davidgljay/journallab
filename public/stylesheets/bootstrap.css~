@@ -2432,7 +2432,7 @@ table .span24 {
   border-bottom: 1px solid #ffffff;
 }
 
-.dropdown-menu a {
+.dropdown-menu a, .dropdown-menu input[type="submit"] {
   display: block;
   padding: 3px 15px;
   clear: both;
@@ -2702,7 +2702,7 @@ button.close {
   font-size: 11px;
   line-height: 14px;
   vertical-align: top;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 .btn-primary,

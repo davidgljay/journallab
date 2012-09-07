@@ -97,8 +97,8 @@ def search_pubmed(search, numresults = 20)
   end
 
 def search_activity(search_term) 
-	comment_papers = Paper.joins("INNER JOIN 'comments' ON 'papers'.'id' = 'comments'.'get_paper_id'").where("comments.text LIKE '%" + search_term + "%'")
-	summary_papers = Paper.joins("INNER JOIN 'assertions' ON 'papers'.'id' = 'assertions'.'get_paper_id'").where("assertions.text LIKE '%" + search_term + "%' OR assertions.method_text LIKE '%" + search_term + "%'")
+	comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('comments.text LIKE "%' + search_term + '%"')
+	summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where('assertions.text LIKE "%' + search_term + '%" OR assertions.method_text LIKE "%' + search_term + '%"')
 	(summary_papers + comment_papers).uniq
 end
 	

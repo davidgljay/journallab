@@ -79,7 +79,7 @@ def search_pubmed(search, numresults = 20)
 		end
 
 		# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
-		if paper.first_last_authors
+		if paper.first_last_authors.nil?
 			authors = []
 			authorlist = article.xpath('MedlineCitation/Article/AuthorList')
 			authorlist.xpath('Author').each do |a|

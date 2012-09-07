@@ -85,7 +85,7 @@ def reactions
 	owner.reactions.select{|r| r.user == self.user}
 end
 
-def generate_anon_name
+def assign_anon_name
 	self.user.assign_anon_name(self.get_paper)
 end
 

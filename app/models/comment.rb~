@@ -16,7 +16,7 @@ has_many :votes
 has_many :maillogs, :as => :about
 
 before_save :set_get_paper
-before_save :generate_anon_name
+before_save :assign_anon_name
 
 has_many :filters, :foreign_key => "comment_id",
                            :dependent => :destroy
@@ -85,7 +85,7 @@ def reactions
 	owner.reactions.select{|r| r.user == self.user}
 end
 
-def generate_anon_name
+def assign_anon_name
 	self.user.assign_anon_name(self.get_paper)
 end
 

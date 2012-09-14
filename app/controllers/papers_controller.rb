@@ -25,7 +25,9 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 	@heatmap = @paper.heatmap
 	@heatmap_overview = @paper.heatmap_overview
 	@reaction_map = @paper.reaction_map
-	@numvisits = @paper.visits.map{|v| v.user}.uniq.count
+	#@numvisits = @paper.visits.map{|v| v.user}.uniq.count
+	@interest = @paper.interest
+	@blogs = @paper.check_blogs
 	if signed_in?
 		@groups = current_user.groups
 		@groups.delay.each {|g| g.most_viewed_add(@paper); g.save;}
@@ -150,9 +152,11 @@ end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
       @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search)).uniq
-      @history_results = @search_results & current_user.visited_papers
-      @search_results = @search_results - @history_results
-      @search_results.select{|p| p.latest_activity.nil?}.each {|p| p.latest_activity ||= Time.now - 1.month;}
+      if signed_in?
+		@history_results = @search_results & current_user.visited_papers
+	      	@search_results = @search_results - @history_results
+      		@search_results.select{|p| p.latest_activity.nil?}.each {|p| p.latest_activity ||= Time.now - 1.month;}
+      end
       @search_results.sort!{|x,y| y.latest_activity <=> x.latest_activity}
     end
     if @paper

@@ -23,6 +23,8 @@
 
          </li>
 	<% end %>
+	<% if user_signed_in? %>
+	<% if current_user.certified %>
          <li class="replylink clickme">
 	Reply
          </li>
@@ -31,14 +33,11 @@
       </div>
       <div> 	      
         <div class = "replyform hideonload">
-		<% if user_signed_in? %>	
 			<%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply', :owner => comment.owner %>
-		<% else %>
-			<br>
-			<br>
-			<div><h3><%= link_to "Sign up", new_user_registration_path %> to give an answer.</h3></div>
-		<% end %>
         </div>
+		<% end %>
+		<% end %>
+
       </div>
       </div>
     </td>

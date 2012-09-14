@@ -1,10 +1,12 @@
+<div align = "center">
 <% if @follows.empty? && @groups.empty? %>
 <h1>Get started!</h1>
 <% end %>
 <h2>Follow a Pubmed Search Term:</h2>
-<%= form_for(Follow.new) do |f| %>
+<%= form_tag '/temp_follows', :method => :post, :remote => true do %>
+
 	<%= f.hidden_field :user_id, :value => current_user.id %>
 	<%= f.text_field :search_term %>
 	<p><%= f.submit "Follow", :class => 'loadingPrompt' %><%= render '/shared/loading' %></p>
 <% end %>
-
+</div>

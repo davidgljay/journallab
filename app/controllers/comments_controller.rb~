@@ -54,13 +54,12 @@ before_filter :authenticate_user!, :except => [:list]
     	end
     	@paper = @owner.get_paper
 	@comment.get_paper = @paper
-	current_user.assign_anon_name(@paper)
 	@comment.save
         @groups.each do |g| 
 		g.delay.feed_add(@comment)
 		g.delay.set_newcount if g.category == 'jclub'
 	end
-    	@paper.add_heat(@owner)
+    	@paper.add_heat(@owner) unless @owner.class == "Paper"
     	@heatmap = @paper.heatmap
 	if @owner.class == Fig
 	    	@comments = @owner.meta_comments

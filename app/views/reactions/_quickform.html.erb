@@ -1,5 +1,6 @@
 <% if signed_in? %>
-<div class = 'quickform'>
+  <% if current_user.certified %>
+    <div class = 'quickform round'>
 	<%= form_tag '/quickform', :method => :post, :remote => true do %>
 
 		<h3>What do you think?</h3>
@@ -29,11 +30,13 @@
 	</ul>
 	</div>
 	<% end %>
-</div>
-<div class = "hideonload">
-<h3>Just a sec..</h3>
-</div>
-<% else %>
+     </div>
+     <div class = "hideonload">
+	<h3>Just a sec..</h3>
+     </div>
+  <% else %>
+	<font style = "color: red;">Because your email address is not affiliated with an academic instition you are not allowed to leave comments at this time. </font><br><br>  <% end %>
+<% else %> 
 		<h3><%= link_to "Sign up" ,new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %> to Leave a Comment </h3>
 	</div>
 <% end %>

@@ -47,6 +47,15 @@ $(".abstract").live('click', function(){
 	$(this).parent().parent().find('.abstract_long').slideToggle(300);
 });
 
+$(".list_abstract").live('click', function(){
+	$(this).parent().parent().parent().find('.abstract_long').slideToggle(300);
+});
+
+//Blog post expansion
+$("#blogs").find("h4").click(function(){
+	$(this).next().slideToggle(300);
+});
+
 //Quickform Expansion
 
 $('a.quick_comment').click(function(){
@@ -142,7 +151,7 @@ $(".leave_reaction").live('click', function() {
     $("div.commentbox").hide("slow");
     $("div.questionbox").hide("slow");
     $("div.sharebox").hide("slow");
-    $(this).parent().next().find("img.fullfig").slideToggle();
+    $(this).parent().next().find(".fullfig").slideToggle();
     });
 
 
@@ -182,6 +191,10 @@ $(".leave_reaction").live('click', function() {
 
        });
 
+$('#expandSignup').click(function(){
+	$('#signup').toggle('300');
+});
+
 //
 // Redirect to signup if you get a 401 unauthentic error from a JS call
 //
@@ -196,6 +209,10 @@ $(".leave_reaction").live('click', function() {
 $('a.dropdown-toggle').live('click', function(){
 	$(this).next().toggle('300');
   });
+
+// Carousel
+
+$('#features').jshowoff();
 
 
 //

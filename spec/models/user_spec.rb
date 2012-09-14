@@ -66,9 +66,20 @@ describe User do
     user_with_duplicate_email.should_not be_valid
   end
 
+  it "should certify users with a .edu address" do
+    	user = User.create!(@attr.merge(:email => 'example@school.edu'))
+	user.certified.should be_true
+  end
 
+  it "should certify users with a nih.gov address" do
+    	user = User.create!(@attr.merge(:email => 'example@nih.gov'))
+	user.certified.should be_true
+  end
 
-
+  it "should not certify users with a .com address" do
+    	user = User.create!(@attr)
+	user.certified.should be_false
+  end
 
   describe "admin attribute" do
 

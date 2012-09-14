@@ -1,0 +1,14 @@
+<div id = "homeFeed" class = "feed round">
+      <%= render '/feed/nav' %>
+      <% @follows.each_with_index do |follow, i| %>
+	<div id = <%= follow.classname + "_feed" %> class = "homePageFeed">
+	<%= render '/feed/follow' if i == 0 %>
+	</div>
+      <% end %>
+      <% @jclubs.each_with_index do |g, i| %>
+	<div id= '<%= g.inspect + '_feed' %>' class = "homePageFeed"><%= render '/feed/discussion', :group => g if i == 0 && @follows.empty? %></div>
+      <% end %>
+	<% if signed_in? %>
+      <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @jclubs.empty? %>"><%= render '/feed/follow_form' %></div>
+	<% end %>
+</div>

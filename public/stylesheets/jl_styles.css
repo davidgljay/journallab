@@ -238,6 +238,7 @@ td#profileImage {
 
 .small {
 	font-size: 11px;
+	line-height: 13px;
 }
 
 .linklike {
@@ -369,6 +370,91 @@ icon {
 	line-height: 13px;
 }
 
+/* Feeds */
+
+
+#homeFeed {
+	margin: 0px;
+	margin-top: 30px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-radius: 10px;
+	background-color: #B5CFE3;
+	padding-bottom: 20px;
+}
+
+
+
+#feedNav {
+	margin: 0px;
+}
+
+#feedNav a {
+	font-weight: bold;
+	display: block;
+	color: #000000;
+	text-decoration: none;
+}
+
+#feedNav ul {
+	padding: 0px;
+	margin-bottom: 0px;
+	-webkit-padding-start: 0px;
+}
+
+#feedNav li {
+	list-style-type: none;
+	display: inline-block;
+	padding-top: 5px;
+	line-height: 20px;
+}
+
+
+
+#feedNav .feed_nav_item {
+	text-align: center;
+	padding: 5px;
+	font-weight: bold;
+	color: #fff;
+	background-color: #005997;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+}
+
+#feedNav .feedPlus {
+	width: 35px;
+	padding: 2px;
+}
+
+#feedNav .feed_nav_selected {
+	color: #000;
+	background-color: #fff;
+}
+
+#follow_form {
+	padding: 10px;
+}
+
+.feedInfo {
+	font-weight: bold;
+	color: #005997;
+}
+
+.homePageFeed {
+	background-color: #fff;
+	padding-top: 20px;
+	padding-bottom: 20px;
+
+}
+
+.feedNotice {
+	float: right;
+	position: relative;
+	top: 5px;
+}
+
+
+
 /* Sharing */
 
 
@@ -498,6 +584,9 @@ input#share_text {
 	display: inline;
 	padding-top: 0px;
 	padding-bottom: 0px;
+	margin-right: 3px;
+	position: relative;
+	bottom: 5px;
 }
 
 .new_folder_text {
@@ -528,6 +617,13 @@ input#share_text {
 	vertical-align: top;
 	color: #005997;
 	font-family: FuturaBT-Heavy, Arial, Helvetica, sans-serif;
+}
+
+#listMenu {
+	float: right;
+	font-size: 9px;
+	line-height: 12px;
+	text-align: right;
 }
 
 .heatTable {

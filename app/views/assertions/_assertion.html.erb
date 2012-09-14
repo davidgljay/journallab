@@ -8,6 +8,7 @@
 		<% if about.image %>
 			<td width="180" align="center">
 		               <%= image_tag about.image.thumb('150x150').url, :class => 'thumbnail clickme'%>
+				<div class = "citation"><%= about.shortname + '. '  + @paper.citation %></div>
 			</td>
 		<% else %>
 			<td width="180" align="center">
@@ -70,6 +71,7 @@
      <% if about.class == Fig %>
        <% unless about.image.nil? %>
           <%= image_tag about.image.thumb('700x700>').url, :class => 'fullfig hideonload'%>
+	  <div class = "citation fullfig hideonload"><%= about.shortname + '. '  + @paper.citation %></div>
        <% end %>
      <% end %>
 </td>

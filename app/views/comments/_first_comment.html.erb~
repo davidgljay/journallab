@@ -6,7 +6,7 @@
 	<h5>Regarding <%= comment.owner.shortname%>:</h5>
       <% end %> 
       <%= render 'comments/linktext', :linktext => comment.linktext(comment.short_text) %>
-      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous %>
+      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous, :checkanon => true %>
       <%= render 'reactions/comment_reactions', :comment => comment %>
       <div class = 'subMenu'>
         <ul>
@@ -23,6 +23,8 @@
 
          </li>
 	<% end %>
+		<% if user_signed_in? %>
+
          <li class="replylink clickme">
 	Reply
          </li>
@@ -31,14 +33,10 @@
       </div>
       <div> 	      
         <div class = "replyform hideonload">
-		<% if user_signed_in? %>	
 			<%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply', :owner => comment.owner %>
-		<% else %>
-			<br>
-			<br>
-			<div><h3><%= link_to "Sign up", new_user_registration_path %> to give an answer.</h3></div>
-		<% end %>
         </div>
+		<% end %>
+
       </div>
       </div>
     </td>

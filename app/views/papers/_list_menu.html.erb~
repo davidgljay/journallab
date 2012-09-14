@@ -1,0 +1,27 @@
+<div id="listMenu">
+<% if paper.pubmed_id %>
+	<div>
+		<%= link_to("http://pubget.com/paper/" + paper.pubmed_id.to_s, :class => 'paperNav', :target => '_blank') do %><%= image_tag 'pdf.png'%><icon class = 'icon-download' style = "position: relative; bottom: 5px;"></icon><% end %>
+	</div>
+	<% elsif @paper.doi %>
+		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
+	<% end %>
+	<% if user_signed_in? && @groups %>
+	<div>
+		<%= link_to('/shares/new/' +  paper.id.to_s, :id => 'shares_new_' + paper.id.to_s, :class => "list_share", :remote => true) do %>Share with Lab <div class = "inline"><icon class = 'icon-share'></icon></div><% end %>
+	</div>      
+  <% end %>
+	<% if !paper.abstract.empty? %>
+	<div>
+		<%= link_to "#", :class => "list_abstract deadLink" do %>View Abstract <div class = "inline"><icon class = 'icon-book'></i></div>
+	</div>
+	<% end %>
+ 		<div class="dropdown inline">
+  			<div class = "inline"></div> 
+			<% if signed_in? %>
+				<%= link_to '/folders/add/' + paper.id.to_s, :id => "folder_list_" + paper.id.to_s, :class => "dropdown-toggle", :remote => true do %>Add to Folder<div class = "inline"><icon class = 'icon-folder-open'></icon></div><% end %>
+			<% else %>
+				<font rel="tooltip" title="With an account you will be able to easily add papers to folders for later reading." class = "clickme"><div class = 'linklike'>Add to Folder  <div class = "inline"><icon class = 'icon-folder-open'></icon></div></div></font>
+			<% end %>
+		</div>
+</div>

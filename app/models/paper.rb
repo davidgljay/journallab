@@ -68,6 +68,10 @@ def search_pubmed(search, numresults = 20)
 	        	day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
 	        	month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
 	        	year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
+			volume = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Volume').text
+			issue = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Issue').text
+			pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
+			
 			if year
 				pubdate = Time.local(year, month, day) 
 				latest_activity = pubdate
@@ -75,26 +79,49 @@ def search_pubmed(search, numresults = 20)
 				latest_activity = Time.now - 1.month
 			end
 	        	abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
-        		paper = Paper.new(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity)
-		end
-
 		# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
-		if paper.first_last_authors.nil?
 			authors = []
 			authorlist = article.xpath('MedlineCitation/Article/AuthorList')
 			authorlist.xpath('Author').each do |a|
 				firstname = a.xpath('ForeName').text 
 				lastname = a.xpath('LastName').text
 				initials = a.xpath('Initials').text
-				authors << Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
+				authors << {:firstname => firstname, :lastname => lastname, :name => lastname + ', ' + firstname }
 			end
-			paper.assign_first_and_last_authors(authors.first, authors.last)
-			#paper.delay.extract_authors(authors)
+			first_last_authors = authors.empty? ? nil : [authors[0], authors[-1]]
+
+			if authors.count > 3
+	                        citation_authors = authors[0][:lastname] + ', ' + authors[1][:lastname] + ", et al."
+			else
+				n = authors.length
+				citation_authors = authors.empty? ? '' : (authors.map{|a| a[:name]}.first(n-1)).join(', ') + ', and ' + authors.last[:name] + '.'
+			end
+
+			citation = citation_authors + ' "' + title + '" ' + volume + '.' + issue + ' (' + pubdate.year.to_s + '): ' + pagination + '. Web.'
+			paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation)
 		end
-        	search_results << paper    
+        	search_results << paper
 	end
 	search_results
   end
+
+def pubmed_search_count(search, numresults = 20)
+	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").delete('"').delete("'")
+      	#Get a list of pubmed IDs for the search terms
+      	url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch + '&retmax=' + numresults.to_s
+      	pids = Nokogiri::XML(open(url1)).xpath("//IdList/Id").map{|p| p.text}
+	pids.count
+end
+
+def interest
+	count = 0
+	Follow.where('user_id IS NOT NULL').map{|f| f.search_term}.compact.each do |w|
+		if (self.title.to_s + ' ' + self.abstract.to_s).include?(w)
+			count += 1	
+		end
+	end
+	count
+end
 
 def search_activity(search_term) 
 	comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('"comments"."text" LIKE '"'%" + search_term + "%'")
@@ -102,6 +129,20 @@ def search_activity(search_term)
 	(summary_papers + comment_papers).uniq
 end
 	
+def check_blogs
+	url = 'http://www.google.com/search?hl=en&q=%22' + self.title.gsub(/[' ']/, "+").gsub(/['.']/, "+").delete('"').delete("'") + '%22&tbm=blg&tbs=li:1&output=rss'
+	blogposts = []
+      	Nokogiri::XML(open(url)).xpath("//item").each do |i|
+		posttitle = i.xpath('title').text.gsub(/<\/?[^>]*>/, "")
+		url = i.xpath('link').text
+		description = i.xpath('description').text.gsub(/<\/?[^>]*>/, "")
+		if (posttitle + ' ' + description).include?(self.title.first(20))
+			blogposts << {:url => url, :title => posttitle, :description => description}
+		end
+	end
+	blogposts
+end
+
 
 def lookup_info
   url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
@@ -156,7 +197,6 @@ def assign_first_and_last_authors(f_author = nil, l_author = nil)
 		f = {:firstname => f_author.firstname, :lastname => f_author.lastname, :name => f_author.lastname + ', ' + f_author.firstname }
 		l = {:firstname => l_author.firstname, :lastname => l_author.lastname, :name => l_author.lastname + ', ' + l_author.firstname} 
 		self.first_last_authors = [f, l]
-		self.save
 	end
 end
 
@@ -316,12 +356,15 @@ end
 def calc_heat(heatmap)
    
    #Find the maximum number of comments
-   max = heatmap.values.map{|h| h[0]}.max
+   max = heatmap.values.drop(1).map{|h| h[0]}.max
    if max == 0
      max = 1
    end
    #Indicate everything else as a percentage
    heatmap.each do |id, h|
+     if id.first(5) == 'paper'
+	     heatmap[id] = [h, [h, 10].min]
+     end
      h = h[0]
      float = h.to_f/max * 10
      heatmap[id] = [h, float.to_i]
@@ -330,8 +373,13 @@ def calc_heat(heatmap)
 end
 
 def add_heat(item)
-    self.h_map[item.class.to_s.downcase + item.id.to_s][0] += 1
-    calc_heat(self.h_map)
+    if item.class == Paper
+	    h_map[self.inspect][0] = (self.meta_reactions + self.meta_comments).map{|c| c.user}.uniq.count
+	    self.save
+    else
+	    self.h_map[item.class.to_s.downcase + item.id.to_s][0] += 1
+	    calc_heat(self.h_map)
+    end
 end
 
 def heat

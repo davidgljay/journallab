@@ -1,25 +1,26 @@
 <div id = "feedNav">
 <ul>
+	<% @follows.each_with_index do |follow, i| %>
+		<li>
+			<% if follow.newcount > 0 %> 			
+				<div class = 'badge badge-warning feedNotice'><%= follow.newcount >= 40 ? "40+" : follow.newcount %></div>
+			<% end %>
+			<%= button_to follow.name, {:controller => "pages", :action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 ? 'feed_nav_selected' : ''), :remote => true %><%= render '/shared/loading' %>
+
+		</li>
+	<% end %>	
+
 <% if signed_in? %>
 	<% @jclubs.each_with_index do |group, i| %>
 		<li>
 			<% if group.newcount(current_user) > 0 %> 	
 				<div class = 'badge badge-important feedNotice'><%= group.newcount(current_user) %></div>		
 			<% end %> 	
-			<%= button_to group.shortname , {:action => "feedswitch",  :switchto => group.inspect}, :class => group.inspect + " feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 ? 'feed_nav_selected' : '') , :remote => true %><%= render '/shared/loading' %>
+			<%= button_to group.shortname , {:action => "feedswitch",  :switchto => group.inspect}, :class => group.inspect + " feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0  && @follows.empty? ? 'feed_nav_selected' : '') , :remote => true %><%= render '/shared/loading' %>
 
 		</li>
 	<% end %>
-	<% @follows.each_with_index do |follow, i| %>
-		<li>
-			<% if follow.newcount > 0 %> 			
-				<div class = 'badge badge-warning feedNotice'><%= follow.newcount%></div>
-			<% end %>
-			<%= button_to follow.name, {:action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 && @jclubs.empty? ? 'feed_nav_selected' : ''), :remote => true %><%= render '/shared/loading' %>
-
-		</li>
-	<% end %>	
-	<li><div class = "feed_nav_item feedPlus clickme" >+</div></li>
 <% end %>
+	<% if signed_in? %><li><div class = "feed_nav_item feedPlus clickme" >+</div></li><% end %>
 </ul>
 </div>

@@ -89,7 +89,7 @@ describe "build figs" do
 	end
 
 	it "should remove figs unless there is a comment on them." do
-	#	@fig.comments.build(:text => 'Comment', :form => 'comment', :user => @user)
+		@fig.comments.build(:text => 'Comment', :form => 'comment', :user => @user)
 		@paper.build_figs(1)
 		@paper.figs.count.should == 1
 	end	

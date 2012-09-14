@@ -16,7 +16,7 @@
 	               	<%= f.hidden_field :about_type, :value => paper.class.to_s %>
         	       	<%= f.hidden_field :about_id, :value =>  paper.id %>
         	       	<%= text_field_tag :folder, "New Folder", :onfocus =>  "if(this.value == 'New Folder') { this.value = ''; }", :class => "small new_folder_text" %>
-                 	<%= submit_tag "+", :class => "inline new_folder_submit"%>
+                 	<%= submit_tag "+", :class => "inline new_folder_submit btn-tiny btn-warning round"%>
         <% end %>
 </li>
 </ul>

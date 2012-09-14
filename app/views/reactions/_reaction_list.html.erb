@@ -1,7 +1,7 @@
-
 	<% if @reaction_map[about.inspect][0][1] > 0 %>
 		<h5>Reactions to <%= about.shortname %>:</h5>
 	<% end %>
+<% if current_user.certified %>
 	<h5 class = "hideonload">What is your reaction?</h5>
 	<ul class = "nomargin nopadding">
 	<% @reaction_map[about.inspect].each do |r| %>
@@ -23,3 +23,11 @@
 	  
 	</ul>
 
+<% else %>
+	<ul class = "nomargin nopadding">
+	<% @reaction_map[about.inspect].select{|r| r[1] > 0}.each do |r| %>
+         <li class="reactionlink badge badge-success"> 
+                 	<%= r[0] + ' x' + r[1].to_s %>
+          </li>
+        <% end %>
+<% end %>

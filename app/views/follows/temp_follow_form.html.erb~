@@ -1,0 +1,6 @@
+<h1>Join the experiment by entering terms you regularly search on pubmed.</h1>
+<i>Separate search terms with commas, eg: 'mRNA, nerve action potential'</i>
+<%= form_tag '/temp_follows', :method => :post, :remote => true do %>
+	<%= text_field_tag :temp_follows %>
+	<p><%= f.submit "Go", :class => 'loadingPrompt' %><%= render '/shared/loading' %></p>
+<% end %>

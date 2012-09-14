@@ -16,7 +16,12 @@ class Devise::RegistrationsController < ApplicationController
     if resource.save
 	@group = Group.find_by_code(params[:group_code]) 
 	@group.add(resource) if @group
-	# Add an e-mail notifier to the head of the group. Later on I'll add an option in that e-mail to remove them. 
+	if params[:follows]
+		 params[:follows].split(',').map{|f| Follow.find(f)}.each do |follow|
+			follow.user = resource
+			follow.save
+		end
+	end 
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_in(resource_name, resource)

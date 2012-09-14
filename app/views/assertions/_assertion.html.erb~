@@ -8,6 +8,7 @@
 		<% if about.image %>
 			<td width="180" align="center">
 		               <%= image_tag about.image.thumb('150x150').url, :class => 'thumbnail clickme'%>
+				<div class = "citation"><%= about.shortname + '. '  + @paper.citation %></div>
 			</td>
 		<% else %>
 			<td width="180" align="center">
@@ -40,7 +41,7 @@
 					<h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
 				<% end %>
 			</div>
-			<%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at, :anonymous => nil, :checkanon => false if about.latest_assertion %>
+			<%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at, :anonymous => false, :checkanon => false if about.latest_assertion %>
 			<%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
 		        	<%= hidden_field_tag :owner, about.class.to_s %>
               			<%= hidden_field_tag :id, about.id %>
@@ -70,6 +71,7 @@
      <% if about.class == Fig %>
        <% unless about.image.nil? %>
           <%= image_tag about.image.thumb('700x700>').url, :class => 'fullfig hideonload'%>
+	  <div class = "citation"><%= about.shortname + '. '  + @paper.citation %></div>
        <% end %>
      <% end %>
 </td>

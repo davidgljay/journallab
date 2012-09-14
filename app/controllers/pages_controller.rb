@@ -31,7 +31,12 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto = params[:switchto]
 		@follow = Follow.find(params[:switchto][7..-1].to_i)
 		@follow.visits.create(:user => current_user, :visit_type => 'feed') if signed_in?
-		@follow.delay.save
+		if @follow.latest_search.nil? 
+			@follow.update_feed
+			@follow.save
+		else
+			 @follow.delay.save
+		end
 		@nav_language = @follow.name
 		@groups = current_user.groups if signed_in?
 	elsif params[:switchto].first(5) == "group"
@@ -47,6 +52,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		@groups = current_user.groups if signed_in?		
 	end
   end
+
 
   def contact
     @title = "Contact"
@@ -64,9 +70,9 @@ before_filter :admin_user,   :only => [:dashboard]
     require 'groups_helper'
     @title = "Dashboard"
 
-    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ?', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ?', Time.now - 1.month))],["Users", graph_by_day(User.where('created_at > ?', Time.now - 1.month))],["Custom Feeds", graph_by_day(Follow.where('created_at > ?', Time.now - 1.month))]]
+    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ? AND user_id <> 1', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ? AND user_id <> 1', Time.now - 1.month))],["Users", graph_by_day(User.where('created_at > ? AND user_id <> 1', Time.now - 1.month))],["Custom Feeds", graph_by_day(Follow.where('created_at > ? AND user_id <> 1', Time.now - 1.month))]]
 
-    @views = [["Papers", graph_by_day(Visit.where("created_at > ? AND visit_type = 'paper'", Time.now - 1.month))], ["Comments", graph_by_day(Visit.where("created_at > ? AND visit_type = 'comment'", Time.now - 1.month))], ["Feeds", graph_by_day(Visit.where("created_at > ? AND visit_type = 'feed'", Time.now - 1.month))]]
+    @views = [["Papers", graph_by_day(Visit.where("created_at > ? AND visit_type = 'paper' AND user_id <> 1", Time.now - 1.month))], ["Comments", graph_by_day(Visit.where("created_at > ? AND visit_type = 'comment' AND user_id <> 1", Time.now - 1.month))], ["Feeds", graph_by_day(Visit.where("created_at > ? AND visit_type = 'feed' AND user_id <> 1", Time.now - 1.month))]]
 
 
     @nods_per_discussion = histogram(Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.votes.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.votes.count})

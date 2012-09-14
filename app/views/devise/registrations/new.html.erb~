@@ -26,11 +26,4 @@
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
-</td><td valign = "top">
-<h1>Thanks for registering!</h1>
-<ul>
-<li><h3>We're testing a system of online journal clubs.</h3></li>
-<li><h3>We want to make it easier for labs to discuss the latest research.</h3></li>
-<li><h3>Check out this week's journal club to get started.</h3></li>
-</ul>
-</td></tr></table>
+

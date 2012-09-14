@@ -6,6 +6,6 @@
 		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
 	<% end %>
 	<% if user_signed_in? %>
-		<%= render '/shares/share_button' unless @groups.select{|g| g.category == 'lab'}.empty? %> 
+		<%= render '/shares/share_button' unless @groups.empty? %> 
         <% end %>
 </div>

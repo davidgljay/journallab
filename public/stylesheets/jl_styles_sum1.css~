@@ -1,7 +1,12 @@
 @charset "UTF-8";
-#abstract {
+#abstract, #blogs {
 	margin-right: 50px;
 	margin-left: 50px;
+	margin-bottom: 10px;
+}
+
+#blogs {
+	text-align: left;
 }
 
 #abstract_short, #abstract_long {
@@ -28,7 +33,6 @@
 .paperNav {
 	color: #63A82A;
 	font-weight: bold;
-	padding-bottom: 10px;
 	display: block;
 }
 
@@ -55,7 +59,11 @@ td.sumright .reaction_list ul {
 
 .custom_reaction input[type = "text"] {
 	width: 80px;
-	font-size: 10px
+	font-size: 10px;
+	padding: 0px;
+	padding-left: 2px;
+	margin-bottom: 0px;
+	margin-top: 3px;
 }
 
 .custom_reaction_submit {
@@ -98,6 +106,12 @@ td.sumright .reaction_list ul {
 .fig_upload {
 	background-color: #fff;
 	width: 80px;
+}
+
+.citation {
+	text-align: left;
+	font-size: 9px;
+	line-height: 10px;
 }
 
 .latest_assertion {

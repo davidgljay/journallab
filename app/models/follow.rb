@@ -8,7 +8,7 @@ belongs_to :follow, :polymorphic => true
 
 validates :name, :presence => true
 
-before_save :update_feed
+#before_save :update_feed
 before_save :set_newcount
 
 def classname
@@ -20,11 +20,13 @@ def inspect
 end
 
 def feed
-	feed = []
-	latest_search.each do |p|
-		feed << Paper.find(p)
+	feed_array = []
+	if latest_search
+		latest_search.each do |p|
+			feed_array << Paper.find(p)
+		end
 	end
-	feed
+	feed_array
 end
 
 
@@ -38,9 +40,30 @@ def update_feed
 end
 
 def set_newcount
-	lastvisit = visits.empty? ? Date.new(1900,1,1) : visits.first.created_at 
-	self.newcount = feed.select{|p| p.created_at > lastvisit}.count
-	self.newcount
+	if latest_search
+		lastvisit = visits.empty? ? Date.new(1900,1,1) : visits.first.created_at 
+		self.newcount = feed.select{|p| p.created_at > lastvisit}.count
+		self.newcount
+	else
+		self.newcount = Paper.new.pubmed_search_count(search_term, 40)
+	end
 end
+
+# Create a set of temporary follows for the homepage
+# Returns an array with one follow and several search terms
+
+def create_temp(temp_follows_string)
+	temp_follows_array = temp_follows_string.split(",").each{|t| t.strip!}
+	follow_array = []	
+	temp_follows_array.each do |f|
+		 follow_array << Follow.create(:name => f, :search_term => f)
+	end
+	follow = follow_array.first
+	follow.update_feed
+	follow.save
+	follow_array[1..-1].each {|f| f.delay.update_feed; f.delay.save}
+	follow_array
+end
+
 
 end

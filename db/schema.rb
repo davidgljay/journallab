@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904152021) do
+ActiveRecord::Schema.define(:version => 20120914003803) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -217,15 +217,6 @@ ActiveRecord::Schema.define(:version => 20120904152021) do
 
   add_index "memberships", ["user_id"], :name => "index_memberships_on_user_id"
 
-  create_table "microposts", :force => true do |t|
-    t.string   "content"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "microposts", ["user_id"], :name => "index_microposts_on_user_id"
-
   create_table "notes", :force => true do |t|
     t.integer  "user_id"
     t.integer  "about_id"
@@ -251,6 +242,7 @@ ActiveRecord::Schema.define(:version => 20120904152021) do
     t.string   "doi"
     t.text     "reaction_map"
     t.datetime "latest_activity"
+    t.text     "citation"
   end
 
   create_table "questions", :force => true do |t|
@@ -286,17 +278,6 @@ ActiveRecord::Schema.define(:version => 20120904152021) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "relationships", :force => true do |t|
-    t.integer  "follower_id"
-    t.integer  "followed_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "relationships", ["followed_id"], :name => "index_relationships_on_followed_id"
-  add_index "relationships", ["follower_id", "followed_id"], :name => "index_relationships_on_follower_id_and_followed_id", :unique => true
-  add_index "relationships", ["follower_id"], :name => "index_relationships_on_follower_id"
 
   create_table "shares", :force => true do |t|
     t.integer  "paper_id"
@@ -362,11 +343,8 @@ ActiveRecord::Schema.define(:version => 20120904152021) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.boolean  "certified"
   end
-
-  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "visits", :force => true do |t|
     t.integer  "paper_id"

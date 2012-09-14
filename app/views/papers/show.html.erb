@@ -3,11 +3,11 @@
 
 <div style = "text-align: right;">
 <span class="small grey">
-<% if @paper.visits.count == 1 %>
-	<em><strong>1 person has visited this paper.</strong></em>
-<% else %>
-	<em><strong><%= pluralize(@numvisits,"Person")%></strong> <%= @numvisits > 1 ? 'have' : 'has' %> visited this paper.</em>
+<% if @interest > 0 %>
+<font rel="tooltip" title="This many people will be notified if the paper is summarized or discussed." class = "clickme">
+<strong><%= pluralize(@interest,"Person")%> on Journal Lab</strong></font> <%= @interest > 1 ? 'are' : 'is' %> interested in this paper.
 <% end %>
+
 </span>
 </div>
 
@@ -30,6 +30,17 @@
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
+	<% if !@blogs.empty? %>
+		<div id = 'blogs' >
+			<h4 class = 'clickme'><%= @blogs.count %> Blog <%= @blogs.count > 1 ? 'Posts' : 'Post' %> About This Paper</h4>
+			<% @blogs.each do |blog| %>
+				<div class = "hideonload">
+					<%= link_to blog[:title], blog[:url], :target => "_blank"%>
+					<div class = "small italic"><%= blog[:description] %></div>
+				</div>
+			<% end %>
+		</div>
+	<% end %>			
 		<%= render '/reactions/quickform'%>
 	<% if user_signed_in? %>
 		<%= render 'add_figs' if @paper.figs.empty? %>

@@ -4,7 +4,7 @@
       	<div class = "comment_body <%= 'author_comment_body' if r.author %>">
        	<%= render 'comments/linktext', :linktext => r.linktext %>
       	</div>
-	<%= render 'shared/user_info', :user => r.user, :date => r.created_at %>
+	<%= render 'shared/user_info', :user => r.user, :date => r.created_at, :anonymous => r.anonymous %>
 	</div>
     </td>
   </tr>

@@ -1,0 +1,4 @@
+class AddCertifiedToUsers < ActiveRecord::Migration
+  def change
+  end
+end

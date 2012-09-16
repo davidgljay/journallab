@@ -26,4 +26,6 @@
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
-
+</td><td valign = "top">
+<h1>Thanks for registering!</h1>
+</td></tr></table>

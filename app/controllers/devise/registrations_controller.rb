@@ -14,8 +14,8 @@ class Devise::RegistrationsController < ApplicationController
     build_resource
 
     if resource.save
-	@group = Group.find_by_code(params[:group_code]) 
-	@group.add(resource) if @group
+	#@group = Group.find_by_code(params[:group_code]) 
+	#@group.add(resource) if @group
 	if params[:follows]
 		 params[:follows].split(',').map{|f| Follow.find(f)}.each do |follow|
 			follow.user = resource
@@ -34,9 +34,6 @@ class Devise::RegistrationsController < ApplicationController
     else
       clean_up_passwords(resource)
       respond_with_navigational(resource) { render_with_scope :new }
-    end
-    if params[:subscription]
-	resource.subscriptions.create!(:category => 'iccr_learnmore')
     end
   end
 

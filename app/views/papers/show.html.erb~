@@ -32,7 +32,7 @@
 	<% end %>
 	<% if !@blogs.empty? %>
 		<div id = 'blogs' >
-			<h4 class = 'clickme'>Blog Posts About This Paper</h4>
+			<h4 class = 'clickme'><%= @blogs.count %> Blog <%= @blogs.count > 1 ? 'Posts' : 'Post' %> About This Paper</h4>
 			<% @blogs.each do |blog| %>
 				<div class = "hideonload">
 					<%= link_to blog[:title], blog[:url], :target => "_blank"%>

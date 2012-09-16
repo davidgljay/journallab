@@ -2,6 +2,7 @@
 <h2>Sign up</h2>
 
 <%= form_for( resource, :url => registration_path(resource_name)) do |f| %>
+  <div style = "color:red;"><%= devise_error_messages! %></div>
   <h3>First name</h3>
   <%= f.text_field :firstname %> 
 
@@ -22,6 +23,4 @@
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
-</td><td valign = "top">
-<h1>Thanks for registering!</h1>
 </td></tr></table>

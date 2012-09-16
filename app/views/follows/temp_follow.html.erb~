@@ -2,7 +2,7 @@
 	<div><h1>Fantastic. Let's get you situated.</h1><h3>These are your feeds.</h3><h3>We’ll update them in <div class = "badge badge-warning inline">yellow</div>when there are new papers posted on pubmed.</h3> <h3>We’ll update them in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3>
 <h3>You can use them to discover and discuss the latest research.</h3>
 <h3>If you leave insightful comments, cool stuff will happen.</h3>
-<h3>Sign up to save your dashboard and start sharing your insights.</h3></div>
+<h3><strong>Sign up</strong> to save your dashboard and start sharing your insights.</h3></div>
 
 <div id = 'signup'>
 <%= form_for( User.new, :url => '/users') do |f| %>

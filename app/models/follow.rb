@@ -61,6 +61,7 @@ def create_temp(temp_follows_string)
 	follow = follow_array.first
 	follow.update_feed
 	follow.save
+	follow.newcount = Paper.new.pubmed_search_count(follow.search_term)
 	follow_array[1..-1].each {|f| f.delay.update_feed; f.delay.save}
 	follow_array
 end

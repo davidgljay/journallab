@@ -32,7 +32,7 @@ end
 
 def update_feed
 	if search_term
-		pubmed_search = Paper.new.search_pubmed(search_term,40).map{|p| [p.id, p.pubdate]}
+		pubmed_search = Paper.new.search_pubmed(search_term,20).map{|p| [p.id, p.pubdate]}
 		activity_search = Paper.new.search_activity(search_term).map{|p| [p.id, p.updated_at]}
 		self.latest_search = (pubmed_search + activity_search).sort{|x,y| y[1] <=> x[1]}.map{|p| p[0]}
 	end
@@ -61,6 +61,7 @@ def create_temp(temp_follows_string)
 	follow = follow_array.first
 	follow.update_feed
 	follow.save
+	follow.newcount = Paper.new.pubmed_search_count(follow.search_term)
 	follow_array[1..-1].each {|f| f.delay.update_feed; f.delay.save}
 	follow_array
 end

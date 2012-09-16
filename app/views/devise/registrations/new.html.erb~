@@ -2,6 +2,7 @@
 <h2>Sign up</h2>
 
 <%= form_for( resource, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
   <h3>First name</h3>
   <%= f.text_field :firstname %> 
 
@@ -18,14 +19,8 @@
   <h3><%= f.label :password_confirmation %></h3>
   <p><%= f.password_field :password_confirmation %></p>
 
-  <h3>Group Code</h3>
-  <div class = "inline small grey">Optional, ignore this if you don't have one.</div>
-  <p><%= text_field_tag :group_code %></p>
-
   <p><%= f.submit "Sign up" %></p>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
-</td><td valign = "top">
-<h1>Thanks for registering!</h1>
 </td></tr></table>

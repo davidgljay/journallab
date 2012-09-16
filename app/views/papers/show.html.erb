@@ -30,17 +30,7 @@
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
-	<% if !@blogs.empty? %>
-		<div id = 'blogs' >
-			<h4 class = 'clickme'><%= @blogs.count %> Blog <%= @blogs.count > 1 ? 'Posts' : 'Post' %> About This Paper</h4>
-			<% @blogs.each do |blog| %>
-				<div class = "hideonload">
-					<%= link_to blog[:title], blog[:url], :target => "_blank"%>
-					<div class = "small italic"><%= blog[:description] %></div>
-				</div>
-			<% end %>
-		</div>
-	<% end %>			
+	
 		<%= render '/reactions/quickform'%>
 	<% if user_signed_in? %>
 		<%= render 'add_figs' if @paper.figs.empty? %>

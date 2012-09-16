@@ -27,7 +27,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 	@reaction_map = @paper.reaction_map
 	#@numvisits = @paper.visits.map{|v| v.user}.uniq.count
 	@interest = @paper.interest
-	@blogs = @paper.check_blogs
+	#@blogs = @paper.check_blogs
 	if signed_in?
 		@groups = current_user.groups
 		@groups.delay.each {|g| g.most_viewed_add(@paper); g.save;}

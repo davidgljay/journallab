@@ -49,7 +49,7 @@ end
 
 
 def search_pubmed(search, numresults = 20)
-	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").delete('"').delete("'")
+	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").gsub(/[^0-9A-Za-z]/, '+').delete('"').delete("'")
 
 # Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
 
@@ -97,7 +97,7 @@ def search_pubmed(search, numresults = 20)
 				citation_authors = authors.empty? ? '' : (authors.map{|a| a[:name]}.first(n-1)).join(', ') + ', and ' + authors.last[:name] + '.'
 			end
 
-			citation = citation_authors + ' "' + title + '" ' + volume + '.' + issue + ' (' + pubdate.year.to_s + '): ' + pagination + '. Web.'
+			citation = citation_authors + ' "' + title + '" ' + journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + pubdate.year.to_s + '): ' + pagination + '. Web.'
 			paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation)
 		end
         	search_results << paper
@@ -129,7 +129,7 @@ def search_activity(search_term)
 end
 	
 def check_blogs
-	url = 'http://www.google.com/search?hl=en&q=%22' + self.title.gsub(/[' ']/, "+").gsub(/['.']/, "+").delete('"').delete("'") + '%22&tbm=blg&tbs=li:1&output=rss'
+	url = 'http://www.google.com/search?hl=en&q=%22' + self.title.gsub(/[' ']/, "+").gsub(/['.']/, "+").gsub(/[^0-9A-Za-z]/, '+').delete('"').delete("'") + '%22&tbm=blg&tbs=li:1&output=rss'
 	blogposts = []
       	Nokogiri::XML(open(url)).xpath("//item").each do |i|
 		posttitle = i.xpath('title').text.gsub(/<\/?[^>]*>/, "")
@@ -143,22 +143,53 @@ def check_blogs
 end
 
 
+
 def lookup_info
   url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
   #Check to see if the ID showed up on pubmed, if not return to the homepage.
   data = Nokogiri::XML(open(url))
+
   if data.xpath("/").empty?
      flash = { :error => "This Pubmed ID is not valid." }
      self.destroy
   else
-    self.title = data.xpath('//Article/ArticleTitle').text
-    self.journal = data.xpath('//Journal/Title').text
-    day = data.xpath('//PubDate/Day').text.to_i == 0 ? nil : data.xpath('//PubDate/Day').text.to_i
-    self.pubdate = Time.local(data.xpath('//PubDate/Year').text.to_i, self.monthhash[data.xpath('//PubDate/Month').text], day )
-    unless data.xpath('//Abstract/AbstractText').empty?
-      self.abstract = data.xpath('//Abstract/AbstractText').text
-    end
-    self.save
+	article = data.xpath('//PubmedArticle').first
+      	self.title = article.xpath('MedlineCitation/Article/ArticleTitle').text
+       	self.journal = article.xpath('MedlineCitation/Article/Journal/Title').text
+       	day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
+       	month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
+       	year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
+	volume = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Volume').text
+	issue = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Issue').text
+	pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
+			
+	if year != 0
+		self.pubdate = DateTime.new(year, month, day) 
+		self.latest_activity = self.pubdate
+	else
+		self.latest_activity = DateTime.now - 1.month
+	end
+       	self.abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
+	# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
+	authors = []
+	authorlist = article.xpath('MedlineCitation/Article/AuthorList')
+	authorlist.xpath('Author').each do |a|
+		firstname = a.xpath('ForeName').text 
+		lastname = a.xpath('LastName').text
+		initials = a.xpath('Initials').text
+		authors << {:firstname => firstname, :lastname => lastname, :name => lastname + ', ' + firstname }
+	end
+		self.first_last_authors = authors.empty? ? nil : [authors[0], authors[-1]]
+
+	if authors.count > 3
+               citation_authors = authors[0][:lastname] + ', ' + authors[1][:lastname] + ", et al."
+	else
+		n = authors.length
+		citation_authors = authors.empty? ? '' : (authors.map{|a| a[:name]}.first(n-1)).join(', ') + ', and ' + authors.last[:name] + '.'
+	end
+
+	self.citation = citation_authors + ' "' + self.title + '" ' + self.journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + self.pubdate.year.to_s + '): ' + pagination + '. Web.'
+    	self.save
   end
 end
 
@@ -214,19 +245,19 @@ def count_figs
     end
   end
   self.build_figs(imagearray.count)
-  self.delay.grab_figs(doc)
+  if doc.css('a.status_icon').text == "Free PMC Article"
+  	pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
+  end
+  self.delay.grab_figs(pmcid, imagearray)
 end
 
-def grab_figs(doc)
+def grab_figs(pmcid, imagearray)
   #
   #Slightly more liberal, extract images if it's free on PMC.
   #
-
-  if doc.css('a.status_icon').text == "Free PMC Article"
-  pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
-  unless pmcid == ' '
+  unless pmcid.nil?
     url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
-    oai = Nokogiri::HTML(open(url2)) unless pmcid.empty?
+    oai = Nokogiri::HTML(open(url2))
     	unless oai.css('error').attribute("code").value == "idDoesNotExist"
     		imagearray.count.times do |n|
       			self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
@@ -234,7 +265,6 @@ def grab_figs(doc)
     		end 
   	end
   end
-end
 end
 
 #Grab images
@@ -365,6 +395,7 @@ def calc_heat(heatmap)
 	     heatmap[id] = [h, [h[0], 10].min]
      end
      h = h[0]
+     h ||= 0
      float = h.to_f/max * 10
      heatmap[id] = [h, float.to_i]
    end

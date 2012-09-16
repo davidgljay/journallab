@@ -71,7 +71,7 @@
      <% if about.class == Fig %>
        <% unless about.image.nil? %>
           <%= image_tag about.image.thumb('700x700>').url, :class => 'fullfig hideonload'%>
-	  <div class = "citation"><%= about.shortname + '. '  + @paper.citation %></div>
+	  <div class = "citation fullfig hideonload"><%= about.shortname + '. '  + @paper.citation %></div>
        <% end %>
      <% end %>
 </td>

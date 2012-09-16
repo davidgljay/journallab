@@ -18,7 +18,7 @@ License: 	Dual licensed under the MIT and GPL licenses.
 	background: #efefef;
 	position: relative;
 	overflow: hidden;
-	padding: 10px;
+	padding: 0px;
 
 	width: 700px;
 	height: 150px;
@@ -28,12 +28,21 @@ License: 	Dual licensed under the MIT and GPL licenses.
 	-moz-border-radius-topright: 6px;
 	}
 
-#features h1 {
-	margin-bottom: 5px;
+.jshowoff .imageOverlayHeader {
+	position: absolute;
+	background-color: rgba(255, 255, 255, .6 );
+	text-align: center;
+	top: -30px;
+	left: 0px;
+	height: 25px;
+	width: 700px;	
+	font-size: 24px;
+	padding-top: 5px;
+	font-weight: bold;
 }
 
 .jshowoff {
-	width: 720px;
+	width: 700px;
 	margin: 10px 0;
 	margin-left: auto;
 	margin-right: auto;
@@ -42,6 +51,22 @@ License: 	Dual licensed under the MIT and GPL licenses.
 	width: 700px;
 	height: 150px;
 	text-align: center;
+
+}
+
+.jshowoff .imageOverlayText {
+	position: absolute;
+	background-color: rgba(255, 255, 255, .6 );
+	width: 300px;
+	bottom: -10px;
+	height: 120px;
+	text-align: left;
+	padding-left: 10px;
+	padding-top: 10px;
+	-webkit-border-top-left-radius: 0px;
+	-webkit-border-top-right-radius: 0px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
 	}
 .jshowoff div, .jshowoff img, .jshowoff {
 	-webkit-border-top-left-radius: 6px;

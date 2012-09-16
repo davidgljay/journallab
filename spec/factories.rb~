@@ -4,14 +4,14 @@ end
 
 Factory.sequence :pubmed_id do |n|
   21230106 + 1
-end
+end	
 
 Factory.define :user do |user|
      user.firstname			"David"
      user.lastname                      "Jay"
      user.password		        "testingtesting123"
      user.password_confirmation 	"testingtesting123"
-     user.email                         rand(100).to_s + "chick@email.com"
+     user.email                         rand(100).to_s + "chick@email.edu"
      user.confirmed_at 			Time.now
 #     user.save
 end

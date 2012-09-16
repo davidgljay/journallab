@@ -1,17 +1,10 @@
 <div align = "center">
-<div id="features">
-	<div><h1>This is your dashboard.</h1><h3>We’ll notify you in <div class = "badge badge-warning inline">yellow</div>when there are new papers posted on pubmed, and in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3></div>
-	<div><h1>Feel the heat.</h1><h3>A heatmap in search results will tell you which papers are being discussed here on Journal Lab or elsewhere on the web.</h3></div>
-	<div><h1>Think climate change is a vast conspiracy?</h1><h3>You can tell us all about it on Wordpress.</h3> <h3>Journal Lab is for practicing academic research scientists only.</h3></div>
-	<div><h1>We <icon class = "icon-heart"></icon> useful gadgets.</h1><h3>View abstracts, save to your “To Read” folder, and grab PDFs right from search results.</h3></div>
-	<div><h1>Notice a figure with missing controls?</h1><h3>We have a button for that.</h3> <h3>Record insights as you read a paper, without breaking your flow. You’ll earn reputation whether you attach your name or choose to make your insights anonymous.</h3></div>
-	<div><h1>Boost your impact.</h1><h3>More eyeballs on your work = more citations down the road.</h3> <h3>Enter open access figure-by-figure summaries of your published research to encourage reading and discussion.</h3></div>
-	<div><h1>Create an account to get started.</h1><h3>Enter your information to create an account and explore Journal Lab.</h3></div>	
-</div>
-<h3></h3>
-<h3><%= link_to 'Sign up', '#', :class => 'deadLink', :id => 'expandSignup' %> to save your dashboard and share your insights.</h3>
+	<div><h1>Fantastic. Let's get you situated.</h1><h3>These are your feeds.</h3><h3>We’ll update them in <div class = "badge badge-warning inline">yellow</div>when there are new papers posted on pubmed.</h3> <h3>We’ll update them in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3>
+<h3>You can use them to discover and discuss the latest research.</h3>
+<h3>If you leave insightful comments, cool stuff will happen.</h3>
+<h3><strong>Sign up</strong> to save your dashboard and start sharing your insights.</h3></div>
 
-<div id = 'signup' class = 'hideonload'>
+<div id = 'signup'>
 <%= form_for( User.new, :url => '/users') do |f| %>
   <strong>First name</strong>
   <%= f.text_field :firstname %> 

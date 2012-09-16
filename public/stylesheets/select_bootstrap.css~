@@ -63,7 +63,7 @@ textarea {
 }
 
 label {
-  display: block;
+  display: inline;
   margin-bottom: 5px;
 }
 
@@ -557,7 +557,7 @@ input[type="checkbox"][readonly] {
 }
 
 .badge {
-  padding: 1px 4px 2px;
+  padding: 4px 4px 2px;
   -webkit-border-radius: 9px;
      -moz-border-radius: 9px;
           border-radius: 9px;
@@ -1296,7 +1296,6 @@ a.badge:hover {
   overflow: hidden;
   background-color: #e5e5e5;
   border-bottom: 1px solid #ffffff;
-  text-align: center;
 }
 
 .dropdown-menu a, .dropdown-menu .folderSelect {
@@ -1307,7 +1306,7 @@ a.badge:hover {
   line-height: 18px;
   color: #333333;
   white-space: nowrap;
-  width: 155px;
+  width: 160px;
 }
 
 .dropdown-menu li > a:hover,

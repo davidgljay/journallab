@@ -32,7 +32,7 @@ end
 
 def update_feed
 	if search_term
-		pubmed_search = Paper.new.search_pubmed(search_term,40).map{|p| [p.id, p.pubdate]}
+		pubmed_search = Paper.new.search_pubmed(search_term,20).map{|p| [p.id, p.pubdate]}
 		activity_search = Paper.new.search_activity(search_term).map{|p| [p.id, p.updated_at]}
 		self.latest_search = (pubmed_search + activity_search).sort{|x,y| y[1] <=> x[1]}.map{|p| p[0]}
 	end
@@ -45,7 +45,7 @@ def set_newcount
 		self.newcount = feed.select{|p| p.created_at > lastvisit}.count
 		self.newcount
 	else
-		self.newcount = Paper.new.pubmed_search_count(search_term, 40)
+		self.newcount = Paper.new.pubmed_search_count(search_term)
 	end
 end
 

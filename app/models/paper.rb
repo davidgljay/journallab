@@ -105,12 +105,11 @@ def search_pubmed(search, numresults = 20)
 	search_results
   end
 
-def pubmed_search_count(search, numresults = 20)
+def pubmed_search_count(search)
 	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").delete('"').delete("'")
       	#Get a list of pubmed IDs for the search terms
-      	url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch + '&retmax=' + numresults.to_s
-      	pids = Nokogiri::XML(open(url1)).xpath("//IdList/Id").map{|p| p.text}
-	pids.count
+      	url1 = 'http://eutils.ncbi.nlm.nih.gov/gquery?term=' + cleansearch + '&retmode=xml'
+      	Nokogiri::XML(open(url1)).xpath('//ResultItem/Count').first.text.to_i
 end
 
 def interest
@@ -363,7 +362,7 @@ def calc_heat(heatmap)
    #Indicate everything else as a percentage
    heatmap.each do |id, h|
      if id.first(5) == 'paper'
-	     heatmap[id] = [h, [h, 10].min]
+	     heatmap[id] = [h, [h[0], 10].min]
      end
      h = h[0]
      float = h.to_f/max * 10

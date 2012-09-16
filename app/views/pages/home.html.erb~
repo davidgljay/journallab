@@ -22,22 +22,61 @@
 
 <%= render '/feed/feeds' %>
 <% else %>
-<div id="features">
-	<div><h1>The world needs a few good post-docs.</h1> <h3>Retraction rates are on the rise, peer review is becoming increasingly <br> political, and no one’s talking about negative data. <p>It's time for change.</p></h3></div>
-	<div><h1>We need your help.</h1> <h3>We’re a tiny group post-docs and open science activists building a community of researchers <br> who openly share insights about published research. <p>Enter your research interests below to learn more.</h3></div>
-	<div><h1>Put the Punch Back in Impact Factor</h1> <h3>Impact factor was never meant to measure your contribution as a scientist. <p> Easily see the impact that articles have across the web and add your own expertise.</h3></div>
-	<div><h1>Good Science is About More </h1> <h1>Than Where You Publish</h1> <h3>We think that it should be much easier to stay up to date with the latest research<br> and that impactful articles should rise to the top, regardless of the journal they’re published in.</h3></div>
-	<div><h1>Contribute to Science (and Get Credit)</h1> <h1>in 2 Minutes or Less</h1> <h3>Earning reputation should be about more than being first author on a Nature paper. <p>Accumulate reputation every time you record an insight about a published paper.</h3></div>	
 
-</div>
 
 <div id = "temp_follow_form">
-<h2>Learn more. Enter some terms that you regularly search on PubMed.</h2>
+<div style = "font-size: 80px; color: black; margin: 10px; padding-bottom: 30px; font-weight:bold;">Your insights matter.</div>
+<h2>We're a community of grad students, post-docs and PIs openly discussing peer-reviewed research.</h2> 
+<h2>Learn more. Enter a few terms that you regularly search on PubMed.</h2>
 Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"</i>
 <%= form_tag '/welcome', :method => :post do %>
 	<%= text_field_tag :temp_follows %>
-	<p><%= submit_tag "Go", :class => 'btn-tiny btn-warning round loadingPrompt' %><%= render '/shared/loading' %></p>
+	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt' %><%= render '/shared/loading' %>
 <% end %>
 </div>
+	<div class = 'homeSlides'>
+		<div class = 'imageOverlayHeader'>We're ready for science to change.</div> 
+		<div class = 'imageOverlayText'>
+			Retraction rates are on the rise, peer review is becoming increasingly political, and no one’s talking about negative data.
+			<br><br><strong>It's time for post-publication peer review.</strong></div>
+		<%= image_tag 'postdocs3.jpg' %>
+	</div>
+	<div class = 'homeSlides'>
+		<div class = 'imageOverlayHeader'>Let's put the splash back in impact measurement.</div> 
+		<div class = 'imageOverlayText'>
+			Solid science is about more than publication in a high-impact journal. 
+			Help us build a world where impact is measured directly.
+			<br><br><strong>Easily see the impact that articles have across the web.</strong></div>
+		<%= image_tag 'splash.jpg' %>
+	</div>
+	<div class = 'homeSlides'>
+		<div class = 'imageOverlayHeader'>Contribute to science in two minutes or less.</div> 
+		<div class = 'imageOverlayText'>
+			Share insights as you read a paper, without breaking your flow.
+			<br><br><strong>Ever notice a figure with missing controls?<br>We have a button for that.</strong></div>
+		<%= image_tag 'timer.jpg' %>
+	</div>
+	<div class = 'homeSlides'>
+		<div class = 'imageOverlayHeader'>Boost your impact.</div> 
+		<div class = 'imageOverlayText'>
+			Create open access figure-by-figure summaries of your published research to encourage reading and discussion.
+			<br><br><strong>More eyes on your work mean more citations down the road.</strong></div>
+		<%= image_tag 'boost.jpg' %>
+	</div>
+	<div class = 'homeSlides'>
+		<div class = 'imageOverlayHeader'>Build your reputation.</div> 
+		<div class = 'imageOverlayText'>
+			<strong>Display your name or post anonymously.</strong> 
+			<br><br>Either way, we'll track whether your comments are well received and hold you accountable to standards of professional dialogue.</div>
+		<%= image_tag 'applause.jpg' %>
+	</div>
+	<div class = 'homeSlides'>
+		<div class = 'imageOverlayHeader'>Think climate change is a vast conspiracy?</div> 
+		<div class = 'imageOverlayText'>
+			<br>Then go start a blog about it. 
+			<br><br><strong>Journal Lab is for practicing academic research scientists only.</strong></div>
+		<%= image_tag 'earth.jpg' %>
+	</div>
+
 
 <% end %>

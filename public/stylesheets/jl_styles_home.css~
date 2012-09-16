@@ -47,19 +47,37 @@ body {
 	width: 550px;
 	height: 30px;
 	font-size: 18px;
-	margin-top: 10pxl
-}
-.signup_button {
-	font-size:22px;
-	padding: 20px;
-	margin: 10px;
-	background-color: #155E3A;
-	color: #fff;
-	width: 300px;
-	margin-left: auto;
-	margin-right: auto;
+	margin-top: 10px;
 }
 
+ .imageOverlayText {
+	background-color: rgba(255, 255, 255, .8 );
+	width: 360px;
+	height: 90px;
+	text-align: left;
+	padding: 10px;
+	margin-left: 125px;
+	}
 
+ .imageOverlayHeader {
+	background-color: rgba(255, 255, 255, .8 );
+	text-align: center;
+	height: 25px;
+	width: 700px;	
+	font-size: 24px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-weight: bold;
+	margin-left: 125px;
+}
 
+.homeSlides {
+	text-align: center;
+	height: 420px;
+}
 
+.homeSlides img {
+	position: relative;
+	bottom: 155px;
+	z-index: -1;
+}

@@ -1,5 +1,5 @@
 Factory.sequence :email do |n|
-  "person-#{n}@example.com"
+  "person-#{n}@example.edu"
 end
 
 Factory.sequence :pubmed_id do |n|
@@ -11,7 +11,7 @@ Factory.define :user do |user|
      user.lastname                      "Jay"
      user.password		        "testingtesting123"
      user.password_confirmation 	"testingtesting123"
-     user.email                         rand(100).to_s + "chick@email.com"
+     user.email                         rand(100).to_s + "chick@email.edu"
      user.confirmed_at 			Time.now
 #     user.save
 end

@@ -63,7 +63,7 @@ textarea {
 }
 
 label {
-  display: block;
+  display: inline;
   margin-bottom: 5px;
 }
 
@@ -543,6 +543,7 @@ input[type="checkbox"][readonly] {
   font-weight: bold;
   line-height: 14px;
   color: #ffffff;
+  margin-top: 3px;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   white-space: nowrap;
   vertical-align: baseline;
@@ -557,7 +558,7 @@ input[type="checkbox"][readonly] {
 }
 
 .badge {
-  padding: 1px 4px 2px;
+  padding: 4px 4px 2px;
   -webkit-border-radius: 9px;
      -moz-border-radius: 9px;
           border-radius: 9px;

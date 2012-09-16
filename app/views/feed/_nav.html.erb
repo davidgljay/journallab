@@ -3,7 +3,7 @@
 	<% @follows.each_with_index do |follow, i| %>
 		<li>
 			<% if follow.newcount > 0 %> 			
-				<div class = 'badge badge-warning feedNotice'><%= follow.newcount >= 40 ? "40+" : follow.newcount %></div>
+				<div class = 'badge badge-warning feedNotice'><%= follow.newcount %></div>
 			<% end %>
 			<%= button_to follow.name, {:controller => "pages", :action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 ? 'feed_nav_selected' : ''), :remote => true %><%= render '/shared/loading' %>
 

@@ -25,8 +25,9 @@
 
 
 <div id = "temp_follow_form">
-<div style = "font-size: 80px; color: black; margin: 10px; padding-bottom: 30px; font-weight:bold;">Your insights matter.</div>
-<h2>We're a community of grad students, post-docs and PIs openly discussing peer-reviewed research.</h2> 
+<div style = "font-size: 70px; color: black; margin: 10px; padding-bottom: 40px; font-weight:bold;">Your insights matter.</div>
+<h2>We're a community of grad students, post-docs, PIs, and professors openly discussing published research.</h2>
+<br>
 <h2>Learn more. Enter a few terms that you regularly search on PubMed.</h2>
 Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"</i>
 <%= form_tag '/welcome', :method => :post do %>
@@ -34,46 +35,49 @@ Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"
 	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt' %><%= render '/shared/loading' %>
 <% end %>
 </div>
+<br><br>
 	<div class = 'homeSlides'>
 		<div class = 'imageOverlayHeader'>We're ready for science to change.</div> 
 		<div class = 'imageOverlayText'>
-			Retraction rates are on the rise, peer review is becoming increasingly political, and no one’s talking about negative data.
-			<br><br><strong>It's time for post-publication peer review.</strong></div>
+			Retraction rates are on the rise, peer review is becoming increasingly political, negative data is ignored, and reproducibility has become optional, not the standard.
+			<br><strong>It's time to close the gap between what science is and what it is supposed to be.</strong></div>
 		<%= image_tag 'postdocs3.jpg' %>
 	</div>
 	<div class = 'homeSlides'>
-		<div class = 'imageOverlayHeader'>Let's put the splash back in impact measurement.</div> 
+		<div class = 'imageOverlayHeader'>Let's put the impact back in "impact factor".</div> 
 		<div class = 'imageOverlayText'>
-			Solid science is about more than publication in a high-impact journal. 
-			Help us build a world where impact is measured directly.
-			<br><br><strong>Easily see the impact that articles have across the web.</strong></div>
+			Solid science ≠ high impact publication. <br>High impact publication ≠ solid science.<br> Sad but true. Together, we can change that.
+			
+			<br><strong>Help us build a world where science is critiqued for its integrity, not its splash.</strong></div>
 		<%= image_tag 'splash.jpg' %>
 	</div>
 	<div class = 'homeSlides'>
 		<div class = 'imageOverlayHeader'>Contribute to science in two minutes or less.</div> 
 		<div class = 'imageOverlayText'>
-			Share insights as you read a paper, without breaking your flow.
+			<br>Share insights as you read a paper, without breaking your flow.
 			<br><br><strong>Ever notice a figure with missing controls?<br>We have a button for that.</strong></div>
 		<%= image_tag 'timer.jpg' %>
 	</div>
 	<div class = 'homeSlides'>
 		<div class = 'imageOverlayHeader'>Boost your impact.</div> 
 		<div class = 'imageOverlayText'>
-			Create open access figure-by-figure summaries of your published research to encourage reading and discussion.
-			<br><br><strong>More eyes on your work mean more citations down the road.</strong></div>
+			More eyes on your research. 
+			<br><br><strong>More appreciation for your contributions.</strong> 
+			<br><br>More opportunities down the road. </div>
 		<%= image_tag 'boost.jpg' %>
 	</div>
 	<div class = 'homeSlides'>
-		<div class = 'imageOverlayHeader'>Build your reputation.</div> 
-		<div class = 'imageOverlayText'>
-			<strong>Display your name or post anonymously.</strong> 
-			<br><br>Either way, we'll track whether your comments are well received and hold you accountable to standards of professional dialogue.</div>
+		<div class = 'imageOverlayHeader'>Build your reputation without risking it.</div> 
+		<div class = 'imageOverlayText'> 
+			<br>Choose to post anonymously and still get the credit you deserve.
+			<br><br><br><strong>Leave your most insightful comments, risk free.</strong>
+			</div>
 		<%= image_tag 'applause.jpg' %>
 	</div>
 	<div class = 'homeSlides hideonload'>
-		<div class = 'imageOverlayHeader'>Think climate change is a vast conspiracy?</div> 
+		<div class = 'imageOverlayHeader'>Comments worth reading.</div> 
 		<div class = 'imageOverlayText'>
-			<br>Then go start a blog about it. 
+			<br>All comments, even anonymous ones, are held to a standard of professionalism.
 			<br><br><strong>Journal Lab is for practicing academic research scientists only.</strong></div>
 		<%= image_tag 'earth.jpg' %>
 	</div>

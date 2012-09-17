@@ -50,6 +50,16 @@ body {
 	margin-top: 10px;
 }
 
+#welcomeBox {
+	background-color: rgba(226, 255, 203, .85);
+	margin-left: 124px;
+	top: 300px;
+}
+
+#welcomeBox h3 {
+	color: black;
+}
+
  .imageOverlayText {
 	background-color: rgba(255, 255, 255, .8 );
 	width: 365px;

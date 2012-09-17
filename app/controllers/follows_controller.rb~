@@ -1,6 +1,5 @@
 class FollowsController < ApplicationController
 before_filter :authenticate_user!, :except => :temp_follow
-include Devise::Controllers::InternalHelpers
 
 
   def create

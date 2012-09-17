@@ -4,11 +4,39 @@
 
 <div id="homeLogo"><%= image_tag 'jl_logo_trans_M.png', :id => 'mainlogo' %></div>
 
-<% if user_signed_in? %>
+<% if user_signed_in? || @welcome_screen %>
+
+	<% if @welcome_screen %>
+	<div class = "lightbox round" id = 'welcomeBox'>
+		<div><h1>Fantastic. These are your feeds.</h1><h3>We’ll update them in <div class = "badge badge-warning inline">yellow</div> when there are new papers posted on pubmed.</h3> <h3>We’ll update them in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3>
+		<h3>You can use them to discover and discuss the latest research.</h3>
+		<h3>If you leave insightful comments, cool stuff will happen.</h3>
+		<h2><strong>Sign up</strong> to save your feeds and start sharing your insights.</h2></div>
+
+		<div id = 'signup'>
+		<%= form_for( @newuser, :url => '/users') do |f| %>
+  			<strong>First name</strong>
+  			<%= f.text_field :firstname, :style => 'width:120px;' %> 
+
+  			<strong>Last name</strong>
+  			<%= f.text_field :lastname, :style => 'width:120px' %> 
+
+  			<strong>Email</strong>
+  			<%= f.text_field :email, :value => "Use a .edu address if you have one.", :onfocus =>  "if(this.value == 'Use a .edu address if you have one.') { this.value = ''; }" %>
+  			<br>  
+  			<strong>Password</strong>
+  			<%= f.password_field :password %>
+  			<strong>Confirm Password</strong>
+  			<%= f.password_field :password_confirmation %>
+  			<%= hidden_field_tag :follows, @follows.map{|follow| follow.id} * ',' %>
+  			<%= f.submit "Sign up", :class => 'btn-warning round' %>
+		<% end %>
+		</div>
+	</div>
+	<% end %>
 <div id="homeSearch">
 <%= form_tag('/lookup', :method => "get") do  %>
    <br>
-   <h1>Discuss Peer Reviewed Science With Smart People.</h1>
     <table border="0" align="center" cellpadding="0" cellspacing="0">
       <tbody><tr>
         <td>
@@ -32,7 +60,7 @@
 Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"</i>
 <%= form_tag '/welcome', :method => :post do %>
 	<%= text_field_tag :temp_follows %>
-	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt' %><%= render '/shared/loading' %>
+	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt', :style => 'font-size: 30px;' %><%= render '/shared/loading' %>
 <% end %>
 </div>
 <br><br>

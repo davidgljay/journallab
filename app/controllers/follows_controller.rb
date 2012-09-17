@@ -10,11 +10,4 @@ before_filter :authenticate_user!, :except => :temp_follow
 	follow.save
 	redirect_to root_path 
   end
-
-  def temp_follow
-	@follows = Follow.new.create_temp(params[:temp_follows])
-	@follow = @follows.first
-	@jclubs = []
-  end
-
 end

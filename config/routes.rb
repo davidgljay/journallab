@@ -53,7 +53,7 @@ Redcell::Application.routes.draw do
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
 
   resources :follows
-   match "/welcome",		:to => 'follows#temp_follow'
+   match "/welcome",		:to => 'pages#welcome'
   resources :reactions
   resources :notes
   resources :folders

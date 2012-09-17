@@ -1,27 +1,2 @@
-<div align = "center">
-	<div><h1>Fantastic. Let's get you situated.</h1><h3>These are your feeds.</h3><h3>We’ll update them in <div class = "badge badge-warning inline">yellow</div>when there are new papers posted on pubmed.</h3> <h3>We’ll update them in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3>
-<h3>You can use them to discover and discuss the latest research.</h3>
-<h3>If you leave insightful comments, cool stuff will happen.</h3>
-<h3><strong>Sign up</strong> to save your dashboard and start sharing your insights.</h3></div>
 
-<div id = 'signup'>
-<%= form_for( User.new, :url => '/users') do |f| %>
-  <strong>First name</strong>
-  <%= f.text_field :firstname %> 
-
-  <strong>Last name</strong>
-  <%= f.text_field :lastname %> 
-
-  <strong>Email</strong>
-  <%= f.text_field :email, :value => "Use a .edu address if you have one.", :onfocus =>  "if(this.value == 'Use a .edu address if you have one.') { this.value = ''; }" %>
-  <br>  
-  <strong>Password</strong>
-  <%= f.password_field :password %>
-  <strong>Confirm Password</strong>
-  <%= f.password_field :password_confirmation %>
-  <%= hidden_field_tag :follows, @follows.map{|follow| follow.id} * ',' %>
-  <%= f.submit "Sign up" %>
-<% end %>
-</div>
-</div>
 <%= render "feed/feeds" %>

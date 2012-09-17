@@ -17,7 +17,19 @@ before_filter :admin_user,   :only => [:dashboard]
 		@follows  = current_user.follows.all
 		@follow = @follows.first
 		@newfollow = current_user.follows.new
+		@welcome_screen = false
 	end
+  end
+
+  def welcome
+	@title = "Welcome"
+	@follows = Follow.new.create_temp(params[:temp_follows])
+	@follow = @follows.first
+	@jclubs = []
+	@groups = []
+	@newuser = User.new
+	@welcome_screen = true
+	:render :action => "home"
   end
 
   def feedswitch

@@ -284,6 +284,20 @@ def grab_images
   end 
 end  
 
+#Check mendeley for OA and a few other things
+def check_mendeley
+	url = 'http://api.mendeley.com/oapi/documents/details/' + pubmed_id.to_s + '?type=pmid&consumer_key=86e4c2e0add7700c7235b2df97bb4b5a050557337'
+	uri = URI.parse(url)
+	req = Net::HTTP.new(uri.host, uri.port)
+	res = req.request_head(uri.path)
+	if res.code == "200" || res.code == "301"
+		oa = ActiveSupport::JSON.decode(res)
+	else
+		oa = false
+	end
+	oa
+end
+
 def monthhash
    monthhash = {
       'Jan' => 1,

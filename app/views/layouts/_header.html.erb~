@@ -10,17 +10,17 @@
             <%= link_to current_user do %><div class = "inline"> <icon class = "icon-user"></icon></div> Profile<% end %>
 	    <%= link_to '/users/' + current_user.id.to_s + '/history', :id => 'historyFeedLink', :remote => true do %><div class = "inline"> <icon class = "icon-list"></icon></div> History<% end %>
 	    <%= link_to '/folders' do %><div class = "inline"> <icon class = "icon-folder-open"></icon></div> Folders<% end %>
-	    <%= link_to '/users/' + current_user.id.to_s + '/sharefeed', :id => 'shareFeedLink', :remote => true do %><div class = "inline"> <icon class = "icon-inbox"></icon></div> Inbox
+	    <div class = "hideonload"><%= link_to '/users/' + current_user.id.to_s + '/sharefeed', :id => 'shareFeedLink', :remote => true do %><div class = "inline"> <icon class = "icon-inbox"></icon></div> Inbox
 	    <% if current_user.new_shares > 0 %>
 		<div class = "badge badge-important" style = "display: inline-block;"><%= current_user.new_shares.to_s %></div>
 	    <% end %>
-	    <% end %>
+	    <% end %></div>
             <% else %>
             <%= link_to "Sign In", new_user_session_path %>
             <% end %>
             <%= link_to root_path do %><div class = "inline"> <icon class = "icon-home"></icon></div> Home<% end %>
 
-            <% unless @title == 'Home' %>
+            <% unless @title == 'Home' || @title == 'Welcome' %>
 
                 <div id = 'contentSearch'>
 		<table border="0" align="right" cellpadding="0" cellspacing="0">
@@ -47,7 +47,8 @@
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-25208054-2']);
+  _gaq.push(['_setAccount', 'UA-25208054-3']);
+  _gaq.push(['_setDomainName', 'journallab.org']);
   _gaq.push(['_trackPageview']);
 
   (function() {

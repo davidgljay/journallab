@@ -1,9 +1,6 @@
-$('<%= escape_javascript(render 'notes/new', :paper => @paper)%>').insertAfter('<%= '#folder_list_' + @paper.id.to_s %>');
-$('<%= '#folder_list_' + @paper.id.to_s %>').next().toggle('300');
-$('<%= '#folder_list_' + @paper.id.to_s %>').click(function(e){
+$('<%= escape_javascript(render 'notes/new')%>').insertAfter('<%= '#folder_list_' + @pubmed_id.to_s %>');
+$('<%= '#folder_list_' + @pubmed_id.to_s %>').next().toggle('300');
+$('<%= '#folder_list_' + @pubmed_id.to_s %>').click(function(e){
+	$(this).next().toggle('300');
 	return false;
 });
-
-$('a.dropdown-toggle').click(function(){
-	$(this).next().toggle('300');
-  });

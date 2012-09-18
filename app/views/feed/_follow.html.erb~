@@ -1,7 +1,7 @@
 <div id= <%= @follow.name.downcase + "Feed" %>>
-<% @follow.feed.each do |paper| %>
+<% @feed.each do |paper| %>
    <div class = "search_results">
-   <%= render 'papers/list', :paper => paper %>
+   <%= render 'papers/list', :paper => paper.to_hash %>
   </div>
-<% end %>
+<% end %>	
 </div>

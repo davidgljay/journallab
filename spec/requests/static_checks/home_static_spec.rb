@@ -55,7 +55,7 @@ describe "/" do
 		f2 = @user.follows.create!(:search_term => "zombies", :name => "zombies")
 		f2.save
 		visit "/"
-		within('body') { page.should have_content('Test Group') }
+		within('body') { page.should have_selector('.group' + @group.id.to_s ) }
 		within('body') { page.should have_selector('input.follow_' + @user.follows.first.id.to_s) }
 	end
    end

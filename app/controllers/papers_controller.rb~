@@ -27,7 +27,7 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 	@reaction_map = @paper.reaction_map
 	#@numvisits = @paper.visits.map{|v| v.user}.uniq.count
 	@interest = @paper.interest
-	@blogs = @paper.check_blogs
+	#@blogs = @paper.check_blogs
 	if signed_in?
 		@groups = current_user.groups
 		@groups.delay.each {|g| g.most_viewed_add(@paper); g.save;}
@@ -52,17 +52,6 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
    	end
 end
 
-  # GET /papers/new
-  # GET /papers/new.xml
-  #def new
-  #  @paper = Paper.new
-
-  #  respond_to do |format|
-  #     format.html # new.html.erb
-  #     format.xml  { render :xml => @paper }
-  #  end
-  #end
-
   # GET /papers/1/m/1
   # For tracking links to paper from e-mail
   def show_from_mail
@@ -72,55 +61,7 @@ end
     @maillog.save
     redirect_to @paper
   end
-  
-  # GET /papers/1/edit
-  def edit
-    @paper = Paper.find(params[:id])
-  end
-
-  # POST /papers
-  # POST /papers.xml
-  def create
-    @paper = Paper.new(params[:paper])
-
-    respond_to do |format|
-      if @paper.save
-        format.html { redirect_to(@paper, :notice => 'Paper was successfully created.') }
-        format.xml  { render :xml => @paper, :status => :created, :location => @paper }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @paper.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /papers/1
-  # PUT /papers/1.xml
-  def update
-    @paper = Paper.find(params[:id])
-
-    respond_to do |format|
-      if @paper.update_attributes(params[:paper])
-        format.html { redirect_to(@paper, :notice => 'Paper was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @paper.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /papers/1
-  # DELETE /papers/1.xml
-  def destroy
-    @paper = Paper.find(params[:id])
-    @paper.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(papers_url) }
-      format.xml  { head :ok }
-    end
-  end
+ 
 
  def grab_images
      @paper = Paper.find(params[:id])
@@ -144,21 +85,20 @@ end
 	@groups = current_user.groups
     end
     if search.to_i.to_s == search
-      @paper = Paper.find_by_pubmed_id(search)
-      if @paper.nil?
-         @paper = Paper.create(:pubmed_id => search)
-         @paper.lookup_info
+      @paper = Paper.find_or_create_by_pubmed_id(search)
+      if @paper.title.nil?
+	@paper.lookup_info)
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
       @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search)).uniq
       @history_results = []
       if signed_in?
-		@history_results = @search_results & current_user.visited_papers
+		@history_results = @search_results & current_user.visited_papers.map{|p| p.to_hash}
 	      	@search_results = @search_results - @history_results
-      		@search_results.select{|p| p.latest_activity.nil?}.each {|p| p.latest_activity ||= Time.now - 1.month;}
+      		@search_results.select{|p| p[:latest_activity].nil?}.each {|p| p[:latest_activity] ||= Time.now - 1.month}
       end
-      @search_results.sort!{|x,y| y.latest_activity <=> x.latest_activity}
+      @search_results.sort!{|x,y| y[:latest_activity] <=> x[:latest_activity]}
     end
     if @paper
         redirect_to @paper

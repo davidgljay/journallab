@@ -18,7 +18,7 @@ describe "Searches:" do
       visit root_path
       fill_in "search", :with => "21228906"
       click_button 'GO'
-      within('body') { page.should have_content('Download') }
+      within('body') { page.should have_selector('.icon-download') }
     end
   end
 

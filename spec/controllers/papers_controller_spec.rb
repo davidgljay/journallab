@@ -33,7 +33,7 @@ describe PapersController do
     describe "pubmed id lookup" do
    
       it "should look up an existing paper" do
-        get :lookup, :pubmed_id => @paper.pubmed_id.to_s
+        get :lookup, :search => @paper.pubmed_id.to_s
         response.should redirect_to(@paper)
       end
     end
@@ -58,62 +58,4 @@ describe PapersController do
        end
     end
   end
-  
-  describe "admin function" do
-  
-     before(:each) do
-        @admin = Factory(:user, :email => "admin@example.com", :admin => true)
-        test_sign_in(@admin)
-     end
-
-    describe "GET index" do
-      it "assigns all papers as @papers" do
-        @paper = Factory(:paper)
-        get :index
-        assigns(:papers).should eq([@paper])
-      end
-    end
-
-     describe "with valid params" do
-        it "assigns a newly created paper as @paper" do
-          Paper.stub(:new).with({'these' => 'params'}) { mock_paper(:save => true) }
-          post :create, :paper => {'these' => 'params'}
-          assigns(:paper).should be(mock_paper)
-        end
-
-        it "redirects to the created paper" do
-          Paper.stub(:new) { mock_paper(:save => true) }
-          post :create, :paper => {}
-          response.should redirect_to(paper_url(mock_paper))
-        end
-      end
-
-      describe "with invalid params" do
-        it "assigns a newly created but unsaved paper as @paper" do
-          Paper.stub(:new).with({'these' => 'params'}) { mock_paper(:save => false) }
-          post :create, :paper => {'these' => 'params'}
-          assigns(:paper).should be(mock_paper)
-        end
-
-        it "re-renders the 'new' template" do
-          Paper.stub(:new) { mock_paper(:save => false) }
-          post :create, :paper => {}
-          response.should render_template("new")
-        end
-      end
-
-      describe "DELETE destroy" do
-        it "destroys the requested paper" do
-          Paper.stub(:find).with("37") { mock_paper }
-          mock_paper.should_receive(:destroy)
-          delete :destroy, :id => "37"
-        end
-
-        it "redirects to the papers list" do
-          Paper.stub(:find) { mock_paper }
-            delete :destroy, :id => "1"
-          response.should redirect_to(papers_url)
-        end
-      end
-    end
 end

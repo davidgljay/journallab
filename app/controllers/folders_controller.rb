@@ -10,7 +10,7 @@ before_filter :authenticate_user!
   end
 
   def list
-	@paper = Paper.find(params[:paper])
+	@pubmed_id = params[:pubmed_id]
     respond_to do |format|
       format.js
     end

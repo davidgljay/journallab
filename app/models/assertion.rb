@@ -17,6 +17,7 @@ has_many :questions
 has_many :votes
 
 before_save :set_get_paper
+before_save :assign_anon_name
 
 #Validations
 
@@ -53,6 +54,10 @@ end
 
 def anonymous
 	nil
+end
+
+def assign_anon_name
+	self.user.assign_anon_name(self.get_paper)
 end
 
 end

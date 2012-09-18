@@ -20,21 +20,19 @@ def inspect
 end
 
 def feed
-	feed_array = []
 	if latest_search
-		latest_search.each do |p|
-			feed_array << Paper.find(p)
-		end
+		latest_search.map{|p| p[0]}		
+	else
+		Paper.new.search_pubmed(search_term)
 	end
-	feed_array
 end
 
 
 def update_feed
 	if search_term
-		pubmed_search = Paper.new.search_pubmed(search_term,20).map{|p| [p.id, p.pubdate]}
-		activity_search = Paper.new.search_activity(search_term).map{|p| [p.id, p.updated_at]}
-		self.latest_search = (pubmed_search + activity_search).sort{|x,y| y[1] <=> x[1]}.map{|p| p[0]}
+		pubmed_search = Paper.new.search_pubmed(search_term,20).map{|p| [p, p[:latest_activity]]}
+		activity_search = Paper.new.search_activity(search_term).map{|p| [p, p[:updated_at]]}
+		self.latest_search = (pubmed_search + activity_search).sort{|x,y| y[1] <=> x[1]}
 	end
 	self.latest_search
 end
@@ -42,7 +40,7 @@ end
 def set_newcount
 	if latest_search
 		lastvisit = visits.empty? ? Date.new(1900,1,1) : visits.first.created_at 
-		self.newcount = feed.select{|p| p.created_at > lastvisit}.count
+		self.newcount = latest_search.select{|p| p[1] > lastvisit}.count
 		self.newcount
 	else
 		self.newcount = Paper.new.pubmed_search_count(search_term)
@@ -59,10 +57,7 @@ def create_temp(temp_follows_string)
 		 follow_array << Follow.create(:name => f, :search_term => f)
 	end
 	follow = follow_array.first
-	follow.update_feed
-	follow.save
-	follow.newcount = Paper.new.pubmed_search_count(follow.search_term)
-	follow_array[1..-1].each {|f| f.delay.update_feed; f.delay.save}
+	follow_array.delay.each {|f| f.update_feed; f.save}
 	follow_array
 end
 

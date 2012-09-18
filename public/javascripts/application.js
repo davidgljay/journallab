@@ -206,7 +206,7 @@ $('#expandSignup').click(function(){
 
 // Dropdown menus
 
-$('a.dropdown-toggle').live('click', function(){
+$('.dropdown-toggle').live('click', function(){
 	$(this).next().toggle('300');
   });
 

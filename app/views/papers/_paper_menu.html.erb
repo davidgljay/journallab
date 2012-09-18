@@ -5,7 +5,7 @@
 	<% elsif @paper.doi %>
 		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
 	<% end %>
-	<% if user_signed_in? %>
+	<% if user_signed_in? || false %>
 		<%= render '/shares/share_button' unless @groups.empty? %> 
         <% end %>
 </div>

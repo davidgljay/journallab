@@ -58,9 +58,9 @@ Redcell::Application.routes.draw do
   resources :notes
   resources :folders
    match '/folders(/:folder_id)/remove(/:paper_id)', :to => 'notes#destroy', :via => :delete
-   match '/folders/add(/:paper)',	:to => 'folders#list'
+   match '/folders/add(/:pubmed_id)',	:to => 'folders#list'
    match 'quickform',			:to => 'reactions#quickform'
-   match 'shares/new(/:paper)',		:to => 'shares#new'
+   match 'shares/new(/:pubmed_id)',		:to => 'shares#new'
 #Static pages
 
 root :to => 'pages#home'

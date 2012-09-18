@@ -10,11 +10,11 @@
             <%= link_to current_user do %><div class = "inline"> <icon class = "icon-user"></icon></div> Profile<% end %>
 	    <%= link_to '/users/' + current_user.id.to_s + '/history', :id => 'historyFeedLink', :remote => true do %><div class = "inline"> <icon class = "icon-list"></icon></div> History<% end %>
 	    <%= link_to '/folders' do %><div class = "inline"> <icon class = "icon-folder-open"></icon></div> Folders<% end %>
-	    <%= link_to '/users/' + current_user.id.to_s + '/sharefeed', :id => 'shareFeedLink', :remote => true do %><div class = "inline"> <icon class = "icon-inbox"></icon></div> Inbox
+	    <div class = "hideonload"><%= link_to '/users/' + current_user.id.to_s + '/sharefeed', :id => 'shareFeedLink', :remote => true do %><div class = "inline"> <icon class = "icon-inbox"></icon></div> Inbox
 	    <% if current_user.new_shares > 0 %>
 		<div class = "badge badge-important" style = "display: inline-block;"><%= current_user.new_shares.to_s %></div>
 	    <% end %>
-	    <% end %>
+	    <% end %></div>
             <% else %>
             <%= link_to "Sign In", new_user_session_path %>
             <% end %>
@@ -47,7 +47,8 @@
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-25208054-2']);
+  _gaq.push(['_setAccount', 'UA-25208054-3']);
+  _gaq.push(['_setDomainName', 'journallab.org']);
   _gaq.push(['_trackPageview']);
 
   (function() {
@@ -58,16 +59,6 @@
 
 </script>
 <!-- end Google Analytics -->
-<!-- start Us‪erVoice -->
-<script type="text/javascript">
-  var uvOptions = {};
-  (function() {
-    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/1Gr4j06X8p4QeZZ7HBSew.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-  })();
-</script>
-<!-- end UserVoice -->
 <% end %>
 <!-- start Us‪erVoice -->
 <script type="text/javascript">

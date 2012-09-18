@@ -1,15 +1,15 @@
-<table><tr><td width = "7px" class = "<%= "heat" + paper.heatmap[paper.inspect][1].to_s unless paper.visits.empty? %>"></td>
-<td width = '800px'>
-	<%= render "/papers/list_menu", :paper => paper %>
-	<div class = "sr_title"><%= link_to paper.title, paper %>	
+<table><tr><td width = "7px" class = "<%= "heat" + paper[:my_heat].to_s %>"></td>
+<td width = '900px'>
+	<%= render 'papers/list_menu', :paper => paper %>
+	<div class = "sr_title"><%= link_to paper[:title], '/lookup/ + paper[:pubmed_id].to_s %>	
 	</div>
-	<div class = "sr_info2 small"><%= paper.journal %>, <%= paper.pubdate.strftime('%B %d, %Y') unless paper.pubdate == nil %>
-	<% if !paper.abstract.empty? %>
-	<p class='abstract_long hideonload'><%= paper.abstract %></p>
-	<% end %>
+	<div class = "sr_info2 small"><%= paper[:journal] %>, <%= paper[:pubdate].strftime('%B %d, %Y') unless paper[:pubdate] == nil %>
 
-	<% if paper.first_last_authors %>
-		<div class = "sr_info2 small grey">First Author: <%= link_to paper.first_last_authors.first[:name], '/lookup/' + paper.first_last_authors.first[:firstname] + '+' + paper.first_last_authors.first[:lastname] %> | Last Author: <%= link_to  paper.first_last_authors.last[:name], '/lookup/' + paper.first_last_authors.last[:firstname] + '+' + paper.first_last_authors.last[:lastname] %></div>
+	<% if !paper[:abstract].empty? %>
+	<p class='abstract_long hideonload'><%= paper[:abstract] %></p>
+	<% end %>
+	<% if paper[:first_last_authors] %>
+		<div class = "sr_info2 small grey">First Author: <%= link_to paper[:first_last_authors].first[:name], '/lookup/' + paper[:first_last_authors].first[:firstname] + '+' + paper[:first_last_authors].first[:lastname] %> | Last Author: <%= link_to  paper[:first_last_authors].last[:name], '/lookup/' + paper[:first_last_authors].last[:firstname] + '+' + paper[:first_last_authors].last[:lastname] %></div>
 	<% end %>	
 </td>
 </tr>

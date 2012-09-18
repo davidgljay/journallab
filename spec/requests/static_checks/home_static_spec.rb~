@@ -42,7 +42,7 @@ describe "/" do
 	end
 
 	it "should render when the user has multiple groups and feeds" do
-		@group = Group.create(:name => "Group create", :category => "jclub")
+		@group = Group.create(:name => "Test Group", :category => "jclub")
 		@group.add(@user)
 		@group.papers << @paper
 		d = @group.discussions.first

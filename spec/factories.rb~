@@ -1,5 +1,5 @@
 Factory.sequence :email do |n|
-  "person-#{n}@example.com"
+  "person-#{n}@example.edu"
 end
 
 Factory.sequence :pubmed_id do |n|

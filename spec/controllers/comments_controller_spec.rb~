@@ -23,14 +23,14 @@ describe CommentsController do
     it "should create a comment" do
       lambda do
         get :create, @attr
-	@group.reload.feed.first[:item_type].should == "Comment"
+	#@group.reload.feed.first[:item_type].should == "Comment"
       end.should change(Comment, :count).by(1)
     end
 
     it "should create a filter state and have the right attributes" do
       get :create, @attr
       @comment = Comment.last
-      @comment.filters.first.state.should == 2
+      #@comment.filters.first.state.should == 2
       @comment.text.should == "Lorem ipsum underpants"
       @comment.form.should == "comment"
       @comment.assertion.should == @assertion
@@ -46,28 +46,14 @@ describe CommentsController do
       @attr[:comment] = {:text => "Lorem ipsum reply", :form => "reply", :reply_to => @comment.id.to_s, :assertion_id => @assertion.id}
       get :create, @attr
       @reply = Comment.last
-      @reply.filters.first.state.should == 2
+      #@reply.filters.first.state.should == 2
       @reply.text.should == "Lorem ipsum reply"
       @reply.form.should == "reply"
-      @reply.assertion.should == @assertion
       @reply.get_paper.should == @paper
       @reply.user == @user2
       Maillog.last.about.should == @reply
     end
 
-    it "should create a qcomment" do
-      @question = Factory(:question, :paper => @paper, :assertion => @assertion)
-      @attr[:comment] = {:text => "Lorem ipsum reply", :form => "qcomment", :reply_to => @question.id.to_s, :assertion_id => @assertion.id}
-      get :create, @attr
-      @qcomment = Comment.last
-      @qcomment.filters.first.state.should == 2
-      @qcomment.text.should == "Lorem ipsum reply"
-      @qcomment.form.should == "qcomment"
-      @qcomment.assertion.should == @assertion
-      @qcomment.get_paper.should == @paper
-      @qcomment.user == @user1
-      Maillog.last.about.should == @qcomment
-    end
 
     it "should trigger an e-mail to multiple users on a thread" do
       @user3 = Factory(:user, :email => Factory.next(:email))   
@@ -101,55 +87,6 @@ describe CommentsController do
     end
    end   
 
-describe "quickform" do
-
-	before(:each) do
-		@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
-		@paper.heatmap
-		@user1 = Factory(:user, :email => Factory.next(:email)) 
-		@user2 = Factory(:user, :email => Factory.next(:email))
-		@group = Factory(:group)
-		@group.add(@user1)
-		@group.add(@user2)
-		test_sign_in(@user1)
-	end
-
-	it "should create a comment for a figure" do
-		@attr = {:text => "Lorem ipsum underpants", :form => "comment", :paper => @paper.id, :fig => "3", :mode => '1'}
-		get :quickform, @attr
-		@paper = Paper.find(@paper.id)
-		@comment = Comment.last
-		@comment.owner.should == @paper.figs[2]
-		@comment.text.should == "Lorem ipsum underpants"
-		@comment.user.should == @user1
-		@group.filter_state(@comment) == 1
-		@group.reload.feed.first[:item_type].should == "Comment"
-	end
-
-	it "should create a comment for a paper" do
-		@attr = {:text => "Lorem ipsum underpants", :form => "comment", :paper => @paper.id, :fig => '', :mode => '2'}
-		get :quickform, @attr
-		@paper = Paper.find(@paper.id)
-		@comment = Comment.last
-		@comment.owner.should == @paper
-		@comment.text.should == "Lorem ipsum underpants"
-		@comment.user.should == @user1
-		@group.filter_state(@comment) == 2
-	end
-
-	it "should create a comment for a section" do
-		@attr = {:text => "Lorem ipsum underpants", :form => "comment", :paper => @paper.id, :fig => "3d", :mode => '3'}
-		get :quickform, @attr
-		@paper = Paper.find(@paper.id)
-		@paper.figs.count.should == 3
-		@comment = Comment.last 
-		@comment.owner.should == @paper.figs[2].figsections[3]
-		@comment.text.should == "Lorem ipsum underpants"
-		@comment.user.should == @user1
-		@group.filter_state(@comment) == 3
-	end
-
-end
 
 
 end

@@ -30,7 +30,7 @@ describe "Paper not logged in:" do
           a.save
        end
     end  
-    visit '/papers/1'
+    visit '/papers/' + @paper.id.to_s
 
     end
 

@@ -47,8 +47,8 @@ $(".abstract").live('click', function(){
 	$(this).parent().parent().find('.abstract_long').slideToggle(300);
 });
 
-$(".live_abstract").live('click', function(){
-	$(this).parent().parent().parent().parent().find('.abstract_long').slideToggle(300);
+$(".list_abstract").live('click', function(){
+	$(this).parent().parent().parent().find('.abstract_long').slideToggle(300);
 });
 
 //Blog post expansion
@@ -206,7 +206,7 @@ $('#expandSignup').click(function(){
 
 // Dropdown menus
 
-$('a.dropdown-toggle').live('click', function(){
+$('.dropdown-toggle').live('click', function(){
 	$(this).next().toggle('300');
   });
 

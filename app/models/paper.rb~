@@ -38,15 +38,18 @@ has_many :notes, :as => :about
    validates_numericality_of :pubmed_id, :only_integer => true,
                          :less_than => 9999999999999,
                          :greater_than => 0, :allow_nil => true
-
 before_save :set_reaction_map
 before_save :set_latest_activity
+after_save :check_info
 
 
 def inspect
 	'paper' + id.to_s
 end
 
+def to_hash
+	{:pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at}
+end
 
 def search_pubmed(search, numresults = 20)
 	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").gsub(/[^0-9A-Za-z]/, '+').delete('"').delete("'")
@@ -59,6 +62,7 @@ def search_pubmed(search, numresults = 20)
       	url2 = pids.empty? ? 'http://www.google.com' : 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
       	data = Nokogiri::XML(open(url2)) 
       	search_results = []
+	newpapers = []
       	data.xpath('//PubmedArticle').each do |article|
         	pid = article.xpath('MedlineCitation/PMID').text
         	paper = Paper.find_by_pubmed_id(pid)
@@ -98,10 +102,15 @@ def search_pubmed(search, numresults = 20)
 			end
 
 			citation = citation_authors + ' "' + title + '" ' + journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + pubdate.year.to_s + '): ' + pagination + '. Web.'
-			paper = Paper.create!(:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation)
+			paper = {:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation, :my_heat => 0}
+			newpaper = {:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation}
+		else
+			paper = paper.to_hash
 		end
+		newpapers << newpaper
         	search_results << paper
 	end
+	newpapmers.delay.each{|p| Paper.create(p)}
 	search_results
   end
 
@@ -125,7 +134,7 @@ end
 def search_activity(search_term) 
 	comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('"comments"."text" LIKE '"'%" + search_term + "%'")
 	summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where('"assertions"."text" LIKE '"'%" + search_term + "%' OR assertions.method_text LIKE '%" + search_term + "%'")
-	(summary_papers + comment_papers).uniq
+	(summary_papers + comment_papers).uniq.map{|p| p.to_hash}
 end
 	
 def check_blogs
@@ -142,7 +151,12 @@ def check_blogs
 	blogposts
 end
 
-
+#Check to see if the paper is filled out. If not, set a delayed job to look it up
+def check_info
+  if title.nil?
+	delay.lookup_info
+  end
+end
 
 def lookup_info
   url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
@@ -431,7 +445,7 @@ def heat
 end
 
 def my_heat
-    h_map[self.inspect][0]
+    h_map ? h_map[self.inspect][0] : 0
 end
 
 def heatmap_overview

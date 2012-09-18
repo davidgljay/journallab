@@ -59,16 +59,6 @@
 
 </script>
 <!-- end Google Analytics -->
-<!-- start Us‪erVoice -->
-<script type="text/javascript">
-  var uvOptions = {};
-  (function() {
-    var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-    uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/1Gr4j06X8p4QeZZ7HBSew.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-  })();
-</script>
-<!-- end UserVoice -->
 <% end %>
 <!-- start Us‪erVoice -->
 <script type="text/javascript">

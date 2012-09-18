@@ -8,7 +8,7 @@
 
 	<% if @welcome_screen %>
 	<div class = "lightbox round" id = 'welcomeBox'>
-		<div><h1>Fantastic. These are your feeds.</h1><h3>We’ll update them in <div class = "badge badge-warning inline">yellow</div>when there are new papers posted on pubmed.</h3> <h3>We’ll update them in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3>
+		<div><h1>Fantastic. These are your feeds.</h1><h3>We’ll update them in <div class = "badge badge-warning inline">yellow</div> when there are new papers posted on pubmed.</h3> <h3>We’ll update them in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3>
 		<h3>You can use them to discover and discuss the latest research.</h3>
 		<h3>If you leave insightful comments, cool stuff will happen.</h3>
 		<h2><strong>Sign up</strong> to save your feeds and start sharing your insights.</h2></div>
@@ -60,7 +60,7 @@
 Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"</i>
 <%= form_tag '/welcome', :method => :post do %>
 	<%= text_field_tag :temp_follows %>
-	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt', :style => 'font-size: 30px;' %><%= render '/shared/loading' %>
+	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt', :style => 'font-size: 30px;', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Tempfeeds');" %><%= render '/shared/loading' %>
 <% end %>
 </div>
 <br><br>
@@ -110,5 +110,11 @@ Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"
 		<%= image_tag 'earth.jpg' %>
 	</div>
 
+<h2>Learn more. Enter a few terms that you regularly search on PubMed.</h2>
+Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"</i>
+<%= form_tag '/welcome', :method => :post do %>
+	<%= text_field_tag :temp_follows %>
+	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt', :style => 'font-size: 30px;', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Tempfeeds');" %><%= render '/shared/loading' %>
+<% end %>
 
 <% end %>

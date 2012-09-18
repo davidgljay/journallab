@@ -110,7 +110,7 @@ def search_pubmed(search, numresults = 20)
 		newpapers << newpaper
         	search_results << paper
 	end
-	newpapmers.delay.each{|p| Paper.create(p)}
+	newpapers.delay.each{|p| Paper.create(p)}
 	search_results
   end
 

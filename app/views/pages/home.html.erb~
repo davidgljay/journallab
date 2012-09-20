@@ -29,7 +29,7 @@
   			<strong>Confirm Password</strong>
   			<%= f.password_field :password_confirmation %>
   			<%= hidden_field_tag :follows, @follows.map{|follow| follow.id} * ',' %>
-  			<%= f.submit "Sign up", :class => 'btn-warning round' %>
+  			<%= f.submit "Sign up", :class => 'btn-warning round', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Register');" %>
 		<% end %>
 		</div>
 	</div>

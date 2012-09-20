@@ -57,7 +57,7 @@ def create_temp(temp_follows_string)
 		 follow_array << Follow.create(:name => f, :search_term => f)
 	end
 	follow = follow_array.first
-	follow_array.delay.each {|f| f.update_feed; f.save}
+	follow_array.delay.each {|f| f.update_feed; f.save;}
 	follow_array
 end
 

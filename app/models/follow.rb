@@ -34,6 +34,7 @@ def update_feed
 		activity_search = Paper.new.search_activity(search_term).map{|p| [p, p[:updated_at]]}
 		self.latest_search = (pubmed_search + activity_search).sort{|x,y| y[1] <=> x[1]}
 	end
+	self.save
 	self.latest_search
 end
 

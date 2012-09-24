@@ -28,21 +28,21 @@ class User < ActiveRecord::Base
 	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link, :position, :institution, :homepage, :cv, :image, :remember_me
 
 
-        has_many :assertions
-        has_many :comments
-        has_many :questions
-        has_many :votes
-        has_many :shares
+    has_many :assertions
+    has_many :comments
+    has_many :questions
+    has_many :votes
+    has_many :shares
 	has_many :reactions
 	has_many :discussions
-        has_many :visits, :foreign_key => "user_id"
-        has_many :visited_papers, :through => :visits, :source => :paper
-        has_many :memberships, :foreign_key => "user_id"
-        has_many :groups, :through => :memberships, :source => :group
+    has_many :visits, :foreign_key => "user_id"
+    has_many :visited_papers, :through => :visits, :source => :paper
+    has_many :memberships, :foreign_key => "user_id"
+    has_many :groups, :through => :memberships, :source => :group
 	has_many :sumreqs
-        has_many :maillogs
-        has_many :subscriptions
-        has_many :votes_for_me, :class_name => "Vote", :foreign_key => "vote_for_id"
+    has_many :maillogs
+    has_many :subscriptions
+    has_many :votes_for_me, :class_name => "Vote", :foreign_key => "vote_for_id"
 	has_many :follows
 	has_many :anons
 	has_many :share_visits, :class_name => "Visit", :as => :about, :order => 'created_at DESC'

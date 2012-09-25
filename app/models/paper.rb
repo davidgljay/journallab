@@ -414,7 +414,7 @@ def calc_heat(heatmap)
    
    #Find the maximum number of comments
    max = heatmap.values.drop(1).map{|h| h[0]}.max
-   if max == 0
+   if max == 0 || max == nil
      max = 1
    end
    #Indicate everything else as a percentage

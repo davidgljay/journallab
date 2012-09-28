@@ -40,7 +40,7 @@ end
 
 def set_newcount
 	if latest_search
-		lastvisit = visits.empty? ? Date.new(1900,1,1) : visits.first.created_at 
+		lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at 
 		self.newcount = latest_search.select{|p| p[1] > lastvisit}.count
 		self.newcount
 	else

@@ -1,0 +1,26 @@
+	<div class = "lightbox round" id = 'welcomeBox'>
+		<div><h1>Fantastic. These are your feeds.</h1><h3>We’ll update them in <div class = "badge badge-warning inline">yellow</div> when there are new papers posted on pubmed.</h3> <h3>We’ll update them in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3>
+		<h3>You can use them to discover and discuss the latest research.</h3>
+		<h3>If you leave insightful comments, cool stuff will happen.</h3>
+		<h2><strong>Sign up</strong> to save your feeds and start sharing your insights.</h2></div>
+
+		<div id = 'signup'>
+		<%= form_for( @newuser, :url => '/users') do |f| %>
+  			<strong>First name</strong>
+  			<%= f.text_field :firstname, :style => 'width:120px;' %> 
+
+  			<strong>Last name</strong>
+  			<%= f.text_field :lastname, :style => 'width:120px' %> 
+
+  			<strong>Email</strong>
+  			<%= f.text_field :email, :value => "Use a .edu address if you have one.", :onfocus =>  "if(this.value == 'Use a .edu address if you have one.') { this.value = ''; }" %>
+  			<br>  
+  			<strong>Password</strong>
+  			<%= f.password_field :password %>
+  			<strong>Confirm Password</strong>
+  			<%= f.password_field :password_confirmation %>
+  			<%= hidden_field_tag :follows, @follows.map{|follow| follow.id} * ',' %>
+  			<%= f.submit "Sign up", :class => 'btn-warning round', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Register']);" %>
+		<% end %>
+		</div>
+	</div>

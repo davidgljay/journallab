@@ -30,7 +30,7 @@ end
 
 def update_feed
 	if search_term
-		pubmed_search = Paper.new.search_pubmed(search_term,20).map{|p| [p, p[:latest_activity]]}
+		pubmed_search = Paper.new.search_pubmed(search_term,40).map{|p| [p, p[:latest_activity]]}
 		activity_search = Paper.new.search_activity(search_term).map{|p| [p, p[:updated_at]]}
 		self.latest_search = (pubmed_search + activity_search).sort{|x,y| y[1] <=> x[1]}
 	end

@@ -1,0 +1,64 @@
+
+<div id = "slides">
+	<div class = 'slides_container'>
+		<div class = 'slide'>
+			<%= image_tag 'pipette.jpg' %>
+			<div class = 'firstSlideHeader imageOverlay'>Your insights matter.</div>							
+			<div class = 'imageOverlay firstSlideText'>
+				We're a community of professional scientists openly discussing peer-reviewed research.
+			</div>
+		</div>
+		<div class = 'slide'>
+			<%= image_tag 'postdocs3.jpg' %>
+			<div class = 'imageOverlay slideHeader'>We're ready for science to change.</div> 
+			<div class = 'imageOverlay slideText'>
+				Retraction rates are on the rise, peer review is becoming increasingly political, negative data is ignored, and reproducibility has become optional, not the standard.
+				<br><strong>It's time to close the gap between what science is and what it is supposed to be.</strong>
+			</div>
+		</div>
+		<div class = 'slide'>
+			<%= image_tag 'splash.jpg' %>
+			<div class = 'imageOverlay slideHeader'>Let's put the impact back in "impact factor".</div> 
+			<div class = 'imageOverlay slideText'>
+				Solid science ≠ high impact publication. <br>High impact publication ≠ solid science.<br> Sad but true. Together, we can change that.	
+				<br><strong>Help us build a world where science is critiqued for its integrity, not its splash.</strong>
+			</div>
+		</div>
+		<div class = 'slide'>
+			<%= image_tag 'timer.jpg' %>
+			<div class = 'imageOverlay slideHeader'>Contribute to science in two minutes or less.</div> 
+			<div class = 'imageOverlay slideText'>
+				<br>Share insights as you read a paper, without breaking your flow.
+				<br><br><strong>Ever notice a figure with missing controls?<br>We have a button for that.</strong>
+			</div>
+		</div>
+		<div class = 'slide'>
+			<%= image_tag 'boost.jpg' %>
+			<div class = 'imageOverlay slideHeader'>Boost your impact.</div> 
+			<div class = 'imageOverlay slideText'>
+				More eyes on your research. 
+				<br><br><strong>More appreciation for your contributions.</strong> 
+				<br><br>More opportunities down the road. 
+			</div>
+		</div>
+		<div class = 'slide'>
+			<%= image_tag 'applause.jpg' %>
+			<div class = 'imageOverlay slideHeader'>Build your reputation without risking it.</div> 
+			<div class = 'imageOverlay slideText'> 
+				<br>Choose to post anonymously and still get the credit you deserve.
+				<br><br><br><strong>Leave your most insightful comments, risk free.</strong>
+			</div>
+		</div>
+	</div>
+	<a href="#" class="prev"><%= image_tag "arrow-prev.png", :width => "24", :height => "43", :alt => "Arrow Prev" %></a>
+	<a href="#" class="next"><%= image_tag "arrow-next.png", :width => "24", :height => "43", :alt => "Arrow Next" %></a>
+</div>
+<div id = "temp_follow_form">
+	<h2>Learn more. Enter a few terms that you regularly search on PubMed.</h2>
+	Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"</i>
+	<%= form_tag '/welcome', :method => :post do %>
+		<%= text_field_tag :temp_follows %>
+		<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt', :style => 'font-size: 30px;', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Tempfeeds']);" %><%= render '/shared/loading' %>
+	<% end %>
+</div>
+

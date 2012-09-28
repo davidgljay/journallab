@@ -1,120 +1,13 @@
 <%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
 <%= stylesheet_link_tag 'jl_styles_home', :media => 'screen' %>
 
-
-<div id="homeLogo"><%= image_tag 'jl_logo_trans_M.png', :id => 'mainlogo' %></div>
-
 <% if user_signed_in? || @welcome_screen %>
-
 	<% if @welcome_screen %>
-	<div class = "lightbox round" id = 'welcomeBox'>
-		<div><h1>Fantastic. These are your feeds.</h1><h3>We’ll update them in <div class = "badge badge-warning inline">yellow</div> when there are new papers posted on pubmed.</h3> <h3>We’ll update them in <div class = "badge badge-important inline">red</div> when there’s new discussion about those papers.</h3>
-		<h3>You can use them to discover and discuss the latest research.</h3>
-		<h3>If you leave insightful comments, cool stuff will happen.</h3>
-		<h2><strong>Sign up</strong> to save your feeds and start sharing your insights.</h2></div>
-
-		<div id = 'signup'>
-		<%= form_for( @newuser, :url => '/users') do |f| %>
-  			<strong>First name</strong>
-  			<%= f.text_field :firstname, :style => 'width:120px;' %> 
-
-  			<strong>Last name</strong>
-  			<%= f.text_field :lastname, :style => 'width:120px' %> 
-
-  			<strong>Email</strong>
-  			<%= f.text_field :email, :value => "Use a .edu address if you have one.", :onfocus =>  "if(this.value == 'Use a .edu address if you have one.') { this.value = ''; }" %>
-  			<br>  
-  			<strong>Password</strong>
-  			<%= f.password_field :password %>
-  			<strong>Confirm Password</strong>
-  			<%= f.password_field :password_confirmation %>
-  			<%= hidden_field_tag :follows, @follows.map{|follow| follow.id} * ',' %>
-  			<%= f.submit "Sign up", :class => 'btn-warning round', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Register']);" %>
-		<% end %>
-		</div>
-	</div>
+		<%= render 'welcome' %>
 	<% end %>
-<div id="homeSearch">
-<%= form_tag('/lookup', :method => "get") do  %>
-   <br>
-    <table border="0" align="center" cellpadding="0" cellspacing="0">
-      <tbody><tr>
-        <td>
-   	<%= text_field_tag :search, "Find a paper and share your insights.", :onfocus =>  "if(this.value == 'Find a paper and share your insights.') { this.value = ''; }", :class => "inputSearch searchreset" %>
-	</td>
-<td valign="top" class = "Search">   <%= submit_tag "GO", :class => 'btn-tiny btn-warning round'%></tb></tr></table>
-  
-
-<% end %>
-</div>
-
 <%= render '/feed/feeds' %>
 <% else %>
+	
+	<%= render 'slideshow' %>
 
-
-<div id = "temp_follow_form">
-<div style = "font-size: 70px; color: black; margin: 10px; padding-bottom: 40px; font-weight:bold;">Your insights matter.</div>
-<h2>We're a community of grad students, post-docs, PIs, and professors openly discussing published research.</h2>
-<br>
-<h2>Learn more. Enter a few terms that you regularly search on PubMed.</h2>
-Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"</i>
-<%= form_tag '/welcome', :method => :post do %>
-	<%= text_field_tag :temp_follows %>
-	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt', :style => 'font-size: 30px;', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Tempfeeds');" %><%= render '/shared/loading' %>
-<% end %>
-</div>
-<br><br>
-	<div class = 'homeSlides'>
-		<div class = 'imageOverlayHeader'>We're ready for science to change.</div> 
-		<div class = 'imageOverlayText'>
-			Retraction rates are on the rise, peer review is becoming increasingly political, negative data is ignored, and reproducibility has become optional, not the standard.
-			<br><strong>It's time to close the gap between what science is and what it is supposed to be.</strong></div>
-		<%= image_tag 'postdocs3.jpg' %>
-	</div>
-	<div class = 'homeSlides'>
-		<div class = 'imageOverlayHeader'>Let's put the impact back in "impact factor".</div> 
-		<div class = 'imageOverlayText'>
-			Solid science ≠ high impact publication. <br>High impact publication ≠ solid science.<br> Sad but true. Together, we can change that.
-			
-			<br><strong>Help us build a world where science is critiqued for its integrity, not its splash.</strong></div>
-		<%= image_tag 'splash.jpg' %>
-	</div>
-	<div class = 'homeSlides'>
-		<div class = 'imageOverlayHeader'>Contribute to science in two minutes or less.</div> 
-		<div class = 'imageOverlayText'>
-			<br>Share insights as you read a paper, without breaking your flow.
-			<br><br><strong>Ever notice a figure with missing controls?<br>We have a button for that.</strong></div>
-		<%= image_tag 'timer.jpg' %>
-	</div>
-	<div class = 'homeSlides'>
-		<div class = 'imageOverlayHeader'>Boost your impact.</div> 
-		<div class = 'imageOverlayText'>
-			More eyes on your research. 
-			<br><br><strong>More appreciation for your contributions.</strong> 
-			<br><br>More opportunities down the road. </div>
-		<%= image_tag 'boost.jpg' %>
-	</div>
-	<div class = 'homeSlides'>
-		<div class = 'imageOverlayHeader'>Build your reputation without risking it.</div> 
-		<div class = 'imageOverlayText'> 
-			<br>Choose to post anonymously and still get the credit you deserve.
-			<br><br><br><strong>Leave your most insightful comments, risk free.</strong>
-			</div>
-		<%= image_tag 'applause.jpg' %>
-	</div>
-	<div class = 'homeSlides hideonload'>
-		<div class = 'imageOverlayHeader'>Comments worth reading.</div> 
-		<div class = 'imageOverlayText'>
-			<br>All comments, even anonymous ones, are held to a standard of professionalism.
-			<br><br><strong>Journal Lab is for practicing academic research scientists only.</strong></div>
-		<%= image_tag 'earth.jpg' %>
-	</div>
-<div id = "temp_follow_form">
-<h2>Learn more. Enter a few terms that you regularly search on PubMed.</h2>
-Separate with commas like so: <i>"mRNA, lymphocite signalling pathways, MiR-120"</i>
-<%= form_tag '/welcome', :method => :post do %>
-	<%= text_field_tag :temp_follows %>
-	<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt', :style => 'font-size: 30px;', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Tempfeeds']);" %><%= render '/shared/loading' %>
-<% end %>
-</div>
 <% end %>

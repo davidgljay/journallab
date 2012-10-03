@@ -8,8 +8,11 @@
 	<% if !paper[:abstract].empty? %>
 	<p class='abstract_long hideonload'><%= paper[:abstract] %></p>
 	<% end %>
-	<% if paper[:first_last_authors] %>
-		<div class = "sr_info2 small grey">First Author: <%= link_to paper[:first_last_authors].first[:name], '/lookup/' + paper[:first_last_authors].first[:firstname] + '+' + paper[:first_last_authors].first[:lastname] %> | Last Author: <%= link_to  paper[:first_last_authors].last[:name], '/lookup/' + paper[:first_last_authors].last[:firstname] + '+' + paper[:first_last_authors].last[:lastname] %></div>
+	<% if paper[:authors] %>
+		<div class = "sr_info2 small grey">First Author: <%= link_to authorname(paper[:authors].first), '/lookup/' + paper[:authors].first[:firstname] + '+' + paper[:authors].first[:lastname] %> 
+		<% unless paper[:authors].length == 1 %>
+			| Last Author: <%= link_to  authorname(paper[:authors].last), '/lookup/' + paper[:authors].last[:firstname] + '+' + paper[:authors].last[:lastname] %></div>
+		<% end %>
 	<% end %>	
 </td>
 </tr>

@@ -6,7 +6,6 @@ describe "Paper not logged in:" do
      @user = Factory(:user)
      @paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
      @paper.save
-     @paper.authors << Factory(:author)
      @paper.buildout([3,3,2,1])
      @user2 = Factory(:user, :email => Factory.next(:email))
      @group = Factory(:group)

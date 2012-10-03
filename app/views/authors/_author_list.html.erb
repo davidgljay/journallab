@@ -1,6 +1,8 @@
-<% paper.authors.each do |a| %>
-  <%= link_to a.lastname + ', ' + a.firstname, '/lookup/' + a.firstname + '+' + a.lastname %>
-  <% unless a == paper.authors.last %>
-    |
-  <% end %> 
+<% if paper.authors %>
+	<% paper.authors.each do |a| %>
+	  <%= link_to a[:lastname] + ', ' + a[:firstname], '/lookup/' + a[:firstname] + '+' + a[:lastname] %>
+	  <% unless a == paper.authors.last %>
+	    |
+	  <% end %> 
+	<% end %>
 <% end %>

@@ -854,6 +854,7 @@ td.comment_body, td.question_body {
 	position: fixed;
 	top: 0px;
 	left: 0px;
+	z-index: 200;
 }
 /* Classes related to javascript */
 

@@ -23,14 +23,18 @@ before_filter :admin_user,   :only => [:dashboard]
   end
 
   def welcome
-	@title = "Welcome"
-	@follows = Follow.new.create_temp(params[:temp_follows])
-	@follow = @follows.first
-	@feed = @follow.feed
-	@jclubs = []
-	@groups = []
-	@newuser = User.new
-	@welcome_screen = true
+	if params[:temp_follows].nil? || params[:temp_follows].empty?
+		flash[:notice] = 'Enter a few of your research interests to get started.'
+	else
+		@title = "Welcome"
+		@follows = Follow.new.create_temp(params[:temp_follows])
+		@follow = @follows.first
+		@feed = @follow.feed
+		@jclubs = []
+		@groups = []
+		@newuser = User.new
+		@welcome_screen = true
+	end
 	render :action => "home"
   end
 

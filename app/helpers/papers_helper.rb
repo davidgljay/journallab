@@ -1,7 +1,8 @@
 module PapersHelper
 
-#Create an overview for the paper display page.	
-	
+def authorname(a)
+		a[:lastname] + ", " + a[:firstname]
+end
 
 end
 

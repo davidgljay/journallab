@@ -1,26 +1,28 @@
 require 'spec_helper'
+DatabaseCleaner.strategy = :deletion
 
 describe "Users" do
-  describe "GET /user/1" do
+  describe "GET /users/1" do
     before(:each) do
-     @user = Factory(:user)
+     @user = Factory(:user, :email => Factory.next(:email))
+     @user.save
      @paper = Factory(:paper)
      @paper.pubdate = Time.now - 5.years
      @paper.save
      @paper.buildout([3,3,2,1])
      @group = Factory(:group)
      @group.add(@user)
-     a = @paper.assertions.build(:text => "Test", :method => "Test test")
+     a = @paper.assertions.build(:text => "Test", :method_text => "Test test")
      a.is_public = true
      a.user = @user
      a.save
      @paper.figs.each do |f|
-       a = f.assertions.build(:text => "Test", :method => "Test test")
+       a = f.assertions.build(:text => "Test", :method_text => "Test test")
        a.is_public = true
        a.user = @user
        a.save
        f.figsections.each do |s|
-          a = s.assertions.build(:text => "Test", :method => "Test test")
+          a = s.assertions.build(:text => "Test", :method_text => "Test test")
           a.is_public = true
           a.user = @user2
           a.save

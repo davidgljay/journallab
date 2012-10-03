@@ -18,14 +18,12 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
   def show
     	@paper = Paper.find(params[:id])
 	@paper.visits.create(:user => current_user, :visit_type => 'paper') if signed_in?
-	if @paper.authors.empty? || @paper.authors.nil?
-       		@paper.extract_authors
+	if @paper.visits.empty?
        		@paper.count_figs
 	end
 	@heatmap = @paper.heatmap
 	@heatmap_overview = @paper.heatmap_overview
 	@reaction_map = @paper.reaction_map
-	#@numvisits = @paper.visits.map{|v| v.user}.uniq.count
 	@interest = @paper.interest
 	#@blogs = @paper.check_blogs
 	if signed_in?

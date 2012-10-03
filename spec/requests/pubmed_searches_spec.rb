@@ -25,11 +25,11 @@ describe "Searches:" do
   describe "entering text into the homepage" do
     it "loads search results" do
      visit root_path
-     fill_in "search", :with => "judson, robert"
+     fill_in "search", :with => "zombies"
      click_button 'GO'
      within('body') { page.should have_content('Search Results') }
-     click_link 'Multiple targets of miR-302 and miR-372 promote reprogramming of human fibroblasts to induced pluripotent stem cells.'
-     page.should have_content('Judson')
+     click_link 'Feeling robots and human zombies: Mind perception and the uncanny valley'
+     page.should have_content('zombies')
    end
   end
 

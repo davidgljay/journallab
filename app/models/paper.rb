@@ -4,13 +4,10 @@ require 'nokogiri'
 require 'open-uri'
 
 serialize :h_map
-serialize :first_last_authors
+serialize :authors
 serialize :reaction_map
 
 #Associations
-has_many :authorships, :foreign_key => "paper_id",
-                           :dependent => :destroy
-has_many :authors, :through => :authorships, :source => :author, :order => "authorships.created_at ASC"
 has_many :assertions, :dependent => :destroy
 has_many :comments, :dependent => :destroy
 has_many :figs, :dependent => :destroy, :order => "figs.num ASC"
@@ -48,7 +45,7 @@ def inspect
 end
 
 def to_hash
-	{:pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at}
+	{:pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :authors => authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at}
 end
 
 def search_pubmed(search, numresults = 20)
@@ -92,8 +89,7 @@ def search_pubmed(search, numresults = 20)
 				initials = a.xpath('Initials').text
 				authors << {:firstname => firstname, :lastname => lastname, :name => lastname + ', ' + firstname }
 			end
-			first_last_authors = authors.empty? ? nil : [authors[0], authors[-1]]
-
+			
 			if authors.count > 3
 	                        citation_authors = authors[0][:lastname] + ', ' + authors[1][:lastname] + ", et al."
 			else
@@ -102,8 +98,8 @@ def search_pubmed(search, numresults = 20)
 			end
 
 			citation = citation_authors + ' "' + title + '" ' + journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + pubdate.year.to_s + '): ' + pagination + '. Web.'
-			paper = {:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation, :my_heat => 0}
-			newpaper = {:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :first_last_authors => first_last_authors, :citation => citation}
+			paper = {:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :authors => authors, :citation => citation, :my_heat => 0}
+			newpaper = {:pubmed_id => pid, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :authors => authors, :citation => citation}
 		else
 			paper = paper.to_hash
 		end
@@ -159,90 +155,93 @@ def check_info
 end
 
 def lookup_info
-  url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
-  #Check to see if the ID showed up on pubmed, if not return to the homepage.
-  data = Nokogiri::XML(open(url))
-
-  if data.xpath("/").empty?
-     flash = { :error => "This Pubmed ID is not valid." }
-     self.destroy
-  else
-	article = data.xpath('//PubmedArticle').first
-      	self.title = article.xpath('MedlineCitation/Article/ArticleTitle').text
-       	self.journal = article.xpath('MedlineCitation/Article/Journal/Title').text
-       	day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
-       	month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
-       	year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
-	volume = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Volume').text
-	issue = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Issue').text
-	pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
-			
-	if year != 0
-		self.pubdate = DateTime.new(year, month, day) 
-		self.latest_activity = self.pubdate
+	if Rails.env.test?
+		self.abstract = "The uncanny valley-the unnerving nature of humanlike robots-is an intriguing idea."
+		self.journal = "Cognition"
+		self.pubdate = Time.now - 1.month
+		self.title = "Feeling robots and human zombies: Mind perception and the uncanny valley"
+		self.citation = "Gray, Kurt, and Wegner, Daniel M. \"Feeling robots and human zombies: Mind perception and the uncanny valley.\" 125.1 (2012): 125-30. Web."
+		self.pubmed_id = 22784682
+		self.authors = [{:firstname=>"Kurt", :lastname=>"Gray", :name=>"Gray, Kurt"}, {:firstname=>"Daniel M", :lastname=>"Wegner", :name=>"Wegner, Daniel M"}]
+		self.save
 	else
-		self.latest_activity = DateTime.now - 1.month
+	  url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
+	  #Check to see if the ID showed up on pubmed, if not return to the homepage.
+	  data = Nokogiri::XML(open(url))
+	
+	  if data.xpath("/").empty?
+	     flash = { :error => "This Pubmed ID is not valid." }
+	     self.destroy
+	  else
+		article = data.xpath('//PubmedArticle').first
+	      	self.title = article.xpath('MedlineCitation/Article/ArticleTitle').text
+	       	self.journal = article.xpath('MedlineCitation/Article/Journal/Title').text
+	       	day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
+	       	month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
+	       	year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
+		volume = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Volume').text
+		issue = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Issue').text
+		pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
+				
+		if year != 0
+			self.pubdate = DateTime.new(year, month, day) 
+			self.latest_activity = self.pubdate
+		else
+			self.latest_activity = DateTime.now - 1.month
+		end
+	       	self.abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
+		# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
+		self.authors = []
+		authorlist = article.xpath('MedlineCitation/Article/AuthorList')
+		authorlist.xpath('Author').each do |a|
+			firstname = a.xpath('ForeName').text 
+			lastname = a.xpath('LastName').text
+			initials = a.xpath('Initials').text
+			self.authors << {:firstname => firstname, :lastname => lastname, :name => lastname + ', ' + firstname }
+		end
+	
+		if self.authors.count > 3
+	               citation_authors = self.authors[0][:lastname] + ', ' + self.authors[1][:lastname] + ", et al."
+		else
+			n = self.authors.length
+			citation_authors = self.authors.empty? ? '' : (self.authors.map{|a| a[:name]}.first(n-1)).join(', ') + ', and ' + self.authors.last[:name] + '.'
+		end
+	
+		self.citation = citation_authors + ' "' + self.title + '" ' + self.journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + self.pubdate.year.to_s + '): ' + pagination + '. Web.'
+	    	self.save
+	  end
 	end
-       	self.abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
-	# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
-	authors = []
-	authorlist = article.xpath('MedlineCitation/Article/AuthorList')
-	authorlist.xpath('Author').each do |a|
-		firstname = a.xpath('ForeName').text 
-		lastname = a.xpath('LastName').text
-		initials = a.xpath('Initials').text
-		authors << {:firstname => firstname, :lastname => lastname, :name => lastname + ', ' + firstname }
-	end
-		self.first_last_authors = authors.empty? ? nil : [authors[0], authors[-1]]
-
-	if authors.count > 3
-               citation_authors = authors[0][:lastname] + ', ' + authors[1][:lastname] + ", et al."
-	else
-		n = authors.length
-		citation_authors = authors.empty? ? '' : (authors.map{|a| a[:name]}.first(n-1)).join(', ') + ', and ' + authors.last[:name] + '.'
-	end
-
-	self.citation = citation_authors + ' "' + self.title + '" ' + self.journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + self.pubdate.year.to_s + '): ' + pagination + '. Web.'
-    	self.save
-  end
 end
 
 #Derive authors
-def extract_authors(authorlist = nil)
-	if authorlist.nil?
-		url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pubmed_id.to_s + '&retmode=xml&rettype=abstract'
-    		data = Nokogiri::XML(open(url))
-    		authorlist = data.xpath('//AuthorList')
-	end
-	authorlist.xpath('Author').each do |a|
-		firstname = a.xpath('ForeName').text 
-		lastname = a.xpath('LastName').text
-		initials = a.xpath('Initials').text
-		a =  Author.new(:firstname => firstname, :lastname => lastname, :initial => initials)
-       		if a.save
-          		self.authors << a
-       		else 
-          		auth = Author.find(:last, :conditions=> {:firstname => firstname, :lastname => lastname})  
-          		if !self.authors.include?(auth) 
-            			self.authors << auth
-          		end
-       		end
-     	end               
-end
+#def extract_authors(authorlist = nil)
+#	if authorlist.nil?
+#		url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pubmed_id.to_s + '&retmode=xml&rettype=abstract'
+#   		data = Nokogiri::XML(open(url))
+#    		authorlist = data.xpath('//AuthorList')
+#	end
+#	authorlist.xpath('Author').each do |a|
+#		firstname = a.xpath('ForeName').text 
+#		lastname = a.xpath('LastName').text
+#		initials = a.xpath('Initials').text
+#		self.authors << {:firstname => firstname, :lastname => lastname, :initial => initials}
+#		authors.uniq!
+#		authors
+#end
 
-def assign_first_and_last_authors(f_author = nil, l_author = nil)
-	if f_author.nil?
-		f_author = authors.first
-	end
-	if l_author.nil?
-		l_author = authors[-1]
-	end
-	if f_author && l_author	
-		f = {:firstname => f_author.firstname, :lastname => f_author.lastname, :name => f_author.lastname + ', ' + f_author.firstname }
-		l = {:firstname => l_author.firstname, :lastname => l_author.lastname, :name => l_author.lastname + ', ' + l_author.firstname} 
-		self.first_last_authors = [f, l]
-	end
-end
+#def assign_first_and_last_authors(f_author = nil, l_author = nil)
+#	if f_author.nil?
+#		f_author = authors.first
+#	end
+#	if l_author.nil?
+#		l_author = authors[-1]
+#	end
+#	if f_author && l_author	
+#		f = {:firstname => f_author.firstname, :lastname => f_author.lastname, :name => f_author.lastname + ', ' + f_author.firstname }
+#		l = {:firstname => l_author.firstname, :lastname => l_author.lastname, :name => l_author.lastname + ', ' + l_author.firstname} 
+#		self.first_last_authors = [f, l]
+#	end
+#end
 
 def openxml(source)
 	Nokogiri::XML(open(source))

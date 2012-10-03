@@ -15,32 +15,20 @@ describe Paper do
     long_pubmed_paper.should_not be_valid
   end
 
-  describe "author associations" do
-     before(:each) do
-        @paper = Paper.create!(@attr)
-        @author = Author.create({:firstname => "David", "lastname" => "Jay"})
-        @paper.authorships.create(:author_id => @author.id)
-     end
-
-     it "should exist" do
-        @paper.authors.all.should include(@author)
-     end
-  end
 
  describe "data population" do
      before(:each) do
-          @attr = {:pubmed_id => "18276894"}
+          @attr = {:pubmed_id => "22784682"}
           @paper = Paper.create!(@attr)
           @paper.lookup_info
-          @paper.extract_authors
      end
 
      it "should bring in data from pubmed" do
-         @paper.title.should == "The critical importance of retrieval for learning."
+         @paper.title.should == "Feeling robots and human zombies: Mind perception and the uncanny valley"
      end
 
      it "should derive authors" do
-         @paper.authors.first.lastname.should == "Karpicke"
+         @paper[:authors].first[:lastname].should == "Gray"
      end
   end
 

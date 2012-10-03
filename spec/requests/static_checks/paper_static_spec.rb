@@ -12,7 +12,9 @@ describe "papers/show" do
  	end
 
  	@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))	
+	@paper.lookup_info
 	@user = Factory(:user, :email => Factory.next(:email))
+	@user.save
    end
 
    it "should load when not signed in" do
@@ -37,7 +39,9 @@ describe "papers/show" do
 
  	@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))	
 	@paper.buildout([3,2,2,2])
+	@paper.lookup_info
 	@user = Factory(:user, :email => Factory.next(:email))
+	@user.save
    end
 
    it "should load when not signed in" do

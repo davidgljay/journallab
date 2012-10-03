@@ -1,13 +1,12 @@
 require 'spec_helper'
+DatabaseCleaner.strategy = :deletion
 
 describe "Assertions" do
    before(:each) do
 	@user = Factory(:user, :email => Factory.next(:email))
 	@paper = Factory(:paper)
-     	@paper.authors << Factory(:author)
 	@group = Factory(:group)
 	@paper.lookup_info
-	@paper.extract_authors
 	@group.add(@user)
 	@paper.buildout([3,3,2,1])
 	@fig = @paper.figs.first

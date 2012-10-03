@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120914003803) do
+ActiveRecord::Schema.define(:version => 20121002172017) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -41,14 +41,6 @@ ActiveRecord::Schema.define(:version => 20120914003803) do
   add_index "assertions", ["get_paper_id"], :name => "index_assertions_on_get_paper_id"
   add_index "assertions", ["paper_id"], :name => "index_assertions_on_paper_id"
   add_index "assertions", ["user_id"], :name => "index_assertions_on_user_id"
-
-  create_table "authors", :force => true do |t|
-    t.string   "firstname"
-    t.string   "lastname"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "initial"
-  end
 
   create_table "authorships", :force => true do |t|
     t.integer  "paper_id"
@@ -231,18 +223,18 @@ ActiveRecord::Schema.define(:version => 20120914003803) do
     t.text     "title"
     t.integer  "pubmed_id"
     t.text     "journal"
-    t.text     "abstract",           :default => ""
+    t.text     "abstract",        :default => ""
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "pdf_link"
     t.datetime "pubdate"
     t.text     "h_map"
-    t.text     "first_last_authors"
     t.text     "description"
     t.string   "doi"
     t.text     "reaction_map"
     t.datetime "latest_activity"
     t.text     "citation"
+    t.text     "authors"
   end
 
   create_table "questions", :force => true do |t|

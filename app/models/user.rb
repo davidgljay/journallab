@@ -272,7 +272,7 @@ end
 #Check whether the user is certified to post
 
 def set_certified
-	allowed_domains = ['nih.gov', 'ucsfmedctr.org']
+	allowed_domains = ['nih.gov', 'ucsfmedctr.org', '.cirm.ca.gov']
 	self.certified ||= self.email.last(4) == '.edu' || allowed_domains.include?(self.email.split('@').last)
 	return true
 end

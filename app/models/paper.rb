@@ -59,7 +59,7 @@ def search_pubmed(search, numresults = 20)
       	url2 = pids.empty? ? 'http://www.google.com' : 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pids + '&retmode=xml&rettype=abstract'
       	data = Nokogiri::XML(open(url2)) 
       	search_results = []
-	newpapers = []
+		newpapers = []
       	data.xpath('//PubmedArticle').each do |article|
         	pid = article.xpath('MedlineCitation/PMID').text
         	paper = Paper.find_by_pubmed_id(pid)
@@ -79,8 +79,7 @@ def search_pubmed(search, numresults = 20)
 			else
 				latest_activity = Time.now - 1.month
 			end
-	        	abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
-		# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
+	        abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
 			authors = []
 			authorlist = article.xpath('MedlineCitation/Article/AuthorList')
 			authorlist.xpath('Author').each do |a|
@@ -199,7 +198,6 @@ def lookup_info
 			initials = a.xpath('Initials').text
 			self.authors << {:firstname => firstname, :lastname => lastname, :name => lastname + ', ' + firstname }
 		end
-	
 		if self.authors.count > 3
 	               citation_authors = self.authors[0][:lastname] + ', ' + self.authors[1][:lastname] + ", et al."
 		else

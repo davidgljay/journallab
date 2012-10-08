@@ -208,7 +208,7 @@ def lookup_info
 		end
 	
 		self.citation = citation_authors + ' "' + self.title + '" ' + self.journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + self.pubdate.year.to_s + '): ' + pagination + '. Web.'
-	    	self.save
+	    self.save
 	  end
 	end
 end

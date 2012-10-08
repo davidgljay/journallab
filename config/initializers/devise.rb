@@ -4,7 +4,7 @@ require 'devise/encryptors/sha2'
 
 Devise.setup do |config|
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "Journal Lab <david@journallab.com>"
+  config.mailer_sender = "Journal Lab <jay@journallab.com>"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is
@@ -41,7 +41,7 @@ Devise.setup do |config|
   # ==> Configuration for :confirmable
   # The time you want give to your user to confirm his account. During this time
   # he will be able to access your application without confirming. Default is nil.
-  config.confirm_within = 2.days
+  config.allow_unconfirmed_access_for = 2.days
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.

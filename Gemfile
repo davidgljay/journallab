@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.8'
 gem 'rake', '0.9.2.2'
 
 # Bundle edge Rails instead:
@@ -13,28 +13,29 @@ gem 'json'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier'
 end
 
 
-  gem 'devise', '1.5.3'
-  gem 'dragonfly', '0.9.12'
-  gem 'rmagick', '2.13.1'
-  gem  'mini_magick', '3.4' 
-  gem 'fog', '1.5.0'
-  gem 'delayed_job', '3.0.3'
-  gem 'delayed_job_active_record', '0.3.2'
+  gem 'devise'
+  gem 'devise-encryptable'
+  gem 'dragonfly'
+  gem 'rmagick'
+  gem  'mini_magick' 
+  gem 'fog'
+  gem 'delayed_job'
+  gem 'delayed_job_active_record'
   gem 'daemons'
-  gem 'pg', '0.14.0'
+  gem 'pg'
 
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+# gem 'bcrypt-ruby'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
@@ -50,16 +51,16 @@ end
 
 
 group :development do
-  gem 'rspec-rails', '2.6.0'
-  gem 'annotate', '2.4.0'
-  gem 'faker', '0.3.1'
+  gem 'rspec-rails'
+  gem 'annotate'
+  gem 'faker'
 end
 
 group :test do
-  gem 'rspec', '2.6.0'
-  gem 'capybara', '1.1.2'
+  gem 'rspec'
+  gem 'capybara'
   gem 'database_cleaner'
-  gem 'factory_girl_rails', '~> 1.1'
+  gem 'factory_girl_rails'
 end
 
 group :redcell do

@@ -1,12 +1,12 @@
-Factory.sequence :email do |n|
+FactoryGirl.sequence :email do |n|
   "person-#{n}@example.edu"
 end
 
-Factory.sequence :pubmed_id do |n|
+FactoryGirl.sequence :pubmed_id do |n|
   21230106 + 1
 end	
 
-Factory.define :user do |user|
+FactoryGirl.define :user do |user|
      user.firstname			"David"
      user.lastname                      "Jay"
      user.password		        "testingtesting123"
@@ -16,15 +16,15 @@ Factory.define :user do |user|
 #     user.save
 end
 
-Factory.define :paper do |paper|
+FactoryGirl.define :paper do |paper|
     paper.title     "The Smartest Science Ever"
     paper.pubmed_id 21228906
     paper.abstract  "Smart smart smartypants"
     paper.pubdate Time.now - 1.week
-    #paper.after_create { |p| Factory(:author, :papers => [p]) }
+    #paper.after_create { |p| FactoryGirl(:author, :papers => [p]) }
 end
 
-Factory.define :summarized_paper do |paper|
+FactoryGirl.define :summarized_paper do |paper|
     paper.title     "The Smartest Science Ever"
     paper.pubmed_id "21228906"
     paper.abstract  "Smart smart smartypants"
@@ -40,14 +40,14 @@ Factory.define :summarized_paper do |paper|
 
 end    
 
-Factory.define :group do |group|
+FactoryGirl.define :group do |group|
     group.name  "Test Group"
     group.desc  "This group is awesome"
     group.category "lab"
 end
 		
 
-Factory.define :comment do |comment|
+FactoryGirl.define :comment do |comment|
     comment.text "Lorem ipsum."
     comment.association :user, :email => 'unique1@email.com'
     comment.association :paper, :pubmed_id => 21228907, :title => "The Smartest Science Ever"
@@ -55,24 +55,24 @@ Factory.define :comment do |comment|
     comment.form "comment"
 end
 
-Factory.define :question do |comment|
+FactoryGirl.define :question do |comment|
     comment.text "Lorem ipsum?"
     comment.association :user, :email => 'unique2@email.com'
     comment.association :paper, :pubmed_id => 21228908, :title => "The Second Smartest Science Ever"
     comment.association :assertion
 end
 
-#Factory.sequence :pubmed do |n|
+#FactoryGirl.sequence :pubmed do |n|
 #   rand(9999999999) + 100
 #end
  
-Factory.define :assertion do |assert|
+FactoryGirl.define :assertion do |assert|
     assert.text "This is grande!"
     assert.association :user
     assert.association :paper
 end
 
-Factory.define :author do |author|
+FactoryGirl.define :author do |author|
     author.firstname "Robert"
     author.lastname "Judson"
     author.initial "RJ"

@@ -49,7 +49,8 @@ def to_hash
 end
 
 def search_pubmed(search, numresults = 20)
-	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").gsub(/[^0-9A-Za-z]/, '+').delete('"').delete("'")
+	cleansearch = search.gsub(/[.]/, "+").gsub(/[^0-9A-Za-z'" ]/, '+').gsub(/[ ]/, "%20")
+
 
 # Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
 
@@ -110,7 +111,7 @@ def search_pubmed(search, numresults = 20)
   end
 
 def pubmed_search_count(search)
-	cleansearch = search.gsub(/[' ']/, "+").gsub(/['.']/, "+").delete('"').delete("'")
+	cleansearch = search.gsub(/[.]/, "+").gsub(/[^0-9A-Za-z'" ]/, '+').gsub(/[ ]/, "%20")
       	#Get a list of pubmed IDs for the search terms
       	url1 = 'http://eutils.ncbi.nlm.nih.gov/gquery?term=' + cleansearch + '&retmode=xml'
       	Nokogiri::XML(open(url1)).xpath('//ResultItem/Count').first.text.to_i
@@ -127,8 +128,9 @@ def interest
 end
 
 def search_activity(search_term) 
-	comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('"comments"."text" LIKE '"'%" + search_term + "%'")
-	summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where('"assertions"."text" LIKE '"'%" + search_term + "%' OR assertions.method_text LIKE '%" + search_term + "%'")
+	cleansearch = search_term.gsub(/[']/, "''")
+	comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('"comments"."text" LIKE '"'%" + cleansearch + "%'")
+	summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where('"assertions"."text" LIKE '"'%" + cleansearch + "%' OR assertions.method_text LIKE '%" + cleansearch + "%'")
 	(summary_papers + comment_papers).uniq.map{|p| p.to_hash}
 end
 	

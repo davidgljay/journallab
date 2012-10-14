@@ -88,14 +88,14 @@ end
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
-      @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search)).uniq
+      @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search, 10)).uniq
       @history_results = []
       if signed_in?
-		@history_results = @search_results & current_user.visited_papers.map{|p| p.to_hash}
+		@history_results = (@search_results & current_user.visited_papers.map{|p| p.to_hash}).first(20)
 	      	@search_results = @search_results - @history_results
       		@search_results.select{|p| p[:latest_activity].nil?}.each {|p| p[:latest_activity] ||= Time.now - 1.month}
       end
-      @search_results.sort!{|x,y| y[:latest_activity] <=> x[:latest_activity]}
+      @search_results = Kaminari.paginate_array(@search_results.sort!{|x,y| y[:latest_activity] <=> x[:latest_activity]}).page(params[:page]).per(20)
     end
     if @paper
         redirect_to @paper

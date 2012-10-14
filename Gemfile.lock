@@ -105,6 +105,9 @@ GEM
     jrails (0.6.0)
     jruby-pageant (1.1.1)
     json (1.7.5)
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.1.2)
       addressable (~> 2.3)
     libwebsocket (0.1.5)
@@ -219,6 +222,7 @@ DEPENDENCIES
   heroku
   jrails
   json
+  kaminari
   mini_magick
   pg
   rack-cache

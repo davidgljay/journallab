@@ -33,6 +33,7 @@ end
   gem 'daemons'
   gem 'pg'
   gem 'heroku'
+  gem 'kaminari'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby'

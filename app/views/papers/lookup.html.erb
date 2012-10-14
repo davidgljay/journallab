@@ -1,5 +1,7 @@
 <h1>Search Results</h1>
 
+<%= paginate @search_results %>
+
 <% if !@history_results.empty? %>
 <h4>Papers You've Visited</h4>
 <% @history_results.each do |result| %>
@@ -16,3 +18,4 @@
 	</div>
 <% end %>
 
+<%= paginate @search_results %>

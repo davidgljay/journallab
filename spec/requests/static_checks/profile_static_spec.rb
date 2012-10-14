@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Static User Profile" do
 
 	before :each do 
-		@user = Factory(:user, :email => Factory.next(:email))
+		@user = create(:user)
 	end
 
   describe "when not logged in" do

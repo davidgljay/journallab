@@ -11,9 +11,9 @@ describe "papers/show" do
  		@numfig_select << [(i+1).to_s, i+1 ]
  	end
 
- 	@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))	
+ 	@paper = create(:paper)	
 	@paper.lookup_info
-	@user = Factory(:user, :email => Factory.next(:email))
+	@user = create(:user)
 	@user.save
    end
 
@@ -37,10 +37,10 @@ describe "papers/show" do
  		@numfig_select << [(i+1).to_s, i+1 ]
  	end
 
- 	@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))	
+ 	@paper = create(:paper)	
 	@paper.buildout([3,2,2,2])
 	@paper.lookup_info
-	@user = Factory(:user, :email => Factory.next(:email))
+	@user = create(:user)
 	@user.save
    end
 

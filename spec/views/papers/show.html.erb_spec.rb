@@ -11,8 +11,8 @@ describe "papers/show" do
  		@numfig_select << [(i+1).to_s, i+1 ]
  	end
 
- 	@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))	
-	@user = Factory(:user, :email => Factory.next(:email))
+ 	@paper = create(:paper)	
+	@user = create(:user)
  	assign(:paper, @paper)
  	assign(:heatmap, @paper.heatmap)
  	assign(:heatmap_overview, @paper.heatmap_overview)

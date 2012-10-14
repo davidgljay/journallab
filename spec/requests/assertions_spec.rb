@@ -3,9 +3,9 @@ DatabaseCleaner.strategy = :deletion
 
 describe "Assertions" do
    before(:each) do
-	@user = Factory(:user, :email => Factory.next(:email))
-	@paper = Factory(:paper)
-	@group = Factory(:group)
+	@user = create(:user)
+	@paper = create(:paper)
+	@group = create(:group)
 	@paper.lookup_info
 	@group.add(@user)
 	@paper.buildout([3,3,2,1])
@@ -27,6 +27,7 @@ describe "Assertions" do
 	find('#paper' + @paper.id.to_s).find('p.method').click
 	find('#paper' + @paper.id.to_s).fill_in "assertion_method_text", :with => "Aloe juice"
 	click_button "Submit"
+		wait_until { page.find('assertion_method_text').visible? }
 	find('div.latest_assertion').click
 	fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#paper' + @paper.id.to_s).click_button "Submit"
@@ -51,6 +52,7 @@ end
 	find('#fig' + @fig.id.to_s ).find('div.latest_assertion').click
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
+		wait_until { page.find('assertion_method_text').visible? }
 	find('#fig' + @fig.id.to_s ).find('p.method').click
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
@@ -67,6 +69,7 @@ end
 	find('#figsection' + @figsection.id.to_s ).find('div.latest_assertion').click
 	find('#figsection' + @figsection.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#figsection' + @figsection.id.to_s ).click_button "Submit"
+		wait_until { page.find('assertion_method_text').visible? }
 	find('#figsection' + @figsection.id.to_s ).find('p.method').click
 	find('#figsection' + @figsection.id.to_s ).fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#figsection' + @figsection.id.to_s ).click_button "Submit"
@@ -79,7 +82,7 @@ end
 
   describe "improving an assertion" do
      before(:each) do 
-     @user2 = Factory(:user, :email => Factory.next(:email))
+     @user2 = create(:user)
      @user2.save  
      a = @paper.assertions.build(:text => "Test", :method_text => "Test test")
      a.is_public = true
@@ -108,6 +111,7 @@ end
 	find('div.latest_assertion').click
 	fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	click_button "Submit"
+		wait_until { page.find('assertion_method_text').visible? }
 	find('p.method').click
 	fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#paper' + @paper.id.to_s ).click_button "Submit"
@@ -119,6 +123,7 @@ end
 	find('#fig' + @fig.id.to_s ).find('div.latest_assertion').click
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
+	wait_until { page.find('assertion_method_text').visible? }
 	find('#fig' + @fig.id.to_s ).find('p.method').click
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
@@ -133,6 +138,7 @@ end
 	find('#fig' + @fig.id.to_s ).find('div.latest_assertion').click
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
+	wait_until { page.find('assertion_method_text').visible? }
 	find('#fig' + @fig.id.to_s ).find('p.method').click
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#fig' + @fig.id.to_s ).click_button "Submit"

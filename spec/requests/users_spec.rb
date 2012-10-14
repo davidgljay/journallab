@@ -4,13 +4,13 @@ DatabaseCleaner.strategy = :deletion
 describe "Users" do
   describe "GET /users/1" do
     before(:each) do
-     @user = Factory(:user, :email => Factory.next(:email))
+     @user = create(:user)
      @user.save
-     @paper = Factory(:paper)
+     @paper = create(:paper)
      @paper.pubdate = Time.now - 5.years
      @paper.save
      @paper.buildout([3,3,2,1])
-     @group = Factory(:group)
+     @group = create(:group)
      @group.add(@user)
      a = @paper.assertions.build(:text => "Test", :method_text => "Test test")
      a.is_public = true

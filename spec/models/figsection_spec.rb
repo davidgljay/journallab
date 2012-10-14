@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Figsection do
 
    before(:each) do
-     @paper = Factory(:paper)
+     @paper = create(:paper)
      @paper.save
      @paper.buildout([3,3,2,1])
      @figsection = @paper.figs.first.figsections.first

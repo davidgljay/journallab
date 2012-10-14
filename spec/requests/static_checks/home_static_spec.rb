@@ -12,11 +12,11 @@ describe "/" do
 
   describe "when logged in" do
 	before :each do
-		@user = Factory(:user, :email => Factory.next(:email))
+		@user = create(:user)
 		@user.save
-		@paper = Factory(:paper)
+		@paper = create(:paper)
 		@paper.lookup_info
-		@paper2 = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
+		@paper2 = create(:paper)
 		@paper2.lookup_info
 		integration_sign_in(@user)
 	end

@@ -34,8 +34,8 @@ describe Paper do
 
  describe "assertions" do
      it "should find the latest assertion" do
-        @paper = Factory(:paper)
-        @user = Factory(:user)
+        @paper = create(:paper)
+        @user = create(:user)
         asrt1 = @paper.assertions.build(:text => "I love Nantucket!")
         asrt1.user = @user
         asrt1.save
@@ -52,9 +52,9 @@ describe Paper do
 describe "heatmap_overview" do
 
 	it "should create a heatmap overview" do
-		@paper = Factory(:paper)
+		@paper = create(:paper)
 		@paper.buildout([3,3,4,2])
-		@user = Factory(:user)
+		@user = create(:user)
 		@paper.comments.build(:text => 'Comment', :form => 'comment', :user => @user)
 		@fig = @paper.figs[1]
 		@fig.questions.build(:text => 'Question', :user => @user)
@@ -67,7 +67,7 @@ end
 
 describe "build figs" do
 	before(:each) do
-		@paper = Factory(:paper)
+		@paper = create(:paper)
 		@paper.build_figs(4)
 		@fig = @paper.figs[0]
 	end		

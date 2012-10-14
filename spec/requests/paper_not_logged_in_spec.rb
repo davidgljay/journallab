@@ -3,12 +3,12 @@ require 'spec_helper'
 describe "Paper not logged in:" do
 
    before(:each) do
-     @user = Factory(:user)
-     @paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
+     @user = create(:user)
+     @paper = create(:paper)
      @paper.save
      @paper.buildout([3,3,2,1])
-     @user2 = Factory(:user, :email => Factory.next(:email))
-     @group = Factory(:group)
+     @user2 = create(:user)
+     @group = create(:group)
      @group.add(@user)
      @group.add(@user2)  
      a = @paper.assertions.build(:text => "Test", :method => "Test test")

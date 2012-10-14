@@ -4,7 +4,7 @@ describe "Searches:" do
 
 #Sign in first
   before(:each) do
-     @user = Factory(:user, :email => Factory.next(:email))
+     @user = create(:user)
       visit '/users/sign_in'
       fill_in "user_email", :with => @user.email
       fill_in "user_password", :with => @user.password

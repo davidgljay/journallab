@@ -104,7 +104,7 @@ describe User do
   describe "unsubscribe functionality" do
 
     before(:each) do
-      @user = Factory(:user, :email => Factory.next(:email))
+      @user = create(:user)
     end
 
     it "should record an unsubscribe" do

@@ -117,6 +117,7 @@ def pubmed_search_count(search)
       	Nokogiri::XML(open(url1)).xpath('//ResultItem/Count').first.text.to_i
 end
 
+#def set_interest
 def interest
 	count = 0
 	Follow.where('user_id IS NOT NULL').map{|f| f.search_term}.compact.each do |w|
@@ -125,7 +126,9 @@ def interest
 		end
 	end
 	count
+	#self.interest = count
 end
+	
 
 def search_activity(search_term) 
 	cleansearch = search_term.gsub(/[']/, "''")

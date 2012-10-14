@@ -4,10 +4,10 @@ describe FigsController do
 
   describe "GET 'build_sections'" do
     it "should be successful" do
-      @paper = Factory(:paper)
+      @paper = create(:paper)
       @paper.build_figs(3)
       @fig = @paper.figs.first
-      @user = Factory(:user, :email => Factory.next(:email))
+      @user = create(:user)
       test_sign_in(@user)
       get 'build_sections', :id => @fig.id.to_s, :num => '3'
       @fig.figsections.count.should == 3

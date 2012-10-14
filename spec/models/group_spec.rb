@@ -4,12 +4,12 @@ describe Group do
   
   describe "Class:" do
    before(:each) do
-     @class = Factory(:group)
+     @class = create(:group)
      @class.category = "class"
-     @instructor = Factory(:user)
-     @student1 = Factory(:user, :email => Factory.next(:email))     
-     @student2 = Factory(:user, :email => Factory.next(:email))
-     @outsider = Factory(:user, :email => Factory.next(:email))
+     @instructor = create(:user)
+     @student1 = create(:user)     
+     @student2 = create(:user)
+     @outsider = create(:user)
      @class.make_lead(@instructor)
      @class.add(@student1)
      @class.add(@student2)     
@@ -17,7 +17,7 @@ describe Group do
 
    describe "Assertions" do
      before(:each) do
-       @paper = Factory(:paper)
+       @paper = create(:paper)
        @paper.buildout([3,3,2,1])
        @class.make_private(@paper)
        @assertion = @paper.assertions.build(:text => 'So smart!', :method => 'Big brains')
@@ -57,7 +57,7 @@ describe Group do
 
    describe "Comments" do
      before(:each) do
-       @paper = Factory(:paper)
+       @paper = create(:paper)
        @paper.buildout([3,3,2,1])
        @class.make_private(@paper)
        @assertion = @paper.assertions.build(:text => 'So smart!', :method => 'Big brains')
@@ -83,17 +83,17 @@ describe Group do
 
  describe "Lab:" do
   before(:each) do
-     @lab = Factory(:group)
-     @rat1 = Factory(:user)     
-     @rat2 = Factory(:user, :email => Factory.next(:email))
-     @outsider = Factory(:user, :email => Factory.next(:email))
+     @lab = create(:group)
+     @rat1 = create(:user)     
+     @rat2 = create(:user)
+     @outsider = create(:user)
      @lab.add(@rat1)
      @lab.add(@rat2)     
    end
 
    describe "assertions" do
      before(:each) do
-       @paper = Factory(:paper)
+       @paper = create(:paper)
        @paper.buildout([3,3,2,1])
        @assertion = @paper.assertions.build(:text => 'So smart!', :method => 'Big brains')
        @assertion.user = @rat1
@@ -114,15 +114,15 @@ describe Group do
 
    describe "Comments:" do
      before(:each) do
-       @paper = Factory(:paper)
+       @paper = create(:paper)
        @paper.buildout([3,3,2,1])
        @assertion = @paper.assertions.build(:text => 'So smart!', :method => 'Big brains')
        @assertion.user = @rat1
        @assertion.save
        @lab.make_public(@assertion)
-       @labcomment = Factory(:comment, :paper => @paper, :assertion => @assertion, :user => @rat1)
+       @labcomment = create(:comment, :paper => @paper, :assertion => @assertion, :user => @rat1)
        @lab.make_group(@labcomment)
-       @publiccomment = Factory(:comment, :paper => @paper, :assertion => @assertion, :user => @rat1)
+       @publiccomment = create(:comment, :paper => @paper, :assertion => @assertion, :user => @rat1)
        @lab.make_public(@publiccomment)
        @mode = 2
      end
@@ -168,9 +168,9 @@ describe Group do
 
   describe "adding users" do
 	it "should send an e-mail to the group lead" do
-		@group = Factory(:group)
-		@lead = Factory(:user, :email => Factory.next(:email))
-		@newuser = Factory(:user, :email => Factory.next(:email))
+		@group = create(:group)
+		@lead = create(:user)
+		@newuser = create(:user)
 		@group.add(@lead)
 		@group.make_lead(@lead)
 		@group.add(@newuser)

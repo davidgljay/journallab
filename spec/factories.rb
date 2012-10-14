@@ -1,35 +1,29 @@
-FactoryGirl.sequence :email do |n|
-  "person-#{n}@example.edu"
-end
+FactoryGirl.define do 
 
-FactoryGirl.sequence :pubmed_id do |n|
-  21230106 + 1
-end	
+  factory :user do
+     firstname			"David"
+     lastname                      "Jay"
+     password		        "testingtesting123"
+     password_confirmation 	"testingtesting123"
+	 sequence(:email) {|n| "email#{n}@journallab.edu" }
+     confirmed_at 			Time.now
+  end
 
-FactoryGirl.define :user do |user|
-     user.firstname			"David"
-     user.lastname                      "Jay"
-     user.password		        "testingtesting123"
-     user.password_confirmation 	"testingtesting123"
-     user.email                         rand(100).to_s + "chick@email.edu"
-     user.confirmed_at 			Time.now
-#     user.save
-end
-
-FactoryGirl.define :paper do |paper|
-    paper.title     "The Smartest Science Ever"
-    paper.pubmed_id 21228906
-    paper.abstract  "Smart smart smartypants"
-    paper.pubdate Time.now - 1.week
+  factory :paper do
+    title     "The Smartest Science Ever"
+    sequence(:pubmed_id) {|n| 21230106 + n}
+    abstract  "Smart smart smartypants"
+    authors [{:firstname=>"Fowzia", :lastname=>"Ibrahim", :name=>"Ibrahim, Fowzia"}, {:firstname=>"Lisa", :lastname=>"Hamzah", :name=>"Hamzah, Lisa"}, {:firstname=>"Rachael", :lastname=>"Jones", :name=>"Jones, Rachael"}, {:firstname=>"Dorothea", :lastname=>"Nitsch", :name=>"Nitsch, Dorothea"}, {:firstname=>"Caroline", :lastname=>"Sabin", :name=>"Sabin, Caroline"}, {:firstname=>"Frank A", :lastname=>"Post", :name=>"Post, Frank A"}, {:firstname=>"", :lastname=>"", :name=>", "}]
+    pubdate Time.now - 1.week
     #paper.after_create { |p| FactoryGirl(:author, :papers => [p]) }
-end
+  end
 
-FactoryGirl.define :summarized_paper do |paper|
-    paper.title     "The Smartest Science Ever"
-    paper.pubmed_id "21228906"
-    paper.abstract  "Smart smart smartypants"
-    paper.save
-    paper.buildout([3,3,2,1])
+  factory :summarized_paper do
+    title     "The Smartest Science Ever"
+    pubmed_id "21228906"
+    abstract  "Smart smart smartypants"
+    save
+    buildout([3,3,2,1])
 #    paper.association :assertion
 #    paper.figs.each do |f|
 #      f.association   :assertion
@@ -38,42 +32,44 @@ FactoryGirl.define :summarized_paper do |paper|
 #      end 
 #    end
 
-end    
+  end    
 
-FactoryGirl.define :group do |group|
-    group.name  "Test Group"
-    group.desc  "This group is awesome"
-    group.category "lab"
-end
+  factory :group do
+    name  "Test Group"
+    desc  "This group is awesome"
+    category "lab"
+  end
 		
 
-FactoryGirl.define :comment do |comment|
-    comment.text "Lorem ipsum."
-    comment.association :user, :email => 'unique1@email.com'
-    comment.association :paper, :pubmed_id => 21228907, :title => "The Smartest Science Ever"
-    comment.association :assertion
-    comment.form "comment"
-end
+  factory :comment do
+    text "Lorem ipsum."
+    #association :user, :email => 'unique1@email.com'
+    association :paper, :pubmed_id => 21228907, :title => "The Smartest Science Ever"
+    association :assertion
+    form "comment"
+  end
 
-FactoryGirl.define :question do |comment|
-    comment.text "Lorem ipsum?"
-    comment.association :user, :email => 'unique2@email.com'
-    comment.association :paper, :pubmed_id => 21228908, :title => "The Second Smartest Science Ever"
-    comment.association :assertion
-end
+  factory :question do
+    text "Lorem ipsum?"
+    #association :user, :email => 'unique2@email.com'
+    association :paper, :pubmed_id => 21228908, :title => "The Second Smartest Science Ever"
+    association :assertion
+  end
 
 #FactoryGirl.sequence :pubmed do |n|
 #   rand(9999999999) + 100
 #end
  
-FactoryGirl.define :assertion do |assert|
-    assert.text "This is grande!"
-    assert.association :user
-    assert.association :paper
-end
+  factory :assertion do
+    text "This is grande!"
+    association :user
+    association :paper
+  end
 
-FactoryGirl.define :author do |author|
-    author.firstname "Robert"
-    author.lastname "Judson"
-    author.initial "RJ"
+  factory :author do 
+    firstname "Robert"
+    lastname "Judson"
+    initial "RJ"
+  end
+
 end

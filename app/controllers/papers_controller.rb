@@ -1,7 +1,6 @@
 class PapersController < ApplicationController
 before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 
-
   # GET /papers
   # GET /papers.xml
   def index
@@ -16,10 +15,10 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
   # GET /papers/1
   # GET /papers/1.xml
   def show
-    	@paper = Paper.find(params[:id])
+    @paper = Paper.find(params[:id])
 	@paper.visits.create(:user => current_user, :visit_type => 'paper') if signed_in?
 	if @paper.visits.empty?
-       		@paper.count_figs
+       	@paper.count_figs
 	end
 	@heatmap = @paper.heatmap
 	@heatmap_overview = @paper.heatmap_overview

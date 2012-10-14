@@ -13,10 +13,10 @@ describe PapersController do
 
   describe "paper functions" do
     before(:each) do
-      @paper = Factory(:paper)
+      @paper = create(:paper)
       @paper.lookup_info
-      @user = Factory(:user, :email => Factory.next(:email))
-      @group = Factory(:group)
+      @user = create(:user)
+      @group = create(:group)
       @group.add(@user)
       test_sign_in(@user)
     end
@@ -51,7 +51,7 @@ describe PapersController do
        end
 
        it "should not mark a conversion if the paper does not match" do
-          @paper2 = Factory(:paper, :pubmed_id => '7809879')
+          @paper2 = create(:paper, :pubmed_id => '7809879')
           get :show_from_mail, :id => @paper2.id, :m_id => @maillog.id
           @maillog.conversiona.should be nil
           response.should redirect_to(@paper2)

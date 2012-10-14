@@ -10,13 +10,13 @@ require 'spec_helper'
 describe AssertionsController do
 
    before(:each) do
-     @admin = Factory(:user, :email => "admin@example.com", :admin => true)
+     @admin = create(:user, :email => "admin@example.com", :admin => true)
      test_sign_in(@admin)
    end
      
 
   def mock_assertion(stubs={:text => "They don't call it a song of nice and fire."})
-    @mock_assertion ||= Factory(:assertion)
+    @mock_assertion ||= create(:assertion)
   end
 
   describe "GET new" do

@@ -4,9 +4,9 @@ describe GroupsController do
 
 	describe "removing users" do 
 		before(:each) do
-			@group = Factory(:group)
-			@lead = Factory(:user, :email => Factory.next(:email))
-			@newuser = Factory(:user, :email => Factory.next(:email))
+			@group = create(:group)
+			@lead = create(:user)
+			@newuser = create(:user)
 			@group.add(@lead)
 			@group.make_lead(@lead)
 			@group.add(@newuser)

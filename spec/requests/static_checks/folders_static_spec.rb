@@ -13,7 +13,7 @@ describe "/folders" do
   describe "when logged in" do
 
 	before :each do 
-		@user = Factory(:user, :email => Factory.next(:email))
+		@user = create(:user)
 		integration_sign_in(@user)
 	end
 
@@ -23,8 +23,8 @@ describe "/folders" do
 	end
 	
 	it "should show a folders page with papers in it" do 		
-		@paper1 = Factory(:paper)
-		@paper2 = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
+		@paper1 = create(:paper)
+		@paper2 = create(:paper)
 		@folder = @user.folders.first
 		@note1 = @folder.notes.create(:about => @paper1, :user => @user)
 		@note2 = @folder.notes.create(:about => @paper2, :user => @user) 

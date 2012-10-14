@@ -6,7 +6,7 @@ describe UsersController do
  describe "unsubscribe" do
 
    before(:each) do
-      	@user = Factory(:user)
+      	@user = create(:user)
 	test_sign_in(@user)
    end
 
@@ -29,8 +29,8 @@ describe UsersController do
  describe "DELETE 'destroy'" do
 
     before(:each) do
-      @user = Factory(:user)
-      @user2 = Factory(:user, :email => Factory.next(:email))
+      @user = create(:user)
+      @user2 = create(:user)
     end
 
     describe "as a non-signed-in user" do
@@ -51,7 +51,7 @@ describe UsersController do
     describe "as an admin user" do
 
       before(:each) do
-        @admin = Factory(:user, :email => "admin@example.com", :admin => true)
+        @admin = create(:user, :email => "admin@example.com", :admin => true)
         test_sign_in(@admin)
       end
 

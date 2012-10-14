@@ -5,8 +5,8 @@ describe NotesController do
   describe "GET 'create' and DELETE 'destroy'" do
 
 	before(:each) do
-		@paper = Factory(:paper)
-		@user = Factory(:user, :email => Factory.next(:email))
+		@paper = create(:paper)
+		@user = create(:user)
 		@folder = @user.folders.first
 		test_sign_in(@user)
 	end

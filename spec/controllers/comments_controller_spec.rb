@@ -7,13 +7,13 @@ describe CommentsController do
   describe "create" do
 
     before(:each) do
-      @paper = Factory(:paper)
+      @paper = create(:paper)
       @paper.buildout([3,3,2,2])
       @paper.heatmap
-      @assertion = Factory(:assertion, :paper => @paper)
-      @user1 = Factory(:user, :email => Factory.next(:email))   
-      @user2 = Factory(:user, :email => Factory.next(:email))
-      @group = Factory(:group)
+      @assertion = create(:assertion, :paper => @paper)
+      @user1 = create(:user)   
+      @user2 = create(:user)
+      @group = create(:group)
       @group.add(@user1)
       @group.add(@user2)
       @attr = {:comment => {:text => "Lorem ipsum underpants", :form => "comment", :reply_to => nil, :assertion_id => @assertion.id, :owner_id => @paper.id, :owner_type => @paper.class.to_s}, :mode => '2', :owner_id => @paper.id, :owner_class => @paper.class.to_s}
@@ -33,7 +33,6 @@ describe CommentsController do
       #@comment.filters.first.state.should == 2
       @comment.text.should == "Lorem ipsum underpants"
       @comment.form.should == "comment"
-      @comment.assertion.should == @assertion
       @comment.paper.should == @paper
       @comment.user == @user1
     end
@@ -56,7 +55,7 @@ describe CommentsController do
 
 
     it "should trigger an e-mail to multiple users on a thread" do
-      @user3 = Factory(:user, :email => Factory.next(:email))   
+      @user3 = create(:user)   
       get :create, @attr
       @comment = Comment.last
       test_sign_out @user1
@@ -71,7 +70,7 @@ describe CommentsController do
     end
 
     it "should not send e-mail to someone who is unsubscribed" do
-      @user3 = Factory(:user, :email => Factory.next(:email))   
+      @user3 = create(:user)   
       @user1.unsubscribe
       @user2.unsubscribe
       @user3.unsubscribe

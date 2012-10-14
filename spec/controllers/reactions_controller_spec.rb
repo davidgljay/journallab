@@ -5,10 +5,10 @@ describe ReactionsController do
 
   describe "GET 'create'" do
 	before(:each) do
-		@paper = Factory(:paper)
+		@paper = create(:paper)
 		@paper.build_figs(3)
 		@fig = @paper.figs.first
-		@user = Factory(:user, :email => Factory.next(:email))
+		@user = create(:user)
 		test_sign_in(@user)
 	end
 

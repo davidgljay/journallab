@@ -83,9 +83,9 @@ before_filter :admin_user,   :only => [:dashboard]
     require 'groups_helper'
     @title = "Dashboard"
 
-    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ? AND id <> 1', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ? AND id <> 1', Time.now - 1.month))],["Users", graph_by_day(User.where('created_at > ? AND id <> 1', Time.now - 1.month))],["Custom Feeds", graph_by_day(Follow.where('created_at > ? AND id <> 1', Time.now - 1.month))]]
+    @vanity = [["Comments",graph_by_day(Comment.where('created_at > ? AND id <> 1 AND id <> 2 AND id <> 85', Time.now - 1.month))], ["Questions",graph_by_day(Question.where('created_at > ?', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ? AND id <> 1 AND id <> 2 AND id <> 85', Time.now - 1.month))],["Users", graph_by_day(User.where('created_at > ? AND id <> 1', Time.now - 1.month))],["Custom Feeds", graph_by_day(Follow.where('created_at > ? AND id <> 1 AND id <> 2 AND id <> 85', Time.now - 1.month))]]
 
-    @views = [["Papers", graph_by_day(Visit.where("created_at > ? AND visit_type = 'paper' AND id <> 1", Time.now - 1.month))], ["Comments", graph_by_day(Visit.where("created_at > ? AND visit_type = 'comment' AND id <> 1", Time.now - 1.month))], ["Feeds", graph_by_day(Visit.where("created_at > ? AND visit_type = 'feed' AND id <> 1", Time.now - 1.month))]]
+    @views = [["Papers", graph_by_day(Visit.where("created_at > ? AND visit_type = 'paper' AND id <> 1 AND id <> 2 AND id <> 85", Time.now - 1.month))], ["Comments", graph_by_day(Visit.where("created_at > ? AND visit_type = 'comment' AND id <> 1 AND id <> 2 AND id <> 85", Time.now - 1.month))], ["Feeds", graph_by_day(Visit.where("created_at > ? AND visit_type = 'feed' AND id <> 1 AND id <> 2 AND id <> 85", Time.now - 1.month))]]
 
 
     @nods_per_discussion = histogram(Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.votes.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.votes.count})
@@ -94,6 +94,8 @@ before_filter :admin_user,   :only => [:dashboard]
     @reply_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count}.inject{|sum, n| sum + n}, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|c| c.comments.count + c.questions.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).count])
     @action_pageview__ratio = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('created_at > ?', Time.now - 1.month).count])
     @total_users = [["Users",graph_total_by_day(User.where('created_at > ?', Time.now - 1.year))]]
+    @active_users = User.all.select{|u| u.visits.count != 0}.select{|u| u.created_at.day != u.visits[-1].created_at.day && u.visits[-1].created_at > Time.now - 1.week}.count
+	
 
   end
 

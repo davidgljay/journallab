@@ -15,6 +15,7 @@ describe "Initial Flow:" do
 		fill_in "user_password_confirmation", :with => "sampling"
 		click_button "Sign up"
 		page.should have_content('Sign Out')
+		page.should have_button('lions')
 	end
 	
 	it "sends back an error if no temp follows are entered" do

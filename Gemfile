@@ -6,7 +6,6 @@ gem 'rake', '0.9.2.2'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
 
 gem 'json'
 
@@ -33,6 +32,7 @@ end
   gem 'delayed_job_active_record'
   gem 'daemons'
   gem 'pg'
+  gem 'heroku'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby'

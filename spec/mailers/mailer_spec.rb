@@ -3,9 +3,9 @@ require "spec_helper"
 describe Mailer do
   describe "comment response" do
     before(:each) do
-      @user1 = Factory(:user, :email => Factory.next(:email))
-      @user2 = Factory(:user, :email => Factory.next(:email))
-      @comment = Factory(:comment)
+      @user1 = create(:user)
+      @user2 = create(:user)
+      @comment = create(:comment)
       @comment.user = @user1
       @reply = @comment.comments.build(:text => "Stampi", :form => "reply")
       @reply.user = @user2
@@ -44,9 +44,9 @@ describe Mailer do
 
   describe "question response" do
     before(:each) do
-      @user1 = Factory(:user, :email => Factory.next(:email))
-      @user2 = Factory(:user, :email => Factory.next(:email))
-      @question = Factory(:question, :user_id => @user1.id)
+      @user1 = create(:user)
+      @user2 = create(:user)
+      @question = create(:question, :user_id => @user1.id)
       @qcomment = @question.comments.build(:text => "Stampi", :form => "reply")
       @answer = @question.comments.build(:text => "Stampi", :form => "reply")
       @qcomment.user = @user2
@@ -73,9 +73,9 @@ describe Mailer do
 
   describe "share notification" do 
     before(:each) do      
-      @user1 = Factory(:user, :email => Factory.next(:email))
-      @paper = Factory(:paper)
-      @group = Factory(:group)
+      @user1 = create(:user)
+      @paper = create(:paper)
+      @group = create(:group)
       @share = @paper.shares.create!(:user => @user1, :get_paper => @paper, :text => 'Check this out!')
       @email = Mailer.share_notification(@share, @user1)
     end
@@ -99,9 +99,9 @@ describe Mailer do
 
   describe "group add notification" do
     before(:each) do
-	@user1 = Factory(:user, :email => Factory.next(:email))
-	@user2 = Factory(:user, :email => Factory.next(:email))
-	@group = Factory(:group)
+	@user1 = create(:user)
+	@user2 = create(:user)
+	@group = create(:group)
 	@group.add(@user1)
 	@group.make_lead(@user1)
 	@email = Mailer.group_add_notification(@group, @user1, @user2)
@@ -114,7 +114,7 @@ describe Mailer do
     end
 
     it "should deliver an e-mail to the leader of the group" do
-	@email.to.to_s.should == @user1.email
+	@email.to.should == [@user1.email]
 	
     end
 
@@ -134,13 +134,12 @@ describe Mailer do
 
   describe "share digest" do
 	it "should send a share digest" do
-		@user1 = Factory(:user, :email => Factory.next(:email))
-		@user2 = Factory(:user, :email => Factory.next(:email))
-		@group = Factory(:group)
+		@user1 = create(:user)
+		@user2 = create(:user)
+		@group = create(:group)
 		@group.add(@user1)
 		@group.add(@user2)
-		@paper = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
-		@paper.buildout([2,2,2])
+		@paper = create(:paper)
 		@fig = @paper.figs.first
 		@share1 = @paper.shares.create!(:user => @user1, :group => @group, :text => "Check out this paper.")
 		@share2 = @fig.shares.create!(:user => @user2, :group => @group, :text => "Check out this figure.")

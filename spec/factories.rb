@@ -15,7 +15,6 @@ FactoryGirl.define do
     abstract  "Smart smart smartypants"
     authors [{:firstname=>"Fowzia", :lastname=>"Ibrahim", :name=>"Ibrahim, Fowzia"}, {:firstname=>"Lisa", :lastname=>"Hamzah", :name=>"Hamzah, Lisa"}, {:firstname=>"Rachael", :lastname=>"Jones", :name=>"Jones, Rachael"}, {:firstname=>"Dorothea", :lastname=>"Nitsch", :name=>"Nitsch, Dorothea"}, {:firstname=>"Caroline", :lastname=>"Sabin", :name=>"Sabin, Caroline"}, {:firstname=>"Frank A", :lastname=>"Post", :name=>"Post, Frank A"}, {:firstname=>"", :lastname=>"", :name=>", "}]
     pubdate Time.now - 1.week
-    #paper.after_create { |p| FactoryGirl(:author, :papers => [p]) }
   end
 
   factory :summarized_paper do
@@ -24,14 +23,6 @@ FactoryGirl.define do
     abstract  "Smart smart smartypants"
     save
     buildout([3,3,2,1])
-#    paper.association :assertion
-#    paper.figs.each do |f|
-#      f.association   :assertion
-#      f.figsections.each do |s|
-#         s.association :assertion
-#      end 
-#    end
-
   end    
 
   factory :group do
@@ -43,7 +34,7 @@ FactoryGirl.define do
 
   factory :comment do
     text "Lorem ipsum."
-    #association :user, :email => 'unique1@email.com'
+    association :user
     association :paper, :pubmed_id => 21228907, :title => "The Smartest Science Ever"
     association :assertion
     form "comment"
@@ -56,9 +47,6 @@ FactoryGirl.define do
     association :assertion
   end
 
-#FactoryGirl.sequence :pubmed do |n|
-#   rand(9999999999) + 100
-#end
  
   factory :assertion do
     text "This is grande!"

@@ -88,7 +88,7 @@ end
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
-      @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search, 10)).uniq
+      @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search, 150)).uniq
       @history_results = []
       if signed_in?
 		@history_results = (@search_results & current_user.visited_papers.map{|p| p.to_hash}).first(20)

@@ -96,5 +96,16 @@ describe "build figs" do
 	end	
 end
 
+describe "pubmed search count" do
+	it "should see how many papers there are for a given search term on pubmed" do
+		Paper.new.pubmed_search_count('zombies').should > 20
+	end
+	
+	it "should see how many people there are for a given search term on pubmed since a particular date" do
+		@num = Paper.new.pubmed_search_count('zombies', Time.now - 1.year)
+		@num.should > 0
+		@num.should < 20
+	end
+end
 
 end

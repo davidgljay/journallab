@@ -41,7 +41,7 @@ end
 def set_newcount
 	if latest_search
 		lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at 
-		self.newcount = latest_search.select{|p| p[1] > lastvisit}.count
+		self.newcount = Paper.new.pubmed_search_count(search_term, lastvisit)
 		self.newcount
 	else
 		self.newcount = Paper.new.pubmed_search_count(search_term)

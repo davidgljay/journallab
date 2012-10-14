@@ -61,7 +61,7 @@ def search_pubmed(search, numresults = 20)
       	data = Nokogiri::XML(open(url2)) 
       	search_results = []
 		newpapers = []
-      	data.xpath('//PubmedArticle').each do |article|
+      data.xpath('//PubmedArticle').each do |article|
         	pid = article.xpath('MedlineCitation/PMID').text
         	paper = Paper.find_by_pubmed_id(pid)
         	if paper.nil?
@@ -110,11 +110,15 @@ def search_pubmed(search, numresults = 20)
 	search_results
   end
 
-def pubmed_search_count(search)
-	cleansearch = search.gsub(/[.]/, "+").gsub(/[^0-9A-Za-z'" ]/, '+').gsub(/[ ]/, "%20")
-      	#Get a list of pubmed IDs for the search terms
-      	url1 = 'http://eutils.ncbi.nlm.nih.gov/gquery?term=' + cleansearch + '&retmode=xml'
-      	Nokogiri::XML(open(url1)).xpath('//ResultItem/Count').first.text.to_i
+def pubmed_search_count(search, date = nil)
+	cleansearch = Rack::Utils.escape(search)
+     #Get number of pubmed search results for the search terms
+	if !date.nil?
+		url1 = 'http://eutils.ncbi.nlm.nih.gov/gquery?term=' + cleansearch + '%20AND%20' + date.strftime('%Y%2f%m%2f%2d') + '%3A3000%5BPublication%20Date%5D&retmode=xml'
+	else
+		url1 = 'http://eutils.ncbi.nlm.nih.gov/gquery?term=' + cleansearch + '&retmode=xml'
+	end
+   	Nokogiri::XML(open(url1)).xpath('//ResultItem/Count').first.text.to_i
 end
 
 #def set_interest

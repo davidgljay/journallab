@@ -132,7 +132,20 @@ def set_interest
 	self.save
 	self.interest
 end
-	
+
+def set_all_interest
+	follows = Follow.where('user_id IS NOT NULL').map{|f| f.search_term}.compact
+	Paper.all.each do |p|
+		count = 0
+		follows.each do |w|
+			if (p.title.to_s + ' ' + p.abstract.to_s).downcase.include?(w.downcase)
+				count += 1	
+			end
+		end
+		p.interest = count
+		p.save
+	end
+end
 
 def search_activity(search_term) 
 	cleansearch = search_term.gsub(/[']/, "''")

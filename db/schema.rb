@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002172017) do
+ActiveRecord::Schema.define(:version => 20121015170209) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -235,6 +236,7 @@ ActiveRecord::Schema.define(:version => 20121002172017) do
     t.datetime "latest_activity"
     t.text     "citation"
     t.text     "authors"
+    t.integer  "interest"
   end
 
   create_table "questions", :force => true do |t|

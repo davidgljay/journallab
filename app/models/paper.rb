@@ -121,16 +121,16 @@ def pubmed_search_count(search, date = nil)
    	Nokogiri::XML(open(url1)).xpath('//ResultItem/Count').first.text.to_i
 end
 
-#def set_interest
-def interest
+def set_interest
 	count = 0
 	Follow.where('user_id IS NOT NULL').map{|f| f.search_term}.compact.each do |w|
-		if (self.title.to_s + ' ' + self.abstract.to_s).include?(w)
+		if (self.title.to_s + ' ' + self.abstract.to_s).downcase.include?(w.downcase)
 			count += 1	
 		end
 	end
-	count
-	#self.interest = count
+	self.interest = count
+	self.save
+	self.interest
 end
 	
 

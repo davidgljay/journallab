@@ -48,8 +48,10 @@ def to_hash
 	{:pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at}
 end
 
+# àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸåÅæÆœŒçÇðÐøØ¿¡ß
+
 def search_pubmed(search, numresults = 20)
-	cleansearch = search.gsub(/[.]/, "+").gsub(/[^0-9A-Za-z'" ]/, '+').gsub(/[ ]/, "%20")
+	cleansearch = search.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').gsub(/[.]/, "+").gsub(/[^0-9A-Za-z'" ]/, '+').gsub(/[ ]/, "%20")
 
 
 # Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")

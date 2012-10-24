@@ -1,10 +1,19 @@
 <div style = "float: left; width:51px; height:40px;"></div>
 <div id="paperMenu">
 <% if @paper.pubmed_id %>
-	<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav', :target => '_blank') do %><%= image_tag 'pdf.png'%><i class = 'icon-download' style = "position: relative; bottom: 5px;"></i><% end %>
+	<div class="dropdown inline">
+		<div class = "inline"></div> 
+		<% if signed_in? %>
+				<%= link_to '/folders/add/' + @paper.pubmed_id.to_s, :id => "folder_list_" + @paper.pubmed_id.to_s, :class => "dropdown-toggle", :remote => true do %>Add to Folder <div class = "inline"><icon class = 'icon-folder-open'></icon></div><% end %>
+			<% else %>
+				<font rel="tooltip" title="With an account you will be able to easily add papers to folders for later reading." class = "clickme"><div class = 'linklike'>Add to Folder  <div class = "inline"><icon class = 'icon-folder-open'></icon></div></div></font>
+			<% end %>
+	</div>
+	<%= link_to("http://pubget.com/paper/" + @paper.pubmed_id.to_s, :class => 'paperNav', :target => '_blank') do %><%= image_tag 'pdf.png'%><icon class = 'icon-download' style = "position: relative; bottom: 5px;"></icon><% end %>
 	<% elsif @paper.doi %>
 		<%= link_to("View on " + @paper.journal, "http://dx.doi.org/" + @paper.doi.to_s, :class => 'paperNav') %>
 	<% end %>
+
 	<% if user_signed_in? || false %>
 		<%= render '/shares/share_button' unless @groups.empty? %> 
         <% end %>

@@ -9,7 +9,7 @@
     </div>
       <div class="latest_assertion"><%= assertion.text %></div> 
       <p class="method"><%= assertion.method_text %></p>
-      <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at, :anonymous => true, :checkanon => true %> 
+      <%= render 'shared/user_info', :user => assertion.user, :date => assertion.created_at, :anonymous => false, :checkanon => true %> 
 <br>
 </div>
 <% end %>

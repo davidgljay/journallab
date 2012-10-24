@@ -45,7 +45,7 @@ def inspect
 end
 
 def to_hash
-	{:pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity, :authors => authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at}
+	{:pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at}
 end
 
 def search_pubmed(search, numresults = 20)
@@ -114,11 +114,14 @@ def pubmed_search_count(search, date = nil)
 	cleansearch = Rack::Utils.escape(search)
      #Get number of pubmed search results for the search terms
 	if !date.nil?
-		url1 = 'http://eutils.ncbi.nlm.nih.gov/gquery?term=' + cleansearch + '%20AND%20' + date.strftime('%Y%2f%m%2f%2d') + '%3A3000%5BPublication%20Date%5D&retmode=xml'
+		url1 = 'http://eutils.ncbi.nlm.nih.gov/gquery?term=' + cleansearch + '%20AND%20' + (date).strftime('%Y%2f%m%2f%2d') + '%3A3000%5BPublication%20Date%5D&retmode=xml'
+		# Pubmed returns a nonzero number of results even for dates in the future. This is a fix, set the count to zero if the date is today.
+		count = date.to_date >= Time.now.to_date ? 0 : nil
 	else
 		url1 = 'http://eutils.ncbi.nlm.nih.gov/gquery?term=' + cleansearch + '&retmode=xml'
 	end
-   	Nokogiri::XML(open(url1)).xpath('//ResultItem/Count').first.text.to_i
+   	count ||= Nokogiri::XML(open(url1)).xpath('//ResultItem/Count').first.text.to_i
+
 end
 
 def set_interest

@@ -49,7 +49,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		else
 			@feed = @follow.feed
 		end
-		@follow.delay.save
+		@follow.save
 		@nav_language = @follow.name
 		@groups = current_user.groups if signed_in?
 	elsif params[:switchto].first(5) == "group"

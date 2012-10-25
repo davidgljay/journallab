@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
 	has_many :reactions
 	has_many :discussions
     has_many :visits, :foreign_key => "user_id"
-    has_many :visited_papers, :through => :visits, :source => :paper
     has_many :memberships, :foreign_key => "user_id"
     has_many :groups, :through => :memberships, :source => :group
 	has_many :sumreqs
@@ -114,6 +113,10 @@ class User < ActiveRecord::Base
    def visited?(paper)
        visited_papers.include?(paper)
    end
+   
+   def visited_papers
+		visits.select{|v| v.about_type == 'Paper'}.map{|v| v.about}
+	end
 
 
 #Create a vote command and a command to check for a vote. This is way klunkier than it needs to be, but it works.

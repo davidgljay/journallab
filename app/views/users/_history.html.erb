@@ -4,8 +4,11 @@
   <%= link_to paper.title, paper %>
   <div class="sr_info2">
   <%= paper.journal %> | <%= paper.pubdate.year %> 
-  <% if paper.first_last_authors %>
-		| <div class = "inline grey"> First Author: <%= link_to paper.first_last_authors.first[:name], '/lookup/' + paper.first_last_authors.first[:firstname] + '+' + paper.first_last_authors.first[:lastname] %> | Last Author: <%= link_to  paper.first_last_authors.last[:name], '/lookup/' + paper.first_last_authors.last[:firstname] + '+' + paper.first_last_authors.last[:lastname] %></div>
+  <% if paper.authors.count > 0 %>
+		| <div class = "inline grey"> First Author: <%= link_to paper.authors.first[:name], '/lookup/' + paper.authors.first[:firstname] + '+' + paper.authors.first[:lastname] %> 
+		<% if paper.authors.count > 1 %>
+			| Last Author: <%= link_to  paper.authors.last[:name], '/lookup/' + paper.authors.last[:firstname] + '+' + paper.authors.last[:lastname] %></div>
+		<% end %>
   <% end %>
   </div>
   </div>

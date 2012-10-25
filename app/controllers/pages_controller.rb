@@ -17,6 +17,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		@follows  = current_user.follows.all
 		@follow = @follows.first
 		@feed = @follow.feed if @follow
+		@feed = Paper.new.search_pubmed(@follow.search_term) if @follow && @feed.empty?
 		@newfollow = current_user.follows.new
 		@welcome_screen = false
 	end
@@ -44,7 +45,7 @@ before_filter :admin_user,   :only => [:dashboard]
 		@switchto = params[:switchto]
 		@follow = Follow.find(params[:switchto][7..-1].to_i)
 		@follow.visits.create(:user => current_user, :visit_type => 'feed') if signed_in?
-		if @follow.latest_search.nil? 
+		if @follow.latest_search.nil? || @follow.latest_search.empty?
 			@feed = Paper.new.search_pubmed(@follow.search_term)
 		else
 			@feed = @follow.feed

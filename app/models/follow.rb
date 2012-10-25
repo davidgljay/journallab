@@ -38,11 +38,22 @@ def update_feed
 	self.latest_search
 end
 
+def update_all_feeds
+	Follow.all.select{|f| f.user.nil? }.each{|f| f.update_feed}
+end
+
 def set_newcount
 	if latest_search
 		lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at 
-		self.newcount = Paper.new.pubmed_search_count(search_term, lastvisit)
-		self.newcount
+		newcount = Paper.new.pubmed_search_count(search_term, lastvisit)
+		if newcount < 40 #Pubmed search results gives an inaccurate number of search results, when the number is low count the results manually in JLab (this is inconvenient for large #s.
+			newcount = latest_search.select{|p| p[1] > lastvisit}.count
+		end
+		# Sometimes there are hundreds of papers posted today. If someone clicked on a feed today, leave it as zero until tomorrow. This is a temporary fix until we can get Pubmed to give us more accurate search #s.
+		if lastvisit.to_date == Time.now.to_date
+			newcount = 0 
+		end
+		self.newcount = newcount
 	else
 		self.newcount = Paper.new.pubmed_search_count(search_term)
 	end

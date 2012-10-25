@@ -1,10 +1,15 @@
 <div id= <%= @follow.name.downcase + "Feed" %>>
+	<% if @feed.empty? %>
+		<div style = "margin-left:20px;">
+			<h3>No search results on pubmed, are you sure that you entered your search correctly?</h3>
+		</div>
+	<% end %>
 	<% @feed.each do |paper| %>
 	   <div class = "search_results">
 	   <%= render 'papers/list', :paper => paper %>
 	  </div>
 	<% end %>
 	<div style = "margin: 10px; margin-left: 25px;">
-		<%= link_to "See more", "/lookup/" + @follow.name.downcase + "?page=3" %>
+		<%= link_to "See more", "/lookup/" + @follow.name.downcase + "?page=3" if @feed.count == 40 %>
 	</div>
 </div>

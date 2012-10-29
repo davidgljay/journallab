@@ -6,10 +6,6 @@ require 'spec_helper'
 
 describe PapersController do
 
-  def mock_paper(stubs={})
-    @mock_paper ||= mock_model(Paper, stubs).as_null_object
-  end
-
 
   describe "paper functions" do
     before(:each) do
@@ -33,6 +29,8 @@ describe PapersController do
     describe "pubmed id lookup" do
    
       it "should look up an existing paper" do
+		get :pmid, :pmid => @paper.pubmed_id.to_s
+		response.should redirect_to(@paper)
         get :lookup, :search => @paper.pubmed_id.to_s
         response.should redirect_to(@paper)
       end

@@ -13,7 +13,7 @@ describe ReactionsController do
 	end
 
 	it "should be successful and flag @newreaction as true" do
-		get 'create', :about_id => @paper.id.to_s, :about_type => 'Fig', :reaction => {:user_id => @user, :name => "Solid Science"}
+		get 'create', :about_id => @fig.id.to_s, :about_type => 'Fig', :reaction => {:user_id => @user, :name => "Solid Science"}
 		assigns(:newreaction).should == true	
        end
 	

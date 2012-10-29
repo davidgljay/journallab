@@ -1,7 +1,6 @@
 class PapersController < ApplicationController
 before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
 
-
   # GET /papers
   # GET /papers.xml
   def index
@@ -16,17 +15,15 @@ before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
   # GET /papers/1
   # GET /papers/1.xml
   def show
-    	@paper = Paper.find(params[:id])
+    @paper = Paper.find(params[:id])
 	@paper.visits.create(:user => current_user, :visit_type => 'paper') if signed_in?
-	if @paper.authors.empty? || @paper.authors.nil?
-       		@paper.extract_authors
-       		@paper.count_figs
+	if @paper.visits.empty?
+       	@paper.count_figs
 	end
 	@heatmap = @paper.heatmap
 	@heatmap_overview = @paper.heatmap_overview
 	@reaction_map = @paper.reaction_map
-	#@numvisits = @paper.visits.map{|v| v.user}.uniq.count
-	@interest = @paper.interest
+	@interest = @paper.set_interest
 	#@blogs = @paper.check_blogs
 	if signed_in?
 		@groups = current_user.groups
@@ -78,6 +75,16 @@ end
      redirect_to(@paper)
   end
 
+#Look up a paper by pubmed ID. Creating a separate URL for this for easy external links.
+  def pmid
+	  pmid = params[:pmid].strip
+      @paper = Paper.find_or_create_by_pubmed_id(pmid)
+      if @paper.title.nil?
+		@paper.lookup_info
+      end
+	  redirect_to @paper
+  end
+
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
   def lookup
     search = params[:search].strip
@@ -87,18 +94,18 @@ end
     if search.to_i.to_s == search
       @paper = Paper.find_or_create_by_pubmed_id(search)
       if @paper.title.nil?
-	@paper.lookup_info)
+		@paper.lookup_info
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
-      @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search)).uniq
+      @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search, 150)).uniq
       @history_results = []
       if signed_in?
-		@history_results = @search_results & current_user.visited_papers.map{|p| p.to_hash}
+		@history_results = (@search_results & current_user.visited_papers.map{|p| p.to_hash}).first(20)
 	      	@search_results = @search_results - @history_results
       		@search_results.select{|p| p[:latest_activity].nil?}.each {|p| p[:latest_activity] ||= Time.now - 1.month}
       end
-      @search_results.sort!{|x,y| y[:latest_activity] <=> x[:latest_activity]}
+      @search_results = Kaminari.paginate_array(@search_results.sort!{|x,y| y[:latest_activity] <=> x[:latest_activity]}).page(params[:page]).per(20)
     end
     if @paper
         redirect_to @paper

@@ -27,7 +27,7 @@ describe "Reactions" do
 	find('#paper' + @paper.id.to_s).fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
 	#click_box 'anonymous'
        	find('#paper' + @paper.id.to_s).click_button 'Submit'
-		wait_until { page.find('li.replylink').visible? }
+		sleep(1)
        	find('#paper' + @paper.id.to_s).find('li.replylink').click 
 	find('#paper' + @paper.id.to_s).fill_in 'comment_text', :with => "That's so smart I'm replying."
        	find('#paper' + @paper.id.to_s).find('form.new_comment').click_button 'Submit' 
@@ -49,6 +49,7 @@ describe "Reactions" do
 	#page.should have_content('Timey Wimey')
 	find('#paper' + @paper.id.to_s).fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
        	find('#paper' + @paper.id.to_s).click_button 'Submit'
+		sleep(1)
        	find('#paper' + @paper.id.to_s).find('li.replylink').click 
 	find('#paper' + @paper.id.to_s).fill_in 'comment_text', :with => "That's so smart I'm replying."
        	find('#paper' + @paper.id.to_s).find('form.new_comment').click_button 'Submit' 
@@ -69,7 +70,7 @@ describe "Reactions" do
 	find('#fig' + @fig.id.to_s).fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
 	#check_box 'anonymous'
         find('#fig' + @fig.id.to_s).click_button 'Submit'
-        wait_until { page.find('li.replylink').visible? }
+        sleep(1)
        	find('li.replylink').click 
 	find('#fig' + @fig.id.to_s).fill_in 'comment_text', :with => "That's so smart I'm replying."
        	find('#fig' + @fig.id.to_s).find('form.new_comment').click_button 'Submit' 
@@ -91,7 +92,7 @@ describe "Reactions" do
 	find('#figsection' + @figsection.id.to_s).fill_in 'comment_text', :with => "I have an incredibly intelligent thing to say."
 	#check_box 'anonymous'
        	find('#figsection' + @figsection.id.to_s).click_button 'Submit'
-       	wait_until { page.find('li.replylink').visible? }
+       	sleep(1)
        	find('#figsection' + @figsection.id.to_s).find('li.replylink').click 
 	find('#figsection' + @figsection.id.to_s).fill_in 'comment_text', :with => "That's so smart I'm replying."
        	find('form.new_comment').click_button 'Submit' 

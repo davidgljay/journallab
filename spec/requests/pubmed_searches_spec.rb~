@@ -1,10 +1,11 @@
 require 'spec_helper'
+DatabaseCleaner.strategy = :deletion
 
 describe "Searches:" do
 
 #Sign in first
   before(:each) do
-     @user = Factory(:user, :email => Factory.next(:email))
+     @user = create(:user)
       visit '/users/sign_in'
       fill_in "user_email", :with => @user.email
       fill_in "user_password", :with => @user.password
@@ -18,19 +19,28 @@ describe "Searches:" do
       visit root_path
       fill_in "search", :with => "21228906"
       click_button 'GO'
-      within('body') { page.should have_content('Download') }
+      within('body') { page.should have_selector('.icon-download') }
     end
   end
 
   describe "entering text into the homepage" do
     it "loads search results" do
      visit root_path
-     fill_in "search", :with => "judson, robert"
+     fill_in "search", :with => "zombies"
      click_button 'GO'
      within('body') { page.should have_content('Search Results') }
-     click_link 'Multiple targets of miR-302 and miR-372 promote reprogramming of human fibroblasts to induced pluripotent stem cells.'
-     page.should have_content('Judson')
+     page.should have_content('zombies')
    end
   end
 
+  describe "home feeds" do
+	it "should load home feeds and switch between them", :js => true do 
+		@follow1 = @user.follows.create(:name => 'lions', :search_term => 'lions')
+		@follow2 = @user.follows.create(:name => 'lions', :search_term => 'lions')
+		visit root_path
+		page.should have_content('lions')
+		click_button'tigers'
+		page.should have_content('tigers')
+	end
+  end
 end

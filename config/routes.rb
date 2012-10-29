@@ -51,6 +51,7 @@ Redcell::Application.routes.draw do
    match '/papers(/:id)/m(/:m_id)', :to => 'papers#show_from_mail'
    match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
    match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
+   match '/pmid(/:pmid)', 			:to => 'papers#pmid'
 
   resources :follows
    match "/welcome",		:to => 'pages#welcome'

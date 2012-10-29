@@ -24,7 +24,7 @@ describe "Home feeds" do
 	page.should have_content('tigers')
 	click_button 'peanutjuice'
 	sleep(1)
-	page.should have_content('No search results on pubmed')
+	page.should have_conent('No search results on pubmed')
 	click_button '+'
 	fill_in 'follow_search_term', :with => 'bears'
 	click_button 'submit'

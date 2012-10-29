@@ -75,6 +75,16 @@ end
      redirect_to(@paper)
   end
 
+#Look up a paper by pubmed ID. Creating a separate URL for this for easy external links.
+  def pmid
+	  pmid = params[:pmid].to_i
+      @paper = Paper.find_or_create_by_pubmed_id(pmid)
+      if @paper.title.nil?
+		@paper.lookup_info
+      end
+	  redirect_to @paper
+  end
+
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
   def lookup
     search = params[:search].strip
@@ -84,7 +94,7 @@ end
     if search.to_i.to_s == search
       @paper = Paper.find_or_create_by_pubmed_id(search)
       if @paper.title.nil?
-	@paper.lookup_info
+		@paper.lookup_info
       end
     # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search

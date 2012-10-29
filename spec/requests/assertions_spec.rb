@@ -27,6 +27,7 @@ describe "Assertions" do
 	find('#paper' + @paper.id.to_s).find('p.method').click
 	find('#paper' + @paper.id.to_s).fill_in "assertion_method_text", :with => "Aloe juice"
 	click_button "Submit"
+	sleep(1)
 	find('div.latest_assertion').click
 	fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#paper' + @paper.id.to_s).click_button "Submit"
@@ -52,7 +53,7 @@ end
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
 	find('#fig' + @fig.id.to_s ).find('p.method').click
-	wait_until { page.find('#assertion_method_text').visible? }
+	sleep(1)
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
 	within('tr#fig' + @fig.id.to_s ) { page.should have_content('Lorem ipsum cupcakes.') }
@@ -69,7 +70,7 @@ end
 	find('#figsection' + @figsection.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#figsection' + @figsection.id.to_s ).click_button "Submit"
 	find('#figsection' + @figsection.id.to_s ).find('p.method').click
-	wait_until { page.find('#assertion_method_text').visible? }
+	sleep(2)
 	find('#figsection' + @figsection.id.to_s ).fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#figsection' + @figsection.id.to_s ).click_button "Submit"
 	within('tr#figsection' + @figsection.id.to_s ) { page.should have_content('Lorem ipsum cupcakes.') }
@@ -111,7 +112,7 @@ end
 	fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	click_button "Submit"
 	find('p.method').click
-	wait_until { page.find('#assertion_method_text').visible? }
+	sleep(1)
 	fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#paper' + @paper.id.to_s ).click_button "Submit"
 	within('body') { page.should have_content('Lorem ipsum cupcakes.') }
@@ -123,7 +124,7 @@ end
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
 	find('#fig' + @fig.id.to_s ).find('p.method').click
-	wait_until { page.find('#assertion_method_text').visible? }
+	sleep(1)
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
 	within('tr#fig' + @fig.id.to_s ) { page.should have_content('Lorem ipsum cupcakes.') }
@@ -138,6 +139,7 @@ end
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_text", :with => "Lorem ipsum cupcakes."
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
 	find('#fig' + @fig.id.to_s ).find('p.method').click
+    sleep(2)
 	find('#fig' + @fig.id.to_s ).fill_in "assertion_method_text", :with => "Aloe juice"
 	find('#fig' + @fig.id.to_s ).click_button "Submit"
 	within('tr#fig' + @fig.id.to_s ) { page.should have_content('Lorem ipsum cupcakes.') }

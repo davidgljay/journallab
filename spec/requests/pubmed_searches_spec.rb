@@ -1,4 +1,5 @@
 require 'spec_helper'
+DatabaseCleaner.strategy = :deletion
 
 describe "Searches:" do
 
@@ -28,7 +29,6 @@ describe "Searches:" do
      fill_in "search", :with => "zombies"
      click_button 'GO'
      within('body') { page.should have_content('Search Results') }
-     click_link 'Feeling robots and human zombies: Mind perception and the uncanny valley'
      page.should have_content('zombies')
    end
   end

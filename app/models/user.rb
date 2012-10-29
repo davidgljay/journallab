@@ -28,25 +28,25 @@ class User < ActiveRecord::Base
 	attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link, :position, :institution, :homepage, :cv, :image, :remember_me
 
 
-    has_many :assertions
-    has_many :comments
-    has_many :questions
-    has_many :votes
-    has_many :shares
-	has_many :reactions
+    has_many :assertions, :dependent => :destroy
+    has_many :comments, :dependent => :destroy
+    has_many :questions, :dependent => :destroy
+    has_many :votes, :dependent => :destroy
+    has_many :shares, :dependent => :destroy
+	has_many :reactions, :dependent => :destroy
 	has_many :discussions
     has_many :visits, :foreign_key => "user_id"
-    has_many :memberships, :foreign_key => "user_id"
+    has_many :memberships, :foreign_key => "user_id", :dependent => :destroy
     has_many :groups, :through => :memberships, :source => :group
 	has_many :sumreqs
     has_many :maillogs
     has_many :subscriptions
     has_many :votes_for_me, :class_name => "Vote", :foreign_key => "vote_for_id"
-	has_many :follows
-	has_many :anons
+	has_many :follows, :order => 'created_at DESC', :dependent => :destroy
+	has_many :anons, :dependent => :destroy
 	has_many :share_visits, :class_name => "Visit", :as => :about, :order => 'created_at DESC'
-	has_many :folders
-	has_many :notes
+	has_many :folders, :dependent => :destroy
+	has_many :notes, :dependent => :destroy
 
 	before_save :set_certified
 	after_save :create_to_read

@@ -21,6 +21,7 @@ $(".feedPlus").live('click', function(){
 	$(this).addClass('feed_nav_selected');
 	$('.homePageFeed').hide();
 	$('#follow_form').show();
+	$('.feed_remove').show();
 });
 
 
@@ -199,21 +200,49 @@ $('#expandSignup').click(function(){
 // Redirect to signup if you get a 401 unauthentic error from a JS call
 //
 
-  $('body').bind("ajax:error", function(event, data, status, xhr) {
+$('body').bind("ajax:error", function(event, data, status, xhr) {
     location.replace("/users/sign_up");
-  });
+});
 
 
 // Dropdown menus
 
 $('.dropdown-toggle').live('click', function(){
 	$(this).next().toggle('300');
-  });
+});
 
 // Carousel
 
-$('#features').jshowoff();
-
+			$('#slides').slides({
+				preload: true,
+				preloadImage: 'img/loading.gif',
+				play: 9000,
+				pause: 2500,
+				hoverPause: true,
+				animationStart: function(current){
+					$('.caption').animate({
+						bottom:-35
+					},100);
+					if (window.console && console.log) {
+						// example return of current slide number
+						console.log('animationStart on slide: ', current);
+					};
+				},
+				animationComplete: function(current){
+					$('.caption').animate({
+						bottom:0
+					},200);
+					if (window.console && console.log) {
+						// example return of current slide number
+						console.log('animationComplete on slide: ', current);
+					};
+				},
+				slidesLoaded: function() {
+					$('.caption').animate({
+						bottom:0
+					},200);
+				}
+			});
 
 //
 //Styling

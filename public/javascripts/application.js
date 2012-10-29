@@ -21,6 +21,7 @@ $(".feedPlus").live('click', function(){
 	$(this).addClass('feed_nav_selected');
 	$('.homePageFeed').hide();
 	$('#follow_form').show();
+	$('.feed_remove').css('display','inline-block');
 });
 
 

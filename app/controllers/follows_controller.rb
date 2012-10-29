@@ -1,5 +1,5 @@
 class FollowsController < ApplicationController
-before_filter :authenticate_user!, :except => :temp_follow
+before_filter :authenticate_user!
 
 
   def create
@@ -9,5 +9,14 @@ before_filter :authenticate_user!, :except => :temp_follow
 	follow.update_feed
 	follow.save
 	redirect_to root_path 
+  end
+
+  def destroy
+	@follow_id = params[:follow]
+	@follow = Follow.find(@follow_id)
+	@follow.destroy
+    respond_to do |format|
+      	format.js
+   	end
   end
 end

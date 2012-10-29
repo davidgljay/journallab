@@ -55,6 +55,7 @@ Redcell::Application.routes.draw do
 
   resources :follows
    match "/welcome",		:to => 'pages#welcome'
+   match "/follows/remove(/:follow)", :to => 'follows#destroy' 
   resources :reactions
   resources :notes
   resources :folders

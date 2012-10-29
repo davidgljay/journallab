@@ -1,0 +1,3 @@
+$('<%= ".follow_" + @follow_id %>').hide();
+$('<%= ".follow_" + @follow_id %>').prev().find('.badge').hide();
+$('<%= ".follow_" + @follow_id %>').prev().find('.badge').hide();

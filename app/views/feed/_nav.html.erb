@@ -2,14 +2,21 @@
 <ul>
 	<% @follows.each_with_index do |follow, i| %>
 		<li>
-			<% if follow.activity_count > 0 %>
-				<div class = 'badge badge-important feedNotice'><%= follow.activity_count %></div>
-			<% end %>			
-			<% if follow.newcount > 0 %> 			
-				<div class = 'badge badge-warning feedNotice'><%= follow.newcount %></div>
-			<% end %>
-			<%= button_to follow.name, {:controller => "pages", :action => "feedswitch",  :switchto => follow.classname}, :class => follow.classname + "  feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0 ? 'feed_nav_selected' : ''), :remote => true %><%= render '/shared/loading' %>
-
+			<div>
+				<% if follow.newcount > 0 %> 			
+					<div class = 'badge badge-warning feedNotice'><%= follow.newcount %></div>
+				<% end %>
+				<% if follow.activity_count > 0 %>
+					<div class = 'badge badge-important feedNotice'><%= follow.activity_count %></div>
+				<% end %>			
+			</div>
+			<div class = "feed_nav_item <%= follow.classname + (i == 0 ? ' feed_nav_selected' : '')%>">
+				<div style = "display:inline-block;">
+					<%= button_to follow.name, {:controller => "pages", :action => "feedswitch",  :switchto => follow.classname}, :class => " loadingPrompt plainSubmit clickme ", :remote => true %><%= render '/shared/loading' %>
+				</div>
+				<div class = 'feed_remove inline hideonload'>
+					<%= link_to '/follows/remove/' + follow.id.to_s, :remote => true do %><icon class = "icon-remove"></icon></div><% end %>
+				</div>
 		</li>
 	<% end %>	
 
@@ -24,6 +31,6 @@
 		</li>
 	<% end %>
 <% end %>
-	<% if signed_in? %><li><div class = "feed_nav_item feedPlus clickme" >+</div></li><% end %>
+	<% if signed_in? %><li><div class = "feed_nav_item feedPlus clickme" ><strong>Add/Remove</strong></div></li><% end %>
 </ul>
 </div>

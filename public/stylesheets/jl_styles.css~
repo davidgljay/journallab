@@ -412,18 +412,26 @@ icon {
 
 
 #feedNav .feed_nav_item {
+	display: block;
 	text-align: center;
 	padding: 5px;
-	font-weight: bold;
-	color: #fff;
+	padding-bottom: 3px;
+	color: white;
 	background-color: #005997;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
 }
 
+#feedNav .feed_nav_item form.button_to input {
+	font-weight: bold;
+}
+
 #feedNav .feedPlus {
-	width: 35px;
-	padding: 2px;
+	width: 84px;
+	padding: 3px;
+	padding-top: 5px;
+	height: 23px;
+	font-weight: bold;
 }
 
 #feedNav .feed_nav_selected {
@@ -448,9 +456,8 @@ icon {
 }
 
 .feedNotice {
-	float: right;
-	position: relative;
-	top: 5px;
+position: relative;
+float: right;
 }
 
 
@@ -854,6 +861,7 @@ td.comment_body, td.question_body {
 	position: fixed;
 	top: 0px;
 	left: 0px;
+	z-index: 200;
 }
 /* Classes related to javascript */
 

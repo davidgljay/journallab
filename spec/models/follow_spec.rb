@@ -11,7 +11,7 @@ describe Follow do
 	end
   end
   
-    describe "Newcount" do
+  describe "Newcount" do
 	before :each do 
 		@user = create(:user)
 		@follow = @user.follows.create(:name => 'zombies', :search_term => 'zombies')
@@ -51,4 +51,54 @@ describe Follow do
 		@follow.newcount.should < 40
 	end
   end
+
+  describe "activity count" do
+
+	before :each do 
+		@user = create(:user)
+		@follow = @user.follows.create(:name => 'zombies', :search_term => 'zombies')
+	end
+
+	it "should return 0 when there are no comments and no visits." do
+		@follow.activity_count.should == 0
+	end 
+
+	it "should return 0 when there are no new comments since the last visit." do
+		@visit = @follow.visits.create(:user => @user, :visit_type => 'feed')
+		@visit.created_at = Time.now - 1.week
+		@visit.save
+		@follow.activity_count.should == 0
+	end
+
+	it "should return greater than zero when there are new comments since the last visit." do
+		@visit = @follow.visits.new(:user => @user, :visit_type => 'feed')
+		@visit.created_at = Time.now - 1.week
+		@visit.save
+		@paper = Paper.find_or_create_by_pubmed_id(@follow.feed.first[:pubmed_id])
+      	@attr = {:text => "zombies zombies zombies", :form => "comment", :reply_to => nil, :owner_id => @paper.id, :owner_type => @paper.class.to_s}
+		@comment = @paper.comments.new(@attr)
+		@comment.user = @user
+		@comment.save
+		@follow.activity_count.should == 1
+	end
+
+	it "should return greater than zero when there are comments and no visits." do
+		@paper = Paper.find_or_create_by_pubmed_id(@follow.feed.first[:pubmed_id])
+      	@attr = {:text => "zombies zombies zombies", :form => "comment", :reply_to => nil, :owner_id => @paper.id, :owner_type => @paper.class.to_s}
+		@comment = @paper.comments.new(@attr)
+		@comment.user = @user
+		@comment.save
+		@follow.activity_count.should == 1
+	end
+
+	it "should return greater than zero when there are comments which mention the key term on papers which do not." do
+		@paper = create(:paper)
+      	@attr = {:text => "zombies zombies zombies", :form => "comment", :reply_to => nil, :owner_id => @paper.id, :owner_type => @paper.class.to_s}
+		@comment = @paper.comments.new(@attr)
+		@comment.user = @user
+		@comment.save
+		@follow.activity_count.should == 1
+	end
+   end
+
 end

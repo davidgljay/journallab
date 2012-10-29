@@ -124,27 +124,27 @@ def pubmed_search_count(search, date = nil)
 end
 
 def set_interest
-	count = 0
-	Follow.where('user_id IS NOT NULL').map{|f| f.search_term}.compact.each do |w|
-		if (self.title.to_s + ' ' + self.abstract.to_s).downcase.include?(w.downcase)
-			count += 1	
+	users = []
+	Follow.where('user_id IS NOT NULL').each do |f|
+		if (self.title.to_s + ' ' + self.abstract.to_s).downcase.include?(f.search_term.downcase)
+			users << f.user	
 		end
 	end
-	self.interest = count
+	self.interest = users.uniq.count
 	self.save
 	self.interest
 end
 
 def set_all_interest
-	follows = Follow.where('user_id IS NOT NULL').map{|f| f.search_term}.compact
+	follows = Follow.where('user_id IS NOT NULL')
 	Paper.all.each do |p|
-		count = 0
-		follows.each do |w|
-			if (p.title.to_s + ' ' + p.abstract.to_s).downcase.include?(w.downcase)
-				count += 1	
+		users = []
+		follows.each do |f|
+			if (p.title.to_s + ' ' + p.abstract.to_s).downcase.include?(f.search_term.downcase)
+				users << f.user	
 			end
 		end
-		p.interest = count
+		p.interest = users.uniq.count
 		p.save
 	end
 end
@@ -235,39 +235,11 @@ def lookup_info
 	end
 end
 
-#Derive authors
-#def extract_authors(authorlist = nil)
-#	if authorlist.nil?
-#		url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + pubmed_id.to_s + '&retmode=xml&rettype=abstract'
-#   		data = Nokogiri::XML(open(url))
-#    		authorlist = data.xpath('//AuthorList')
-#	end
-#	authorlist.xpath('Author').each do |a|
-#		firstname = a.xpath('ForeName').text 
-#		lastname = a.xpath('LastName').text
-#		initials = a.xpath('Initials').text
-#		self.authors << {:firstname => firstname, :lastname => lastname, :initial => initials}
-#		authors.uniq!
-#		authors
-#end
 
-#def assign_first_and_last_authors(f_author = nil, l_author = nil)
-#	if f_author.nil?
-#		f_author = authors.first
-#	end
-#	if l_author.nil?
-#		l_author = authors[-1]
-#	end
-#	if f_author && l_author	
-#		f = {:firstname => f_author.firstname, :lastname => f_author.lastname, :name => f_author.lastname + ', ' + f_author.firstname }
-#		l = {:firstname => l_author.firstname, :lastname => l_author.lastname, :name => l_author.lastname + ', ' + l_author.firstname} 
-#		self.first_last_authors = [f, l]
-#	end
-#end
 
-def openxml(source)
-	Nokogiri::XML(open(source))
-end
+#def openxml(source)
+#	Nokogiri::XML(open(source))
+#end
 
 
 def count_figs

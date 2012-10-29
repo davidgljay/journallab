@@ -2,6 +2,9 @@
 <ul>
 	<% @follows.each_with_index do |follow, i| %>
 		<li>
+			<% if follow.activity_count > 0 %>
+				<div class = 'badge badge-important feedNotice'><%= follow.activity_count %></div>
+			<% end %>			
 			<% if follow.newcount > 0 %> 			
 				<div class = 'badge badge-warning feedNotice'><%= follow.newcount %></div>
 			<% end %>

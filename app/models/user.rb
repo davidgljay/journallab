@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
     has_many :maillogs
     has_many :subscriptions
     has_many :votes_for_me, :class_name => "Vote", :foreign_key => "vote_for_id"
-	has_many :follows, :order => 'created_at DESC', :dependent => :destroy
+	has_many :follows, :order => 'created_at ASC', :dependent => :destroy
 	has_many :anons, :dependent => :destroy
 	has_many :share_visits, :class_name => "Visit", :as => :about, :order => 'created_at DESC'
 	has_many :folders, :dependent => :destroy

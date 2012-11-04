@@ -407,6 +407,7 @@ icon {
 	display: inline-block;
 	padding-top: 5px;
 	line-height: 20px;
+	vertical-align: bottom;
 }
 
 
@@ -420,7 +421,6 @@ icon {
 	background-color: #005997;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
-	vertical-align: bottom;
 }
 
 #feedNav .feed_nav_item form.button_to input {

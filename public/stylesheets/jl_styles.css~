@@ -420,8 +420,6 @@ icon {
 	background-color: #005997;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
-	position: relative;
-	top: 3px;
 }
 
 #feedNav .feed_nav_item form.button_to input {

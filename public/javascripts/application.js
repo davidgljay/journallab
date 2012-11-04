@@ -168,7 +168,7 @@ $(".leave_reaction").live('click', function() {
 	$('div#add_figs').show(300);
      });	
 
-//Image upload for admins
+//Image upload
     $(".fig_upload").live('click', function(){
       $(this).parent().find('div.upload_form').show();
      });

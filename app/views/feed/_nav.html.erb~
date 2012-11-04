@@ -15,8 +15,10 @@
 					<%= button_to follow.name, {:controller => "pages", :action => "feedswitch",  :switchto => follow.classname}, :class => " loadingPrompt plainSubmit clickme ", :remote => true %><%= render '/shared/loading' %>
 				</div>
 				<div class = 'feed_remove inline hideonload'>
-					<%= link_to '/follows/remove/' + follow.id.to_s, :remote => true do %><icon class = "icon-remove"></icon></div><% end %>
+					<%= link_to '/follows/remove/' + follow.id.to_s, :remote => true do %><icon class = "icon-remove"></icon>
+				<% end %>		
 				</div>
+			end
 		</li>
 	<% end %>	
 
@@ -31,6 +33,6 @@
 		</li>
 	<% end %>
 <% end %>
-	<% if signed_in? %><li><div class = "feed_nav_item feedPlus clickme" ><strong>Add/Remove</strong></div></li><% end %>
+	<% if signed_in? %><li><div class = "feed_nav_item feedPlus clickme" >Add/Remove</div></li><% end %>
 </ul>
 </div>

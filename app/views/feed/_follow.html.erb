@@ -10,6 +10,6 @@
 	  </div>
 	<% end %>
 	<div style = "margin: 10px; margin-left: 25px;">
-		<%= link_to "See more", "/lookup/" + @follow.name.downcase + "?page=3" if @feed.count == 40 %>
+		<%= link_to "See more", "/lookup/" + @follow.name.downcase + "?page=3" if @feed.count >= 40 %>
 	</div>
 </div>

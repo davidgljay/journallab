@@ -12,9 +12,12 @@ describe "/" do
 
   describe "when logged in" do
 	before :each do
-		@user = Factory(:user, :email => Factory.next(:email))
-		@paper = Factory(:paper)
-		@paper2 = Factory(:paper, :pubmed_id => Factory.next(:pubmed_id))
+		@user = create(:user)
+		@user.save
+		@paper = create(:paper)
+		@paper.lookup_info
+		@paper2 = create(:paper)
+		@paper2.lookup_info
 		integration_sign_in(@user)
 	end
 
@@ -55,7 +58,7 @@ describe "/" do
 		f2 = @user.follows.create!(:search_term => "zombies", :name => "zombies")
 		f2.save
 		visit "/"
-		within('body') { page.should have_content('Test Group') }
+		within('body') { page.should have_selector('.group' + @group.id.to_s ) }
 		within('body') { page.should have_selector('input.follow_' + @user.follows.first.id.to_s) }
 	end
    end

@@ -51,7 +51,8 @@ end
 # àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸåÅæÆœŒçÇðÐøØ¿¡ß
 
 def search_pubmed(search, numresults = 20)
-	cleansearch = search.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').gsub(/[.]/, "+").gsub(/[^0-9A-Za-z'" ]/, '+').gsub(/[ ]/, "%20")
+	cleansearch = Rack::Utils.escape(search)
+	#cleansearch = search.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').gsub(/[.]/, "+").gsub(/[^0-9A-Za-z'" ]/, '+').gsub(/[ ]/, "%20")
 
 
 # Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
@@ -231,6 +232,7 @@ def lookup_info
 	
 		self.citation = citation_authors + ' "' + self.title + '" ' + self.journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + self.pubdate.year.to_s + '): ' + pagination + '. Web.'
 	    self.save
+	    count_figs
 	  end
 	end
 end
@@ -252,26 +254,26 @@ def count_figs
     end
   end
   self.build_figs(imagearray.count)
-  if doc.css('a.status_icon').text == "Free PMC Article"
-  	pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
-  end
-  self.delay.grab_figs(pmcid, imagearray)
+  #if doc.css('a.status_icon').text == "Free PMC Article"
+  #	pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
+  #end
+  self.delay.grab_figs(imagearray)
 end
 
-def grab_figs(pmcid, imagearray)
+def grab_figs(imagearray)
   #
-  #Slightly more liberal, extract images if it's free on PMC.
+  #Extract images only for PLoS papers
   #
-  unless pmcid.nil?
-    url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
-    oai = Nokogiri::HTML(open(url2))
-    	unless oai.css('error').attribute("code").value == "idDoesNotExist"
-    		imagearray.count.times do |n|
-      			self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
-      			self.figs[n].save
-    		end 
-  	end
-  end
+    #url2 = 'http://www.pubmedcentral.nih.gov/oai/oai.cgi?verb=GetRecord&metadataPrefix=pmc&identifier=oai:pubmedcentral.gov:' + pmcid
+    #oai = Nokogiri::HTML(open(url2))
+    #	unless oai.css('error').attribute("code").value == "idDoesNotExist"
+    if self.journal.downcase.include?('plos')
+   	imagearray.count.times do |n|
+   		self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
+   		self.figs[n].save
+   	end 
+    end
+  #	end
 end
 
 #Grab images

@@ -412,7 +412,7 @@ icon {
 
 
 #feedNav .feed_nav_item {
-	display: block;
+	display: inline-block;
 	text-align: center;
 	padding: 5px;
 	padding-bottom: 3px;
@@ -420,6 +420,8 @@ icon {
 	background-color: #005997;
 	border-top-right-radius: 10px;
 	border-top-left-radius: 10px;
+	position: relative;
+	top: 3px;
 }
 
 #feedNav .feed_nav_item form.button_to input {
@@ -430,7 +432,6 @@ icon {
 	width: 84px;
 	padding: 3px;
 	padding-top: 5px;
-	height: 23px;
 	font-weight: bold;
 }
 
@@ -458,6 +459,7 @@ icon {
 .feedNotice {
 position: relative;
 float: right;
+top: 6px;
 }
 
 

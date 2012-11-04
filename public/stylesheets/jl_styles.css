@@ -412,7 +412,7 @@ icon {
 
 
 #feedNav .feed_nav_item {
-	display: inline;
+	display: inline-block;
 	text-align: center;
 	padding: 5px;
 	padding-bottom: 3px;
@@ -430,7 +430,6 @@ icon {
 	width: 84px;
 	padding: 3px;
 	padding-top: 5px;
-	height: 23px;
 	font-weight: bold;
 }
 
@@ -458,6 +457,7 @@ icon {
 .feedNotice {
 position: relative;
 float: right;
+top: 6px;
 }
 
 

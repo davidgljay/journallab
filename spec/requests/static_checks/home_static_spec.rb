@@ -30,7 +30,7 @@ describe "/" do
 		f = @user.follows.create!(:search_term => "RNA", :name => "RNA")
 		f.save
 		visit "/"
-		within('body') { page.should have_selector('input.follow_' + @user.follows.first.id.to_s) }
+		within('body') { page.should have_selector('div.follow_' + @user.follows.first.id.to_s) }
 	end
 
 	it "should render when the user has groups but no feeds" do

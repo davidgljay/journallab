@@ -41,7 +41,7 @@
 					<h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
 				<% end %>
 			</div>
-			<%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at, :anonymous => false, :checkanon => true if about.latest_assertion %>
+			<%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at, :anonymous => true, :checkanon => false if about.latest_assertion %>
 			<%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
 		        	<%= hidden_field_tag :owner, about.class.to_s %>
               			<%= hidden_field_tag :id, about.id %>

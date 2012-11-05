@@ -105,7 +105,7 @@ describe Follow do
     before :each do
       @user = create(:user)
       @follow = @user.follows.create(:name => 'zombies', :search_term => 'zombies')
-      @attr = {:text => "zombies zombies zombies", :form => "comment", :reply_to => nil, :owner_id => @paper.id, :owner_type => @paper.class.to_s}
+      @attr = {:text => "zombies zombies zombies", :form => "comment"}
     end
 
     it "should return a papers with a comments" do

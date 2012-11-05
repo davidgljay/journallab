@@ -106,13 +106,5 @@ def bar_graph(array, unit_name)
     output.html_safe
 end
 
-#
-# Feeds for grabbing Journals
-#
-
-#
-# Feeds for grabbing Journals
-#
-
 
 end

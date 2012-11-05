@@ -5,9 +5,9 @@
 	<h3><div class = "inline"><icon class = "icon-folder-open"></icon></div> <%= folder[0].name%></h3>
 	<table>
 	<% folder[1].each do |paper| %>
-	<tr id= '<%= "f#{folder[0].id.to_s}_p#{paper.id.to_s}" %>'>
+	<tr id= '<%= "f#{folder[0].id.to_s}_p#{paper[:id].to_s}" %>'>
 		<td><%= render '/papers/list', :paper => paper %></td>
-		<td valign = "center"><%= link_to 'folders/' + folder[0].id.to_s + '/remove/' + paper.id.to_s, :method => :delete, :remote => true do %><icon class = "icon-remove-sign"></icon><% end %>
+		<td valign = "center"><%= link_to 'folders/' + folder[0].id.to_s + '/remove/' + paper[:id].to_s, :method => :delete, :remote => true do %><icon class = "icon-remove-sign"></icon><% end %>
 	</tr>
 	<% end %>
 	</table>

@@ -15,9 +15,13 @@ before_filter :admin_user,   :only => [:dashboard]
 		end
 		@groups = current_user.groups.all
 		@follows  = current_user.follows.all
-		@follow = @follows.first
-		@feed = @follow.feed if @follow
-		@feed = Paper.new.search_pubmed(@follow.search_term) if @follow && @feed.empty?
+		if @follow = @follows.first
+		  @feed = @follow.feed
+      @recent_activity = @follow.recent_activity
+    else
+		  @feed = Paper.new.search_pubmed(@follow.search_term) if @follow && @feed.empty?
+      @recent_activity = nil
+    end
 		@newfollow = current_user.follows.new
 		@welcome_screen = false
 	end
@@ -47,8 +51,10 @@ before_filter :admin_user,   :only => [:dashboard]
 		@follow.visits.create(:user => current_user, :visit_type => 'feed') if signed_in?
 		if @follow.latest_search.nil? || @follow.latest_search.empty?
 			@feed = Paper.new.search_pubmed(@follow.search_term)
+      @recent_activity = []
 		else
 			@feed = @follow.feed
+      @recent_activity = @follow.recent_activity
 		end
 		@follow.save
 		@nav_language = @follow.name

@@ -25,8 +25,10 @@ class FollowsController < ApplicationController
     @follow = Follow.find(params[:follow])
     if @switchto == 'comments'
       @feed = @follow.comments_feed
+      @recent_activity = @follow.recent_activity
     else
       @feed = @follow.feed
+      @recent_activity = @follow.recent_activity
     end
     respond_to do |format|
       format.js

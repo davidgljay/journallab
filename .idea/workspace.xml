@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28cbb8b2-c23d-47c0-9ecb-c0ec0aee68f1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/Journal Lab" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/assertions/_assertion.html.erb" afterPath="$PROJECT_DIR$/app/views/assertions/_assertion.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/follow.rb" afterPath="$PROJECT_DIR$/app/models/follow.rb" />
     </list>
     <ignored path="redcell.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -59,10 +58,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_assertion.html.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="follow.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/models/follow.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="61" column="236" selection-start="1910" selection-end="1910" vertical-scroll-proportion="0.27173913">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_assertion.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/assertions/_assertion.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="165" selection-start="2037" selection-end="2037" vertical-scroll-proportion="0.53977275">
+            <state line="43" column="165" selection-start="2037" selection-end="2037" vertical-scroll-proportion="-11.875">
               <folding />
             </state>
           </provider>
@@ -71,7 +79,7 @@
       <file leaf-file-name="paper.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/paper.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="3" selection-start="1750" selection-end="1750" vertical-scroll-proportion="0.0">
+            <state line="89" column="91" selection-start="4728" selection-end="4728" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -81,15 +89,6 @@
         <entry file="file://$PROJECT_DIR$/app/controllers/folders_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="5" column="72" selection-start="188" selection-end="188" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="follows_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/follows_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="43" selection-start="782" selection-end="782" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -126,7 +125,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/spec/controllers/follows_controller_spec.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/follows/viewswitch.js.erb" />
         <option value="$PROJECT_DIR$/app/views/feed/_follow.html.erb" />
@@ -142,6 +140,7 @@
         <option value="$PROJECT_DIR$/public/stylesheets/select_bootstrap.css" />
         <option value="$PROJECT_DIR$/spec/models/follow_spec.rb" />
         <option value="$PROJECT_DIR$/app/views/assertions/_assertion.html.erb" />
+        <option value="$PROJECT_DIR$/app/models/follow.rb" />
       </list>
     </option>
   </component>
@@ -786,13 +785,6 @@
         <state line="472" column="16" selection-start="7533" selection-end="7533" vertical-scroll-proportion="-9.67742" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/follow.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="52" selection-start="1389" selection-end="1389" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="53" column="27" selection-start="1712" selection-end="1712" vertical-scroll-proportion="0.0">
@@ -817,13 +809,6 @@
     <entry file="file://$PROJECT_DIR$/app/controllers/folders_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="72" selection-start="188" selection-end="188" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/paper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="3" selection-start="1750" selection-end="1750" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -856,13 +841,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/models/follow_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="107" column="69" selection-start="3877" selection-end="3877" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/helpers/pages_helper.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="106" column="3" selection-start="3546" selection-end="3546" vertical-scroll-proportion="0.0">
@@ -872,7 +850,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/assertions/_assertion.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="165" selection-start="2037" selection-end="2037" vertical-scroll-proportion="0.53977275">
+        <state line="43" column="165" selection-start="2037" selection-end="2037" vertical-scroll-proportion="-11.875">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/paper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="91" selection-start="4728" selection-end="4728" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/models/follow_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="107" column="69" selection-start="3877" selection-end="3877" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/follow.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="236" selection-start="1910" selection-end="1910" vertical-scroll-proportion="0.27173913">
           <folding />
         </state>
       </provider>

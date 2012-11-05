@@ -59,7 +59,7 @@ def recent_activity
   lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
   papers_with_term = Paper.new.jlab_search(search_term).uniq.map{|p| p.id}
   unless papers_with_term.empty?
-    papers_with_recent_comments = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where(' papers.id IN (' + papers_with_term * ',' + ') AND "comments"."created_at" >= '+ "'" + lastvisit.to_s + "'")
+    papers_with_recent_comments = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where(' papers.id IN (' + papers_with_term * ',' + ') AND "comments"."created_at" >= '+ "'" + lastvisit.to_s + "'").uniq
     papers_with_recent_comments.map{|p| p.pubmed_id}
   else
     []

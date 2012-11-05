@@ -45,7 +45,7 @@ def inspect
 end
 
 def to_hash
-	{:pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at}
+	{:pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at, :percent_summarized => percent_summarized, :comments => meta_comments.count}
 end
 
 # àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸåÅæÆœŒçÇðÐøØ¿¡ß
@@ -152,9 +152,27 @@ end
 
 def search_activity(search_term) 
 	cleansearch = search_term.gsub(/[']/, "''")
-	comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('"comments"."text" LIKE '"'%" + cleansearch + "%'")
-	summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where('"assertions"."text" LIKE '"'%" + cleansearch + "%' OR assertions.method_text LIKE '%" + cleansearch + "%'")
+  comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('UPPER("comments"."text") LIKE '"'%" + search_term.upcase + "%'")
+  summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where("UPPER(assertions.text) LIKE '%#{search_term.upcase}%' OR UPPER(assertions.method_text) LIKE '%#{search_term.upcase}%'")
 	(summary_papers + comment_papers).uniq.map{|p| p.to_hash}
+end
+
+# Search for papers with a given search term in the J.Lab database
+def jlab_search(search_term)
+  cleansearch = search_term.gsub(/[']/, "''")
+  papers = Paper.find(:all, :conditions => ['(UPPER(title) LIKE ? or UPPER(abstract) LIKE ?)', "%" + search_term.upcase + "%", "%" + search_term.upcase + "%"])
+  comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('UPPER("comments"."text") LIKE '"'%" + search_term.upcase + "%'")
+  summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where("UPPER(assertions.text) LIKE '%#{search_term.upcase}%' OR UPPER(assertions.method_text) LIKE '%#{search_term.upcase}%'")
+  (papers + comment_papers + summary_papers).sort{|x,y| x.latest_activity <=> y.latest_activity}
+end
+
+def comments_search(search_term)
+  papers = jlab_search(search_term)
+  if papers.empty?
+    []
+  else
+    Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where(' papers.id IN (' + papers.map{|p| p.id} * ',' + ')').uniq
+  end
 end
 	
 def check_blogs
@@ -182,10 +200,9 @@ def lookup_info
 	if Rails.env.test?
 		self.abstract = "The uncanny valley-the unnerving nature of humanlike robots-is an intriguing idea."
 		self.journal = "Cognition"
-		self.pubdate = Time.now - 1.month
+		self.pubdate = (Time.now - 1.month)
 		self.title = "Feeling robots and human zombies: Mind perception and the uncanny valley"
 		self.citation = "Gray, Kurt, and Wegner, Daniel M. \"Feeling robots and human zombies: Mind perception and the uncanny valley.\" 125.1 (2012): 125-30. Web."
-		self.pubmed_id = 22784682
 		self.authors = [{:firstname=>"Kurt", :lastname=>"Gray", :name=>"Gray, Kurt"}, {:firstname=>"Daniel M", :lastname=>"Wegner", :name=>"Wegner, Daniel M"}]
 		self.save
 	else
@@ -327,8 +344,9 @@ end
 #Check to see when the last comment or summary was left on the paper. Used for ranking in search results.
 
 def set_latest_activity
-   activity = (self.meta_comments + self.meta_assertions).map{|p| p.created_at}
-   self.latest_activity = (activity << pubdate).max
+   activity = (self.meta_comments + self.meta_assertions).map{|p| p.created_at}.compact
+   self.pubdate ||= Time.now - 1.month
+   self.latest_activity = (activity << self.pubdate).max
 end
 #Map reactions to the overall paper and to individual figures and figure sections and store it as a hash text, that way we don't have to run a ton of SQL queries every time the page loads
 
@@ -441,6 +459,15 @@ end
 
 def my_heat
     h_map ? h_map[self.inspect][0] : 0
+end
+
+def percent_summarized
+  figcount = figs.count
+  if figcount > 0
+    meta_assertions.select{|a| a.fig_id}.map{|a| a.fig_id}.uniq.count * 100 / figcount
+  else
+    0
+  end
 end
 
 def heatmap_overview

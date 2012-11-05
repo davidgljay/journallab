@@ -55,13 +55,19 @@ def set_newcount
 	end
 end
 
-def activity_count
-	lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
-	papers = Paper.find(:all, :conditions => ['(UPPER(title) LIKE ? or UPPER(abstract) LIKE ?) AND latest_activity >= ?', "%" + self.search_term.upcase + "%", "%" + self.search_term.upcase + "%", lastvisit]) 
-	papers = papers.select{|p| p.heatmap}.select{|p| p.h_map[p.inspect][1] > 0}
-	comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('(UPPER("comments"."text") LIKE '"'%" + search_term.upcase + "%'" + ') AND "comments"."created_at" >= '+ "'" + lastvisit.to_s + "'")
-	summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where("(UPPER(assertions.text) LIKE '%#{search_term.upcase}%' OR UPPER(assertions.method_text) LIKE '%#{search_term.upcase}%') AND assertions.created_at >= '#{lastvisit.to_s}'")
-	(papers + comment_papers + summary_papers).uniq.count
+def recent_activity
+  lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
+  papers_with_term = Paper.new.jlab_search(search_term).uniq.map{|p| p.id}
+  unless papers_with_term.empty?
+    papers_with_recent_comments = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where(' papers.id IN (' + papers_with_term * ',' + ') AND "comments"."created_at" >= '+ "'" + lastvisit.to_s + "'")
+    papers_with_recent_comments.map{|p| p.pubmed_id}
+  else
+    []
+  end
+end
+
+def comments_feed
+  Paper.new.comments_search(search_term).map{|p| p.to_hash}
 end
 
 # Create a set of temporary follows for the homepage

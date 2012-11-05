@@ -3,12 +3,21 @@
 		<div style = "margin-left:20px;">
 			<h3>No search results on pubmed, are you sure that you entered your search correctly?</h3>
 		</div>
-	<% end %>
-	<% @feed.each do |paper| %>
-	   <div class = "search_results">
-	   <%= render 'papers/list', :paper => paper %>
-	  </div>
-	<% end %>
+	<% else %>
+      <% if @follow.comments_feed.count > 0 %>
+          <div class = 'viewswitch'>
+            <%=  link_to "View #{pluralize(@follow.comments_feed.count, 'paper')} with comments", "/follows/#{@follow.id.to_s}/viewswitch/comments", :remote => true %>
+          </div>
+          <div class = 'viewswitch hideonload'>
+            <%=  link_to 'View all papers', "/follows/#{@follow.id.to_s}/viewswitch/all", :remote => true %>
+          </div>
+      <% end %>
+	    <% @feed.each do |paper| %>
+	        <div class = "search_results">
+	            <%= render 'papers/list', :paper => paper %>
+	        </div>
+	    <% end %>
+    <% end %>
 	<div style = "margin: 10px; margin-left: 25px;">
 		<%= link_to "See more", "/lookup/" + @follow.name.downcase + "?page=3" if @feed.count >= 40 %>
 	</div>

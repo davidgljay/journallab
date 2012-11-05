@@ -1,22 +1,35 @@
 class FollowsController < ApplicationController
-before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:viewswitch]
 
 
   def create
-	follow = Follow.new(params[:follow])
-	follow.search_term = params[:follow][:search_term]
-	follow.name = follow.search_term
-	follow.update_feed
-	follow.save
-	redirect_to root_path 
+    follow = Follow.new(params[:follow])
+    follow.search_term = params[:follow][:search_term]
+    follow.name = follow.search_term
+    follow.update_feed
+    follow.save
+    redirect_to root_path
   end
 
   def destroy
-	@follow_id = params[:follow]
-	@follow = Follow.find(@follow_id)
-	@follow.destroy
+    @follow_id = params[:follow]
+    @follow = Follow.find(@follow_id)
+    @follow.destroy
     respond_to do |format|
-      	format.js
-   	end
+      format.js
+    end
+  end
+
+  def viewswitch
+    @switchto = params[:switchto]
+    @follow = Follow.find(params[:follow])
+    if @switchto == 'comments'
+      @feed = @follow.comments_feed
+    else
+      @feed = @follow.feed
+    end
+    respond_to do |format|
+      format.js
+    end
   end
 end

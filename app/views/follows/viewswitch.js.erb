@@ -1,0 +1,11 @@
+<% if @feed.length > 0 %>
+$('<%= "div#follow_#{@follow.id.to_s}_feed"%>').html('<%= escape_javascript(render 'feed/follow') %>')
+<% else %>
+    $('<%= "div#follow_#{@follow.id.to_s}_feed"%>').html('' +
+            '<div style="margin-left: 40px;">' +
+            '   <h3>This feed has no papers with comments.</h3>' +
+            '</div>')
+<% end %>
+<% if @switchto == 'comments' %>
+    $('div.viewswitch').toggle()
+<% end %>

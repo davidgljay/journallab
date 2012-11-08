@@ -1,0 +1,40 @@
+<%= f.radio_button(:anonymous, true) %>
+<%= f.label(:anonymous_true, "Post anonymously ") %>
+<%= f.radio_button(:anonymous, false) %>
+<%= f.label(:anonymous_false, "Post using my real name ") %>
+<div class = "small grey">
+  <b class="clickme anon_learn_more">Learn more</b> about anonymity on Journal Lab.
+</div>
+<div class ="lightbox hideonload" style="width: 600px;">
+  <i class = 'icon-remove'></i>
+  <h2>Anonymity on Journal Lab</h2>
+  <div align="left">
+  <b>We get it,</b> sometimes there's risk to publicly commenting on other people's work.<br>
+  Our goal is to allow everyone to protect their reputations while encouraging a high level of scientific dialogue.<br>
+  Here's how we do that:
+
+ <ul>
+   <li>
+     We show when multiple anonymous comments on a single paper are from the same person.
+     <div class="small grey">
+       We do this by generating a unique pseudonym for each anonymous user. New pseudonyms are generated for every paper.
+     </div>
+   </li>
+   <li>
+     Positive reputation flows to the authors of anonymous comments.
+     <div class = "small grey">
+       If you say something insightful and people "Nod" it, this will be reflected in your profile.
+     </div>
+   </li>
+   <li>
+     Negative reputation flows to the authors of anonymous comments.
+     <div class = "small grey">
+       If you say something unrelated to the paper being discussed or post a personal attack, this will also be reflected in your profile.
+     </div>
+   </li>
+   <li>
+     In extreme cases offending users may have their accounts revoked.
+   </li>
+ </ul>
+  </div>
+</div>

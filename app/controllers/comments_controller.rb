@@ -36,11 +36,6 @@ before_filter :authenticate_user!, :except => [:list]
     	if params[:comment][:form] == "reply"
        		@comment.comment = Comment.find(params[:comment][:reply_to])
     		@owner = @comment.owner
-	# Old code for independent comments, bring back if I bring them back.
-    	#elsif params[:comment][:form] == "qcomment"
-       	#	@comment.question = Question.find(params[:comment][:reply_to])
-       	#	@questions = @comment.owner.questions.all.select{|c| @group.let_through_filter?(c,current_user, @mode)}
-    	#	@owner = @comment.owner
     	else
 		@owner = params[:owner_class].constantize.find(params[:owner_id])
 	# At some point, come in and make comments polymorphic so that this can be avoided

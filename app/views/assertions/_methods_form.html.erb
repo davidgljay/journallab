@@ -3,9 +3,11 @@
       <%= render 'shared/error_messages', :object => f.object %>
       <div class="field">
          <% if assert.nil? || new_if_nil(assert).method_text.to_s.empty? %>
-           <%= f.text_area :method_text, :value => "Separate methods with commas (e.g. western blot, QPCR, etc.)", :rows => 1 %>
+           <%= f.text_area :method_text, :value => "Separate methods with commas (e.g. western blot, QPCR, etc.)", :rows => 1 %><br>
+            <%=  render 'shared/anon_form', :f => f %><br>
          <% else %>
-           Methods:<%= f.text_field :method_text, :value => assert.method_text.to_s %>
+           Methods:<%= f.text_field :method_text, :value => assert.method_text.to_s %><br>
+           <%=  render 'shared/anon_form', :f => f %><br>
          <% end %>
         </div>
         <%= f.hidden_field :about, :value => owner.class.to_s.downcase %>

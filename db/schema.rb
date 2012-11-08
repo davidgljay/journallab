@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121015170209) do
+ActiveRecord::Schema.define(:version => 20121108060049) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20121015170209) do
     t.boolean  "is_public"
     t.text     "alt_approach"
     t.integer  "get_paper_id"
+    t.boolean  "anonymous"
   end
 
   add_index "assertions", ["fig_id"], :name => "index_assertions_on_fig_id"

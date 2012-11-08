@@ -1,6 +1,5 @@
 <div class="user_info">
-<% if signed_in? %>
-  <% if (anonymous || user.anon?(current_user)) && checkanon %>
+  <% if anonymous %>
     <span class="anon_name">
 	<% if @paper %>
 	      <strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= user.anon_name(@paper) %></font>)
@@ -22,17 +21,5 @@
 	    <div class = 'small inline'><em><%= render 'shared/display_date', :date => date %></em></div>
     <% end %>
   <% end %>
-<% else %>
-    <span class="anon_name">
-	<% if @paper %>
-	      <strong>Anonymous</strong> (<font rel="tooltip" title="Use these names to distinguish one anonymous user from another." class = "clickme"><%= user.anon_name(@paper) %></font>)
-	<% else %> 
-	      <strong>Anonymous</strong>
-	<% end %>
-    </span>
-    <% if date %>
-    	<div class = 'small inline' ><em><%= render 'shared/display_date', :date => date %></em></div>
-    <% end %>
-<% end %>
 
 </div>

@@ -6,7 +6,7 @@ def new_or_edit(assertion)
 end
 
 def new_if_nil(assertion)
-	a = assertion.nil? ? Assertion.new : assertion
+	a = assertion.nil? ? Assertion.new(:anonymous => false) : assertion
 end
 
 end

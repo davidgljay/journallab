@@ -34,7 +34,7 @@ describe Follow do
       @follow.search_term = "rna"
       @visit = @follow.visits.new
       @visit.user = @user
-      @visit.created_at = Time.now - 1.week
+      @visit.created_at = Time.now - 3.days
       @visit.save
       @follow.update_feed
       @follow.newcount.should < 1000

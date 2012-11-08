@@ -20,6 +20,7 @@ describe "Initial Flow:" do
 	
 	it "sends back an error if no temp follows are entered" do
 		visit root_path
+    fill_in "temp_follows", :with => ""
 		click_button "Go"
 		page.should have_content('Enter a few of your research interests to get started.')
 	end

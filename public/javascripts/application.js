@@ -126,6 +126,13 @@ $(".leave_reaction").live('click', function() {
 //     });
 
 
+    // Anonymity Lightbox
+    $(".anon_learn_more").live('click', function(){
+
+        $(this).parent().next().toggle();
+    });
+
+
 //Toggle Figure sections
    $("div.figtoggle").live('click', function(){
      $(this).next().toggle(300);

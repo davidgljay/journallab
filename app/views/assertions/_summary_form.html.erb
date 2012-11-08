@@ -1,13 +1,13 @@
-<div class = 'summary_form'>
+<div class='summary_form'>
 <%= form_for new_or_edit(assert), :class => "new_assertion summary_form", :remote => true do |f| %>
       <div class="field">
          <% if assert.nil? || new_if_nil(assert).text.to_s.empty? %>
            	<%= f.text_area :text, :value =>  "What is the core conclusion of " + owner.shortname + "?", :rows => 5 %><br>
-		<%= f.submit 'Submit' %>
          <% else %>
-           	<table><tr><td>Summary:</td><td><%= f.text_area :text, :value =>  assert.text.to_s, :rows => 5 %><br>	
-		<%= f.submit 'Submit' %></td></tr></table>
+            <%= f.text_area :text, :value =>  assert.text.to_s, :rows => 5 %><br>
          <% end %>
+        <%=  render 'shared/anon_form', :f => f %><br>
+        <%= f.submit 'Submit' %>
         </div>
         <%= f.hidden_field :about, :value => owner.class.to_s.downcase %>
         <%= hidden_field_tag :owner_id, owner.id.to_s %>

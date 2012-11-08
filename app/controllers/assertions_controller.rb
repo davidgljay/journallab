@@ -6,6 +6,7 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @owner = params[:owner].constantize.find(params[:id])
     @assertions = @owner.assertions.all
     @owner_type = params[:owner]
+    @paper = @owner.get_paper
     @group = current_user.get_group
     respond_to do |format|
         format.js 
@@ -17,10 +18,11 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @about = params[:about].constantize.find(params[:id])
     @mode = params[:mode]
     @assertion = @about.assertions.build
+    @assertion.anonymous = false #Set all assertions to be false by default.
     @type = {'paper' => 'paper', 'fig' => 'figure', 'figsection' => 'section'}
     @group = current_user.get_group
     respond_to do |format|
-      format.js 
+      format.js
    end
 end
 
@@ -87,10 +89,8 @@ end
     @assertion.text = @assertion.text.nil? || @assertion.text.include?('What is the core conclusion') ? nil : @assertion.text
     @assertion.method_text = @assertion.method_text.nil? || @assertion.method_text.include?('Separate methods with commas') ? nil : @assertion.method_text
     @assertion.is_public = true
-   # @assertion.alt_approach = @assertion.alt_approach == 'What are alternate approaches?' ? nil : @assertion.alt_approach
     @assertion.save
     current_user.get_group.feed_add(@assertion)
-   # flash[:success] = 'Summary entered, thanks for your contribution.'
 
   # Add a privacy setting if the user is part of a class that's reading this paper.
   #  if @group = current_user.groups.last
@@ -101,12 +101,6 @@ end
   #  end
 
     @owner = @assertion.owner
-    #Mark any summary requests on the paper as summarized
-    @owner.sumreqs.each do |s|
-         s.summarized = true
-         s.save
-    end
-
     @paper = @owner.get_paper
     @paper.add_heat(@owner)
     @heatmap = @paper.heatmap

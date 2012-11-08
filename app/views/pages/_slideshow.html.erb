@@ -55,9 +55,8 @@
 </div>
 <div id = "temp_follow_form">
 	<h2>Learn more. Enter a few terms that you regularly search on PubMed.</h2>
-	Separate with commas like so: <i>"mRNA, lymphocyte signalling pathways, MiR-120"</i>
 	<%= form_tag '/welcome', :method => :post do %>
-		<%= text_field_tag :temp_follows %>
+		<%= text_field_tag :temp_follows, "microRNA, mir-181, mir-294", :onfocus => "if(this.value == 'microRNA, mir-181, mir-294') { this.value = ''; }" %>
 		<%= submit_tag "Go", :class => 'btn-warning round loadingPrompt', :style => 'font-size: 30px;', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Tempfeeds']);" %><%= render '/shared/loading' %>
 	<% end %>
 </div>

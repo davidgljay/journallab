@@ -73,6 +73,7 @@ end
 # Create a set of temporary follows for the homepage
 # Returns an array with one follow and several search terms
 
+
 def create_temp(temp_follows_string)
 	temp_follows_array = temp_follows_string.split(",").each{|t| t.strip!}
 	follow_array = []	

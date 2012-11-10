@@ -160,9 +160,9 @@ end
 # Search for papers with a given search term in the J.Lab database
 def jlab_search(search_term)
   cleansearch = search_term.gsub(/[']/, "''")
-  papers = Paper.find(:all, :conditions => ['(UPPER(title) LIKE ? or UPPER(abstract) LIKE ?)', "%" + search_term.upcase + "%", "%" + search_term.upcase + "%"])
-  comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('UPPER("comments"."text") LIKE '"'%" + search_term.upcase + "%'")
-  summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where("UPPER(assertions.text) LIKE '%#{search_term.upcase}%' OR UPPER(assertions.method_text) LIKE '%#{search_term.upcase}%'")
+  papers = Paper.find(:all, :conditions => ['(UPPER(title) LIKE ? or UPPER(abstract) LIKE ?)', "%" + cleansearch.upcase + "%", "%" + cleansearch.upcase + "%"])
+  comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('UPPER("comments"."text") LIKE '"'%" + cleansearch.upcase + "%'")
+  summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where("UPPER(assertions.text) LIKE '%#{cleansearch.upcase}%' OR UPPER(assertions.method_text) LIKE '%#{cleansearch.upcase}%'")
   (papers + comment_papers + summary_papers).sort{|x,y| x.latest_activity <=> y.latest_activity}
 end
 
@@ -171,7 +171,8 @@ def comments_search(search_term)
   if papers.empty?
     []
   else
-    Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where(' papers.id IN (' + papers.map{|p| p.id} * ',' + ')').uniq
+    comments_search = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where(' papers.id IN (' + papers.map{|p| p.id} * ',' + ')')
+    comments_search.uniq.sort{|x,y| y.latest_activity <=> x.latest_activity}
   end
 end
 	

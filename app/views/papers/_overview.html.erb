@@ -1,5 +1,5 @@
 <% if @heatmap.count > 1 || @heatmap.first[1][1] > 0 %> 
-<%= render 'legend' %>
+<%= render '/papers/legend' %>
 <table id = 'overview' class = 'heatTable'><tr>
 <% @heatmap_overview.first.length.times do |i| %>
 	<% @heatmap_overview.length.times do |h| %>

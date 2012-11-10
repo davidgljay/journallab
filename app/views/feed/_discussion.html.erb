@@ -3,7 +3,7 @@
 <% if group.current_discussion %>
 
 
-<h4>Current topic of discussion:</h4>
+<h4><%= group.desc %></h4>
 <%= render 'papers/paper_menu' %>
 <div align = "center">
 <h2><%= link_to @paper.title, @paper, :style => "font-weight:normal;" %></h2>
@@ -25,7 +25,7 @@
 	<br>
 </div>
 
-
+<%= render '/papers/overview' %>
 <%= render '/papers/summary' %>
   <div id = "add_figs_link"><a  class = "small clickme">Add/Remove Figures</a></div>
   <div id = "add_figs" class = "hideonload">

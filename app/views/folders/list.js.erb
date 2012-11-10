@@ -1,4 +1,4 @@
-$('<%= escape_javascript(render 'notes/new')%>').insertAfter('<%= '#folder_list_' + @pubmed_id.to_s %>');
+$('<%= escape_javascript(render 'notes/new')%>').insertAfter('<%= escape_javascript('#folder_list_' + @pubmed_id.to_s) %>');
 $('<%= '#folder_list_' + @pubmed_id.to_s %>').next().toggle('300');
 $('<%= '#folder_list_' + @pubmed_id.to_s %>').click(function(e){
 	$(this).next().toggle('300');

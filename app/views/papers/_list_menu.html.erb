@@ -6,7 +6,7 @@
 	<% elsif paper[:doi] %>
 		<%= link_to("View on " + paper[:journal], "http://dx.doi.org/" + paper[:doi], :class => 'paperNav') %>
 	<% end %>
-	<% if user_signed_in? && @groups %>
+	<% if user_signed_in? && @groups && false %>
 	<div class = 'hideonload'>
 		<%= link_to('/shares/new/' +  paper[:pubmed_id].to_s, :id => 'shares_new_' + paper[:pubmed_id].to_s, :class => "list_share", :remote => true) do %>Share with Lab <div class = "inline"><icon class = 'icon-share'></icon></div><% end %>
 	</div>      

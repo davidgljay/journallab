@@ -33,11 +33,18 @@
     <% if signed_in? %>
         <% @jclubs.each_with_index do |group, i| %>
             <li>
-              <% if group.newcount(current_user) > 0 %>
-                  <div class = 'badge badge-important feedNotice'><%= group.newcount(current_user) %></div>
-              <% end %>
-              <%= button_to group.shortname , {:action => "feedswitch",  :switchto => group.inspect}, :class => group.inspect + " feed_nav_item loadingPrompt plainSubmit clickme " + (i == 0  && @follows.empty? ? 'feed_nav_selected' : '') , :remote => true %><%= render '/shared/loading' %>
-
+              <div>
+                <% if group.newcount(current_user) > 0 %>
+                    <div class = 'badge badge-important feedNotice'><%= group.newcount(current_user) %></div>
+                <% end %>
+              </div>
+              <div class = "feed_nav_item <%= group.inspect + (i == 0  && @follows.empty? ? ' feed_nav_selected' : '')%>">
+                <div style = "display:inline-block;">
+                  <%= link_to "/feedswitch/#{group.inspect}", :class => group.inspect + " loadingPrompt plainSubmit clickme " , :remote => true do %>
+                      <%=  group.id == 8 ? image_tag('plos_logo.png', :id => 'ploslogo'): group.shortname %><% end %>
+                  <%= render '/shared/loading' %>
+                </div>
+               </div>
             </li>
         <% end %>
     <% end %>

@@ -10,7 +10,7 @@
       <%= render 'reactions/comment_reactions', :comment => comment %>
       <div class = 'subMenu'>
         <ul>
-	<% if comment.text.length > 500 || (owner.comments + comment.owner.comments).uniq.count > 1 %>
+	<% if comment.text.length > 500 || (owner.comments + comment.owner.comments + comment.comments).uniq.count > 1 %>
          <li class="readmore clickme">
 
              <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>

@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="28cbb8b2-c23d-47c0-9ecb-c0ec0aee68f1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/Journal Lab" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/pages/feedswitch.js.erb" afterPath="$PROJECT_DIR$/app/views/pages/feedswitch.js.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pages_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
     </list>
     <ignored path="redcell.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,10 +27,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pages_controller.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pages_controller.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="28" selection-start="1960" selection-end="1960" vertical-scroll-proportion="0.0">
+            <state line="14" column="49" selection-start="597" selection-end="597" vertical-scroll-proportion="0.41666666">
               <folding />
             </state>
           </provider>
@@ -73,10 +74,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="feedswitch.js.erb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="feedswitch.js.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/pages/feedswitch.js.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="26" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0625">
+            <state line="2" column="26" selection-start="109" selection-end="109" vertical-scroll-proportion="-1.25">
               <folding />
             </state>
           </provider>
@@ -146,9 +147,9 @@
         <option value="$PROJECT_DIR$/app/views/papers/_list.html.erb" />
         <option value="$PROJECT_DIR$/app/views/authors/_author_list.html.erb" />
         <option value="$PROJECT_DIR$/app/models/paper.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/pages/feedswitch.js.erb" />
+        <option value="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
       </list>
     </option>
   </component>
@@ -806,13 +807,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="28" selection-start="1960" selection-end="1960" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="66" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
@@ -822,7 +816,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/pages/feedswitch.js.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="26" selection-start="109" selection-end="109" vertical-scroll-proportion="0.0625">
+        <state line="2" column="26" selection-start="109" selection-end="109" vertical-scroll-proportion="-1.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="49" selection-start="597" selection-end="597" vertical-scroll-proportion="0.41666666">
           <folding />
         </state>
       </provider>

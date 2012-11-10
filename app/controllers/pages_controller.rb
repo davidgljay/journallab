@@ -7,11 +7,13 @@ class PagesController < ApplicationController
     if signed_in?
       @jclubs = current_user.groups.select{|g| g.category == 'jclub'}
       if !@jclubs.empty?
-        @paper = @jclubs.first.current_discussion.paper
-        @jclubs.delay.each do |j|
-          j.memberships.select{|m| m.user == current_user}.first.visits.create(:user => current_user, :visit_type => 'feed')			end
-        @heatmap = @paper.heatmap
-        @reaction_map = @paper.reaction_map
+        if @jclubs.first.current_discussion
+          @paper = @jclubs.first.current_discussion.paper
+          @jclubs.delay.each do |j|
+            j.memberships.select{|m| m.user == current_user}.first.visits.create(:user => current_user, :visit_type => 'feed')			end
+          @heatmap = @paper.heatmap
+          @reaction_map = @paper.reaction_map
+        end
       end
       @groups = current_user.groups.all
       @follows  = current_user.follows.all

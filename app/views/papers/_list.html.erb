@@ -26,7 +26,7 @@
       <% end %>
     </div>
     <div class = "sr_title">
-      <%= link_to paper[:title], '/lookup/' + paper[:pubmed_id].to_s %>
+      <%= link_to paper[:title], '/pmid/' + paper[:pubmed_id].to_s %>
     </div>
     <div class = "sr_info2 small">
       <%= paper[:journal] %>, <%= paper[:pubdate].strftime('%B %d, %Y') unless paper[:pubdate] == nil %>

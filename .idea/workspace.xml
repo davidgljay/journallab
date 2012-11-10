@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28cbb8b2-c23d-47c0-9ecb-c0ec0aee68f1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/Journal Lab" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pages_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/papers/_list.html.erb" afterPath="$PROJECT_DIR$/app/views/papers/_list.html.erb" />
     </list>
     <ignored path="redcell.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -27,10 +26,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pages_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pages_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="49" selection-start="597" selection-end="597" vertical-scroll-proportion="0.41666666">
+            <state line="14" column="49" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -110,10 +109,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_list.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="_list.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/papers/_list.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="23" selection-start="807" selection-end="807" vertical-scroll-proportion="-10.0">
+            <state line="28" column="39" selection-start="1139" selection-end="1139" vertical-scroll-proportion="0.40625">
               <folding>
                 <element signature="n#style#0;n#div#3;n#div#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
               </folding>
@@ -144,18 +143,18 @@
         <option value="$PROJECT_DIR$/app/views/papers/_overview.html.erb" />
         <option value="$PROJECT_DIR$/app/views/folders/list.js.erb" />
         <option value="$PROJECT_DIR$/app/views/comments/_first_comment.html.erb" />
-        <option value="$PROJECT_DIR$/app/views/papers/_list.html.erb" />
         <option value="$PROJECT_DIR$/app/views/authors/_author_list.html.erb" />
         <option value="$PROJECT_DIR$/app/models/paper.rb" />
         <option value="$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/pages/feedswitch.js.erb" />
         <option value="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/papers/_list.html.erb" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-1215" />
-    <option name="y" value="24" />
+    <option name="y" value="744" />
     <option name="width" value="1215" />
     <option name="height" value="696" />
   </component>
@@ -617,7 +616,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1215" y="24" width="1215" height="696" extended-state="6" />
+    <frame x="-1215" y="744" width="1215" height="696" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -791,15 +790,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/papers/_list.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="23" selection-start="807" selection-end="807" vertical-scroll-proportion="-10.0">
-          <folding>
-            <element signature="n#style#0;n#div#3;n#div#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spec/factories.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="8" selection-start="952" selection-end="952" vertical-scroll-proportion="0.0">
@@ -823,8 +813,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="49" selection-start="597" selection-end="597" vertical-scroll-proportion="0.41666666">
+        <state line="14" column="49" selection-start="597" selection-end="597" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/papers/_list.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="39" selection-start="1139" selection-end="1139" vertical-scroll-proportion="0.40625">
+          <folding>
+            <element signature="n#style#0;n#div#3;n#div#0;n#td#1;n#tr#0;n#table#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

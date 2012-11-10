@@ -3,24 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28cbb8b2-c23d-47c0-9ecb-c0ec0aee68f1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/Journal Lab" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/davidgljay.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/davidgljay.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/comments_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/comments_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pages_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/papers_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/papers_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/paper.rb" afterPath="$PROJECT_DIR$/app/models/paper.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/authors/_author_list.html.erb" afterPath="$PROJECT_DIR$/app/views/authors/_author_list.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/comments/_first_comment.html.erb" afterPath="$PROJECT_DIR$/app/views/comments/_first_comment.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/feed/_discussion.html.erb" afterPath="$PROJECT_DIR$/app/views/feed/_discussion.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/feed/_nav.html.erb" afterPath="$PROJECT_DIR$/app/views/feed/_nav.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/folders/list.js.erb" afterPath="$PROJECT_DIR$/app/views/folders/list.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/pages/feedswitch.js.erb" afterPath="$PROJECT_DIR$/app/views/pages/feedswitch.js.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/papers/_list.html.erb" afterPath="$PROJECT_DIR$/app/views/papers/_list.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/papers/_list_menu.html.erb" afterPath="$PROJECT_DIR$/app/views/papers/_list_menu.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/papers/_overview.html.erb" afterPath="$PROJECT_DIR$/app/views/papers/_overview.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/papers/_paper_menu.html.erb" afterPath="$PROJECT_DIR$/app/views/papers/_paper_menu.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/jl_styles.css" afterPath="$PROJECT_DIR$/public/stylesheets/jl_styles.css" />
     </list>
     <ignored path="redcell.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,24 +26,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pages_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="pages_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="28" selection-start="1960" selection-end="1960" vertical-scroll-proportion="0.5625">
+            <state line="56" column="28" selection-start="1960" selection-end="1960" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_overview.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/papers/_overview.html.erb">
+      <file leaf-file-name="registrations_controller.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="21" selection-start="78" selection-end="78" vertical-scroll-proportion="-0.625">
-              <folding>
-                <marker date="1352571619000" expanded="true" signature="130:466" placeholder="..." />
-                <marker date="1352571619000" expanded="true" signature="134:447" placeholder="..." />
-                <marker date="1352571619000" expanded="true" signature="236:429" placeholder="..." />
-              </folding>
+            <state line="16" column="66" selection-start="574" selection-end="574" vertical-scroll-proportion="0.47619048">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="factories.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spec/factories.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="8" selection-start="952" selection-end="952" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -72,15 +60,6 @@
               <folding>
                 <marker date="1352573829000" expanded="true" signature="256:305" placeholder="{...}" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="folders_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/folders_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="18" selection-start="342" selection-end="342" vertical-scroll-proportion="0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -156,7 +135,6 @@
       <list>
         <option value="$PROJECT_DIR$/app/views/papers/_paper_menu.html.erb" />
         <option value="$PROJECT_DIR$/app/views/papers/_list_menu.html.erb" />
-        <option value="$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/feed/_nav.html.erb" />
         <option value="$PROJECT_DIR$/public/stylesheets/jl_styles.css" />
         <option value="$PROJECT_DIR$/app/controllers/comments_controller.rb" />
@@ -170,12 +148,13 @@
         <option value="$PROJECT_DIR$/app/views/authors/_author_list.html.erb" />
         <option value="$PROJECT_DIR$/app/models/paper.rb" />
         <option value="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-1215" />
-    <option name="y" value="744" />
+    <option name="y" value="24" />
     <option name="width" value="1215" />
     <option name="height" value="696" />
   </component>
@@ -250,6 +229,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="spec" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -291,6 +284,68 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="devise" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -561,7 +616,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1215" y="744" width="1215" height="696" extended-state="6" />
+    <frame x="-1215" y="24" width="1215" height="696" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -637,20 +692,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/jl_styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="390" column="0" selection-start="6260" selection-end="6260" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/feed/_nav.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="88" selection-start="2138" selection-end="2138" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/comments_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="114" column="76" selection-start="4458" selection-end="4458" vertical-scroll-proportion="0.0">
@@ -698,9 +739,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="21" selection-start="78" selection-end="78" vertical-scroll-proportion="-0.625">
           <folding>
-            <marker date="1352571619000" expanded="true" signature="130:466" placeholder="..." />
-            <marker date="1352571619000" expanded="true" signature="134:447" placeholder="..." />
-            <marker date="1352571619000" expanded="true" signature="236:429" placeholder="..." />
+            <marker date="1352571619000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1352571619000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1352571619000" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -765,9 +806,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/spec/factories.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="8" selection-start="952" selection-end="952" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="28" selection-start="1960" selection-end="1960" vertical-scroll-proportion="0.5625">
+        <state line="56" column="28" selection-start="1960" selection-end="1960" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/devise/registrations_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="66" selection-start="574" selection-end="574" vertical-scroll-proportion="0.47619048">
           <folding />
         </state>
       </provider>

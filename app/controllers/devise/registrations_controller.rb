@@ -14,7 +14,7 @@ class Devise::RegistrationsController < DeviseController
 
     if resource.save
       params[:follows].split(',').each{|f| resource.follows << Follow.find(f.to_i)} if params[:follows]
-      Group.find(8).add(resource) #Adding users to the PLoS group by default
+      Group.find(8).add(resource) unless Group.find_by_id(8).nil? #Adding users to the PLoS group by default
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_in(resource_name, resource)

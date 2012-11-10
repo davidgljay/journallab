@@ -1,5 +1,6 @@
 $('.feed_nav_item').removeClass('feed_nav_selected');
 $('.homePageFeed').html('');
+$('.homePageFeed').hide();
 $('<%= '.' + @switchto %>').find('input').val('<%= @nav_language %>')
 $('<%= '.' + @switchto %>').addClass('feed_nav_selected');
 <% if @switchto == 'group8' %>

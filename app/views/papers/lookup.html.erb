@@ -1,21 +1,21 @@
 <h1>Search Results</h1>
 
-<%= paginate @search_results %>
+  <%= paginate @search_results %>
 
 <% if !@history_results.empty? %>
-<h4>Papers You've Visited</h4>
-<% @history_results.each do |result| %>
-	<div class = "search_results">
-	<%= render 'list', :paper => result %>
-	</div>
-<% end %>
+    <h4>Papers You've Visited</h4>
+    <% @history_results.each do |result| %>
+        <div class = "search_results">
+          <%= render 'list', :paper => result %>
+        </div>
+    <% end %>
 
-<h4>All other papers</h4>
+    <h4>All other papers</h4>
 <% end %>
 <% @search_results.each do |result| %>
-	<div class = "search_results">
-	<%= render 'list', :paper => result %>
-	</div>
+    <div class = "search_results">
+      <%= render 'list', :paper => result %>
+    </div>
 <% end %>
 
 <%= paginate @search_results %>

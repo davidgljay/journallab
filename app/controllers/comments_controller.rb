@@ -16,6 +16,7 @@ class CommentsController < ApplicationController
       @comments = @owner.comments.all
     end
     @owner_type = params[:owner]
+    @paper = @owner.get_paper
     respond_to do |format|
       format.js
     end

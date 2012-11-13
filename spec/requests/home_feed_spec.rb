@@ -24,9 +24,10 @@ describe "Home feeds" do
     sleep(3)
 	page.should have_content('tigers')
 	click_button 'peanutjuice'
-	sleep(2)
+	sleep(3)
 	page.should have_content('No search results on pubmed')
 	find('div.feedPlus').click
+  sleep(1)
 	fill_in 'follow_search_term', :with => 'bears'
 	click_button 'Follow'
 	click_button 'bears'

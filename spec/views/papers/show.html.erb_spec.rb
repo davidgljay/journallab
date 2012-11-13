@@ -20,6 +20,7 @@ describe "papers/show" do
       assign(:numvisits, @paper.visits.map{|v| v.user}.uniq.count)
       assign(:numfig_select, @numfig_select)
       assign(:mode, 1)
+      assign(:interest, 1)
     end
 
     it "should load when not signed in" do

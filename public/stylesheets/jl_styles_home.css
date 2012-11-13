@@ -167,7 +167,7 @@
 	Pagination
 */
 
-.pagination {
+.slideshow_pagination {
 	width:100px;
 	position:relative;
 	left: 570px;
@@ -175,13 +175,13 @@
 	z-index:110;
 }
 
-.pagination li {
+.slideshow_pagination li {
 	float:left;
 	margin:0 1px;
 	list-style:none;
 }
 
-.pagination li a {
+.slideshow_pagination li a {
 	display:block;
 	width:12px;
 	height:0;
@@ -192,7 +192,7 @@
 	overflow:hidden;
 }
 
-.pagination li.current a {
+.slideshow_pagination li.current a {
 	background-position:0 -12px;
 }
 

@@ -507,7 +507,7 @@
 		pagination: true, // boolean, If you're not using pagination you can set to false, but don't have to
 		generatePagination: true, // boolean, Auto generate pagination
 		prependPagination: false, // boolean, prepend pagination
-		paginationClass: 'pagination', // string, Class name for pagination
+		paginationClass: 'slideshow_pagination', // string, Class name for pagination
 		currentClass: 'current', // string, Class name for current class
 		fadeSpeed: 350, // number, Set the speed of the fading animation in milliseconds
 		fadeEasing: '', // string, must load jQuery's easing plugin before http://gsgd.co.uk/sandbox/jquery/easing/

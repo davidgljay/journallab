@@ -155,10 +155,6 @@ $(".leave_reaction").live('click', function() {
 //Image expansion
   
    $(".summary img.thumbnail").live('click', function(){
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $("div.questionbox").hide("slow");
-    $("div.sharebox").hide("slow");
     $(this).parent().next().find(".fullfig").slideToggle();
     });
 

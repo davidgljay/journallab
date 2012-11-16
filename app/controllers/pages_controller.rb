@@ -12,6 +12,7 @@ class PagesController < ApplicationController
           @jclubs.delay.each do |j|
             j.memberships.select{|m| m.user == current_user}.first.visits.create(:user => current_user, :visit_type => 'feed')			end
           @heatmap = @paper.heatmap
+          @heatmap_overview = @paper.heatmap_overview
           @reaction_map = @paper.reaction_map
         end
       end

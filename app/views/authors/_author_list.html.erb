@@ -1,6 +1,6 @@
 <% if paper.authors %>
 	<% paper.authors.each do |a| %>
-	  <%= link_to a[:lastname] + ', ' + a[:firstname], '/lookup/' + a[:firstname] + '%20' + a[:lastname] + '%5BAuthor%20-%20Full%5D' %>
+	  <%= link_to a[:lastname] + ', ' + a[:firstname], '/lookup/' + a[:firstname].gsub(' ', '%20') + '%20' + a[:lastname].gsub(' ', '%20') + '%5BAuthor%20-%20Full%5D' %>
 	  <% unless a == paper.authors.last %>
 	    |
 	  <% end %> 

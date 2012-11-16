@@ -10,8 +10,9 @@ class Devise::RegistrationsController < DeviseController
 
   # POST /resource
   def create
-    build_resource
 
+    build_resource
+    resource.email = resource.email.downcase
     if resource.save
       params[:follows].split(',').each{|f| resource.follows << Follow.find(f.to_i)} if params[:follows]
       Group.find(8).add(resource) unless Group.find_by_id(8).nil? #Adding users to the PLoS group by default

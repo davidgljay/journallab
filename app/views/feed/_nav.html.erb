@@ -41,7 +41,14 @@
               <div class = "feed_nav_item <%= group.inspect + (i == 0  && @follows.empty? ? ' feed_nav_selected' : '')%>">
                 <div style = "display:inline-block;">
                   <%= link_to "/feedswitch/#{group.inspect}", :class => group.inspect + " loadingPrompt plainSubmit clickme " , :remote => true do %>
-                      <%=  group.id == 8 ? image_tag('plos_logo.png', :id => 'ploslogo'): group.shortname %><% end %>
+                      <% if  group.id == 8 && @follows.empty? && i == 0 %>
+                          <%=  image_tag('plos-logo-black.jpg', :id => 'ploslogo') %>
+                       <% elsif group.id == 8 %>
+                          <%=  image_tag('plos_logo.png', :id => 'ploslogo') %>
+                       <% else %>
+                          <%= group.shortname %>
+                      <% end %>
+                  <% end %>
                   <%= render '/shared/loading' %>
                 </div>
                </div>

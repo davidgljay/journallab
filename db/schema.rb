@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108060049) do
+ActiveRecord::Schema.define(:version => 20121118013719) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -317,7 +317,7 @@ ActiveRecord::Schema.define(:version => 20121108060049) do
     t.datetime "updated_at"
     t.string   "encrypted_password"
     t.string   "password_salt"
-    t.boolean  "admin",                :default => false
+    t.boolean  "admin",                  :default => false
     t.text     "specialization"
     t.string   "profile_link"
     t.string   "image_uid"
@@ -326,19 +326,20 @@ ActiveRecord::Schema.define(:version => 20121108060049) do
     t.string   "cv"
     t.string   "position"
     t.string   "institution"
-    t.boolean  "verified",             :default => false
+    t.boolean  "verified",               :default => false
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",        :default => 0
+    t.integer  "sign_in_count",          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.boolean  "certified"
+    t.datetime "reset_password_sent_at"
   end
 
   create_table "visits", :force => true do |t|

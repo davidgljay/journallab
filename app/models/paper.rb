@@ -78,9 +78,11 @@ def search_pubmed(search, numresults = 20)
 			pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
 			
 			if year
-        month = [month, 12].min
-        day = [day, 31].min
-				pubdate = Time.local(year, month, day) 
+        begin
+				  pubdate = Time.local(year, month, day)
+        rescue
+          pubdate = Time.local(year)
+        end
 				latest_activity = pubdate
 			else
 				latest_activity = Time.now - 1.month

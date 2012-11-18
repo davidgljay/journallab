@@ -9,6 +9,8 @@
 	<div id= '<%= g.inspect + '_feed' %>' class = "homePageFeed"><%= render '/feed/discussion', :group => g if i == 0 && @follows.empty? %></div>
       <% end %>
 	<% if signed_in? %>
-      <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @jclubs.empty? %>"><%= render '/feed/follow_form' %></div>
+      <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @jclubs.empty? %>">
+        <%= render '/feed/follow_form' %>
+      </div>
 	<% end %>
 </div>

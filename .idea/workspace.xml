@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="28cbb8b2-c23d-47c0-9ecb-c0ec0aee68f1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/Journal Lab" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/paper.rb" afterPath="$PROJECT_DIR$/app/models/paper.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/schema.rb" afterPath="$PROJECT_DIR$/db/schema.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/requests/signup_spec.rb" afterPath="$PROJECT_DIR$/spec/requests/signup_spec.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="redcell.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -55,15 +54,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_nav.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/feed/_nav.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="51" selection-start="2176" selection-end="2176" vertical-scroll-proportion="-8.25">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="_header.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/_header.html.erb">
           <provider selected="true" editor-type-id="text-editor">
@@ -75,13 +65,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="signup_spec.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="signup_spec.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/requests/signup_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="35" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.8890943">
+            <state line="72" column="35" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#41#1128#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="7" selection-start="43" selection-end="43" vertical-scroll-proportion="0.10619469">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -135,7 +134,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/spec/views/papers/show.html.erb_spec.rb" />
         <option value="$PROJECT_DIR$/spec/requests/home_feed_spec.rb" />
         <option value="$PROJECT_DIR$/app/controllers/comments_controller.rb" />
         <option value="$PROJECT_DIR$/public/javascripts/application.js" />
@@ -151,6 +149,7 @@
         <option value="$PROJECT_DIR$/app/models/paper.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20121118013719_add_recoverability_to_users.rb" />
         <option value="$PROJECT_DIR$/spec/requests/signup_spec.rb" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -794,13 +793,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/javascripts/application.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="56" selection-start="3718" selection-end="3718" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/papers/_list.html.erb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="167" selection-start="1669" selection-end="1669" vertical-scroll-proportion="0.0">
@@ -903,10 +895,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/requests/signup_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="35" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.8890943">
+        <state line="72" column="35" selection-start="2335" selection-end="2335" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#41#1128#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="7" selection-start="43" selection-end="43" vertical-scroll-proportion="0.10619469">
+          <folding />
         </state>
       </provider>
     </entry>

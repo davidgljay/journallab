@@ -56,8 +56,8 @@
 .imageOverlay {
 	position: relative;
 	bottom: 410px;
-   background: rgb(255, 255, 255);
-	background-color: rgba(255, 255, 255, .8 );
+   background: rgb(158, 195, 221);
+   background-color: rgba(158, 195, 221, .8 );;
 }
 
 .firstSlideHeader{
@@ -78,20 +78,21 @@
 }
 
  .slideText {
-	width: 365px;
-	height: 100px;
-	text-align: left;
-	padding: 10px;
+     width: 700px;
+     text-align: center;
+     font-size: 16px;
+     height: 20px;
+     padding-bottom: 5px;
 	}
 
  .slideHeader {
-	text-align: center;
-	height: 25px;
-	width: 700px;	
-	font-size: 24px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	font-weight: bold;
+     text-align: center;
+     height: 40px;
+     width: 700px;
+     font-size: 39px;
+     padding-top: 20px;
+     padding-bottom: 5px;
+     font-weight: bold;
 }
 /*
 .homeSlides {
@@ -128,6 +129,7 @@
 	overflow:hidden;
 	position:relative;
 	display:none;
+    border: 1px solid rgb(158, 195, 221);
 }
 
 /*

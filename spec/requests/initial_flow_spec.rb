@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Initial Flow:" do
 
 
-  describe "Finding feeds and registering" do
+describe "Finding feeds and registering" do
 	it "lets you create feeds and then register" do
 		visit root_path
 		fill_in "temp_follows", :with => "lions,tigers,bears"
@@ -42,7 +42,7 @@ describe "Initial Flow:" do
 		visit '/welcome'
 		page.should have_content('Sign In')
 	end
-  end
+end
   
 end
 

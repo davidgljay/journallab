@@ -55,10 +55,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_slideshow.html.erb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="_slideshow.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/pages/_slideshow.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="27" selection-start="960" selection-end="960" vertical-scroll-proportion="-2.875">
+            <state line="35" column="59" selection-start="1419" selection-end="1419" vertical-scroll-proportion="0.77380955">
               <folding />
             </state>
           </provider>
@@ -67,16 +67,16 @@
       <file leaf-file-name="jl_styles.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/jl_styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="6" selection-start="5" selection-end="6" vertical-scroll-proportion="-0.0">
+            <state line="0" column="6" selection-start="5" selection-end="6" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="jl_styles_home.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="jl_styles_home.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/jl_styles_home.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="93" column="22" selection-start="1486" selection-end="1486" vertical-scroll-proportion="0.7941176">
+            <state line="59" column="43" selection-start="934" selection-end="934" vertical-scroll-proportion="-7.903226">
               <folding />
             </state>
           </provider>
@@ -145,8 +145,8 @@
         <option value="$PROJECT_DIR$/db/migrate/20121118013719_add_recoverability_to_users.rb" />
         <option value="$PROJECT_DIR$/spec/requests/signup_spec.rb" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/app/views/pages/_slideshow.html.erb" />
         <option value="$PROJECT_DIR$/public/stylesheets/jl_styles_home.css" />
+        <option value="$PROJECT_DIR$/app/views/pages/_slideshow.html.erb" />
       </list>
     </option>
   </component>
@@ -198,6 +198,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -456,18 +457,17 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="RailsProjectView" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.externalTools" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/papers/_paper_menu.html.erb" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="Rails.Production: redcell">
     <configuration default="true" type="RakeRunConfigurationType" factoryName="Rake">
@@ -729,7 +729,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32933652" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39488408" sideWeight="0.6713396" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40207833" sideWeight="0.6713396" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32866043" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -810,9 +810,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/feed/_nav.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="51" selection-start="2176" selection-end="2176" vertical-scroll-proportion="-8.25">
-          <folding />
-        </state>
+        <state line="44" column="51" selection-start="2176" selection-end="2176" vertical-scroll-proportion="-8.25" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/_header.html.erb">
@@ -824,9 +822,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/pages/home.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/feed/_feeds.html.erb">
@@ -892,16 +888,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/pages/_slideshow.html.erb">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/jl_styles_home.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="27" selection-start="960" selection-end="960" vertical-scroll-proportion="-2.875">
+        <state line="59" column="43" selection-start="934" selection-end="934" vertical-scroll-proportion="-7.903226">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/jl_styles_home.css">
+    <entry file="file://$PROJECT_DIR$/app/views/pages/_slideshow.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="22" selection-start="1486" selection-end="1486" vertical-scroll-proportion="0.7941176">
+        <state line="35" column="59" selection-start="1419" selection-end="1419" vertical-scroll-proportion="0.77380955">
           <folding />
         </state>
       </provider>

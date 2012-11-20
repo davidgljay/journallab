@@ -21,7 +21,15 @@
 			<% if signed_in? %>
 				<%= link_to '/folders/add/' + paper[:pubmed_id].to_s, :id => "folder_list_" + paper[:pubmed_id].to_s, :class => "dropdown-toggle", :remote => true do %>Add to Folder<div class = "inline"><icon class = 'icon-folder-open'></icon></div><% end %>
 			<% else %>
-				<font rel="tooltip" title="With an account you will be able to easily add papers to folders for later reading." class = "clickme"><div class = 'linklike'>Add to Folder  <div class = "inline"><icon class = 'icon-folder-open'></icon></div></div></font>
+				<div class = 'linklike clickme folderAdd'>
+                  Add to Folder
+                  <div class = "inline">
+                    <icon class = 'icon-folder-open'></icon>
+                  </div>
+                </div>
+               <div class="hideonload" style="font-size: 12px; float:right">
+                 <h5>With an account you will be able to easily add papers to folders for later reading.</h5>
+               </div>
 			<% end %>
 		</div>
 </div>

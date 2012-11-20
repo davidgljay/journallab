@@ -214,6 +214,12 @@ $('.dropdown-toggle').live('click', function(){
 	$(this).next().toggle('300');
 });
 
+// Folder prompt when not signed in
+$('.folderAdd').live('click', function(){
+    $(this).next().toggle();
+
+});
+
 // Carousel
 
 			$('#slides').slides({

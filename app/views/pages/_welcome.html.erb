@@ -1,18 +1,18 @@
 <div id = 'signup'>
-  <h2><strong>Sign up</strong> to save your feeds and start sharing your insights.</h2>
+  <h2><strong>Sign up</strong> to save your feeds.</h2>
   <%= form_for( @newuser, :url => '/users') do |f| %>
       <strong>First name</strong>
       <%= f.text_field :firstname, :style => 'width:120px;' %>
 
-      <strong>Last name</strong>
+      <strong> Last name</strong>
       <%= f.text_field :lastname, :style => 'width:120px' %>
 
-      <strong>Email</strong>
+      <strong> Email</strong>
       <%= f.text_field :email, :value => "Use a .edu address if you have one.", :onfocus =>  "if(this.value == 'Use a .edu address if you have one.') { this.value = ''; }" %>
       <br>
-      <strong>Password</strong>
+      <strong> Password</strong>
       <%= f.password_field :password %>
-      <strong>Confirm Password</strong>
+      <strong> Confirm Password</strong>
       <%= f.password_field :password_confirmation %>
       <%= hidden_field_tag :follows, @follows.map{|follow| follow.id} * ',' %>
       <%= f.submit "Sign up", :class => 'btn-warning round', :onClick => "_gaq.push(['_trackEvent', 'Users', 'Register']);" %>
@@ -27,7 +27,5 @@
     <div class="inline">
       <h3>You can contribute to <b>open access</b> by summarizing the papers you read.</h3>
     </div>
-    <h3>You can <b>earn reputation</b> by leaving insightful comments about those papers.</h3>
-
   </div>
 </div>

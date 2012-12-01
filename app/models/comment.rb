@@ -14,6 +14,7 @@ class Comment < ActiveRecord::Base
   has_many :comments, :order => "created_at ASC"
   has_many :votes
   has_many :maillogs, :as => :about
+  has_many :commentnotices
 
   after_initialize :default_values
 
@@ -85,6 +86,18 @@ class Comment < ActiveRecord::Base
 
   def reactions
     owner.reactions.select{|r| r.user == self.user}
+  end
+
+  # Record whether this comment should pop up on any feeds
+  def feedify
+    p = self.get_paper
+    Follow.where('user_id IS NOT NULL').each do |f|
+      if (p.title.to_s + ' ' + p.abstract.to_s + ' ' + self.text).downcase.include?(f.search_term.downcase)
+        cn = commentnotices.new(:follow_id => f.id)
+        cn.before_save #before_save functionality isn't working for some reason?! This is a hack.
+        cn.save
+      end
+    end
   end
 
   def assign_anon_name

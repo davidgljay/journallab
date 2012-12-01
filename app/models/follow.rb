@@ -4,6 +4,7 @@ serialize :latest_search
 
 belongs_to :user
 has_many :visits, :as => :about, :dependent => :destroy, :order => 'created_at DESC'
+has_many :commentnotices
 belongs_to :follow, :polymorphic => true
 
 validates :name, :presence => true
@@ -57,17 +58,16 @@ end
 
 def recent_activity
   lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
-  papers_with_term = Paper.new.jlab_search(search_term).uniq.map{|p| p.id}
-  unless papers_with_term.empty?
-    papers_with_recent_comments = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where(' papers.id IN (' + papers_with_term * ',' + ') AND "comments"."created_at" >= '+ "'" + lastvisit.to_s + "'").uniq
-    papers_with_recent_comments.map{|p| p.pubmed_id}
-  else
-    []
-  end
+  commentnotices.select{|c| c.comment_date > lastvisit}.map{|c| c.paper.pubmed_id}.uniq
 end
 
+  def recent_activity_count
+    lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
+    commentnotices.select{|c| c.comment_date > lastvisit}.map{|c| c.paper_id}.uniq.count
+  end
+
 def comments_feed
-  Paper.new.comments_search(search_term).map{|p| p.to_hash}
+  commentnotices.map{|cn| cn.paper.to_hash}
 end
 
 # Create a set of temporary follows for the homepage

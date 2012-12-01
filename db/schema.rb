@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118013719) do
+ActiveRecord::Schema.define(:version => 20121130214308) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -54,6 +54,17 @@ ActiveRecord::Schema.define(:version => 20121118013719) do
   add_index "authorships", ["author_id"], :name => "index_authorships_on_author_id"
   add_index "authorships", ["paper_id", "author_id"], :name => "index_authorships_on_paper_id_and_author_id", :unique => true
   add_index "authorships", ["paper_id"], :name => "index_authorships_on_paper_id"
+
+  create_table "commentnotices", :force => true do |t|
+    t.integer  "follow_id"
+    t.integer  "comment_id"
+    t.integer  "paper_id"
+    t.datetime "comment_date"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "commentnotices", ["follow_id"], :name => "index_commentnotices_on_follow_id"
 
   create_table "comments", :force => true do |t|
     t.text     "text"

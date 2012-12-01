@@ -79,6 +79,7 @@ describe Follow do
       @comment = @paper.comments.new(@attr)
       @comment.user = @user
       @comment.save
+      @comment.feedify
       @follow.recent_activity.count.should == 1
     end
 
@@ -88,6 +89,7 @@ describe Follow do
       @comment = @paper.comments.new(@attr)
       @comment.user = @user
       @comment.save
+      @comment.feedify
       @follow.recent_activity.count.should == 1
     end
 
@@ -97,6 +99,7 @@ describe Follow do
       @comment = @paper.comments.new(@attr)
       @comment.user = @user
       @comment.save
+      @comment.feedify
       @follow.recent_activity.count.should == 1
     end
   end
@@ -113,6 +116,7 @@ describe Follow do
       @comment = @paper.comments.new(@attr)
       @comment.user = @user
       @comment.save
+      @comment.feedify
       @follow.comments_feed.count.should == 1
     end
 
@@ -122,6 +126,7 @@ describe Follow do
       @comment = @paper1.comments.new(@attr)
       @comment.user = @user
       @comment.save
+      @comment.feedify
       @follow.comments_feed.count.should == 1
     end
 

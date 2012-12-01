@@ -6,9 +6,9 @@
             <% if follow.newcount > 0 %>
                 <div class = 'badge badge-warning feedNotice'><%= follow.newcount %></div>
             <% end %>
-            <% if follow.recent_activity.count > 0 %>
+            <% if follow.recent_activity_count > 0 %>
                 <div class = 'badge badge-important feedNotice'>
-                  <%= follow.recent_activity.count %>
+                  <%= follow.recent_activity_count %>
                 </div>
             <% end %>
           </div>

@@ -67,8 +67,11 @@ class PagesController < ApplicationController
       @switchto = params[:switchto]
       @switchto_render = "discussion"
       @group = Group.find(@switchto[5..-1].to_i)
-      @group.memberships.select{|m| m.user == current_user}[0].visits.create(:user => current_user, :visit_type => 'feed') if signed_in?
-      @group.delay.set_newcount
+      if signed_in?
+        @membership = @group.memberships.select{|m| m.user == current_user}[0]
+        @membership.visits.create(:user => current_user, :visit_type => 'feed')
+        @membership.save
+      end
       @nav_language = @group.shortname
       @paper = @group.current_discussion.paper
       @heatmap = @paper.heatmap

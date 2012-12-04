@@ -12,6 +12,11 @@
 
     <h4>All other papers</h4>
 <% end %>
+<% if @search_results.empty? %>
+    <div style = "margin-left:20px;">
+      <h3>No search results on pubmed, are you sure that you entered your search correctly?</h3>
+    </div>
+<% else %>
 <% @search_results.each do |result| %>
     <div class = "search_results">
       <%= render 'list', :paper => result %>
@@ -19,3 +24,5 @@
 <% end %>
 
 <%= paginate @search_results %>
+<br>
+<br>

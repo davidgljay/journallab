@@ -26,6 +26,7 @@ has_many :assertions, :through => :filters, :source => :assertion
 has_many :sumreqs, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :maillogs, :as => :about
+has_many :visits, :as => :about, :dependent => :destroy, :order => 'created_at DESC'
 
 
 validates :code, :uniqueness => true, :allow_nil => true
@@ -367,7 +368,7 @@ def current_discussion
 end
 
 def set_newcount
-	memberships.each{|m| m.set_newcount}
+	memberships.each{|m| m.save}
 end
 
 def newcount(user)

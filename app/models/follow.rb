@@ -67,7 +67,7 @@ end
   end
 
 def comments_feed
-  commentnotices.map{|cn| cn.paper.to_hash}
+  commentnotices.map{|cn| cn.paper.to_hash}.uniq
 end
 
 # Create a set of temporary follows for the homepage

@@ -1,6 +1,6 @@
 <h1>Search Results</h1>
 
-  <%= paginate @search_results %>
+<%= paginate @search_results %>
 
 <% if !@history_results.empty? %>
     <h4>Papers You've Visited</h4>
@@ -17,11 +17,12 @@
       <h3>No search results on pubmed, are you sure that you entered your search correctly?</h3>
     </div>
 <% else %>
-<% @search_results.each do |result| %>
-    <div class = "search_results">
-      <%= render 'list', :paper => result %>
-    </div>
-<% end %>
+    <% @search_results.each do |result| %>
+        <div class = "search_results">
+          <%= render 'list', :paper => result %>
+        </div>
+    <% end %>
+<% end %> %>
 
 <%= paginate @search_results %>
 <br>

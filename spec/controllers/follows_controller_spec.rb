@@ -14,6 +14,7 @@ describe FollowsController do
       @comment = @paper1.comments.new(@attr)
       @comment.user = @user
       @comment.save
+      @comment.feedify
     end
 
     it "should switch to view only papers with comments" do

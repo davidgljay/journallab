@@ -55,7 +55,7 @@ def search_pubmed(search, numresults = 20)
 	#cleansearch = search.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').gsub(/[.]/, "+").gsub(/[^0-9A-Za-z'" ]/, '+').gsub(/[ ]/, "%20")
 
 
-# Non-alphanumerics are apprently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
+# Non-alphanumerics are apparently verboden on heroku,,.gsub(/['α']/, "alpha").gsub(/['β']/, "beta").gsub(/['δ']/, "delta").gsub(/['ε']/, "epsilon").gsub(/['ζ']/, "zeta").gsub(/['θ']/, "theta").gsub(/['ι']/, "iota").gsub(/['κ']/, "kappa").gsub(/['λ']/, "lamda").gsub(/['μ']/, "mu").gsub(/['ν']/, "nu").gsub(/['ξ']/, "xi").gsub(/['ο']/, "omicron").gsub(/['π']/, "pi").gsub(/['ρ']/, "rho").gsub(/['Σσς']/, "sigma").gsub(/['Ττ']/, "tau").gsub(/['Υυ']/, "upsilon").gsub(/['Φφ']/, "phi").gsub(/['Χχ']/, "chi").gsub(/['Ψψ']/, "psi").gsub(/['Ωω']/, "omega")
 
       	#Get a list of pubmed IDs for the search terms
       	url1 = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=' + cleansearch + '&retmax=' + numresults.to_s
@@ -64,7 +64,7 @@ def search_pubmed(search, numresults = 20)
       	data = Nokogiri::XML(open(url2)) 
       	search_results = []
 		newpapers = []
-      data.xpath('//PubmedArticle').each do |article|
+      data.xpath('//PubmedArticle').each_with_index do |article, i|
         	pid = article.xpath('MedlineCitation/PMID').text
         	paper = Paper.find_by_pubmed_id(pid)
         	if paper.nil?
@@ -83,7 +83,8 @@ def search_pubmed(search, numresults = 20)
         rescue
           pubdate = Time.local(year)
         end
-				latest_activity = pubdate
+        # This is the term used to order search results. Add a small pad to reflect pubmed search order, so that search results match what someone would get on an organic pubmed search.
+				latest_activity = pubdate + (200 - i).minutes
 			else
 				latest_activity = Time.now - 1.month
 			end
@@ -113,7 +114,6 @@ def search_pubmed(search, numresults = 20)
 		newpapers << newpaper
         	search_results << paper
 	end
-	newpapers.delay.each{|p| Paper.create(p)}
 	search_results
   end
 

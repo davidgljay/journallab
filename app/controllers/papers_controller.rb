@@ -101,7 +101,7 @@ class PapersController < ApplicationController
       @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search, 150)).uniq
       @history_results = []
       if signed_in?
-        @history_results = (@search_results & current_user.visited_papers.map{|p| p.to_hash}).first(20)
+        @history_results = (@search_results & current_user.visited_papers.map{|p| p.to_hash}).first(10)
         @search_results = @search_results - @history_results
         @search_results.select{|p| p[:latest_activity].nil?}.each {|p| p[:latest_activity] ||= Time.now - 1.month}
       end

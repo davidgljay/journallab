@@ -50,6 +50,15 @@ describe Follow do
       @follow.update_feed
       @follow.newcount.should < 40
     end
+
+    it "should return the same results as a pubmed search with no comments or summaries" do
+      @follow.name = 'rna'
+      @follow.search_term = 'rna'
+      @follow.update_feed
+      feed = @follow.feed.map{|p| p[:pubmed_id]}
+      search_results = Paper.new.search_pubmed('rna').map{|p| p[:pubmed_id]}
+      feed.first(20).should == search_results.first(20)
+    end
   end
 
   describe "activity count" do

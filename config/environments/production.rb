@@ -39,8 +39,8 @@ Redcell::Application.configure do
   config.action_mailer.smtp_settings = {
     :address => 'smtp.gmail.com',
     :port => 587,
-    :domain               => 'journallab.com',
-    :user_name            => 'david@journallab.com',
+    :domain               => 'journallab.org',
+    :user_name            => 'david@journallab.org',
     :password             => 'stemcellironman',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }

@@ -57,7 +57,7 @@ class Follow < ActiveRecord::Base
   def set_newcount
     if latest_search
       lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
-      newcount = latest_search.select{|p| p[1] > lastvisit}.count
+      newcount = latest_search.select{|p| p[0][:pubdate] > lastvisit}.count
       if newcount == 40 #Pubmed search results gives an inaccurate number of search results, when the number is low count the results manually in JLab (this is inconvenient for large #s.
         newcount = Paper.new.pubmed_search_count(search_term, lastvisit)
       end

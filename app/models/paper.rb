@@ -154,17 +154,17 @@ def set_all_interest
 	end
 end
 
-def search_activity(search_term) 
-	cleansearch = search_term.gsub(/[']/, "''")
-  comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('UPPER("comments"."text") LIKE '"'%" + search_term.upcase + "%'")
-  summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where("UPPER(assertions.text) LIKE '%#{search_term.upcase}%' OR UPPER(assertions.method_text) LIKE '%#{search_term.upcase}%'")
+def search_activity(search_term)
+  cleansearch = search_term.gsub(/[']/, "''")
+  comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('UPPER("comments"."text") LIKE '"'%" + cleansearch.upcase + "%'")
+  summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where("UPPER(assertions.text) LIKE '%#{cleansearch.upcase}%' OR UPPER(assertions.method_text) LIKE '%#{cleansearch.upcase}%'")
 	(summary_papers + comment_papers).uniq.map{|p| p.to_hash}
 end
 
 # Search for papers with a given search term in the J.Lab database
 def jlab_search(search_term)
   cleansearch = search_term.gsub(/[']/, "''")
-  papers = Paper.find(:all, :conditions => ['(UPPER(title) LIKE ? or UPPER(abstract) LIKE ?)', "%" + cleansearch.upcase + "%", "%" + cleansearch.upcase + "%"])
+  papers = Paper.where("UPPER(title) LIKE '%#{cleansearch.upcase}%' OR UPPER(abstract) LIKE '%#{cleansearch.upcase}%'")
   comment_papers = Paper.joins('INNER JOIN "comments" ON "papers"."id" = "comments"."get_paper_id"').where('UPPER("comments"."text") LIKE '"'%" + cleansearch.upcase + "%'")
   summary_papers = Paper.joins('INNER JOIN "assertions" ON "papers"."id" = "assertions"."get_paper_id"').where("UPPER(assertions.text) LIKE '%#{cleansearch.upcase}%' OR UPPER(assertions.method_text) LIKE '%#{cleansearch.upcase}%'")
   (papers + comment_papers + summary_papers).sort{|x,y| x.latest_activity <=> y.latest_activity}

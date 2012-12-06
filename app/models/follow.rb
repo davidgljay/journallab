@@ -51,7 +51,7 @@ class Follow < ActiveRecord::Base
   #end
 
   def update_all_feeds
-    Follow.all.select{|f| f.user.nil? }.each{|f| f.update_feed}
+    Follow.all.select{|f| f.user.nil? }.each{|f| f.delay.update_feed}
   end
 
   def set_newcount

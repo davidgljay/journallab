@@ -32,6 +32,6 @@
     	<%= hidden_field_tag :owner_class, owner.class.to_s %>
     <% end %>
   <div class="actions">
-    <%= f.submit :value => "Submit", :class => 'btn' %>
+    <%= f.submit :value => "Submit", :class => 'btn loadingPrompt' %><%= render '/shared/loading' %>
   </div>
 <% end %>

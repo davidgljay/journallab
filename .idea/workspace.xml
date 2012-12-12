@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28cbb8b2-c23d-47c0-9ecb-c0ec0aee68f1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/Journal Lab" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/users_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/users_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/user.rb" afterPath="$PROJECT_DIR$/app/models/user.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/_user.html.erb" afterPath="$PROJECT_DIR$/app/views/users/_user.html.erb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/users/index.html.erb" afterPath="$PROJECT_DIR$/app/views/users/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/comments/_form.html.erb" afterPath="$PROJECT_DIR$/app/views/comments/_form.html.erb" />
     </list>
     <ignored path="redcell.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,15 +26,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="edit.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/devise/passwords/edit.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="99" selection-start="519" selection-end="519" vertical-scroll-proportion="-9.375">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/users/index.html.erb">
           <provider selected="true" editor-type-id="text-editor">
@@ -83,10 +71,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/user.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="285" column="133" selection-start="8940" selection-end="8940" vertical-scroll-proportion="0.32291666">
+            <state line="285" column="133" selection-start="8940" selection-end="8940" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_list.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/comments/_list.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_form.html.erb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/comments/_form.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="100" selection-start="1275" selection-end="1275" vertical-scroll-proportion="0.7948244">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_nav.html.erb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/feed/_nav.html.erb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="222" selection-start="870" selection-end="870" vertical-scroll-proportion="-10.0">
               <folding />
             </state>
           </provider>
@@ -96,24 +111,6 @@
         <entry file="file://$PROJECT_DIR$/app/views/devise/confirmations/new.html.erb">
           <provider selected="true" editor-type-id="text-editor">
             <state line="3" column="0" selection-start="171" selection-end="202" vertical-scroll-proportion="-1.875">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="edit.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/devise/registrations/edit.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="100" selection-start="393" selection-end="393" vertical-scroll-proportion="-5.625">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="new.html.erb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/devise/passwords/new.html.erb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -132,7 +129,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/papers/lookup.html.erb" />
         <option value="$PROJECT_DIR$/spec/controllers/follows_controller_spec.rb" />
         <option value="$PROJECT_DIR$/app/models/commentnotice.rb" />
@@ -148,6 +144,7 @@
         <option value="$PROJECT_DIR$/app/views/users/index.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
+        <option value="$PROJECT_DIR$/app/views/comments/_form.html.erb" />
       </list>
     </option>
   </component>
@@ -297,6 +294,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="feed" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="redcell" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="devise" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -367,7 +386,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="comments" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -729,25 +752,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="50" selection-start="956" selection-end="956" vertical-scroll-proportion="0.28977272" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/paper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="166" column="24" selection-start="8017" selection-end="8017" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/models/follow_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="51" selection-start="1915" selection-end="1915" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/tasks/update_feeds.rake">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="22" selection-start="92" selection-end="92" vertical-scroll-proportion="0.0">
@@ -834,7 +838,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/user.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="285" column="133" selection-start="8940" selection-end="8940" vertical-scroll-proportion="0.32291666">
+        <state line="285" column="133" selection-start="8940" selection-end="8940" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/comments/_list.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/feed/_nav.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="222" selection-start="870" selection-end="870" vertical-scroll-proportion="-10.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/comments/_form.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="100" selection-start="1275" selection-end="1275" vertical-scroll-proportion="0.7948244">
           <folding />
         </state>
       </provider>

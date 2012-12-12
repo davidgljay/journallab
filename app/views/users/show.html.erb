@@ -51,7 +51,6 @@
         		</div>      <% else %>
         			<h2><%= @user.position %><%= ', ' + @user.institution if @user.institution %></h2>
       			<% end %><br>
-      			<h2><%= @user.get_group.name %></h2></p>
     			<% if @user == current_user %>
        				<div class = "clickme editme" id="specialization"><h3><%= @user.specialization ? "Focus: #{@user.specialization}" : "Enter your research focus" %></h3></div>
         	 		<div class = "hideonload editme_form">

@@ -6,7 +6,11 @@ before_filter :admin_user,   :only => [:destroy, :index]
 
   def index
     @title = "All users"
-    @users = User.all.sort{|x,y| y.created_at <=> x.created_at}.paginate(:page => params[:page])
+    @users = Kaminari.paginate_array(User.all.sort{|x,y| y.created_at <=> x.created_at}).page(params[:page]).per(20)
+    respond_to do |format|
+      format.html
+      format.csv { send_data User.new.to_csv }
+    end
   end
 
   def show

@@ -52,6 +52,13 @@ $(".list_abstract").live('click', function(){
 	$(this).parent().parent().parent().find('.abstract_long').slideToggle(300);
 });
 
+//Citation expansion
+
+$(".citation_link").live('click', function(){
+    	$(this).parent().next().slideToggle(300);
+});
+
+
 //Blog post expansion
 $("#blogs").find("h4").click(function(){
 	$(this).next().slideToggle(300);
@@ -126,6 +133,13 @@ $(".leave_reaction").live('click', function() {
 //     });
 
 
+    // Anonymity Lightbox
+    $(".anon_learn_more").live('click', function(){
+
+        $(this).parent().next().toggle();
+    });
+
+
 //Toggle Figure sections
    $("div.figtoggle").live('click', function(){
      $(this).next().toggle(300);
@@ -148,10 +162,6 @@ $(".leave_reaction").live('click', function() {
 //Image expansion
   
    $(".summary img.thumbnail").live('click', function(){
-    $("div.improve").hide("slow");
-    $("div.commentbox").hide("slow");
-    $("div.questionbox").hide("slow");
-    $("div.sharebox").hide("slow");
     $(this).parent().next().find(".fullfig").slideToggle();
     });
 
@@ -168,7 +178,7 @@ $(".leave_reaction").live('click', function() {
 	$('div#add_figs').show(300);
      });	
 
-//Image upload for admins
+//Image upload
     $(".fig_upload").live('click', function(){
       $(this).parent().find('div.upload_form').show();
      });
@@ -209,6 +219,12 @@ $('body').bind("ajax:error", function(event, data, status, xhr) {
 
 $('.dropdown-toggle').live('click', function(){
 	$(this).next().toggle('300');
+});
+
+// Folder prompt when not signed in
+$('.folderAdd').live('click', function(){
+    $(this).next().toggle();
+
 });
 
 // Carousel

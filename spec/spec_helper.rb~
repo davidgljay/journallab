@@ -7,6 +7,10 @@ class ActionController::TestCase
   include Devise::TestHelpers
 end
 
+RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
@@ -33,7 +37,7 @@ RSpec.configure do |config|
      new_user_session_path
   end
 
-  def intergration_sign_in(user)
+  def integration_sign_in(user)
       visit '/users/sign_in'
       fill_in "user_email", :with => user.email
       fill_in "user_password", :with => user.password
@@ -48,8 +52,8 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false
   
-  DatabaseCleaner.strategy = :truncation
-
+  DatabaseCleaner.strategy = :transaction
+  
   config.before(:each) do
     DatabaseCleaner.start
   end

@@ -27,7 +27,7 @@ describe "Assertions" do
 	first('#paper' + @paper.id.to_s).first('p.method').click
 	first('#paper' + @paper.id.to_s).first("#assertion_method_text").set("Aloe juice")
 	first('#paper' + @paper.id.to_s).first(".methods_form").click_button("Submit")
-	within('body') { page.should have_content("Aloe juice") }
+	within('body') { page.should have_text("Aloe juice") }
 end
 
 #    it "processes a summary request", :js => true do

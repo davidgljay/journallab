@@ -4,7 +4,8 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
 
   def list
     @owner = params[:owner].constantize.find(params[:id])
-    @assertions = @owner.assertions.all
+    @latest = @owner.latest_assertion
+    @assertions = @owner.assertions.select{|a| a != @latest}
     @owner_type = params[:owner]
     @paper = @owner.get_paper
     @group = current_user.get_group

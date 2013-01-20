@@ -45,7 +45,7 @@ def inspect
 end
 
 def to_hash
-	{ :pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at, :percent_summarized => percent_summarized, :comments => meta_comments.count}
+	{ :id => id, :pubmed_id => pubmed_id, :title => title, :journal => journal, :pubdate => pubdate, :abstract => abstract, :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => citation, :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at, :percent_summarized => percent_summarized, :comments => meta_comments.count}
 end
 
 # àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸåÅæÆœŒçÇðÐøØ¿¡ß

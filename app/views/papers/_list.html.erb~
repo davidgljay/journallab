@@ -1,16 +1,52 @@
-<table><tr><td width = "7px" class = "<%= "heat" + paper[:my_heat].to_s %>"></td>
-<td width = '900px'>
-	<%= render 'papers/list_menu', :paper => paper %>
-	<div class = "sr_title"><%= link_to paper[:title], '/lookup/ + paper[:pubmed_id].to_s %>	
-	</div>
-	<div class = "sr_info2 small"><%= paper[:journal] %>, <%= paper[:pubdate].strftime('%B %d, %Y') unless paper[:pubdate] == nil %>
+<table><tr><td width = "7px"></td>
+  <td width = '900px'>
+    <%= render 'papers/list_menu', :paper => paper %>
+    <div class="small grey">
+      <% if paper[:percent_summarized].to_i > 0 %>
+          <div style="display: inline-block;">
+            <div class="progress">
+              <div class="bar" style="width: <%=  paper[:percent_summarized] %>%;">
+              </div>
+            </div>
+          </div>
+          <div style="display: inline-block; margin-right: 5px;">
+            <%=  paper[:percent_summarized] %>% Summarized
+          </div>
+      <% end  %>
+      <% if paper[:comments].to_i > 0 %>
+          <div style="display: inline-block;">
+            <%= pluralize(paper[:comments], 'Comment') %>
+          </div>
+            <% if (@recent_activity ||= []).include?(paper[:pubmed_id]) %>
+                <div class='new_comment_flag badge badge-important btn-small' style="font-size: 8px; padding:2px;">
+                  New
+                </div>
+            <% end  %>
 
-	<% if !paper[:abstract].empty? %>
-	<p class='abstract_long hideonload'><%= paper[:abstract] %></p>
-	<% end %>
-	<% if paper[:first_last_authors] %>
-		<div class = "sr_info2 small grey">First Author: <%= link_to paper[:first_last_authors].first[:name], '/lookup/' + paper[:first_last_authors].first[:firstname] + '+' + paper[:first_last_authors].first[:lastname] %> | Last Author: <%= link_to  paper[:first_last_authors].last[:name], '/lookup/' + paper[:first_last_authors].last[:firstname] + '+' + paper[:first_last_authors].last[:lastname] %></div>
-	<% end %>	
-</td>
+      <% end %>
+    </div>
+    <div class = "sr_title">
+      <%= link_to paper[:title], '/pmid/' + paper[:pubmed_id].to_s %>
+    </div>
+    <div class = "sr_info2 small">
+      <%= paper[:journal] %>, <%= paper[:pubdate].strftime('%B %d, %Y') unless paper[:pubdate] == nil %>
+    </div>
+    <% if !paper[:abstract].empty? %>
+        <p class='abstract_long hideonload'><%= paper[:abstract] %></p>
+    <% end %>
+    <% if !(paper[:authors] ||= []).empty? %>
+        <div class = "sr_info2 small grey">First Author: <%= link_to authorname(paper[:authors].first), '/lookup/' + paper[:authors].first[:firstname].gsub(' ', '%20') + '%20' + paper[:authors].first[:lastname].gsub(' ', '%20') + '%5BAuthor%20-%20Full%5D' %>
+          <% unless paper[:authors].length == 1 %>
+              | Last Author: <%= link_to  authorname(paper[:authors].last), '/lookup/' + paper[:authors].last[:firstname].gsub(' ', '%20') + '%20' + paper[:authors].last[:lastname].gsub(' ', '%20') + '%5BAuthor%20-%20Full%5D' %> | 
+<div class = 'linklike inline citation_link'> 
+Citation
+</div>
+</div>
+	<div class = 'sr_info2 citation hideonload'>
+		<%= paper[:citation] %>
+        </div>
+          <% end %>
+    <% end %>
+  </td>
 </tr>
 </table>

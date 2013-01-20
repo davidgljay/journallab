@@ -52,6 +52,13 @@ $(".list_abstract").live('click', function(){
 	$(this).parent().parent().parent().find('.abstract_long').slideToggle(300);
 });
 
+//Citation expansion
+
+$(".citation_link").live('click', function(){
+    	$(this).parent().parent().find('.citation').slideToggle(300);
+});
+
+
 //Blog post expansion
 $("#blogs").find("h4").click(function(){
 	$(this).next().slideToggle(300);

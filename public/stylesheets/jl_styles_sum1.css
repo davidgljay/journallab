@@ -30,6 +30,14 @@
 	text-align: right;
 }
 
+
+#citation {
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 12px;
+	line-height: 15px;
+}
+
 .paperNav {
 	color: #63A82A;
 	font-weight: bold;

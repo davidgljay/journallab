@@ -9,7 +9,7 @@ describe PagesController do
       it "should be successful" do
 	get 'home'
         response.should be_success
-        response.body.should have_selector('title', :content => "Home")
+        response.body.should have_selector('title', :text => "Home")
       end
      end     
 
@@ -21,7 +21,7 @@ describe PagesController do
     it "should be successful" do
        get 'about'
        response.should be_success
-       response.body.should have_selector('title', :content => "About")
+       response.body.should have_selector('title', :text => "About")
      end
    end
     

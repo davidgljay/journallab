@@ -14,8 +14,15 @@
 <div id="paperInfo" class = "round">
 <%= render 'paper_menu' %>
 <h1><%= @paper.title %></h1>
-	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
+	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %> | 
+		<div class = 'linklike inline clickme citation_link'> 
+			Citation
+		</div>
+	</h3>
 	<div><%= render '/authors/author_list', :paper => @paper %></div>
+	<div id = 'citation' class = 'citation hideonload'>
+		<%= @paper.citation %>
+        </div>
 	<% if @paper.abstract.nil? || @paper.abstract.empty? %>
 		<% if @paper.description %>
 

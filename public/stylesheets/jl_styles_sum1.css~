@@ -5,7 +5,7 @@
 	margin-bottom: 10px;
 }
 
-#blogs {
+#blogs div {
 	text-align: left;
 }
 
@@ -28,6 +28,13 @@
 	float: right;
 	margin-right: 10px;
 	text-align: right;
+}
+
+
+#citation {
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 12px;
 }
 
 .paperNav {

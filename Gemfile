@@ -34,6 +34,7 @@ end
   gem 'pg'
   gem 'heroku'
   gem 'kaminari'
+  gem 'rb-readline'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby'

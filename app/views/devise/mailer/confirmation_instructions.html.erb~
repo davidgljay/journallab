@@ -1,5 +1,15 @@
-<p>Welcome <%= @resource.firstname %>!</p>
+<p><h2>Welcome <%= @resource.firstname %>!</h2></p>
 
-<p>Please confirm your account through the link below:</p>
+<p>Thanks for checking out Journal Lab. We’re experimenting with new ways to track and communicate about published science, and we’re excited to have your participation. To get started:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+<p><b>1)</b> <%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+
+<p><b>2)</b> Come back to Journal Lab regularly to see if there are new, relevant papers posted on PubMed.</p>
+
+<p><b>3)</b> Leave an insight about the next paper you read (it takes about 90 seconds.) Other people following that paper will see it and start a discussion!</p>
+
+<p>Great to meet you,</p>
+
+<p>Rob and David<br>
+<b>The Journal Lab Team</b></p>
+

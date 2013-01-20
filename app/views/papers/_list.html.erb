@@ -37,7 +37,14 @@
     <% if !(paper[:authors] ||= []).empty? %>
         <div class = "sr_info2 small grey">First Author: <%= link_to authorname(paper[:authors].first), '/lookup/' + paper[:authors].first[:firstname].gsub(' ', '%20') + '%20' + paper[:authors].first[:lastname].gsub(' ', '%20') + '%5BAuthor%20-%20Full%5D' %>
           <% unless paper[:authors].length == 1 %>
-              | Last Author: <%= link_to  authorname(paper[:authors].last), '/lookup/' + paper[:authors].last[:firstname].gsub(' ', '%20') + '%20' + paper[:authors].last[:lastname].gsub(' ', '%20') + '%5BAuthor%20-%20Full%5D' %></div>
+              | Last Author: <%= link_to  authorname(paper[:authors].last), '/lookup/' + paper[:authors].last[:firstname].gsub(' ', '%20') + '%20' + paper[:authors].last[:lastname].gsub(' ', '%20') + '%5BAuthor%20-%20Full%5D' %> | 
+<div class = 'linklike inline clickme citation_link'> 
+Citation
+</div>
+</div>
+	<div class = 'sr_info2 citation hideonload'>
+		<%= paper[:citation] %>
+        </div>
           <% end %>
     <% end %>
   </td>

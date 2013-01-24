@@ -41,6 +41,45 @@ before_filter :is_group_lead, :only => [:remove]
 	redirect_to root_path
   end
 
+  def join
+    @group = Group.find(params[:id])
+    @user = current_user
+    @group.add(@user)
+    flash[:success] = "Congratulations! You have joined the discussion group " + @group.name
+    redirect_to root_path
+  end
+
+  def leave
+    @group = Group.find(params[:id])
+    @user = current_user
+    @group.users = @group.users - [@user]
+    @group.save
+    flash[:success] = "You have left the discussion group " + @group.name
+    redirect_to root_path
+  end
+
+  def discuss
+    @group = Group.find(params[:id])
+    @user = current_user
+    @paper = Paper.find(params[:paper_id])
+    if @group.leads.include?(@user)
+      @group.discuss(@paper, @user)
+      flash[:success] = "This paper will now appear in the tab marked " + @group.name
+    end
+    redirect_to @paper
+  end
+
+def undiscuss
+  @user = current_user
+  @groups = @user.memberships.select{|m| m.lead }.map{|m| m.group}
+  @paper = Paper.find(params[:paper_id])
+  @groups.each do |group|
+    group.undiscuss(@paper)
+    flash[:success] = "This paper has been removed from your #{'group'.pluralize(@groups.count)}."
+  end
+  redirect_to @paper
+end
+
 private
    def is_group_lead
 	@group = Group.find(params[:id])

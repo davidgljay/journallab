@@ -27,4 +27,51 @@ describe GroupsController do
 		end
 	end
 
+  describe "discussing and undiscussing papers" do
+    before(:each) do
+      @group = create(:group)
+      @lead = create(:user)
+      @group.add(@lead)
+      @group.make_lead(@lead)
+      @paper = create(:paper)
+    end
+
+    it "should discuss a paper" do
+      test_sign_in(@lead)
+      get :discuss, {:id => @group.id, :paper_id => @paper.id}
+      @group.discussions.last.paper.should == @paper
+    end
+
+    it "should undiscuss a paper" do
+      test_sign_in(@lead)
+      @group.discuss(@paper,@lead)
+      get :undiscuss, {:id => @group.id, :paper_id => @paper.id}
+      @group.papers.include?(@paper).should be_false
+    end
+
+  end
+
+  describe "joining and leaving a group" do
+    before(:each) do
+      @group = create(:group)
+      @user= create(:user)
+    end
+
+    it "should let a user join" do
+      test_sign_in(@user)
+      get :join, {:id => @group.id}
+      @group.reload
+      @group.users.should include @user
+    end
+
+    it "should let a user leave" do
+      @group.add(@user)
+      test_sign_in(@user)
+      get :leave, {:id => @group.id}
+      @group.reload
+      @group.users.include?(@user).should be_false
+    end
+
+  end
+
 end

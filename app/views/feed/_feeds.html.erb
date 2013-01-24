@@ -11,6 +11,8 @@
 	<% if signed_in? %>
       <div id='follow_form' class = "homePageFeed <%= 'hideonload' unless @follows.empty? && @jclubs.empty? %>">
         <%= render '/feed/follow_form' %>
+        <%= render '/groups/group_list' %>
       </div>
+
 	<% end %>
 </div>

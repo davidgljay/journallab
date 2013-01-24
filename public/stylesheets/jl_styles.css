@@ -154,10 +154,7 @@ textarea, input [type = 'text'] {
     color: #FFFFFF;
     text-decoration: underline;
 }
-#paperInfo a {
-    color: #63a82a;
-    text-decoration: none;
-}
+
 #profileInfo {
     border: 2px solid #005997;
     padding-top: 20px;
@@ -172,6 +169,8 @@ textarea, input [type = 'text'] {
     padding-right: 20px;
     margin-right: 5px;
 }
+
+
 .notes {
     font-style: italic;
     color: #666666;
@@ -292,6 +291,12 @@ td#profileImage {
 icon {
     opacity:0.6;
     filter:alpha(opacity=60); /* For IE8 and earlier */
+}
+
+img.icon {
+    width: 14px;
+    height: 14px;
+    opacity: 0.6;
 }
 
 /* Full Page Overlays */
@@ -607,6 +612,8 @@ input[type = 'text'].new_folder_text {
     font-size: 9px;
     height: 12px;
 }
+
+
 /* Heatmaps */
 
 #legend {

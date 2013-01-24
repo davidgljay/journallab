@@ -18,7 +18,7 @@ has_many :users, :through => :memberships, :source => :user
 #Filter Associations
 has_many :filters, :foreign_key => "group_id",
                            :dependent => :destroy
-has_many :discussions, :dependent => :destroy
+has_many :discussions, :dependent => :destroy, :order => 'starttime DESC'
 has_many :papers, :through => :discussions, :source => :paper
 has_many :comments, :through => :filters, :source => :comment
 has_many :questions, :through => :filters, :source => :question
@@ -364,7 +364,22 @@ end
 
 # Functions related to Journal clubs
 def current_discussion
-	discussions.select{|d| d.starttime <= Time.now}.sort{|x,y| y.starttime <=> x.starttime}.first
+	discussions.select{|d| d.starttime}.first
+end
+
+def discuss(paper, user)
+  self.papers << paper
+  d = self.discussions.select{|d| d.paper == paper}.first
+  d.starttime = Time.now
+  d.user = user
+  d.save
+end
+
+def undiscuss(paper)
+  d = self.discussions.select{|d| d.paper == paper}
+  if d
+    d.each{|disc| disc.destroy}
+  end
 end
 
 def set_newcount

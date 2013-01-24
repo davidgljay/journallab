@@ -16,6 +16,10 @@ Redcell::Application.routes.draw do
 
   resources :groups
    match '/groups(/:id)/remove(/:u_id)', :to => 'groups#remove'
+   match '/groups(/:id)/discuss(/:paper_id)', :to => 'groups#discuss'
+   match '/groups/undiscuss(/:paper_id)', :to => 'groups#undiscuss'
+   match '/groups(/:id)/join' , :to => 'groups#join'
+  match '/groups(/:id)/leave' , :to => 'groups#leave'
 
   resources :filters
   resources :comments

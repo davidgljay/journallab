@@ -8,3 +8,9 @@
 	margin-right: 10px;
 	font-size: 12px;
 }
+
+img.icon {
+    width: 14px;
+    height: 14px;
+    opacity: 0.6;
+}

@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28cbb8b2-c23d-47c0-9ecb-c0ec0aee68f1" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/Journal Lab" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/redcell.iml" afterPath="$PROJECT_DIR$/.idea/redcell.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/pages_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/pages_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/pages/dashboard.html.erb" afterPath="$PROJECT_DIR$/app/views/pages/dashboard.html.erb" />
     </list>
@@ -85,7 +85,7 @@
       <file leaf-file-name="pages_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="112" column="291" selection-start="6365" selection-end="6365" vertical-scroll-proportion="0.0">
+            <state line="114" column="97" selection-start="6525" selection-end="6525" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -94,7 +94,7 @@
       <file leaf-file-name="dashboard.html.erb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/pages/dashboard.html.erb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="29" selection-start="342" selection-end="342" vertical-scroll-proportion="0.22365989">
+            <state line="39" column="57" selection-start="823" selection-end="823" vertical-scroll-proportion="1.0813309">
               <folding />
             </state>
           </provider>
@@ -711,14 +711,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/pages_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="291" selection-start="6365" selection-end="6365" vertical-scroll-proportion="0.0">
+        <state line="114" column="97" selection-start="6525" selection-end="6525" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/pages/dashboard.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="29" selection-start="342" selection-end="342" vertical-scroll-proportion="0.22365989">
+        <state line="39" column="57" selection-start="823" selection-end="823" vertical-scroll-proportion="1.0813309">
           <folding />
         </state>
       </provider>

@@ -112,6 +112,7 @@ class PagesController < ApplicationController
     @active_users = User.all.select{|u| u.visits.count != 0}.select{|u| u.created_at.day != u.visits[-1].created_at.day && u.visits[-1].created_at > Time.now - 1.month}.count
     @pct_returning_users = User.all.select{|u| u.visits.count != 0}.select{|u| u.created_at > Time.now - 1.month && u.created_at.day != u.visits[-1].created_at.day && u.visits[-1].created_at > Time.now - 1.month}.count.to_f / User.all.select{|u| u.created_at > Time.now - 1.month}.count.to_f
     @visits_per_user = histogram(User.all.map{|u| u.visits.count})
+    @discussion_per_user = histogram(User.all.map{|u| u.reactions.count + u.comments.count})
 
   end
 

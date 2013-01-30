@@ -1,8 +1,8 @@
 <div id = "group_list">
-<% unless current_user.groups.empty? %>
+  <% unless @groups.empty? %>
       <h1 align="center">My Discussion Groups</h1>
-<% end %>
-  <% current_user.groups.each do |group| %>
+  <% end %>
+  <% @groups.each do |group| %>
       <div class = "well group_select">
         <h2><%= group.name %></h2>
         <%=  group.desc %>
@@ -12,14 +12,16 @@
 
       </div>
   <% end %>
-<h1 align="center">Join a Discussion Group</h1>
-  <% (Group.all.select{|g| g.public} - current_user.groups).each do |group| %>
-      <div class = "well group_select">
-        <h2><%= group.name %></h2>
-        <%=  group.desc %>
-        <div>
-          <%=  link_to 'Join Discussion Group', "/groups/#{group.id}/join" %>
-        </div>
-      </div>
+  <% if (Group.all.select{|g| g.public} - @groups).count > 0 %>
+      <h1 align="center">Join a Discussion Group</h1>
+      <% (Group.all.select{|g| g.public} - current_user.groups).each do |group| %>
+          <div class = "well group_select">
+            <h2><%= group.name %></h2>
+            <%=  group.desc %>
+            <div>
+              <%=  link_to 'Join Discussion Group', "/groups/#{group.id}/join" %>
+            </div>
+          </div>
+      <% end %>
   <% end %>
 </div>

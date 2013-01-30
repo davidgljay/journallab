@@ -109,8 +109,9 @@ class PagesController < ApplicationController
     @reply_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count}.inject{|sum, n| sum + n}, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|c| c.comments.count + c.questions.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).count])
     @action_pageview__ratio = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('created_at > ?', Time.now - 1.month).count])
     @total_users = [["Users",graph_total_by_day(User.all)]]
-    @active_users = User.all.select{|u| u.visits.count != 0}.select{|u| u.created_at.day != u.visits[-1].created_at.day && u.visits[-1].created_at > Time.now - 1.week}.count
-
+    @active_users = User.all.select{|u| u.visits.count != 0}.select{|u| u.created_at.day != u.visits[-1].created_at.day && u.visits[-1].created_at > Time.now - 1.month}.count
+    @pct_returning_users = User.all.select{|u| u.visits.count != 0}.select{|u| u.created_at > Time.now - 1.month && u.created_at.day != u.visits[-1].created_at.day && u.visits[-1].created_at > Time.now - 1.month}.count.to_f / User.all.select{|u| u.created_at > Time.now - 1.month}.count.to_f
+    @visits_per_user = histogram(User.all.map{|u| u.visits.count})
 
   end
 

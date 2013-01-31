@@ -42,7 +42,7 @@ def add(user)
      m.lead = false
      m.save
      leads.each do |lead|
-	Mailer.group_add_notification(self, lead, user).deliver
+	Mailer.group_add_notification(self, lead, user).deliver unless self.id == 8
      end
    end
 end

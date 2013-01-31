@@ -1,9 +1,6 @@
 Hi <%= @recipient.firstname %>,
 
-<%= "#{@newuser.name} (#{@newuser.email})" %> has joined the group <%= @group.name %>
+<%= "#{@newuser.name}" %> has joined the group <%= @group.name %>.
 
-If <%= @newuser.firstname %> should not be a member of <%= @group.name %>, you may remove them by clicking the following link:
-
-<%= @url %>
 
 <%= render 'unsubscribe_text' %>

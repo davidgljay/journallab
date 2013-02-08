@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     if signed_in?
-      @jclubs = current_user.groups.select{|g| g.category == 'jclub'}
+      @jclubs = current_user.groups.select{|g| g.category == 'jclub' && !g.current_discussion.nil?}
       if !@jclubs.empty?
         if @jclubs.first.current_discussion
           @paper = @jclubs.first.current_discussion.paper

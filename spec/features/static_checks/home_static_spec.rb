@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "/" do
+describe "Visiting the homepage" do
 
   describe "when not logged in" do
 
@@ -47,19 +47,19 @@ describe "/" do
 	it "should render when the user has multiple groups and feeds" do
 		@group = Group.create(:name => "Test Group", :category => "jclub")
 		@group.add(@user)
-		@group.papers << @paper
-		d = @group.discussions.first
-		d.starttime = Time.now - 1.day
-		d.save		
-		@group = @user.groups.create(:name => "Sample Group", :category => "jclub")
-		@group.papers << @paper2
+    @group.discuss(@paper, @user)
+		@group2 = @user.groups.create(:name => "Sample Group", :category => "jclub")
+		@group2.discuss(@paper2, @user)
+    @group3 = @user.groups.create(:name => "Sample Group", :category => "jclub")
 		f1 = @user.follows.create!(:search_term => "RNA", :name => "RNA")
 		f1.save
 		f2 = @user.follows.create!(:search_term => "zombies", :name => "zombies")
 		f2.save
 		visit "/"
 		within('body') { page.should have_selector('.group' + @group.id.to_s ) }
-		within('body') { page.should have_selector('input.follow_' + @user.follows.first.id.to_s) }
+    within('body') { page.should have_selector('.group' + @group2.id.to_s ) }
+    within('body') { page.should_not have_selector('.group' + @group3.id.to_s ) }
+		within('body') { page.should have_selector('div.follow_' + @user.follows.first.id.to_s) }
 	end
    end
 

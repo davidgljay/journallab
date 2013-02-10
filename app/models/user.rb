@@ -282,16 +282,16 @@ end
 
   def to_csv(options = {})
     CSV.generate(options) do |csv|
-      csv << ["Name", "Email", "Registered On", "Last Visit", "Days Btw Reg and Latest Visit", "Paper Views", "Feed Views", "Number of Feeds", "Activity", "Nods Received"]
+      csv << ["Name", "Email", "Registered On", "Latest Visit", "Days Btw Reg and Latest Visit", "Paper Views", "Feed Views", "Number of Feeds", "Activity", "Nods Received"]
       User.all.each do |user|
         name = user.name
         email = user.email
         registered_on = user.created_at.strftime('%D')
-        last_active = user.visits.last.created_at
+        last_active = user.visits.last ? user.visits.last.created_at : nil
         time_since_last = (([user.visits.map{|v| v.created_at}, user.created_at].flatten.max - user.created_at)/86400).to_i
         paper_views = user.visits.select{|v| v.about_type == 'Paper'}.count
         feed_views = user.visits.select{|v| v.about_type == 'Feed'}.count
-        num_feeds = user.feeds.count
+        num_feeds = user.follows.count
         activity = user.comments.count + user.assertions.count + user.votes.count + user.reactions.count
         nods_for_user = user.votes_for_me.count
         csv << [name, email, registered_on, last_active, time_since_last, paper_views, feed_views, num_feeds, activity, nods_for_user]

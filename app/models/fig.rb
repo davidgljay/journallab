@@ -35,7 +35,8 @@ end
 
 def build_figsections(numsections)
    	if numsections == 0
-     		nosections = true
+     		self.nosections = true
+        self.save
    	else
      		newsections = numsections.to_i - self.figsections.count
 		if newsections > 0

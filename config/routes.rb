@@ -89,7 +89,10 @@ root :to => 'pages#home'
 
 devise_for :users
 resources :users
-   match '/users(/:id)/history',	:to => 'users#history'
+  match '/users(/:id)/history',	:to => 'users#history'
+  match '/users/subscriptions', :to => 'users#subscriptions', :via => :get
+  match '/users/subscriptions', :to => 'users#set_subscriptions', :via => :post
+
 
 
 #  match '/reset_password', :to => 'users#reset_password'

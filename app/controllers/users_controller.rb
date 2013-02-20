@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 before_filter :authenticate_user!, :except => [:new, :create, :show]
-before_filter :correct_user, :only => [:edit, :update, :unsubscribe, :image_upload]
+before_filter :correct_user, :only => [:edit, :update, :unsubscribe, :email_subscriptions, :image_upload]
 before_filter :admin_user,   :only => [:destroy, :index]
 
 
@@ -19,6 +19,7 @@ before_filter :admin_user,   :only => [:destroy, :index]
 
   end
 
+# This functionality has been replaced by Devise.
 #  def new
 #   @title = "Get Started"
 #   @user = User.new
@@ -73,6 +74,7 @@ before_filter :admin_user,   :only => [:destroy, :index]
    render 'bulk_confirmation'
    end
 
+#  This functionality has been replaced by Devise.
 #  def create
 #   @user = User.new(params[:user])
 #   @user.generate_anon_name
@@ -140,18 +142,35 @@ before_filter :admin_user,   :only => [:destroy, :index]
 	redirect_to root_path
   end
 
-  def share_digest
-    	@user = User.find(params[:id])
-	@user.subscriptions.create!(:category => "share_notification", :receive_mail => false)
-	@user.subscriptions.create!(:category => "share_digest", :receive_mail => true)
-	flash[:success] = "You will now recieve Journal Lab papers as a daily digest."
-	redirect_to root_path
-  end
+# Old code for managing sharing within labs. Bring back if I re-enable this functionality.
+# def share_digest
+#   	@user = User.find(params[:id])
+#	@user.subscriptions.create!(:category => "share_notification", :receive_mail => false)
+#	@user.subscriptions.create!(:category => "share_digest", :receive_mail => true)
+#	flash[:success] = "You will now recieve Journal Lab papers as a daily digest."
+#	redirect_to root_path
+#  end
 	
   def history
+    #runs /users/history.js.erb to make the history feed appear on from the top menu.
    @recent_visits = current_user.visited_papers.reverse.uniq.first(20)
-	#runs /users/history.js.erb to make the history feed appear on from the top menu.
   end
+
+  def subscriptions
+    # Interface for managing email subscriptions
+    # Putting language in the controller, I should move it to a YML file when I'm not on an airplane.
+    @user = current_user
+    @recurring = []
+    @recurring << {:type => 'recurring', :option => 'Weekly Update', :desc => 'Receive a weekly update about new papers and discussion relevant to your interests.'}
+    @recurring << {:type => 'recurring', :option => 'Open Science Alerts', :desc => 'Receive information less than once per month about the ways that scientists are transforming academic publishing.'}
+    @notification = []
+    @notification << {:type => 'notification', :option => 'When someone responds to one of my comments', :desc => 'We will email you when someone responds to a comment that you have left.'}
+    @notification << {:type => 'notification', :option => 'When there is discussion about one of my papers', :desc => 'We will email you when a paper that you have written is discussed for the first time, or when discussion on that paper hits significant milestones.'}
+    @notification << {:type => 'notification', :option => 'When one of my contributions makes a significant impact', :desc => 'We will email you when a comment or summary that you have left has sparked significant discussion.'}
+    @notification << {:type => 'notification', :option => 'When my reputation on Journal Lab hits a major milestone', :desc => 'We will email you periodically as your reputation develops in the Journal Lab community, for example when your contributions on the system have been viewed 1000 times.'}
+  end
+
+
 
   private
 

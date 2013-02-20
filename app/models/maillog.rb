@@ -15,4 +15,8 @@ def conversion_b_flag
   save
 end
 
+def mail_types
+  Maillog.all.map{|m| m.category}.uniq
+end
+
 end

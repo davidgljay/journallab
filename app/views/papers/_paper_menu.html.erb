@@ -23,7 +23,7 @@
               <div class="dropdown" id="discussion_link" >
                 <%=  link_to "Present to Group", "#", :class => "dropdown-toggle deadlink" %>
                 <ul class="dropdown-menu">
-                  <% current_user.groups.each do |group| %>
+                  <% current_user.memberships.select{|m| m.lead}.map{|m| m.group}.each do |group| %>
                       <li>
                         <%= link_to group.name, "/groups/#{group.id}/discuss/#{@paper.id}"%>
                       </li>

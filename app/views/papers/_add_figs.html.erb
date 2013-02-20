@@ -1,8 +1,12 @@
 <div class = 'addFigs'>
-	<h5>How many figures are in this paper?</h5>
-	<% 30.times do |i| %>
-		<div class = "fig_numselect inline">
-			<%= link_to (i+1).to_s, '/papers/' + @paper.id.to_s + '/build_figs/' + (i+1).to_s %>
-		</div>
-	<% end %>
+  <% if @paper.figs.empty? %>
+      <h5>In order to discuss the paper, we need to know how many figures it has.</h5>
+  <% else %>
+      <h5>How many figures are in this paper?</h5>
+  <% end %>
+  <% 30.times do |i| %>
+      <div class = "fig_numselect inline">
+        <%= link_to (i+1).to_s, '/papers/' + @paper.id.to_s + '/build_figs/' + (i+1).to_s %>
+      </div>
+  <% end %>
 </div>

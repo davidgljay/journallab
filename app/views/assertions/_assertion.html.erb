@@ -12,68 +12,84 @@
             </td>
         <% else %>
             <td width="180" align="center">
-              <%= render '/figs/image_upload', :fig => about %>
+              <% if signed_in? %>
+                  <% if current_user.certified? %>
+                      <%= render '/figs/image_upload', :fig => about %>
+                  <% end %>
+              <% end %>
             </td>
         <% end %>
-        <td class = "sumright">
-          <h1>Fig <%= about.num.to_s %></h1>
-    <% elsif about.class == Figsection %>
-        <td class = "sumright">
-          <h1>Section <%= about.letter(about.num) %></h1>
-    <% end %>
-
-
-    <p>
-    <div class = 'latest_assertion clickme editme'><%= new_if_nil(about.latest_assertion).text.to_s.empty? ? 'Click to enter summary' : about.latest_assertion.text %></div>
-    <div class = "hideonload editme_form">
-      <% if signed_in? %>
-          <%= render '/assertions/summary_form' , :assert => about.latest_assertion , :owner => about %>
-      <% else %>
-          <h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
+    <td class = "sumright">
+      <h1>Fig <%= about.num.to_s %></h1>
+      <% elsif about.class == Figsection %>
+    <td class = "sumright">
+      <h1>Section <%= about.letter(about.num) %></h1>
       <% end %>
-    </div><br>
-    <p class="method clickme editme"><%= new_if_nil(about.latest_assertion).method_text.to_s.empty? ? 'Click to list methods' : 'Methods: ' + about.latest_assertion.method_text %>
-    </p>
-    <div class = "hideonload editme_form">
-      <% if signed_in? %>
-          <%= render '/assertions/methods_form' , :assert => about.latest_assertion, :owner => about %>
-      <% else %>
-          <h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
-      <% end %>
-    </div>
-    <%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at, :anonymous => about.latest_assertion.anonymous if about.latest_assertion %>
-    <%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
-        <%= hidden_field_tag :owner, about.class.to_s %>
-        <%= hidden_field_tag :id, about.id %>
-    <% end %>
-    <div class="improve">
-    </div><br>
-
-    <% if signed_in? %>
-        <div class = "reaction_list">
-          <%= render '/reactions/reaction_list', :about => about %>
-        </div>
-    <% end %>
-    <br>
-    <div class = 'comment_form hideonload'>
-    </div>
-    <div class="contribute">
-
-    </div>
 
 
-    </div>
-    <% comments = about.class == Fig ? about.meta_comments : about.comments %>
-    <div class = "commentbox <%= 'hideonload' if comments.empty? %>", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
-    <h5>Comments</h5>
-    <%= render('/comments/first_comment', :comment => comments.first, :owner => about) unless comments.empty? %>
-    </div>
-    <% if about.class == Fig %>
-        <% unless about.image.nil? %>
-            <%= image_tag about.image.thumb('700x700>').url, :class => 'fullfig hideonload'%>
-            <div class = "citation fullfig hideonload"><%= about.shortname + '. '  + @paper.citation.to_s %></div>
+      <p>
+
+      <div class = 'latest_assertion clickme editme'><%= new_if_nil(about.latest_assertion).text.to_s.empty? ? 'Click to enter summary' : about.latest_assertion.text %></div>
+      <div class = "hideonload editme_form">
+        <% if signed_in? %>
+            <% if current_user.certified? %>
+                <%= render '/assertions/summary_form' , :assert => about.latest_assertion , :owner => about %>
+            <% else %>
+                <p>Sorry, you must be affiliated with an academic institution to post on Journal Lab. We'll change this soon!</p>
+            <% end %>
+        <% else %>
+            <h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
         <% end %>
-    <% end %>
+      </div><br>
+      <% if about.class != Paper %>
+          <p class="method clickme editme">
+            <%= new_if_nil(about.latest_assertion).method_text.to_s.empty? ? 'Click to list methods' : 'Methods: ' + about.latest_assertion.method_text %>
+          </p>
+      <% end %>
+      <div class = "hideonload editme_form">
+        <% if signed_in? %>
+            <% if current_user.certified? %>
+                <%= render '/assertions/methods_form' , :assert => about.latest_assertion, :owner => about %>
+            <% else %>
+                <p>Sorry, you must affiliated with an academic institution to post on Journal Lab. We'll change this soon!</p>
+            <% end %>
+        <% else %>
+            <h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
+        <% end %>
+      </div>
+      <%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at, :anonymous => about.latest_assertion.anonymous if about.latest_assertion %>
+      <%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
+          <%= hidden_field_tag :owner, about.class.to_s %>
+          <%= hidden_field_tag :id, about.id %>
+      <% end %>
+      <div class="improve">
+      </div><br>
+
+      <% if signed_in? %>
+          <div class = "reaction_list">
+            <%= render '/reactions/reaction_list', :about => about %>
+          </div>
+      <% end %>
+      <br>
+      <div class = 'comment_form hideonload'>
+      </div>
+      <div class="contribute">
+
+      </div>
+
+
+      </div>
+      <% comments = about.class == Fig ? about.meta_comments : about.comments %>
+      <div class = "commentbox <%= 'hideonload' if comments.empty? %>", id = <%= 'comments_' + about.class.to_s + '_' + about.id.to_s %>>
+      <h5>Comments</h5>
+      <%= render('/comments/first_comment', :comment => comments.first, :owner => about) unless comments.empty? %>
+      </div>
+      <% if about.class == Fig %>
+          <% unless about.image.nil? %>
+              <%= image_tag about.image.thumb('700x700>').url, :class => 'fullfig hideonload'%>
+              <div class = "citation fullfig hideonload"><%= about.shortname + '. '  + @paper.citation.to_s %></div>
+          <% end %>
+      <% end %>
     </td>
   </tr>
 </table>

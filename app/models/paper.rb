@@ -371,7 +371,7 @@ end
 #Wipe and reset the reaction map
 
 def reset_reaction_map
-	reaction_map = nil
+	self.reaction_map = nil
 	set_reaction_map
 end
 

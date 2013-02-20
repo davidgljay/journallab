@@ -2,7 +2,7 @@
       <%= render 'shared/error_messages', :object => f.object %>
       <div class="field">
          <% if assert.owner.latest_assertion.nil? || (@group.category == "class" && !current_user.lead_of?(@group)) %>
-           <%= f.text_area :text, :value =>  "What is the core conclusion of this " + type + "?", :rows => 5 %>
+           <%= f.text_area :text, :value =>  "What are the authors trying to show in this " + type + "?", :rows => 5 %>
            <br>
            <%= f.text_area :method, :value => "What principal methods are used?", :rows => 1 %>
            <%= f.text_field :alt_approach, :value => "What are alternate approaches?" if @group.category == 'class'%>

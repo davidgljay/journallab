@@ -6,7 +6,22 @@ class PagesController < ApplicationController
     @title = "Home"
     if signed_in?
       @jclubs = current_user.groups.select{|g| g.category == 'jclub' && !g.current_discussion.nil?}
-      if !@jclubs.empty?
+      @groups = current_user.groups.all
+      @follows  = current_user.follows.all
+
+      #If there is a follow, load that.
+      if @follows.count > 0
+        @follow = @follows.first
+        if @follow.latest_search
+          @feed = @follow.feed
+          @recent_activity = @follow.recent_activity
+        else
+          @feed = Paper.new.search_pubmed(@follow.search_term) if @follow && @feed.empty?
+          @recent_activity = nil
+        end
+
+        #If there are no feeds but there is a journal club, load that.
+      elsif !@jclubs.empty? && @follows.empty?
         if @jclubs.first.current_discussion
           @paper = @jclubs.first.current_discussion.paper
           @jclubs.delay.each do |j|
@@ -16,17 +31,9 @@ class PagesController < ApplicationController
           @reaction_map = @paper.reaction_map
         end
       end
-      @groups = current_user.groups.all
-      @follows  = current_user.follows.all
-      if @follow = @follows.first
-        @feed = @follow.feed
-        @recent_activity = @follow.recent_activity
-      else
-        @feed = Paper.new.search_pubmed(@follow.search_term) if @follow && @feed.empty?
-        @recent_activity = nil
-      end
       @newfollow = current_user.follows.new
       @welcome_screen = false
+
     end
   end
 

@@ -422,6 +422,14 @@ img.icon {
     border-top-left-radius: 10px;
 }
 
+#feedNav .follow {
+    background-color: #005997;
+}
+
+#feedNav .group {
+    background-color: #00704a;
+}
+
 #feedNav .feed_nav_item form.button_to input {
     font-weight: bold;
 }
@@ -431,6 +439,7 @@ img.icon {
     padding: 3px;
     padding-top: 5px;
     font-weight: bold;
+    background-color: rgb(14, 51, 77);
 }
 
 #feedNav .feed_nav_selected {

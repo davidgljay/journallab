@@ -3,11 +3,6 @@ $('.homePageFeed').not('#follow_form').html('');
 $('.homePageFeed').hide();
 $('<%= '.' + @switchto %>').find('input').val('<%= @nav_language %>')
 $('<%= '.' + @switchto %>').addClass('feed_nav_selected');
-<% if @switchto == 'group8' %>
-$('.group8').html('<%= image_tag 'plos-logo-black.jpg'%>');
-<% else %>
-$('.group8').html('<%= link_to "/feedswitch/group8", :class => "group8 loadingPrompt plainSubmit clickme " , :remote => true do  image_tag 'plos_logo.png', :id => 'ploslogo'  end %>');
-<% end %>
 $('<%= '.' + @switchto %>').prev().addClass('hideonload');
 $('<%= '#' + @switchto + '_feed'%>').html('<%= escape_javascript(render '/feed/' + @switchto_render, :group => @group) %>');
 $('<%= '#' + @switchto + '_feed'%>').show();

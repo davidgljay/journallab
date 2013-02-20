@@ -1,11 +1,13 @@
 <%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
 <div id="contentMain">
 
-<div style = "text-align: right;">
-<span class="small grey">
-
-</span>
-</div>
+  <%  if @paper.interest > 1 %>
+      <div style = "text-align: right;">
+        <font class="small grey">
+          <%=  @paper.interest %> people are following discussion on this paper.
+        </font>
+      </div>
+  <% end %>
 
 <div id="paperInfo" class = "round">
 <%= render 'paper_menu' %>
@@ -33,11 +35,18 @@
   			<p id='abstract_long' class='hideonload'><%= @paper.abstract %></p>
 		</div>
 	<% end %>
-	
-		<%= render '/reactions/quickform'%>
-	<% if user_signed_in? %>
-		<%= render 'add_figs' if @paper.figs.empty? %>
-	<% end %> 
+
+  <% if user_signed_in? %>
+      <% if @paper.meta_reactions.empty? %>
+          <h2>Be the first to discuss this paper.</h2>
+            <% if @paper.interest > 1 %>
+                <h3>If you do, it will appear in <%= @paper.interest %> people's feeds.</h3>
+            <% end %>
+      <% end %>
+          <% if @paper.figs.empty? %>
+              <%= render 'add_figs' %>
+          <% end %>
+      <% end %>
 
 </div>
 

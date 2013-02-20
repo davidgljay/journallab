@@ -12,7 +12,7 @@
                 </div>
             <% end %>
           </div>
-          <div class = "feed_nav_item <%= follow.classname + (i == 0 ? ' feed_nav_selected' : '')%>">
+          <div class = "feed_nav_item follow <%= follow.classname + (i == 0 ? ' feed_nav_selected' : '')%>">
             <div style = "display:inline-block;">
               <%= button_to follow.name, {:controller => "pages", :action => "feedswitch",  :switchto => follow.classname}, :class => " loadingPrompt plainSubmit clickme ", :remote => true %><%= render '/shared/loading' %>
             </div>
@@ -38,16 +38,10 @@
                     <div class = 'badge badge-important feedNotice'><%= group.newcount(current_user) %></div>
                 <% end %>
               </div>
-              <div class = "feed_nav_item <%= group.inspect + (i == 0  && @follows.empty? ? ' feed_nav_selected' : '')%>">
+              <div class = "feed_nav_item group <%= group.inspect + (i == 0  && @follows.empty? ? ' feed_nav_selected' : '')%>">
                 <div style = "display:inline-block;">
-                  <%= link_to "/feedswitch/#{group.inspect}", :class => group.inspect + " loadingPrompt plainSubmit clickme " , :remote => true do %>
-                      <% if  group.id == 8 && @follows.empty? && i == 0 %>
-                          <%=  image_tag('plos-logo-black.jpg', :id => 'ploslogo') %>
-                       <% elsif group.id == 8 %>
-                          <%=  image_tag('plos_logo.png', :id => 'ploslogo') %>
-                       <% else %>
+                  <%= link_to "/feedswitch/#{group.inspect}", :class => " loadingPrompt plainSubmit clickme " , :remote => true do %>
                           <%= group.shortname %>
-                      <% end %>
                   <% end %>
                   <%= render '/shared/loading' %>
                 </div>

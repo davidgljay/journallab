@@ -1,42 +1,44 @@
-<% if signed_in? %>
-  <% if current_user.certified %>
-    <div class = 'quickform round'>
-	<%= form_tag '/quickform', :method => :post, :remote => true do %>
+<% if @paper.figs.empty? && @paper.comments.empty? %>
+    <% if signed_in? %>
+        <% if current_user.certified %>
+            <div class = 'quickform round'>
+              <%= form_tag '/quickform', :method => :post, :remote => true do %>
 
-		<h3>What do you think?</h3>
-		<div class = 'figSelector'>
-			<h5>This is a reaction to:</h5>
-			<div>
-				<%= radio_button_tag 'fig', '', :checked => 'checked' %> The overall paper
-			</div>
-			<div>
-				<%= radio_button_tag 'fig', '' %>Fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
-			</div>
-		</div>
-	<div class = "reaction_list">
-	<ul class = "nomargin nopadding">
-				<%= hidden_field_tag :paper, @paper.id %>
+                  <h3>Start a discussion about this paper.</h3>
+                  <div class = 'figSelector'>
+                    <h5>This is a reaction to:</h5>
+                    <div>
+                      <%= radio_button_tag 'fig', '', :checked => 'checked' %> The overall paper
+                    </div>
+                    <div>
+                      <%= radio_button_tag 'fig', '' %>Fig <%= text_field_tag :fig, '2, 3C, etc.', :onfocus => "if(this.value == '2, 3C, etc.') { this.value = ''; }" %>
+                    </div>
+                  </div>
+                  <div class = "reaction_list">
+                    <ul class = "nomargin nopadding">
+                      <%= hidden_field_tag :paper, @paper.id %>
 
-		<% Reaction.new.defaults.each do |r| %>
-           		<li class="reactionlink clickme badge">  
-				<%= submit_tag r , :class => "plainSubmit", :id => r %>
-          		</li>
-        	<% end %>
-        	 <li class="reactionlink custom_reaction clickme badge">  
-		     	Other:
-			<%= text_field_tag :name %>
-			<%= submit_tag 'Submit', :class => 'custom_reaction_submit' %>
-          	</li>
-	</ul>
-	</div>
-	<% end %>
-     </div>
-     <div class = "hideonload">
-	<h3>Just a sec..</h3>
-     </div>
-  <% else %>
-	<font style = "color: red;">Because your email address is not affiliated with an academic instition you are not allowed to leave comments at this time. </font><br><br>  <% end %>
-<% else %> 
-		<h3><%= link_to "Sign up" ,new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %> to Leave a Comment </h3>
-	</div>
+                      <% Reaction.new.defaults.each do |r| %>
+                          <li class="reactionlink clickme badge">
+                            <%= submit_tag r , :class => "plainSubmit", :id => r %>
+                          </li>
+                      <% end %>
+                      <li class="reactionlink custom_reaction clickme badge">
+                        Other:
+                        <%= text_field_tag :name %>
+                        <%= submit_tag 'Submit', :class => 'custom_reaction_submit' %>
+                      </li>
+                    </ul>
+                  </div>
+              <% end %>
+            </div>
+            <div class = "hideonload">
+              <h3>Just a sec..</h3>
+            </div>
+        <% else %>
+            <font style = "color: red;">Because your email address is not affiliated with an academic instition you are not allowed to leave comments at this time. </font><br><br>  <% end %>
+    <% else %>
+        <h3><%= link_to "Sign up" ,new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %> to Leave a Comment </h3>
+        </div>
+    <% end %>
 <% end %>

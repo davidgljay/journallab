@@ -2,7 +2,11 @@
 <%= form_for new_or_edit(assert), :class => "new_assertion summary_form", :remote => true do |f| %>
       <div class="field">
          <% if assert.nil? || new_if_nil(assert).text.to_s.empty? %>
-           	<%= f.text_area :text, :value =>  "What is the core conclusion of " + owner.shortname + "?", :rows => 5 %><br>
+            <% if owner.class == Paper %>
+                <%= f.text_area :text, :value =>  "Please provide a brief summary of this paper readable to a scientist outside of this field.", :rows => 5 %><br>
+            <% else %>
+           	    <%= f.text_area :text, :value =>  "What are the authors trying to show in " + owner.shortname + "?", :rows => 5 %><br>
+            <% end %>
          <% else %>
             <%= f.text_area :text, :value =>  assert.text.to_s, :rows => 5 %><br>
          <% end %>

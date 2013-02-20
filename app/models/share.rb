@@ -42,16 +42,16 @@ def linktext
    linktext = []
    comment.each do |phrase|
       if phrase.to_i.to_s == phrase 
-        if p = Paper.find_by_pubmed_id(phrase)
-        elsif p = Paper.create( :pubmed_id => phrase.to_i )
+        p = Paper.find__or_create_by_pubmed_id(phrase.to_i)
+        if p.title == nil
             p.lookup_info
         end
         linktext << p
       elsif (phrase.split(/[;:,.]/)[0].to_i.to_s == phrase.split(/[;:,.]/)[0])  
         phr = phrase.split(/[;:,.]/)
-        if p = Paper.find_by_pubmed_id(phr[0])
-        elsif p = Paper.create( :pubmed_id => phr[0].to_i )
-            p.lookup_info
+        p = Paper.find__or_create_by_pubmed_id(phrase.to_i)
+        if p.title == nil
+          p.lookup_info
         end
         if phr.length == 2
            p.build_figs(phr[1].to_i)

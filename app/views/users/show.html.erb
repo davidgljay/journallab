@@ -81,7 +81,7 @@
         	   		<i>Press enter to save</i>
         			</div>
         		</h3><p>
-       				<div class = "clickme editme"><h3>Change Password</h3></div> 
+       				<div class = "clickme editme inline"><h3 >Change Password</h3></div>
         	 <div class = "editme_form hideonload">
         	   		<%= form_for @user do |f| %>
         	       			New Password: <%= f.password_field :password %><br>
@@ -89,6 +89,10 @@
         	       			<%= f.submit 'Change Password' %>
         	   		<% end %>
         	   		</div>
+                    <div class='inline'>
+                          <%=  link_to '/users/' + @user.id.to_s + '/subscriptions' do %>
+                          <h3 >Email Settings </h3><% end %>
+                    </div>
      			<% else %>
        				<h3><%= link_to "Homepage", @user.homepage if @user.homepage %>
        				<%= " • " if @user.cv && @user.homepage %> 

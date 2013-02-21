@@ -44,7 +44,7 @@ describe "Users" do
      end
 
      it "should render the user profile", :js => true do
-        within('h2') { page.should have_content(@user.name) }
+        page.should have_content(@user.name)
         find('#position').click
         fill_in "user[position]", :with => "stuff and things"
         find('#user_position').native.send_key(:enter)

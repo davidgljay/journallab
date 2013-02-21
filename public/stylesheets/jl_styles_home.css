@@ -53,6 +53,10 @@
 	color: black;
 }
 
+#group_list h1, #group_list h2{
+    color: #00704a;
+}
+
 .imageOverlay {
 	position: relative;
 	bottom: 410px;

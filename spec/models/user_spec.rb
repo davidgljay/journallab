@@ -1,39 +1,39 @@
 require 'spec_helper'
 
 describe User do
-   before(:each) do
-	@attr = { 
-		:firstname => "Example",
-                :lastname => "User", 
-		:email => "user@example.com",
-		:password => "funstuff",
-		:password_confirmation => "funstuff" 
-		}
-   end
+  before(:each) do
+    @attr = {
+        :firstname => "Example",
+        :lastname => "User",
+        :email => "user@example.com",
+        :password => "funstuff",
+        :password_confirmation => "funstuff"
+    }
+  end
 
-    it "should create a new instance given valid attributes" do
-	User.create!(@attr)
-    end
- 
-    it "should automatically create a To Read folder" do
-	@user = User.create!(@attr)
-	@user.folders.map{|f| f.name}.should include "To Read"
-    end
+  it "should create a new instance given valid attributes" do
+    User.create!(@attr)
+  end
+
+  it "should automatically create a To Read folder" do
+    @user = User.create!(@attr)
+    @user.folders.map{|f| f.name}.should include "To Read"
+  end
 
   it "should require a name" do
-	no_name_user = User.new(@attr.merge(:firstname => "", :lastname => ''))
-	no_name_user.should_not be_valid
+    no_name_user = User.new(@attr.merge(:firstname => "", :lastname => ''))
+    no_name_user.should_not be_valid
   end
-  
+
   it "should require an email address" do
-	no_email_user = User.new(@attr.merge(:email =>""))
-	no_email_user.should_not be_valid
+    no_email_user = User.new(@attr.merge(:email =>""))
+    no_email_user.should_not be_valid
   end
 
   it "should reject names that are too long" do
-	long_name = "a" * 51
-	long_name_user = User.new(@attr.merge(:firstname => long_name))
-	long_name_user.should_not be_valid
+    long_name = "a" * 51
+    long_name_user = User.new(@attr.merge(:firstname => long_name))
+    long_name_user.should_not be_valid
   end
 
   it "should accept valid email addresses" do
@@ -51,15 +51,15 @@ describe User do
       invalid_email_user.should_not be_valid
     end
   end
-  
+
   it "should reject duplicate email addresses" do
     # Put a user with given email address into the database.
     User.create!(@attr)
     user_with_duplicate_email = User.new(@attr)
     user_with_duplicate_email.should_not be_valid
   end
-  
-    it "should reject email addresses identical up to case" do
+
+  it "should reject email addresses identical up to case" do
     upcased_email = @attr[:email].upcase
     User.create!(@attr.merge(:email => upcased_email))
     user_with_duplicate_email = User.new(@attr)
@@ -67,18 +67,32 @@ describe User do
   end
 
   it "should certify users with a .edu address" do
-    	user = User.create!(@attr.merge(:email => 'example@school.edu'))
-	user.certified.should be_true
+    user = User.create!(@attr.merge(:email => 'example@school.edu'))
+    user.certified.should be_true
   end
 
   it "should certify users with a nih.gov address" do
-    	user = User.create!(@attr.merge(:email => 'example@nih.gov'))
-	user.certified.should be_true
+    user = User.create!(@attr.merge(:email => 'example@nih.gov'))
+    user.certified.should be_true
   end
 
   it "should not certify users with a .com address" do
-    	user = User.create!(@attr)
-	user.certified.should be_false
+    user = User.create!(@attr)
+    user.certified.should be_false
+  end
+
+  it "should automatically create a set of subscriptions" do
+    user = User.create!(@attr)
+    user.subscription_map.should include 'weekly'
+  end
+
+  it "should automatically create a set of subscriptions" do
+    user = User.create!(@attr)
+    s = user.subscriptions.first
+    s.receive_mail = false
+    s.save
+    user.save
+    user.subscriptions.first.receive_mail.should be_false
   end
 
   describe "admin attribute" do
@@ -121,6 +135,5 @@ describe User do
       @user.receive_mail? == true
     end
   end
-
 
 end

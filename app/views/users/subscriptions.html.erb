@@ -1,0 +1,31 @@
+<div id = 'contentMain'>
+  <div id = 'paperInfo' class = "round" style = "text-align:left; padding: 10px;">
+    <%= image_tag @user.image.thumb('50x50>').url, :alt => @user.name if @user.image %><h1 class = "inline" valign = "top"> <%= @user.name %>'s Email Settings</h1>
+    <%=  form_for @user, :url => 'subscriptions' do |f| %>
+        <h3>Regularly email me with a:</h3>
+        <div style = 'padding-left: 20px;'>
+          <% @options.select{|o| o[:type] == 'recurring'}.each do |option| %>
+              <p>
+              <h3><%= f.check_box option[:short], :checked => @subscription_map[option[:short]] %> <%= f.label option[:short], option[:option] %></h3>
+              </p>
+              <div class = 'small' style = 'padding-left: 20px;'>
+                <em><%=  option[:desc] %></em>
+              </div>
+          <% end  %>
+        </div>
+        <h3>Notify me when:</h3>
+        <div style = 'padding-left: 20px;'>
+          <% @options.select{|o| o[:type] == 'notification'}.each do |option| %>
+              <p>
+              <h3><%= f.check_box option[:short], :checked => @subscription_map[option[:short]] %> <%= f.label option[:short], option[:option] %></h3>
+              </p>
+              <div class = 'small' style = 'padding-left: 20px;'>
+                <em><%=  option[:desc] %></em>
+              </div>
+          <% end  %>
+        </div>
+        <div style = "padding:20px;">
+        <%= f.submit 'Submit' %>
+            </div>
+    <% end %>
+

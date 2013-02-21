@@ -66,7 +66,7 @@ class CommentsController < ApplicationController
           #Send the comment to the original commenter and anyone else in the thread, except the current poster
           @thread = @comment.comment ? @comment.comment : @comment.question
           ([@thread.user] + @thread.comments.map{|c| c.user}).uniq.each do |u|
-            Mailer.comment_response(@comment, u).deliver if u != @comment.user && u.receive_mail?
+            Mailer.comment_response(@comment, u).deliver if u != @comment.user && u.receive_mail?('reply')
           end
         end
         format.js

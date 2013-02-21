@@ -1,10 +1,10 @@
 <%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
 <div id="contentMain">
 
-  <%  if @paper.interest > 1 %>
+  <% if @paper_interest > 1 %>
       <div style = "text-align: right;">
         <font class="small grey">
-          <%=  @paper.interest %> people are following discussion on this paper.
+          <%=  @paper_interest %> people are following discussion on this paper.
         </font>
       </div>
   <% end %>
@@ -39,8 +39,8 @@
   <% if user_signed_in? %>
       <% if @paper.meta_reactions.empty? %>
           <h2>Be the first to discuss this paper.</h2>
-            <% if @paper.interest > 1 %>
-                <h3>If you do, it will appear in <%= @paper.interest %> people's feeds.</h3>
+            <% if @paper_interest > 1 %>
+                <h3>If you do, it will appear in <%= @paper_interest %> people's feeds.</h3>
             <% end %>
       <% end %>
           <% if @paper.figs.empty? %>

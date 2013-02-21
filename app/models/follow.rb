@@ -67,6 +67,14 @@ class Follow < ActiveRecord::Base
     end
   end
 
+  def latest_visit
+    latest = visits.first(4).map{|v| v.created_at}.select{|v| v < Time.now - 10.seconds}.max
+    if latest.nil?
+      latest = DateTime.new(1900)
+    end
+    latest
+  end
+
   def recent_activity
     lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
     commentnotices.select{|c| c.comment_date > lastvisit}.map{|c| c.paper.pubmed_id}.uniq
@@ -92,6 +100,7 @@ class Follow < ActiveRecord::Base
       follow_array << Follow.create(:name => f, :search_term => f)
     end
     follow = follow_array.first
+    follow.update_feed
     follow_array.delay.each {|f| f.update_feed; f.save;}
     follow_array
   end

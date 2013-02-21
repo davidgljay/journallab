@@ -14,14 +14,14 @@
           <% if current_user.memberships.select{|m| m.lead}.count > 0 %>
               <% if @paper.groups.select{|group| current_user.lead_of?(group)}.count > 0  %>
                 <div id="undiscuss">
-                  <%=  link_to "Remove From Group", "/groups/undiscuss/#{@paper.id}" %>
+                  <%=  link_to "Remove From Journal Club", "/groups/undiscuss/#{@paper.id}" %>
                   <div class = "inline">
                     <%= image_tag '/images/icons/glyphicons_056_projector.png', :class => 'icon' %>
                   </div>
                 </div>
 <% else %>
               <div class="dropdown" id="discussion_link" >
-                <%=  link_to "Present to Group", "#", :class => "dropdown-toggle deadlink" %>
+                <%=  link_to "Present to Journal Club", "#", :class => "dropdown-toggle deadlink" %>
                 <ul class="dropdown-menu">
                   <% current_user.memberships.select{|m| m.lead}.map{|m| m.group}.each do |group| %>
                       <li>

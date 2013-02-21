@@ -1,25 +1,25 @@
 <div id = "group_list">
   <% unless @groups.empty? %>
-      <h1 align="center">My Discussion Groups</h1>
+      <h1 align="center">My Journal Clubs</h1>
   <% end %>
   <% @groups.each do |group| %>
       <div class = "well group_select">
         <h2><%= group.name %></h2>
         <%=  group.desc %>
         <div>
-          <%=  link_to 'Leave Discussion Group', "/groups/#{group.id}/leave" %>
+          <%=  link_to 'Leave Journal Club', "/groups/#{group.id}/leave" %>
         </div>
 
       </div>
   <% end %>
   <% if (Group.all.select{|g| g.public} - @groups).count > 0 %>
-      <h1 align="center">Join a Discussion Group</h1>
+      <h1 align="center">Join a Virtual Journal Club</h1>
       <% (Group.all.select{|g| g.public} - current_user.groups).each do |group| %>
           <div class = "well group_select">
             <h2><%= group.name %></h2>
             <%=  group.desc %>
             <div>
-              <%=  link_to 'Join Discussion Group', "/groups/#{group.id}/join" %>
+              <%=  link_to 'Join Journal Club', "/groups/#{group.id}/join" %>
             </div>
           </div>
       <% end %>

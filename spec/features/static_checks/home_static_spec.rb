@@ -28,6 +28,7 @@ describe "Visiting the homepage" do
 
 	it "should render when the user feeds but no groups" do
 		f = @user.follows.create!(:search_term => "RNA", :name => "RNA")
+    f.update_feed
 		f.save
 		visit "/"
 		within('body') { page.should have_selector('div.follow_' + @user.follows.first.id.to_s) }
@@ -52,9 +53,11 @@ describe "Visiting the homepage" do
 		@group2.discuss(@paper2, @user)
     @group3 = @user.groups.create(:name => "Sample Group", :category => "jclub")
 		f1 = @user.follows.create!(:search_term => "RNA", :name => "RNA")
+    f1.update_feed
 		f1.save
 		f2 = @user.follows.create!(:search_term => "zombies", :name => "zombies")
-		f2.save
+		f2.update_feed
+    f2.save
 		visit "/"
 		within('body') { page.should have_selector('.group' + @group.id.to_s ) }
     within('body') { page.should have_selector('.group' + @group2.id.to_s ) }

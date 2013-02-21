@@ -20,10 +20,10 @@ class PapersController < ApplicationController
     if @paper.visits.empty?
       @paper.count_figs
     end
+    @paper_interest = @paper.interest.to_i
     @heatmap = @paper.heatmap
     @heatmap_overview = @paper.heatmap_overview
     @reaction_map = @paper.reaction_map
-    #@interest = @paper.set_interest
     #@blogs = @paper.check_blogs
     if signed_in?
       @groups = current_user.groups

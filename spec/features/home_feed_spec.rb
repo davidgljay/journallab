@@ -5,10 +5,12 @@ describe "Home feeds" do
 
   before(:each) do
      @user = create(:user)
-	 @follow1 = @user.follows.create(:name => 'lions', :search_term => 'lions')
-	 @follow2 = @user.follows.create(:name => 'tigers', :search_term => 'tigers')
-	 @follow3 = @user.follows.create(:name => 'peanutjuice', :search_term => 'peanutjuice') 
-
+	   @follow1 = @user.follows.create(:name => 'lions', :search_term => 'lions')
+	   @follow2 = @user.follows.create(:name => 'tigers', :search_term => 'tigers')
+	   @follow3 = @user.follows.create(:name => 'peanutjuice', :search_term => 'peanutjuice')
+     @follow1.update_feed
+     @follow2.update_feed
+     @follow3.update_feed
      visit '/users/sign_in'
      fill_in "user_email", :with => @user.email
      fill_in "user_password", :with => @user.password
@@ -16,7 +18,6 @@ describe "Home feeds" do
   end         
 
   it "should load home feeds and switch between them", :js => true do
-	visit root_path
 	page.should have_content('lions')
 	page.should have_content('View Abstract')
 	page.should have_content('Add to Folder')
@@ -34,6 +35,6 @@ describe "Home feeds" do
     sleep(2)
 	page.should have_content 'bears'
 	find('.feedPlus').click
-	find('.feed_remove').click
+	first('.feed_remove').click
   end
 end

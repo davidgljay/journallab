@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "LayoutLinks" do
 
   it "should have a Home page at '/'" do
-    get '/'
+    visit '/'
     have_xpath("//title", :text => "Home")
   end
 

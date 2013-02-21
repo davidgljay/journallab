@@ -337,8 +337,6 @@ img.icon {
     border-bottom-style: solid;
     border-bottom-color: #8BD2F4;
     color: #333333;
-    padding-top: 10px;
-    padding-bottom: 10px;
     text-align: left;
     margin-left: 30px;
 }
@@ -481,6 +479,9 @@ img.icon {
     bottom: 7px;
 }
 
+.newPaper {
+    background-color: rgba(231, 213, 0, 0.29);
+}
 /* Sharing */
 
 

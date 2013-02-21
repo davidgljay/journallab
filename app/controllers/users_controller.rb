@@ -135,12 +135,12 @@ before_filter :admin_user,   :only => [:destroy, :index]
     redirect_to @user
   end
 
-  def unsubscribe
-    	@user = User.find(params[:id])
-	@user.subscriptions.create!(:category => "all", :receive_mail => false)
-	flash[:success] = "You have been unsubscribed from Journal Lab e-mail."
-	redirect_to root_path
-  end
+  #def unsubscribe
+  #  	@user = User.find(params[:id])
+	#    @user.subscriptions.each(:category => "all", :receive_mail => false)
+	#    flash[:success] = "You have been unsubscribed from Journal Lab e-mail."
+	#redirect_to root_path
+  #end
 
 # Old code for managing sharing within labs. Bring back if I re-enable this functionality.
 # def share_digest
@@ -159,15 +159,31 @@ before_filter :admin_user,   :only => [:destroy, :index]
   def subscriptions
     # Interface for managing email subscriptions
     # Putting language in the controller, I should move it to a YML file when I'm not on an airplane.
+    # Note- when adding or removing a class of email please also check the mailer.rb file and the defaults method in subscription.rb.
+    @title = 'Email Settings'
     @user = current_user
-    @recurring = []
-    @recurring << {:type => 'recurring', :option => 'Weekly Update', :desc => 'Receive a weekly update about new papers and discussion relevant to your interests.'}
-    @recurring << {:type => 'recurring', :option => 'Open Science Alerts', :desc => 'Receive information less than once per month about the ways that scientists are transforming academic publishing.'}
-    @notification = []
-    @notification << {:type => 'notification', :option => 'When someone responds to one of my comments', :desc => 'We will email you when someone responds to a comment that you have left.'}
-    @notification << {:type => 'notification', :option => 'When there is discussion about one of my papers', :desc => 'We will email you when a paper that you have written is discussed for the first time, or when discussion on that paper hits significant milestones.'}
-    @notification << {:type => 'notification', :option => 'When one of my contributions makes a significant impact', :desc => 'We will email you when a comment or summary that you have left has sparked significant discussion.'}
-    @notification << {:type => 'notification', :option => 'When my reputation on Journal Lab hits a major milestone', :desc => 'We will email you periodically as your reputation develops in the Journal Lab community, for example when your contributions on the system have been viewed 1000 times.'}
+    @subscription_map = @user.subscription_map
+    @options = []
+    @options << {:type => 'recurring', :short => 'weekly', :option => 'Weekly Update of New Papers', :desc => ''}
+    @options << {:type => 'recurring', :short => 'alerts', :option => 'Monthly (or less) Open Science Alert', :desc => 'Stay up to date on the ways that scientists are transforming academic publishing.'}
+    @options << {:type => 'notification', :short => 'reply', :option => 'Someone responds to one of my comments', :desc => ''}
+    @options << {:type => 'notification', :short => 'jclub', :option => 'One of my virtual journal clubs discusses a new paper', :desc => ''}
+    @options << {:type => 'notification', :short => 'impact', :option => 'One of my contributions makes a significant impact', :desc => ''}
+    @options << {:type => 'notification', :short => 'author', :option => 'There is discussion about one of my papers', :desc => 'We will email you when a paper that you have written is discussed for the first time, or when discussion on that paper hits significant milestones.'}
+    @options << {:type => 'notification', :short => 'milestone', :option => 'My reputation on Journal Lab hits a major milestone', :desc => 'We will email you periodically as your reputation develops in the Journal Lab community, for example when your contributions on the system have been viewed 1000 times.'}
+
+  end
+
+  def set_subscriptions
+    @settings = params[:user]
+    @user = current_user
+    @settings.to_a.each do |sub|
+      option = @user.subscriptions.select{|s| s.category == sub[0]}.first
+      option.receive_mail = (sub[1].to_i == 1)
+      option.save
+    end
+    flash[:success] = 'Your email settings have been updated!'
+    redirect_to @user
   end
 
 

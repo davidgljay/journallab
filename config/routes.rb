@@ -90,8 +90,8 @@ root :to => 'pages#home'
 devise_for :users
 resources :users
   match '/users(/:id)/history',	:to => 'users#history'
-  match '/users/subscriptions', :to => 'users#subscriptions', :via => :get
-  match '/users/subscriptions', :to => 'users#set_subscriptions', :via => :post
+  match '/users(/:id)/subscriptions', :to => 'users#subscriptions', :via => :get
+  match '/users(/:id)/subscriptions', :to => 'users#set_subscriptions', :via => :put
 
 
 

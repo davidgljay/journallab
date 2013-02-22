@@ -325,7 +325,13 @@ class User < ActiveRecord::Base
     end
   end
 
-
+  def impact
+    comment_papers = comments.map{|c| c.get_paper}
+    summarized_papers = assertions.map{|a| a.get_paper}
+    sum = 0
+    [comment_papers + summarized_papers].flatten.uniq.map{|p| p.visits.count}.each{|a| sum+= a}
+    sum
+  end
 
 
   private

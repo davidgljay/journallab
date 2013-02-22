@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Shares:" do
-
+ if false # disabling until shares are re-enabled
  before(:each) do
      @user = create(:user)
      @paper = create(:paper)
@@ -40,5 +40,5 @@ describe "Shares:" do
       page.should have_content("Shared!")
       @group.reload.feed.first[:item_type].should == "Share"
   end
-
+ end
 end

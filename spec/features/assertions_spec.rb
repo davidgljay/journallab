@@ -24,10 +24,11 @@ describe "Assertions" do
 
   describe "for the paper" do
     it "adds an assertion to the paper", :js => true do
-	first('#paper' + @paper.id.to_s).first('p.method').click
-	first('#paper' + @paper.id.to_s).first("#assertion_method_text").set("Aloe juice")
-	first('#paper' + @paper.id.to_s).first(".methods_form").click_button("Submit")
-	within('body') { page.should have_text("Aloe juice") }
+	first('#paper' + @paper.id.to_s).first('.latest_assertion').click
+  sleep(1)
+	first('#paper' + @paper.id.to_s).first("#assertion_text").set("Stampisaur")
+	first('#paper' + @paper.id.to_s).first("#new_assertion").click_button("Submit")
+  within('#paper' + @paper.id.to_s + '.summary') { page.should have_text("Stampisaur") }
 end
 
 #    it "processes a summary request", :js => true do
@@ -46,6 +47,7 @@ end
   describe "for the figure" do
     it "adds an assertion to the figure", :js => true do
 	first('#fig' + @fig.id.to_s ).first('.latest_assertion').click
+  sleep(1)
 	first('#fig' + @fig.id.to_s ).first("#assertion_text").set("Lorem ipsum cupcakes.")
 	first('#fig' + @fig.id.to_s ).first("#new_assertion").click_button "Submit"
 	first('#fig' + @fig.id.to_s ).first('p.method').click
@@ -60,10 +62,12 @@ end
 	#first('#fig' + @fig.id.to_s ).first('form#new_sumreq').click
 	#within('#fig' + @fig.id.to_s ) { page.should have_content('Got it!') }
 	first('#figsection' + @figsection.id.to_s ).first('.latest_assertion').click
+  sleep(1)
 	first('#figsection' + @figsection.id.to_s ).first("#assertion_text").set("Lorem ipsum cupcakes.")
 	first('#figsection' + @figsection.id.to_s ).first("#new_assertion").click_button "Submit"
 	sleep(2)
 	first('#figsection' + @figsection.id.to_s ).first('p.method').click
+  sleep(1)
 	first('#figsection' + @figsection.id.to_s ).first("#assertion_method_text").set("Aloe juice")
 	first('#figsection' + @figsection.id.to_s ).first(".methods_form").click_button "Submit"
 	within('tr#figsection' + @figsection.id.to_s ) { page.should have_content('Lorem ipsum cupcakes.') }
@@ -102,20 +106,20 @@ end
 
     it "works for a paper", :js => true do
 	first('.latest_assertion').click
+  sleep(1)
 	first("#assertion_text").set("Lorem ipsum cupcakes.")
-	first('#new_assertion').click_button "Submit"
-	first('p.method').click
+	first('form.edit_assertion').click_button "Submit"
 	sleep(1)
-	first("#assertion_method_text").set("Aloe juice")
-	first('#paper' + @paper.id.to_s ).first(".methods_form").click_button "Submit"
 	within('body') { page.should have_content('Lorem ipsum cupcakes.') }
     end
 
 
     it "works for a figure", :js => true do
 	first('#fig' + @fig.id.to_s ).first('div.latest_assertion').click
+  sleep(1)
 	first('#fig' + @fig.id.to_s ).first("#assertion_text").set("Lorem ipsum cupcakes.")
-	first('#fig' + @fig.id.to_s ).first('#new_assertion').click_button "Submit"
+	first('#fig' + @fig.id.to_s ).first('form.edit_assertion').click_button "Submit"
+  sleep(1)
 	first('#fig' + @fig.id.to_s ).first('p.method').click
 	sleep(1)
 	first('#fig' + @fig.id.to_s ).first("#assertion_method_text").set("Aloe juice")
@@ -129,10 +133,12 @@ end
 	#first('#fig' + @fig.id.to_s ).first('form#new_sumreq').click
 	#within('#fig' + @fig.id.to_s ) { page.should have_content('Got it!') }
 	first('#fig' + @fig.id.to_s ).first('div.latest_assertion').click
+  sleep(1)
 	first('#fig' + @fig.id.to_s ).first("#assertion_text").set("Lorem ipsum cupcakes.")
-	first('#fig' + @fig.id.to_s ).first('#new_assertion').click_button "Submit"
+	first('#fig' + @fig.id.to_s ).first('form.edit_assertion').click_button "Submit"
+  sleep(1)
 	first('#fig' + @fig.id.to_s ).first('p.method').click
-    	sleep(2)
+  sleep(2)
 	first('#fig' + @fig.id.to_s ).first("#assertion_method_text").set("Aloe juice")
 	first('#fig' + @fig.id.to_s ).first(".methods_form").click_button "Submit"
 	within('tr#fig' + @fig.id.to_s ) { page.should have_content('Lorem ipsum cupcakes.') }

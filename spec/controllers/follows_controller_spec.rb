@@ -7,8 +7,10 @@ describe FollowsController do
       @user = create(:user)
       @follow = @user.follows.create(:name => 'zombies', :search_term => 'zombies')
       @paper1 = Paper.find_or_create_by_pubmed_id(@follow.feed[0][:pubmed_id])
+      @paper1.title = 'Zombies love brains'
       @paper1.save
       @paper2 = Paper.find_or_create_by_pubmed_id(@follow.feed[1][:pubmed_id])
+      @paper2.title = 'The Walking Dead'
       @paper2.save
       @attr = {:text => "zombies zombies zombies", :form => "comment"}
       @comment = @paper1.comments.new(@attr)

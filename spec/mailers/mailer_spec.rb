@@ -132,6 +132,7 @@ describe Mailer do
 
   end
 
+  if false #disabling until shares are re-enabled.
   describe "share digest" do
 	it "should send a share digest" do
 		@user1 = create(:user)
@@ -157,6 +158,7 @@ describe Mailer do
       		@email.deliver
 		Maillog.last.about.should == @share1
 	end
-   end
+  end
+    end
 
 end

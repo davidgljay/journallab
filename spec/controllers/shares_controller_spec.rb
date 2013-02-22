@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SharesController do
-
+ if false #disabling this test until shares are re-enabled.
   describe "create" do
     before(:each) do
       @user1 = create(:user)
@@ -55,5 +55,5 @@ describe SharesController do
     # @mailed_users.should include @user4
     #end
   end
-
+ end
 end

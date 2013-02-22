@@ -4,9 +4,8 @@ class CommentsController < ApplicationController
   #Used to render a list in the papers view.
   def list
     @owner = params[:owner].constantize.find(params[:id])
-    @groups = current_user.groups
     @mode = params[:mode].to_i
-    if signed_in? ||
+    if signed_in?
         @owner.visits.create(:user => current_user, :visit_type => 'comment')
     end
     #Comments used to be visible only to groups. We're switching things so that they're always visible and just semi-anonymous.

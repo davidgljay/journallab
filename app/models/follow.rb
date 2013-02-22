@@ -22,7 +22,7 @@ class Follow < ActiveRecord::Base
 
   def feed
     if latest_search
-      latest_search.map{|p| p[0]}
+      latest_search.map{|p| p[0]}.select{|p| p[:title]}
     else
       Paper.new.search_pubmed(search_term)
     end

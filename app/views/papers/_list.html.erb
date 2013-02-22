@@ -5,17 +5,17 @@
       <% if paper[:percent_summarized].to_i > 0 %>
           <div style="display: inline-block;">
             <div class="progress">
-              <div class="bar" style="width: <%=  paper[:percent_summarized] %>%;">
+              <div class="bar" style="width: <%=  paper[:percent_summarized].to_i %>%;">
               </div>
             </div>
           </div>
           <div style="display: inline-block; margin-right: 5px;">
-            <%=  paper[:percent_summarized] %>% Summarized
+            <%=  paper[:percent_summarized].to_i %>% Summarized
           </div>
       <% end  %>
       <% if paper[:comments].to_i > 0 %>
           <div style="display: inline-block;">
-            <%= pluralize(paper[:comments], 'Comment') %>
+            <%= pluralize(paper[:comments].to_i, 'Comment') %>
           </div>
             <% if (@recent_activity ||= []).include?(paper[:pubmed_id]) %>
                 <div class='new_comment_flag badge badge-important btn-small' style="font-size: 8px; padding:2px;">

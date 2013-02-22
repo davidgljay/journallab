@@ -217,6 +217,11 @@ class User < ActiveRecord::Base
       Subscription.new.defaults.each do |s|
         self.subscriptions.create(:category => s, :receive_mail => true)
       end
+    elsif subscriptions.count == 1 && subscriptions.first.category == 'all'
+      setting = subscriptions.first.receive_mail
+       Subscription.new.defaults.each do |s|
+         self.subscriptions.create(:category => s, :receive_mail => setting)
+       end
     end
   end
 

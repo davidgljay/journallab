@@ -49,6 +49,7 @@ def to_hash
 end
 
 def scrub(string) #getting wierd intermittent errors from some pubmed into, this should address them.
+  string ||= ''
   string.gsub(/['\u2029''\u2028']/,'')
 end
 

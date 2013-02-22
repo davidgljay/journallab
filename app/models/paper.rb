@@ -204,6 +204,7 @@ def check_info
   if title.nil?
 	delay.lookup_info
   end
+  delay.reset_heatmap
 end
 
 def lookup_info
@@ -481,10 +482,11 @@ def percent_summarized
 end
 
 def heatmap_overview
+  hm = heatmap
 	max_sections = (figs.map{|f| f.figsections.count}).max.to_i
-	overview = [[['Paper', heatmap['paper' + id.to_s][1], 'paper' + id.to_s]] + [nil] * max_sections]
+	overview = [[['Paper', hm['paper' + id.to_s][1], 'paper' + id.to_s]] + [nil] * max_sections]
 	figs.sort{|x,y| x.num <=> y.num}.each do |fig|
-		figrow = [['Fig ' + fig.num.to_s, heatmap['fig' + fig.id.to_s][1], 'fig' + fig.id.to_s]]
+		figrow = [['Fig ' + fig.num.to_s, hm['fig' + fig.id.to_s][1], 'fig' + fig.id.to_s]]
 		#fig.figsections.each do |section|
 		#	figrow << [fig.num.to_s + section.letter, heatmap['figsection' + section.id.to_s][1], 'figsection' + section.id.to_s]
 		#end
@@ -558,7 +560,8 @@ def build_figs(numfigs)
 				f.destroy
 			end
 			self.reload
-		end
+    end
+    reset_heatmap
 	end
    	numfigs
 end

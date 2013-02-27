@@ -357,6 +357,7 @@ def set_latest_activity
    self.pubdate ||= Time.now - 1.month
    self.latest_activity = (activity << self.pubdate).max
 end
+
 #Map reactions to the overall paper and to individual figures and figure sections and store it as a hash text, that way we don't have to run a ton of SQL queries every time the page loads
 
 def set_reaction_map

@@ -220,7 +220,7 @@ def lookup_info
     url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
     data = Nokogiri::XML(open(url))
 
-	  if data.xpath("/").empty? || data.xpath('//PubmedArticle').nil?
+	  if data.xpath("/").empty? || data.xpath('//PubmedArticle').nil? || data.xpath('//PubmedArticle').first.nil?
 	     flash = { :error => "This Pubmed ID is not valid." }
 	  else
 		article = data.xpath('//PubmedArticle').first
@@ -234,13 +234,16 @@ def lookup_info
 		pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
 				
 		if year != 0
-			self.pubdate = DateTime.new(year, month, day) 
+      month = month == 0 ? 1 : month
+      day = day == 0 ? 1 : day
+
+      self.pubdate = DateTime.new(year, month, day)
 			self.latest_activity = self.pubdate
 		else
 			self.latest_activity = DateTime.now - 1.month
 		end
 	       	self.abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
-		# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
+
 		self.authors = []
 		authorlist = article.xpath('MedlineCitation/Article/AuthorList')
 		authorlist.xpath('Author').each do |a|

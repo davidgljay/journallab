@@ -78,6 +78,7 @@ class PapersController < ApplicationController
     if @paper.title.nil?
       @paper.lookup_info
     end
+    @paper.save
     redirect_to @paper
   end
 

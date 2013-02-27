@@ -220,9 +220,8 @@ def lookup_info
     url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
     data = Nokogiri::XML(open(url))
 
-	  if data.xpath("/").empty? || data.xpath('//PubmedArticle')
+	  if data.xpath("/").empty? || data.xpath('//PubmedArticle').nil?
 	     flash = { :error => "This Pubmed ID is not valid." }
-	     self.destroy
 	  else
 		article = data.xpath('//PubmedArticle').first
 	      	self.title = article.xpath('MedlineCitation/Article/ArticleTitle').text

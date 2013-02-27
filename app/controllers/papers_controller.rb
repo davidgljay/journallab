@@ -4,12 +4,8 @@ class PapersController < ApplicationController
   # GET /papers
   # GET /papers.xml
   def index
-    @papers = Paper.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @papers }
-    end
+    flash = { :error => "There was an error loading this paper." }
+    redirect_to root_path
   end
 
   # GET /papers/1

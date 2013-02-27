@@ -35,7 +35,6 @@ has_many :notes, :as => :about
    validates_numericality_of :pubmed_id, :only_integer => true,
                          :less_than => 9999999999999,
                          :greater_than => 0, :allow_nil => true
-before_save :set_reaction_map
 before_save :set_latest_activity
 after_save :check_info
 
@@ -214,14 +213,14 @@ def lookup_info
 		self.pubdate = (Time.now - 1.month)
 		self.title = "Feeling robots and human zombies: Mind perception and the uncanny valley"
 		self.citation = "Gray, Kurt, and Wegner, Daniel M. \"Feeling robots and human zombies: Mind perception and the uncanny valley.\" 125.1 (2012): 125-30. Web."
-		self.authors = [{:firstname=>"Kurt", :lastname=>"Gray", :name=>"Gray, Kurt"}, {:firstname=>"Daniel M", :lastname=>"Wegner", :name=>"Wegner, Daniel M"}]
-		self.save
-	else
-	  url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
 	  #Check to see if the ID showed up on pubmed, if not return to the homepage.
-	  data = Nokogiri::XML(open(url))
-	
-	  if data.xpath("/").empty?
+    self.authors = [{:firstname=>"Kurt", :lastname=>"Gray", :name=>"Gray, Kurt"}, {:firstname=>"Daniel M", :lastname=>"Wegner", :name=>"Wegner, Daniel M"}]
+    self.save
+  else
+    url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
+    data = Nokogiri::XML(open(url))
+
+	  if data.xpath("/").empty? || data.xpath('//PubmedArticle')
 	     flash = { :error => "This Pubmed ID is not valid." }
 	     self.destroy
 	  else

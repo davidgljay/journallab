@@ -35,6 +35,7 @@ has_many :notes, :as => :about
    validates_numericality_of :pubmed_id, :only_integer => true,
                          :less_than => 9999999999999,
                          :greater_than => 0, :allow_nil => true
+before_save :set_reaction_map
 before_save :set_latest_activity
 after_save :check_info
 
@@ -203,7 +204,6 @@ def check_info
   if title.nil?
 	delay.lookup_info
   end
-  delay.reset_heatmap
 end
 
 def lookup_info

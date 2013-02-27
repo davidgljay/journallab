@@ -559,7 +559,7 @@ def build_figs(numfigs)
 	elsif newfigs < 0
 		(newfigs * -1).times do		
 			f = self.figs[-1]
-			if f.comments.empty? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.reactions.empty?
+			if f.comments.empty? && f.image.nil? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.reactions.empty?
 				f.destroy
 			end
 			self.reload

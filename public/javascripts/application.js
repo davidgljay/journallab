@@ -197,7 +197,7 @@ $(".leave_reaction").live('click', function() {
 //Reset assertion forms when clicked.
 
    $("#assertion_text, #assertion_method_text").live('click', function(){
-     if( $(this).val().substring(0,27) == "What is the core conclusion" || $(this).val() == "Separate methods with commas (e.g. western blot, QPCR, etc.)" || $(this).val() == "What are alternate approaches?" || $(this).val() == "Please provide a brief summary of this paper readable to a scientist outside of this field.")
+     if( $(this).val().substring(0,20) == "What are the authors" || $(this).val() == "Separate methods with commas (e.g. western blot, QPCR, etc.)" || $(this).val() == "What are alternate approaches?" || $(this).val() == "Please provide a brief summary of this paper readable to a scientist outside of this field."  || $(this).val().substring(0,27) == "What are alternate approaches?")
         $(this).val('');
 
        });

@@ -207,12 +207,12 @@ $('#expandSignup').click(function(){
 });
 
 //
-// Redirect to signup if you get a 401 unauthentic error from a JS call
+// Reload the page if you get an error from a JS call
 //
 
-//$('body').bind("ajax:error", function(event, data, status, xhr) {
-//    location.replace("/users/sign_up");
-//});
+$('body').bind("ajax:error", function(event, data, status, xhr) {
+    location.reload();
+});
 
 
 // Dropdown menus

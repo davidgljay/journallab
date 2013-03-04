@@ -27,7 +27,7 @@ end
   gem 'dragonfly'
   gem 'rmagick'
   gem  'mini_magick' 
-  gem 'fog'
+  gem 'fog', '1.4.0'
   gem 'delayed_job'
   gem 'delayed_job_active_record'
   gem 'daemons'

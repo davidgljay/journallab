@@ -11,7 +11,6 @@ has_many :questions, :dependent => :destroy
 has_many :shares, :dependent => :destroy
 has_many :sumreqs, :dependent => :destroy
 has_many :reactions, :as => :about, :dependent => :destroy
-has_many :visits, :as => :about, :dependent => :destroy
 validates :paper_id, :presence => true
 
 image_accessor :image

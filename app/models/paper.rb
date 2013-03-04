@@ -49,6 +49,7 @@ def to_hash
 end
 
 def scrub(string) #getting wierd intermittent errors from some pubmed into, this should address them.
+  string ||= ''
   string.gsub(/['\u2029''\u2028']/,'')
 end
 
@@ -212,16 +213,15 @@ def lookup_info
 		self.pubdate = (Time.now - 1.month)
 		self.title = "Feeling robots and human zombies: Mind perception and the uncanny valley"
 		self.citation = "Gray, Kurt, and Wegner, Daniel M. \"Feeling robots and human zombies: Mind perception and the uncanny valley.\" 125.1 (2012): 125-30. Web."
-		self.authors = [{:firstname=>"Kurt", :lastname=>"Gray", :name=>"Gray, Kurt"}, {:firstname=>"Daniel M", :lastname=>"Wegner", :name=>"Wegner, Daniel M"}]
-		self.save
-	else
-	  url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
 	  #Check to see if the ID showed up on pubmed, if not return to the homepage.
-	  data = Nokogiri::XML(open(url))
-	
-	  if data.xpath("/").empty?
+    self.authors = [{:firstname=>"Kurt", :lastname=>"Gray", :name=>"Gray, Kurt"}, {:firstname=>"Daniel M", :lastname=>"Wegner", :name=>"Wegner, Daniel M"}]
+    self.save
+  else
+    url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
+    data = Nokogiri::XML(open(url))
+
+	  if data.xpath("/").empty? || data.xpath('//PubmedArticle').nil? || data.xpath('//PubmedArticle').first.nil?
 	     flash = { :error => "This Pubmed ID is not valid." }
-	     self.destroy
 	  else
 		article = data.xpath('//PubmedArticle').first
 	      	self.title = article.xpath('MedlineCitation/Article/ArticleTitle').text
@@ -234,13 +234,16 @@ def lookup_info
 		pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
 				
 		if year != 0
-			self.pubdate = DateTime.new(year, month, day) 
+      month = month == 0 ? 1 : month
+      day = day == 0 ? 1 : day
+
+      self.pubdate = DateTime.new(year, month, day)
 			self.latest_activity = self.pubdate
 		else
 			self.latest_activity = DateTime.now - 1.month
 		end
 	       	self.abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
-		# Just pull the authors for now, it takes too much time to save them to the DB (though this could happen once we have a job server.)
+
 		self.authors = []
 		authorlist = article.xpath('MedlineCitation/Article/AuthorList')
 		authorlist.xpath('Author').each do |a|
@@ -357,6 +360,7 @@ def set_latest_activity
    self.pubdate ||= Time.now - 1.month
    self.latest_activity = (activity << self.pubdate).max
 end
+
 #Map reactions to the overall paper and to individual figures and figure sections and store it as a hash text, that way we don't have to run a ton of SQL queries every time the page loads
 
 def set_reaction_map
@@ -480,10 +484,11 @@ def percent_summarized
 end
 
 def heatmap_overview
+  hm = heatmap
 	max_sections = (figs.map{|f| f.figsections.count}).max.to_i
-	overview = [[['Paper', heatmap['paper' + id.to_s][1], 'paper' + id.to_s]] + [nil] * max_sections]
+	overview = [[['Paper', hm['paper' + id.to_s][1], 'paper' + id.to_s]] + [nil] * max_sections]
 	figs.sort{|x,y| x.num <=> y.num}.each do |fig|
-		figrow = [['Fig ' + fig.num.to_s, heatmap['fig' + fig.id.to_s][1], 'fig' + fig.id.to_s]]
+		figrow = [['Fig ' + fig.num.to_s, hm['fig' + fig.id.to_s][1], 'fig' + fig.id.to_s]]
 		#fig.figsections.each do |section|
 		#	figrow << [fig.num.to_s + section.letter, heatmap['figsection' + section.id.to_s][1], 'figsection' + section.id.to_s]
 		#end
@@ -545,6 +550,7 @@ end
 
 def build_figs(numfigs)
    	newfigs = numfigs.to_i-self.figs.count
+    newfigs.to_i
 	if newfigs > 0
    		newfigs.times do |i|
      			self.figs.create(:num => (self.figs.count+1))
@@ -553,11 +559,12 @@ def build_figs(numfigs)
 	elsif newfigs < 0
 		(newfigs * -1).times do		
 			f = self.figs[-1]
-			if f.comments.empty? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.shares.empty?
+			if f.comments.empty? && f.image.nil? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.reactions.empty?
 				f.destroy
 			end
 			self.reload
-		end
+    end
+    reset_heatmap
 	end
    	numfigs
 end

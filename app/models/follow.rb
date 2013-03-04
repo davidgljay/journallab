@@ -34,6 +34,8 @@ class Follow < ActiveRecord::Base
       pubmed_search = Paper.new.search_pubmed(search_term,40).map{|p| [p, p[:latest_activity]]}
       activity_search = Paper.new.search_activity(search_term).map{|p| [p, p[:latest_activity]]}
       self.latest_search = (pubmed_search + activity_search).sort{|x,y| y[1] <=> x[1]}
+    elsif self.follow_type = 'latest_comments'
+      self.latest_search = latest_comments
     end
     self.save
     self.latest_search
@@ -54,17 +56,22 @@ class Follow < ActiveRecord::Base
     Follow.all.select{|f| !f.user.nil? }.each{|f| f.delay.update_feed}
   end
 
+
+  # Saves the most recent discussions in the system to latest_search
+  def latest_comments
+    Comment.last(100).reverse.map{|c| c.get_paper}.uniq.map{|p| [p.to_hash, p.latest_activity]}
+  end
+
   def set_newcount
-    if latest_search
-      lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
+    lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
+    if latest_search && follow_type != 'latest_comments'
       newcount = latest_search.select{|p| p[0][:pubdate] > lastvisit}.count
       if newcount == 40 #Pubmed search results gives an inaccurate number of search results, when the number is low count the results manually in JLab (this is inconvenient for large #s.
         newcount = Paper.new.pubmed_search_count(search_term, lastvisit)
       end
       self.newcount = newcount
-    else
-      self.newcount = Paper.new.pubmed_search_count(search_term)
     end
+    self.newcount
   end
 
   def latest_visit
@@ -82,7 +89,12 @@ class Follow < ActiveRecord::Base
 
   def recent_activity_count
     lastvisit = self.visits.empty? ? Date.new(1900,1,1) : self.visits.first.created_at
-    commentnotices.select{|c| c.comment_date > lastvisit}.map{|c| c.paper_id}.uniq.count
+    if self.follow_type == 'latest_comments'
+      recent = self.latest_search.select{|p| p[1] > lastvisit}.count
+    else
+      recent = commentnotices.select{|c| c.comment_date > lastvisit}.map{|c| c.paper_id}.uniq.count
+    end
+    recent
   end
 
   def comments_feed

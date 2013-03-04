@@ -144,6 +144,16 @@ class User < ActiveRecord::Base
     end
   end
 
+#Calculates the number of people who have viewed your work on Journal Lab (not counting random views from the interwebs)
+
+def set_impact
+  comment_papers = comments.map{|c| c.get_paper}
+  reaction_papers = reactions.map{|r| r.get_paper}
+  assertion_papers = assertions.map{|a| a.get_paper}
+  visits = (comment_papers + reaction_papers + assertion_papers).flatten.uniq.map{|p| p.visits}.flatten
+  impact = {:visits => visits.count, :users => visits.map{|v| v.user_id}.uniq.count}
+end
+
 # Functionality related to groups
 
   def member_of?(group)

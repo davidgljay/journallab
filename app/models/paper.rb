@@ -45,7 +45,7 @@ class Paper < ActiveRecord::Base
   end
 
   def to_hash
-    { :id => id, :pubmed_id => pubmed_id.to_i, :title => scrub(title), :journal => scrub(journal), :pubdate => pubdate, :abstract => scrub(abstract), :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => scrub(citation), :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at, :percent_summarized => percent_summarized ? 0 : percent_summarized, :comments => meta_comments.count ? 0 : meta_comments.count}
+    { :id => id, :pubmed_id => pubmed_id.to_i, :title => scrub(title), :journal => scrub(journal), :pubdate => pubdate, :abstract => scrub(abstract), :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => scrub(citation), :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at, :percent_summarized => percent_summarized ? percent_summarized : 0, :comments => meta_comments ? meta_comments.count : 0 }
   end
 
   def scrub(string) #getting wierd intermittent errors from some pubmed into, this should address them.

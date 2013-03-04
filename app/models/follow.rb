@@ -69,8 +69,10 @@ class Follow < ActiveRecord::Base
       if newcount == 40 #Pubmed search results gives an inaccurate number of search results, when the number is low count the results manually in JLab (this is inconvenient for large #s.
         newcount = Paper.new.pubmed_search_count(search_term, lastvisit)
       end
-      self.newcount = newcount
+    else
+      newcount = 0
     end
+    self.newcount = newcount
     self.newcount
   end
 

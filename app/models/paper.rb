@@ -194,7 +194,6 @@ class Paper < ActiveRecord::Base
     begin
       doc = Nokogiri::HTML(open(url).read.strip)
     rescue Exception => ex
-      log.error "Error: #{ex}"
       attempts = attempts + 1
       retry if(attempts < 10)
     end
@@ -210,7 +209,6 @@ class Paper < ActiveRecord::Base
     begin
       doc = Nokogiri::XML(open(url).read.strip)
     rescue Exception => ex
-      log.error "Error: #{ex}"
       attempts = attempts + 1
       retry if(attempts < 10)
     end

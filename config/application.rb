@@ -30,8 +30,8 @@ module Redcell
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    #Sprockets::Compressors.register_css_compressor(:scss, 'Sass::Rails::CssCompressor', :require => 'sass/rails/compressor')
-    config.assets.css_compressor = :uglifier
+    Sprockets::Compressors.register_css_compressor(:scss, 'Sass::Rails::CssCompressor', :require => 'sass/rails/compressor')
+
 
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false

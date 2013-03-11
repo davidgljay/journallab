@@ -17,6 +17,14 @@ class PapersController < ApplicationController
       @paper.count_figs
     end
     @paper_interest = @paper.interest.to_i
+
+    #Doublecheck to make sure that all media have a category listed. In principle this should happen as soon as the media is saved.
+    @paper.medias.each do |m|
+      if m.category.nil?
+        m.set_category
+        m.save
+      end
+    end
     @heatmap = @paper.heatmap
     @heatmap_overview = @paper.heatmap_overview
     @reaction_map = @paper.reaction_map

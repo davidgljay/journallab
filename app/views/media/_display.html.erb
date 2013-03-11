@@ -1,0 +1,18 @@
+<% unless paper.medias.empty? %>
+    <div id = "slides" class='media' >
+      <div class = 'slides_container'>
+        <% paper.medias.each do |m| %>
+            <% unless m.category == 'invalid' %>
+                <div class = 'slide'>
+                  <%= m.embed.to_s.html_safe %>
+                </div>
+            <% end %>
+        <% end %>
+      </div>
+      <% if paper.medias.count > 1 %>
+          <a href="#" class="prev"><%= image_tag "arrow-prev.png", :width => "24", :height => "43", :alt => "Arrow Prev" %></a>
+          <a href="#" class="next"><%= image_tag "arrow-next.png", :width => "24", :height => "43", :alt => "Arrow Next" %></a>
+      <% end %>
+    </div>
+<% end %>
+

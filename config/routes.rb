@@ -1,76 +1,69 @@
 Redcell::Application.routes.draw do
-   
-  get "folders/show"
 
-  get "notes/create"
-
-  get "reactions/create"
-
-  get "reactions/destroy"
-
-  get "follows/create"
-
-  get "sumreq/create"
-
-  get "figs/build_sections"
 
   resources :groups
-   match '/groups(/:id)/remove(/:u_id)', :to => 'groups#remove'
-   match '/groups(/:id)/discuss(/:paper_id)', :to => 'groups#discuss'
-   match '/groups/undiscuss(/:paper_id)', :to => 'groups#undiscuss'
-   match '/groups(/:id)/join' , :to => 'groups#join'
+  match '/groups(/:id)/remove(/:u_id)', :to => 'groups#remove'
+  match '/groups(/:id)/discuss(/:paper_id)', :to => 'groups#discuss'
+  match '/groups/undiscuss(/:paper_id)', :to => 'groups#undiscuss'
+  match '/groups(/:id)/join' , :to => 'groups#join'
   match '/groups(/:id)/leave' , :to => 'groups#leave'
 
   resources :filters
   resources :comments
-   match '/comments(/:id)/reply',    :to => 'comments#reply'
-   match 'comment_list',             :to => 'comments#list'
+  match '/comments(/:id)/reply',    :to => 'comments#reply'
+  match 'comment_list',             :to => 'comments#list'
 
 
   resources :votes
   resources :shares
-   match '/users(/:id)/sharefeed',	:to => 'shares#list'
+  match '/users(/:id)/sharefeed',	:to => 'shares#list'
   resources :sumreqs
 
 
   resources :assertions
-    match '/assertions/improve(/:id)', :to => 'assertions#improve'
-    match '/assertions/new',           :to => 'assertions#new'
-    match 'improve_list',             :to => 'assertions#list'
+  match '/assertions/improve(/:id)', :to => 'assertions#improve'
+  match '/assertions/new',           :to => 'assertions#new'
+  match 'improve_list',             :to => 'assertions#list'
 
 
   resources :questions
-   match '/questions(/:id)/answer',    :to => 'questions#answer'
-   match '/questions(/:id)/comment',    :to => 'questions#comment'
-   match 'question_list',             :to => 'questions#list'
+  match '/questions(/:id)/answer',    :to => 'questions#answer'
+  match '/questions(/:id)/comment',    :to => 'questions#comment'
+  match 'question_list',             :to => 'questions#list'
 
   resources :authors
 
   resources :papers
-   match '/lookup(/:search)', :to => 'papers#lookup'
-   match '(/:about)(/:id)/discussion', :to => 'papers#discussion'
-   match '/grab_images(/:id)', :to => 'papers#grab_images'
-   match '/papers(/:id)/build_figs(/:num)', :to => 'papers#build_figs'
-   match 'paper_show',               :to => 'papers#show'
-   match '/papers(/:id)/m(/:m_id)', :to => 'papers#show_from_mail'
-   match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
-   match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
-   match '/pmid(/:pmid)', 			:to => 'papers#pmid'
+  match '/lookup(/:search)', :to => 'papers#lookup'
+  match '(/:about)(/:id)/discussion', :to => 'papers#discussion'
+  match '/grab_images(/:id)', :to => 'papers#grab_images'
+  match '/papers(/:id)/build_figs(/:num)', :to => 'papers#build_figs'
+  match 'paper_show',               :to => 'papers#show'
+  match '/papers(/:id)/m(/:m_id)', :to => 'papers#show_from_mail'
+  match '/figs(/:id)/build_figsections(/:num)', :to => 'figs#build_sections'
+  match '/figs(/:id)/image_upload', :to => 'figs#image_upload'
+  match '/figs(/:id)/remove_image', :to => 'figs#remove_image', :via => :delete
+  match '/pmid(/:pmid)', 			:to => 'papers#pmid'
 
   resources :follows
-   match "/welcome",		:to => 'pages#welcome'
-   match "/follows/remove(/:follow)", :to => 'follows#destroy'
-   match "/follows(/:follow)/viewswitch(/:switchto)",       :to => 'follows#viewswitch'
+  match "/welcome",		:to => 'pages#welcome'
+  match "/follows/remove(/:follow)", :to => 'follows#destroy'
+  match "/follows(/:follow)/viewswitch(/:switchto)",       :to => 'follows#viewswitch'
   resources :reactions
   resources :notes
   resources :folders
-   match '/folders(/:folder_id)/remove(/:paper_id)', :to => 'notes#destroy', :via => :delete
-   match '/folders/add(/:pubmed_id)',	:to => 'folders#list'
-   match 'quickform',			:to => 'reactions#quickform'
-   match 'shares/new(/:pubmed_id)',		:to => 'shares#new'
+  match '/folders(/:folder_id)/remove(/:paper_id)', :to => 'notes#destroy', :via => :delete
+  match '/folders/add(/:pubmed_id)',	:to => 'folders#list'
+  match 'quickform',			:to => 'reactions#quickform'
+  match 'shares/new(/:pubmed_id)',		:to => 'shares#new'
+  match 'medias',         :to => 'media#create', :via => :post
+  match 'medias',         :to => 'media#index', :via => :get
+  match '/medias/destroy(/:id)',         :to => 'media#destroy', :via => :delete
+
 #Static pages
 
-root :to => 'pages#home'
+
+  root :to => 'pages#home'
   match '/contact',  :to => 'pages#contact'
   match '/about',    :to => 'pages#about'
   match '/help',     :to => 'pages#help'
@@ -87,8 +80,8 @@ root :to => 'pages#home'
 
 #Users routes
 
-devise_for :users
-resources :users
+  devise_for :users
+  resources :users
   match '/users(/:id)/history',	:to => 'users#history'
   match '/users(/:id)/subscriptions', :to => 'users#subscriptions', :via => :get
   match '/users(/:id)/subscriptions', :to => 'users#set_subscriptions', :via => :put
@@ -97,8 +90,8 @@ resources :users
 
 #  match '/reset_password', :to => 'users#reset_password'
 #  match '/signup',   :to => 'users#new'
-  match '/bulksignup', :to => 'users#bulk_new', :via => :get 
-  match '/bulksignup', :to => 'users#bulk_create', :via => :post 
+  match '/bulksignup', :to => 'users#bulk_new', :via => :get
+  match '/bulksignup', :to => 'users#bulk_create', :via => :post
   match '/users(/:id)/unsubscribe', :to => 'users#unsubscribe'
   match '/users(/:id)/share_digest', :to => 'users#share_digest'
   match '/users(/:id)/image_upload', :to => 'users#image_upload'

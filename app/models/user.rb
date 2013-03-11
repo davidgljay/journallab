@@ -11,6 +11,7 @@
 #  admin      :boolean
 #  anon_name  :string(255)
 #  specialization  :string(255)
+#  impact     :string(255) as hash
 #  created_at :datetime
 #  updated_at :datetime
 #
@@ -28,6 +29,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link, :position, :institution, :homepage, :cv, :image, :remember_me
 
+  serialize :impact
 
   has_many :assertions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -49,6 +51,7 @@ class User < ActiveRecord::Base
   has_many :folders, :dependent => :destroy
   has_many :notes, :dependent => :destroy
 
+  before_save :set_impact
   before_save :set_certified
   after_save :create_to_read
   after_save :set_subscriptions
@@ -151,7 +154,7 @@ def set_impact
   reaction_papers = reactions.map{|r| r.get_paper}
   assertion_papers = assertions.map{|a| a.get_paper}
   visits = (comment_papers + reaction_papers + assertion_papers).flatten.uniq.map{|p| p.visits}.flatten
-  impact = {:visits => visits.count, :users => visits.map{|v| v.user_id}.uniq.count}
+  self.impact = {:visits => visits.count, :users => visits.map{|v| v.user_id}.uniq.count}
 end
 
 # Functionality related to groups
@@ -334,38 +337,5 @@ end
       end
     end
   end
-
-  def impact
-    comment_papers = comments.map{|c| c.get_paper}
-    summarized_papers = assertions.map{|a| a.get_paper}
-    sum = 0
-    [comment_papers + summarized_papers].flatten.uniq.map{|p| p.visits.count}.each{|a| sum+= a}
-    sum
-  end
-
-
-  private
-
-#    def encrypt_password
-#      if password
-#        self.password_salt = make_salt if new_record?
-#        self.encrypted_password = encrypt(password)
-#      end
-#    end
-
-
-#    def encrypt(string)
-#      secure_hash(string)
-#    end
-
-#    def make_salt
-#      secure_hash("#{Time.now.utc}--#{password}")
-#    end
-
-#    def secure_hash(string)
-#      Digest::SHA2.hexdigest(string)
-#    end
-
-
 
 end

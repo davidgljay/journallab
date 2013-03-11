@@ -27,6 +27,7 @@ class Paper < ActiveRecord::Base
   has_many :meta_reactions, :class_name => "Reaction", :foreign_key => "get_paper_id"
   has_many :reactions, :as => :about
   has_many :anons
+  has_many :medias
   has_many :notes, :as => :about
 
 #Validations

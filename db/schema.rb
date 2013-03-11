@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130214308) do
+ActiveRecord::Schema.define(:version => 20130311161323) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -211,6 +211,16 @@ ActiveRecord::Schema.define(:version => 20121130214308) do
     t.datetime "updated_at"
   end
 
+  create_table "media", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "paper_id"
+    t.text     "link"
+    t.string   "category"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.text     "embed"
+  end
+
   create_table "memberships", :force => true do |t|
     t.integer  "user_id"
     t.integer  "group_id"
@@ -351,6 +361,7 @@ ActiveRecord::Schema.define(:version => 20121130214308) do
     t.string   "last_sign_in_ip"
     t.boolean  "certified"
     t.datetime "reset_password_sent_at"
+    t.string   "impact"
   end
 
   create_table "visits", :force => true do |t|

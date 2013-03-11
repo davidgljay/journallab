@@ -27,6 +27,12 @@ Redcell::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 
+  config.assets.compress = true
+
+# I keep this off during development because I want
+# to make sure the compression isn't breaking my JS
+  config.assets.debug = false
+
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
 

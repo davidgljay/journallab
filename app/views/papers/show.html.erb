@@ -1,4 +1,4 @@
-<%= stylesheet_link_tag 'jl_styles_sum1', :media => 'screen' %>
+
 <div id="contentMain">
 
   <% if @paper_interest > 1 %>
@@ -36,9 +36,11 @@
 		</div>
 	<% end %>
 
+  <%= render '/media/display', :paper => @paper %>
+
   <% if user_signed_in? %>
       <% if @paper.meta_reactions.empty? && @paper.meta_comments.empty? %>
-          <h2>Be the first to discuss this paper.</h2>
+          <h2>Be the first to discuss this paper. Leave a comment below.</h2>
             <% if @paper_interest > 1 %>
                 <h3>If you do, it will appear in <%= @paper_interest %> people's feeds.</h3>
             <% end %>
@@ -46,7 +48,8 @@
           <% if @paper.figs.empty? %>
               <%= render 'add_figs' %>
           <% end %>
-      <% end %>
+  <% end %>
+
 
 </div>
 

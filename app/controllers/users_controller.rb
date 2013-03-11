@@ -16,28 +16,10 @@ before_filter :admin_user,   :only => [:destroy, :index]
   def show
    @user = User.find(params[:id])
    @title = @user.name
-
+   if @user.impact.nil?
+      @user.save
+   end
   end
-
-# This functionality has been replaced by Devise.
-#  def new
-#   @title = "Get Started"
-#   @user = User.new
-#   @groups = Group.all
-#  end
-
-#  def reset_password
-#   @title = "Reset User Password"
-#   if params[:email] != nil
-#     @user = User.find_by_email(params[:email])
-#     if @password = current_user.reset_user_password(@user)
-#      flash[:success] = @user.name + "'s password has been reset to " + @password
-#     else
-#       flash[:error] = "You must be an admin, how did you get here?"
-#     end
-#   end
-#   render 'reset_password'
-#  end
 
   def  bulk_new
    @title = "Bulk user signup"

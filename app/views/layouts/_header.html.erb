@@ -5,6 +5,8 @@
       <% if user_signed_in? %>
           <% if current_user.admin? %>
               <%= link_to "Dashboard", dashboard_path %>
+              <%= link_to "Review Media", '/medias' %>
+              <%= link_to "Users", '/users' %>
           <% end %>
           <%= link_to destroy_user_session_path do %><div class = "inline floatright"> <icon class = "icon-remove-sign"></icon></div> Sign Out<% end %>
           <%= link_to current_user do %><div class = "inline"> <icon class = "icon-user"></icon></div> Profile<% end %>

@@ -1,0 +1,42 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+#slides.media {
+    left: 0px;
+    top: 0px;
+}
+
+#slides.media .next {
+    position: relative;
+    top: -272px;
+    left: 773px;
+    width: 24px;
+    height: 43px;
+    display: block;
+    z-index: 101;
+}
+
+#slides.media .prev {
+    position: relative;
+    top: -229px;
+    left: 49px;
+    width: 24px;
+    height: 43px;
+    display: block;
+    z-index: 101;
+}
+
+#slides.media .slides_container {
+    width: 700px;
+    height: 400px;
+}
+
+#slides.media .slideshow_pagination {
+    width: 100px;
+    position: relative;
+    left: 657px;
+    bottom: 116px;
+    z-index: 110;
+}

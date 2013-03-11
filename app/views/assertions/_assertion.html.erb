@@ -9,6 +9,11 @@
             <td width="180" align="center">
               <%= image_tag about.image.thumb('150x150').url, :class => 'thumbnail clickme'%>
               <div class = "citation"><%= about.shortname + '. '  + @paper.citation.to_s %></div>
+              <%  if signed_in? %>
+              <%  if current_user.admin %>
+                 <%=  link_to 'Remove Image', "/figs/#{about.id.to_s}/remove_image", :method => :delete  %>
+                      <% end %>
+                  <% end %>
             </td>
         <% else %>
             <td width="180" align="center">

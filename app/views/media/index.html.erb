@@ -1,0 +1,17 @@
+<h1>Recently Uploaded Media</h1>
+
+<%= paginate @list %>
+<div id="media_review"
+<% @list.each do |item| %>
+    <div class = "review_item">
+      <% if  item[:type] == 'media'%>
+          <h3><%= link_to item[:paper].title, item[:paper] %></h3>
+          <%=  item[:item].embed.to_s.html_safe %><br>
+          <%= link_to "Delete", 'medias/destroy/' + item[:item].id.to_s, :method => :delete %>
+      <% elsif item[:type] == 'fig' %>
+          <h3>Fig <%=  item[:item].num %> of <%= link_to item[:paper].title, item[:paper] %></h3>
+          <%=  image_tag item[:item].image.thumb('400x400').url %><br>
+          <%= link_to "Delete", 'figs/' + item[:item].id.to_s + '/remove_image', :method => :delete %>
+      <% end %>
+    </div>
+<% end %>

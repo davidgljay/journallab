@@ -1,0 +1,18 @@
+<div id="upload_media" class="linklike clickme popup" >
+  Add Video or Slides
+  <div class="inline">
+    <icon class ='icon-film'></icon>
+  </div>
+</div>
+
+  <div id="media_form" class='popup-box'>
+  <div class ='inline small grey'>
+    Do you a video or slideshow about this paper? Show it off! <br>
+    Enter a link to <%= link_to 'youtube.com', 'http://www.youtube.com'%> or <%= link_to 'slideshare.net', 'http://www.slideshare.net'%>.
+  </div>
+  <%= form_tag('/medias', :method => 'post') do %>
+      <%= text_field_tag 'link' %>
+      <%= hidden_field_tag 'paper', @paper.id %>
+      <%= submit_tag 'Submit' %>
+  <% end %>
+</div>

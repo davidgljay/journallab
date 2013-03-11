@@ -1,0 +1,217 @@
+@charset "UTF-8";
+#abstract, #blogs {
+	margin-right: 50px;
+	margin-left: 50px;
+	margin-bottom: 10px;
+}
+
+#blogs div {
+	text-align: left;
+}
+
+#abstract_short, #abstract_long {
+	text-align: left;
+}
+
+
+#paperInfo h3 {
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+
+#assertion_text, #assertion_method_text {
+	width: 450px;
+}
+
+#paperMenu {
+	float: right;
+	margin-right: 10px;
+	text-align: right;
+}
+
+
+#citation {
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 12px;
+	line-height: 15px;
+}
+
+.paperNav {
+	color: #63A82A;
+	font-weight: bold;
+	display: block;
+}
+
+.visits {
+	font-size: 11px;
+	font-style: italic;
+	color: #545B5F;
+}
+
+.method {
+	font-style: italic;
+	font-size: 11px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+td.sumright .reaction_list ul {
+	width:450px;
+}
+
+.custom_reaction {
+	font-size: 10px;
+	margin-top: 3px;
+}
+
+.custom_reaction input[type = "text"] {
+	width: 80px;
+	font-size: 10px;
+	padding: 0px;
+	padding-left: 2px;
+	margin-bottom: 0px;
+	margin-top: 3px;
+}
+
+.custom_reaction_submit {
+	font-size: 9px;
+} 
+
+.summaryGap {
+	width: 10px;
+	height: 3px;
+	display: inline-block;
+}
+
+.summaryBox {
+	border-left-width: 10px;
+	border-left-style: solid;
+	border-left-color: #025B98;
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	clear: both;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	display: inline-block;
+}
+
+.summaryBox h1 {
+	font-size: 14px;
+	text-transform: uppercase;
+	line-height: 18px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.comment_form textarea {
+	width: 500px;
+}
+
+.fig_upload {
+	background-color: #fff;
+	width: 80px;
+}
+
+.citation {
+	text-align: left;
+	font-size: 9px;
+	line-height: 10px;
+}
+
+.latest_assertion {
+	font-weight: bold;
+}
+
+.heatBox0{
+	border-color: #999;
+	border-left-width: 1px; 
+}
+	
+.heatBox1{
+	border-color: #D1D6D8;
+}
+.heatBox2{
+	border-color: #BED4E1;
+}
+.heatBox3{
+	border-color: #A9D6EC;
+}
+.heatBox4{
+	border-color: #8CD4F6;
+}
+.heatBox5{
+	border-color: #94D2C7;
+}
+.heatBox6{
+	border-color: #9CD098;
+}
+.heatBox7{
+	border-color: #A0CF67;
+}
+.heatBox8{
+	border-color: #C3D666;
+}
+.heatBox9{
+	border-color: #E3DD64;
+}
+.heatBox10{
+	border-color: #FFE564;
+}
+
+.heatBox0{
+	border-color: #999;
+	border-left-width: 1px; 
+}
+
+
+.summaryGap.heat0{
+	background-color: #999;
+	height: 1px;
+}
+
+
+.contribute {
+	margin: 0px;
+	padding: 0px;
+}
+.contribute ul, .commentbox ul, .questionbox ul {
+	margin: 0px;
+	padding: 0px;
+}
+.subMenu li {
+	display: inline-block;
+	list-style-type: none;
+	margin: 5px;
+	color: #666666;
+	font-size: 11px;
+	padding-top: 1px;
+	padding-right: 5px;
+	padding-bottom: 1px;
+	padding-left: 5px;
+	background-image: url(/images/vellum.png);
+}
+
+.figtoggle, .add_figs_and_sections {
+	background-repeat: no-repeat;
+	padding-left: 15px;
+	display: block;
+	color: #00569B;
+	text-transform: uppercase;
+	font-weight: bold;
+	line-height: 18px;
+	font-size: 12px;
+	width: 100px;
+}
+
+.numselect {
+	margin-left: 20px;
+}
+
+
+.fig_numselect {
+	margin: 5px;
+}

@@ -191,7 +191,7 @@ textarea, input [type = 'text'] {
     position: fixed;
     z-index: 999;
     width: 100%;
-    background-image: url(/images/bg_footer.gif);
+    background-image: url(/assets/bg_footer.gif);
 }
 #footer {
     font-size: 11px;

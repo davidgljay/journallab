@@ -106,11 +106,14 @@
 
 #slides {
 	position: relative;
-	top:15px;
-	left:125px;
+    left: 0px;
+    top: 15px;
 	z-index: 100;
 }
 
+#slides.home {
+    height: 366px;
+}
 /*
 	Slides container
 	Important:
@@ -149,18 +152,24 @@
 	Next/prev buttons
 */
 
-#slides .next,#slides .prev {
-	position:absolute;
-	top:154px;
-	left: -24px;
-	width:24px;
-	height:43px;
-	display:block;
-	z-index:101;
+#slides .next {
+    position: relative;
+    top: -238px;
+    left: 825px;
+    width: 24px;
+    height: 43px;
+    display: block;
+    z-index: 101;
 }
 
-#slides .next {
-	left:702px;
+#slides .prev {
+    position: relative;
+    top: -195px;
+    left: 100px;
+    width: 24px;
+    height: 43px;
+    display: block;
+    z-index: 101;
 }
 
 
@@ -169,11 +178,11 @@
 */
 
 .slideshow_pagination {
-	width:100px;
-	position:relative;
-	left: 570px;
-	bottom: 32px;
-	z-index:110;
+    width: 100px;
+    position: relative;
+    left: 657px;
+    bottom: 116px;
+    z-index: 110;
 }
 
 .slideshow_pagination li {
@@ -187,7 +196,7 @@
 	width:12px;
 	height:0;
 	padding-top:12px;
-	background-image:url(../images/pagination.png);
+	background-image:url(/assets/pagination.png);
 	background-position:0 0;
 	float:left;
 	overflow:hidden;

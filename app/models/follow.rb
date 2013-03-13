@@ -73,7 +73,6 @@ class Follow < ActiveRecord::Base
       newcount = 0
     end
     self.newcount = newcount
-    self.newcount
   end
 
   def latest_visit

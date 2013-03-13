@@ -178,9 +178,15 @@ before_filter :admin_user,   :only => [:destroy, :index]
       redirect_to(root_path) unless current_user == @user
     end
 
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
+  def admin_user
+    redirect = true
+    if signed_in?
+      if current_user.admin
+        redirect = false
+      end
     end
+    redirect_to(root_path) if redirect
+  end
 
     def logged_out
       redirect_to(root_path) unless not signed_in?

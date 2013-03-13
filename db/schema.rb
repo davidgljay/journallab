@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130311161323) do
+ActiveRecord::Schema.define(:version => 20130313215851) do
 
   create_table "anons", :force => true do |t|
     t.string   "name"
@@ -362,6 +362,7 @@ ActiveRecord::Schema.define(:version => 20130311161323) do
     t.boolean  "certified"
     t.datetime "reset_password_sent_at"
     t.string   "impact"
+    t.text     "feedhash"
   end
 
   create_table "visits", :force => true do |t|

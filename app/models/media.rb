@@ -21,9 +21,9 @@ class Media < ActiveRecord::Base
     if link.nil?
       self.category = 'invalid'
     end
-    if link.first(22).include?('youtube.com')
+    if link.first(23).include?('youtube.com')
       self.category = 'youtube'
-    elsif link.first(30).include?('slideshare.net')
+    elsif link.first(31).include?('slideshare.net')
       self.category = 'slideshare'
     else
       self.category = 'invalid'

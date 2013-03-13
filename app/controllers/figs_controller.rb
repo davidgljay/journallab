@@ -11,8 +11,10 @@ before_filter :admin_user,   :only => :destroy
 
   def image_upload
     fig = Fig.find(params[:id])
-    fig.image = params[:fig][:fig_image]
-    fig.save
+    if params[:fig]
+      fig.image = params[:fig][:fig_image]
+      fig.save
+    end
     redirect_to fig.paper
   end
 

@@ -232,7 +232,7 @@ $('.folderAdd').live('click', function(){
 
 			$('#slides').slides({
 				preload: true,
-				//preloadImage: 'img/loading.gif',
+				preloadImage: 'assets/loading.gif',
 				play: 9000,
 				pause: 2500,
 				hoverPause: true,

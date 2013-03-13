@@ -1,10 +1,12 @@
 class MediaController < ApplicationController
+  before_filter :authenticate_user!
   before_filter :admin_user,   :only => [:destroy, :index]
 
 
   def create
     @media = Media.new(:link => params[:link])
     @media.paper = Paper.find(params[:paper])
+    @media.user = current_user
     @media.save
     if @media.category == 'invalid' || @media.category == nil
       flash[:error] = 'Please enter a valid youtube or slideshare link.'
@@ -31,7 +33,13 @@ class MediaController < ApplicationController
   private
 
   def admin_user
-    redirect_to(root_path) unless current_user.admin?
+    redirect = true
+    if signed_in?
+      if current_user.admin
+        redirect = false
+      end
+    end
+    redirect_to(root_path) if redirect
   end
 
 end

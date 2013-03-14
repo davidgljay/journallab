@@ -89,8 +89,10 @@ class Comment < ActiveRecord::Base
   # Record whether this comment should pop up on any feeds
   def feedify
     p = self.get_paper
-    Follow.where('user_id IS NOT NULL').each do |f|
-      if (p.title.to_s + ' ' + p.abstract.to_s + ' ' + self.text).downcase.include?(f.search_term.downcase)
+    searchtext = (p.title.to_s + ' ' + p.abstract.to_s + ' ' + self.text)
+    searchtext ||= ' '
+    Follow.where('user_id IS NOT NULL AND search_term IS NOT NULL').each do |f|
+      if searchtext.downcase.include?(f.search_term.downcase)
         cn = commentnotices.new(:follow_id => f.id)
         cn.before_save #before_save functionality isn't working for some reason?! This is a hack.
         cn.save

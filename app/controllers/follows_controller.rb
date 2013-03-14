@@ -16,7 +16,7 @@ class FollowsController < ApplicationController
     @follow_id = params[:follow]
     @follow = Follow.find(@follow_id)
     @follow.destroy
-    current_user.delay.set_feedhash
+    current_user.set_feedhash
     respond_to do |format|
       format.js
     end

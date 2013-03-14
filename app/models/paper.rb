@@ -471,12 +471,12 @@ class Paper < ActiveRecord::Base
 
 #Accepts a hash called "heatmap" of the form 'fig[id]' (text) => # of comments and summaries (int)
 # ie 'fig4432' => 2
-#Calculate the relative heat of each element, with 0 being cool and 100 being warm
+#Calculates the relative heat of each element, with 0 being cool and 10 being warm
 
   def calc_heat(heatmap)
 
     #Find the maximum number of comments
-    max = heatmap.values.drop(1).map{|h| h[0]}.max
+    max = heatmap.values.map{|h| h[0]}.max
     if max == 0 || max == nil
       max = 1
     end

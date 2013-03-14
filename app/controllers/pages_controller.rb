@@ -10,7 +10,7 @@ class PagesController < ApplicationController
       @groups = current_user.groups.select{|g| g.category == 'jclub'}
       @follows  = @user.follows.all
       @user.check_feedhash
-      @feedhash = @user.feedhash
+      @feedhash = @user.feedhash.to_a
 
       #If there is a follow, load that.
       if @follows.count > 0

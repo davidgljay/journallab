@@ -39,7 +39,14 @@
 
 <h1>Histograms</h1>
 <table>
-
+  <tr>
+    <td>
+      <%=  bar_graph(@replies_per_discussion, "Replies Per Comment") %>
+    </td>
+    <td>
+      <%= bar_graph(@nods_per_discussion, "Nods Per Comment") %>
+    </td>
+  </tr>
   <tr>
     <td>
       <%= bar_graph(@visits_per_user, "Visits Per User") %>

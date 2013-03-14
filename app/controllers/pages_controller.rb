@@ -123,14 +123,14 @@ class PagesController < ApplicationController
     @views = [["Papers", graph_by_day(Visit.where("created_at > ? AND visit_type = 'paper' AND user_id <> 1 AND user_id <> 2 AND user_id <> 85", Time.now - 1.month))], ["Comments", graph_by_day(Visit.where("created_at > ? AND visit_type = 'comment' AND user_id <> 1 AND user_id <> 2 AND user_id <> 85", Time.now - 1.month))], ["Feeds", graph_by_day(Visit.where("created_at > ? AND visit_type = 'feed' AND user_id <> 1 AND user_id <> 2 AND user_id <> 85", Time.now - 1.month))]]
 
 
-    #@nods_per_discussion = histogram(Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.votes.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.votes.count})
-    #@replies_per_discussion =  histogram(Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.comments.count + q.questions.count})
+    @nods_per_discussion = histogram(Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.votes.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.votes.count})
+    @replies_per_discussion =  histogram(Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count} + Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|q| q.comments.count + q.questions.count})
     @nod_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.votes.count}.inject{|sum, n| sum + n}, Question.where('created_at > ?', Time.now - 1.month).map{|c| c.votes.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ?', Time.now - 1.month).count])
     @reply_discussion_ratio = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count}.inject{|sum, n| sum + n}, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|c| c.comments.count + c.questions.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).count])
     @action_pageview__ratio = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('created_at > ?', Time.now - 1.month).count])
     @total_users = [["Users",graph_total_by_day(User.all)]]
-    @active_users = Visit.all.select{|v| v.user}.select{|v| v.created_at.to_date != v.user.created_at.to_date && v.created_at > Time.now - 1.month}.map{|v| v.user}.uniq
-    @returning_this_month = @active_users.select{|u| u.created_at > Time.now - 1.month}.count
+    @active_users = Visit.all.select{|v| v.user_id}.select{|v| v.created_at > Time.now - 1.month}.map{|v| v.user_id}.uniq
+    @returning_this_month = @active_users.select{|u| User.find(u).created_at > Time.now - 1.month}.count
     @registered_this_month = User.all.select{|u| u.created_at > Time.now - 1. month}.count
     @visits_per_user = histogram(User.all.map{|u| u.visits.count})
     @discussion_per_user = histogram(User.all.map{|u| u.reactions.count + u.comments.count})

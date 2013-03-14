@@ -2,7 +2,7 @@ Redcell::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Log params and SQL queries temporarily so that I can debug on heroku.
-  # config.logger = Logger.new(STDOUT)
+  config.logger = Logger.new(STDOUT)
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests

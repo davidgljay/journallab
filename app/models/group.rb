@@ -44,7 +44,13 @@ def add(user)
      leads.each do |lead|
 	Mailer.group_add_notification(self, lead, user).deliver unless self.id == 8
      end
+     #user.delay.set_feedhash
    end
+end
+
+#Used in feedhash
+def css_class
+    'group' + id.to_s
 end
 
 def shortname
@@ -74,6 +80,7 @@ end
 def remove(user)
     if self.users.include?(user)
       self.memberships.find_by_user_id(user.id).destroy
+      user.delay.set_feedhash
     end
 end
 

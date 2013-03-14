@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
   attr_accessible :firstname, :lastname, :email, :password, :password_confirmation, :specialization, :profile_link, :position, :institution, :homepage, :cv, :image, :remember_me
 
   serialize :impact
+  serialize :feedhash
 
   has_many :assertions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -53,6 +54,7 @@ class User < ActiveRecord::Base
 
   before_save :set_impact
   before_save :set_certified
+  before_save :check_feedhash
   after_save :create_to_read
   after_save :set_subscriptions
 
@@ -70,15 +72,6 @@ class User < ActiveRecord::Base
   validates :email, :presence => true,
             :format   => { :with => email_regex },
             :uniqueness => { :case_sensitive => false }
-#  validates :password, :presence => true,
-#          :confirmation => true,
-#          :length => {:within => 6..40},
-#          :on => :create
-#  validates :password, :confirmation => true,
-#          :length => {:within => 6..40},
-#          :allow_blank => true,
-#          :on => :update
-# validates :anon_name,  :uniqueness => true
 
 
 #Some functions for calling names
@@ -149,18 +142,18 @@ class User < ActiveRecord::Base
 
 #Calculates the number of people who have viewed your work on Journal Lab (not counting random views from the interwebs)
 
-def set_impact
-  comment_papers = comments.map{|c| c.get_paper}
-  reaction_papers = reactions.map{|r| r.get_paper}
-  assertion_papers = assertions.map{|a| a.get_paper}
-  visits = (comment_papers + reaction_papers + assertion_papers).flatten.uniq.map{|p| p.visits}.flatten
-  self.impact = {:visits => visits.count, :users => visits.map{|v| v.user_id}.uniq.count}
-end
+  def set_impact
+    comment_papers = comments.map{|c| c.get_paper}
+    reaction_papers = reactions.map{|r| r.get_paper}
+    assertion_papers = assertions.map{|a| a.get_paper}
+    visits = (comment_papers + reaction_papers + assertion_papers).flatten.uniq.map{|p| p.visits}.flatten
+    self.impact = {:visits => visits.count, :users => visits.map{|v| v.user_id}.uniq.count}
+  end
 
 # Functionality related to groups
 
   def member_of?(group)
-    groups.include?(group)
+    self.groups.include?(group)
   end
 
   def lead_of?(group)
@@ -232,9 +225,9 @@ end
       end
     elsif subscriptions.count == 1 && subscriptions.first.category == 'all'
       setting = subscriptions.first.receive_mail
-       Subscription.new.defaults.each do |s|
-         self.subscriptions.create(:category => s, :receive_mail => setting)
-       end
+      Subscription.new.defaults.each do |s|
+        self.subscriptions.create(:category => s, :receive_mail => setting)
+      end
     end
   end
 
@@ -317,6 +310,27 @@ end
     allowed_domains = ['nih.gov', 'ucsfmedctr.org', '.cirm.ca.gov']
     self.certified ||= self.email.last(4) == '.edu' || allowed_domains.include?(self.email.split('@').last)
     return true
+  end
+
+  #Move data about the user's feeds into a handy dandy hash for quick retrieval on homepage load.
+  #Activated by Follow.update_all_feeds during daily feed update.
+
+  def set_feedhash
+    feeds = []
+    self.follows.each do |f|
+      feeds << {:id => f.id, :name => f.name, :newcount => f.newcount, :recent_activity => f.recent_activity.count, :type => 'follow', :css_class => f.css_class}
+    end
+    self.groups.select{|g| g.category == 'jclub' && g.current_discussion}.each do |g|
+      feeds << {:id => g.id, :name => g.name, :recent_activity => g.newcount(self), :newcount => 0, :type => 'group', :css_class => g.css_class }
+    end
+    self.feedhash = feeds
+    self.save
+  end
+
+  def check_feedhash
+    if self.feedhash.nil?
+      set_feedhash
+    end
   end
 
   def to_csv(options = {})

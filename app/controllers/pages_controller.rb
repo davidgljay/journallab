@@ -5,9 +5,12 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     if signed_in?
-      @jclubs = current_user.groups.select{|g| g.category == 'jclub' && !g.current_discussion.nil?}
-      @groups = current_user.groups.all
-      @follows  = current_user.follows.all
+      @user = current_user
+      @jclubs = @user.groups.select{|g| g.category == 'jclub' && !g.current_discussion.nil?}
+      @groups = current_user.groups.select{|g| g.category == 'jclub'}
+      @follows  = @user.follows.all
+      @user.check_feedhash
+      @feedhash = @user.feedhash
 
       #If there is a follow, load that.
       if @follows.count > 0
@@ -44,6 +47,11 @@ class PagesController < ApplicationController
     else
       @title = "Welcome"
       @follows = Follow.new.create_temp(params[:temp_follows])
+      @feedhash = []
+      @follows.each do |f|
+        newcount = f.newcount == 0 ? Paper.new.pubmed_search_count(f.search_term, Date.new(1900,1,1)) : f.newcount
+        @feedhash << {:id => f.id, :name => f.name, :newcount => newcount, :recent_activity => f.recent_activity.count, :type => 'follow', :css_class => f.css_class}
+      end
       @follow = @follows.first
       @feed = @follow.feed
       @jclubs = []
@@ -90,6 +98,7 @@ class PagesController < ApplicationController
       @reaction_map = @paper.reaction_map
       @groups = current_user.groups if signed_in?
     end
+    current_user.delay.set_feedhash if signed_in?
   end
 
 

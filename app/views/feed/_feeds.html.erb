@@ -1,7 +1,7 @@
 <div id = "homeFeed" class = "feed round">
       <%= render '/feed/nav' %>
       <% @follows.each_with_index do |follow, i| %>
-	<div id = <%= follow.classname + "_feed" %> class = "homePageFeed">
+	<div id = <%= follow.css_class + "_feed" %> class = "homePageFeed">
 	<%=  render '/feed/follow' if i == 0 %>
 	</div>
       <% end %>

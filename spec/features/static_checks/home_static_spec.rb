@@ -30,6 +30,8 @@ describe "Visiting the homepage" do
 		f = @user.follows.create!(:search_term => "RNA", :name => "RNA")
     f.update_feed
 		f.save
+    @user.reload
+    @user.set_feedhash
 		visit "/"
 		within('body') { page.should have_selector('div.follow_' + @user.follows.first.id.to_s) }
 	end
@@ -40,7 +42,9 @@ describe "Visiting the homepage" do
 		@group.papers << @paper
 		d = @group.discussions.first
 		d.starttime = Time.now - 1.day
-		d.save		
+		d.save
+    @user.reload
+    @user.set_feedhash
 		visit "/"
 		within('body') { page.should have_content('Test Group') }
 	end
@@ -58,6 +62,8 @@ describe "Visiting the homepage" do
 		f2 = @user.follows.create!(:search_term => "zombies", :name => "zombies")
 		f2.update_feed
     f2.save
+    @user.reload
+    @user.set_feedhash
 		visit "/"
 		within('body') { page.should have_selector('.group' + @group.id.to_s ) }
     within('body') { page.should have_selector('.group' + @group2.id.to_s ) }

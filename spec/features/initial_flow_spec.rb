@@ -6,8 +6,9 @@ describe "Initial Flow:" do
 describe "Finding feeds and registering" do
 	it "lets you create feeds and then register" do
 		visit root_path
-		fill_in "temp_follows", :with => "lions,tigers,bears"
+		fill_in "temp_follows", :with => "lions, tigers, bears"
 		click_button "Go"
+    page.should have_button('tigers')
 		fill_in "user_firstname", :with => "Stampi"
 		fill_in "user_lastname", :with => "the Dinosaur"
 		fill_in "user_email", :with => "stampi@rocks.edu"

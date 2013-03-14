@@ -7,12 +7,12 @@ describe Group do
      @class = create(:group)
      @class.category = "class"
      @instructor = create(:user)
-     @student1 = create(:user)     
+     @student1 = create(:user)
      @student2 = create(:user)
      @outsider = create(:user)
      @class.make_lead(@instructor)
      @class.add(@student1)
-     @class.add(@student2)     
+     @class.add(@student2)
    end
 
    describe "Assertions" do
@@ -26,7 +26,7 @@ describe Group do
        @class.make_group(@assertion)
        @mode = 2
      end
-   
+
    it "should be visible to an instructor" do
         @class.let_through_filter?(@assertion, @instructor, @mode).should be_true
         @assertion.is_public.should be_false
@@ -68,7 +68,7 @@ describe Group do
        @comment.paper = @paper
        @comment.user = @student1
        @comment.save
-       @class.make_group(@comment) 
+       @class.make_group(@comment)
      end
     it "should be visible to someone from the class" do
         @class.let_through_filter?(@comment, @student1, @mode).should be_true
@@ -77,18 +77,18 @@ describe Group do
 
     it "should not be visible to someone outside of the class" do
        @class.let_through_filter?(@comment, @outsider, @mode).should be_false
-    end 
+    end
    end
  end
 
  describe "Lab:" do
   before(:each) do
      @lab = create(:group)
-     @rat1 = create(:user)     
+     @rat1 = create(:user)
      @rat2 = create(:user)
      @outsider = create(:user)
      @lab.add(@rat1)
-     @lab.add(@rat2)     
+     @lab.add(@rat2)
    end
 
    describe "assertions" do
@@ -126,14 +126,14 @@ describe Group do
        @lab.make_public(@publiccomment)
        @mode = 2
      end
- 
+
     describe "In lab view" do
 
      it "lab comments should be visible to the people in the lab" do
        @lab.let_through_filter?(@labcomment, @rat1,@mode).should be_true
        @lab.let_through_filter?(@labcomment, @rat2,@mode).should be_true
      end
- 
+
      it "public comments should be invisible to the people in the lab" do
        @lab.let_through_filter?(@publiccomment, @rat1,@mode).should be_false
        @lab.let_through_filter?(@publiccomment, @rat2,@mode).should be_false
@@ -143,7 +143,7 @@ describe Group do
        @lab.let_through_filter?(@labcomment, @outsider,@mode).should be_false
      end
     end
- 
+
     describe "In public view" do
 
      before(:each) do

@@ -8,6 +8,7 @@ class FollowsController < ApplicationController
     follow.name = follow.search_term
     follow.update_feed
     follow.save
+    current_user.set_feedhash
     redirect_to root_path
   end
 
@@ -15,9 +16,11 @@ class FollowsController < ApplicationController
     @follow_id = params[:follow]
     @follow = Follow.find(@follow_id)
     @follow.destroy
+    current_user.delay.set_feedhash
     respond_to do |format|
       format.js
     end
+
   end
 
   def viewswitch

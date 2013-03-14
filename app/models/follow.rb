@@ -12,7 +12,7 @@ class Follow < ActiveRecord::Base
 #before_save :update_feed
   before_save :set_newcount
 
-  def classname
+  def css_class
     "follow_" + id.to_s
   end
 
@@ -38,6 +38,7 @@ class Follow < ActiveRecord::Base
       self.latest_search = latest_comments
     end
     self.save
+    self.user.set_feedhash
     self.latest_search
   end
 
@@ -54,6 +55,7 @@ class Follow < ActiveRecord::Base
 
   def update_all_feeds
     Follow.all.select{|f| !f.user.nil? }.each{|f| f.delay.update_feed}
+    User.all.each{|u| u.delay.set_feedhash}
   end
 
 

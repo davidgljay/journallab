@@ -136,4 +136,26 @@ describe User do
     end
   end
 
+  describe "feedhash functionality" do
+    before(:each) do
+      @user = create(:user)
+      @f = @user.follows.create!(:name => "test", :search_term => "test", :follow_type => "pubmed_search")
+      @group = create(:group)
+      @group.category = 'jclub'
+      @group.save
+      @group.add(@user)
+      @user.reload
+    end
+
+    it "should generate a hash of the users feeds, including follows and groups" do
+      @user.set_feedhash
+      @group.users.count.should == 1
+      @user.groups.first.category.should == 'jclub'
+      @user.feedhash[0][:name].should == 'test'
+      @user.feedhash[0][:css_class].should == @f.css_class
+      @user.feedhash[0][:newcount].should == 0
+      @user.feedhash[1][:css_class].should == @group.css_class
+    end
+  end
+
 end

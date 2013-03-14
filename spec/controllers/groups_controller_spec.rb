@@ -10,11 +10,13 @@ describe GroupsController do
 			@group.add(@lead)
 			@group.make_lead(@lead)
 			@group.add(@newuser)
+      @newuser.reload
 		end
 
 		it "should not remove if not logged in as a group lead" do
+      @newuser.member_of?(@group).should be true
 			get :remove, {:id => @group.id, :u_id => @newuser.id }
-			@newuser.member_of?(@group).should be true
+      @newuser.member_of?(@group).should be true
 		end
 
 		
@@ -23,7 +25,7 @@ describe GroupsController do
 			@newuser.id.should_not be_nil
 			get :remove, {:id => @group.id, :u_id => @newuser.id }
 			@newuser.member_of?(@group).should be false
-			response.should redirect_to root_path 
+			response.should redirect_to root_path
 		end
 	end
 

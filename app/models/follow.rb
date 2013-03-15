@@ -38,7 +38,7 @@ class Follow < ActiveRecord::Base
       self.latest_search = latest_comments
     end
     self.save
-    self.user.set_feedhash
+    self.user.set_feedhash if self.user
     self.latest_search
   end
 

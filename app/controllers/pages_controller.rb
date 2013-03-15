@@ -130,7 +130,7 @@ class PagesController < ApplicationController
     @action_pageview__ratio = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('created_at > ?', Time.now - 1.month).count])
     #@total_users = [["Users",graph_total_by_day(User.all)]]
     @active_users = Visit.all.select{|v| v.user_id}.select{|v| v.created_at > Time.now - 1.month}.map{|v| v.user_id}.uniq
-    @returning_this_month = @active_users.map{|u| User.find(u)}.select{|user| user.created_at > Time.now - 1.month && user.visits.last.created_at.to_date != user.created_at.to_date}.count
+    @returning_this_month = @active_users.map{|u| User.find(u)}.select{|user| user.created_at > Time.now - 1.month && usero.visits.last.created_at.to_date != user.created_at.to_date}.count
     @registered_this_month = User.all.select{|u| u.created_at > Time.now - 1. month}.count
     #@visits_per_user = histogram(User.all.map{|u| u.visits.count})
    # @discussion_per_user = histogram(User.all.map{|u| u.reactions.count + u.comments.count})

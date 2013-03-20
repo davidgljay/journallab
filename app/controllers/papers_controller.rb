@@ -11,8 +11,10 @@ class PapersController < ApplicationController
   # GET /papers/1
   # GET /papers/1.xml
   def show
+
     @paper = Paper.find(params[:id])
-    @paper.visits.create(:user => current_user, :visit_type => 'paper') if signed_in?
+    @title = @paper.title
+        @paper.visits.create(:user => current_user, :visit_type => 'paper') if signed_in?
     if @paper.visits.empty?
       @paper.count_figs
     end

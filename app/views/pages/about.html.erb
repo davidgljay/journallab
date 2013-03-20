@@ -1,13 +1,42 @@
+<div id="about">
+<div class = 'slide'>
+  <%= image_tag 'https://s3.amazonaws.com/j.lab-images/static/postersessions.jpg' %>
+  <div class = 'slideHeader imageOverlay'>Journal Lab</div>
+  <div class = 'imageOverlay slideText'>
+    is dedicated to improving dialog about published science.
+    <div id="caption" class= "small" >
+      Photo by <%= link_to 'NASA Goddard Photo and Video', 'http://www.flickr.com/photos/gsfc/'%>
+    </div>
 
-    <h1>About Us</h1>
-      <h3>The Journal Lab is dedicated to improving dialog about published science.</h3>
-    <p>
-      Thank you for joining our early-stage experiment. We are working hard to help top-teir scientists:
-      <ul>
-        <li><strong>Read papers more efficiently.</strong></li>
-        <li><strong>Share opinions about those papers.</strong></li>
-        <li><strong>Benefit from the aggregated knowledge of experts in their field.</strong></li>
-      </ul>
-    </p>
-    
+  </div>
+
+</div>
+
+
+  <div id="description">
+<h1>At a Glance</h1>
+   <br>
+   <p>We think it should be easy for anyone in the world to look at published scientific data and see what experts in the field think about it. That’s why we’re building the world’s first database of figure-by-figure comments on published biomedical research. </p>
+   <p>
+     Our goal is to capture and aggregate the insights about published data that regularly occur in lab meetings, lunchroom discussions, and journal clubs. We accomplish this goal by making your workflow easier.
+   </p>
+    <h1> We Make It Easer To...</h1>
+   <div id="features">
+      <h3><div class="inline"><icon class="icon-exclamation-sign"></icon> Discover the research that’s relevant.</h3>
+      <h3><div class="inline"><icon class="icon-eye-open"></icon> Quickly review that research.</h3>
+      <h3><%= image_tag '/assets/icons/glyphicons_087_log_book.png', :class => 'icon' %> Gauge the integrity of that research.</h3>
+      <h3><%= image_tag '/assets/icons/glyphicons_244_conversation.png', :class => 'icon' %> Leave a comment without risking your reputation.</h3>
+      <h3><%= image_tag '/assets/icons/glyphicons_361_crown.png', :class => 'icon' %> Get credit if the comments that you leave are useful.</h3>
+     </div>
+   <p>
+     To get started, track your favorite Pubmed search terms and join the discussion in one of our virtual journal clubs. <br>
+   </p>
+
+   <h1><%=  link_to "Try Us Out", root_path%></h1>
+   <br>
+</div>
+</div>
+
+
+
 

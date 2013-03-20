@@ -1,4 +1,4 @@
-<% unless paper.medias.empty? %>
+<% if paper.medias.select{|m| m.category != 'invalid'}.count > 0 %>
     <div id = "slides" class='media' >
       <div class = 'slides_container'>
         <% paper.medias.each do |m| %>
@@ -9,7 +9,7 @@
             <% end %>
         <% end %>
       </div>
-      <% if paper.medias.count > 1 %>
+      <% if  paper.medias.select{|m| m.category != 'invalid'}.count > 1 %>
           <a href="#" class="prev"><%= image_tag "arrow-prev.png", :width => "24", :height => "43", :alt => "Arrow Prev" %></a>
           <a href="#" class="next"><%= image_tag "arrow-next.png", :width => "24", :height => "43", :alt => "Arrow Next" %></a>
       <% end %>

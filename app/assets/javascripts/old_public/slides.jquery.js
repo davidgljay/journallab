@@ -388,7 +388,7 @@
 					cursor: 'pointer'
 				});
 				// click handler
-				control.children().click(function(){
+				control.children().live('click', function(){
 					// animate to next on slide click
 					animate('next', effect);
 					return false;
@@ -414,7 +414,7 @@
 			}
 			
 			// next button
-			$('.' + option.next ,elem).click(function(e){
+			$('.' + option.next ,elem).live('click', function(e){
 				e.preventDefault();
 				if (option.play) {
 					pause();
@@ -423,7 +423,7 @@
 			});
 			
 			// previous button
-			$('.' + option.prev, elem).click(function(e){
+			$('.' + option.prev, elem).live('click', function(e){
 				e.preventDefault();
 				if (option.play) {
 					 pause();
@@ -456,7 +456,7 @@
 			$('.' + option.paginationClass + ' li:eq('+ start +')', elem).addClass(option.currentClass);
 			
 			// click handling 
-			$('.' + option.paginationClass + ' li a', elem ).click(function(){
+			$('.' + option.paginationClass + ' li a', elem ).live('click', function(){
 				// pause slideshow
 				if (option.play) {
 					 pause();
@@ -471,7 +471,7 @@
 			});
 			
 			// click handling 
-			$('a.link', elem).click(function(){
+			$('a.link', elem).live('click', function(){
 				// pause slideshow
 				if (option.play) {
 					 pause();

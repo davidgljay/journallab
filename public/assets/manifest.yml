@@ -14,6 +14,9 @@ bg_sky.gif: bg_sky-f4e215a3783472d7ac3ddc5db268ed18.gif
 button_go.png: button_go-7387c3c80b88022dadf644cd9d52660d.png
 green_testube.jpg: green_testube-7e7132786310b65cd93172db14de2016.jpg
 icons/glyphicons_056_projector.png: icons/glyphicons_056_projector-d997051b7d472b4033dae01b1e44bdb8.png
+icons/glyphicons_087_log_book.png: icons/glyphicons_087_log_book-94f65f467a31cf428453b2ddf0fe70e1.png
+icons/glyphicons_244_conversation.png: icons/glyphicons_244_conversation-5491fab9de6732725a93d567bd928042.png
+icons/glyphicons_361_crown.png: icons/glyphicons_361_crown-54666f0a7354189968a96067c2843c11.png
 jl_logo_slide.png: jl_logo_slide-423068c66e50ef5851ee5bced6e0c519.png
 jl_logo_trans_M.png: jl_logo_trans_M-6b760338a6551569d9e02f7a5414d227.png
 jlablogo.png: jlablogo-c91198078563331611331def7131fcd4.png
@@ -43,8 +46,8 @@ upload.xcf: upload-d8f08b2b355be5d52270a266f55aac6d.xcf
 vellum.png: vellum-73dc47e6900914a7f65ff274e42d5a67.png
 voted.gif: voted-17d85c23f21dc12bbe0d59a991757b3f.gif
 voted.png: voted-0834b894d13de65233cd7e068de41251.png
-application.js: application-c9204e2c301cbfef8f0ad846c6c5e418.js
+application.js: application-52651fac3a42f758c88c4821176c0ab2.js
 old_public/application.js: old_public/application-69fddfb1b028a3b95b0a44ef99d483dc.js
-application.css: application-0ece5d00f71921e997f5982e2a73af3c.css
+application.css: application-9eee68c7e40e93fd7464da96fe748030.css
 img/glyphicons-halflings-white.png: img/glyphicons-halflings-white-1e8ea0990959a875a3ba6bcf03390ac3.png
 img/glyphicons-halflings.png: img/glyphicons-halflings-6e76ef68a2fefbeddbff878af02da203.png

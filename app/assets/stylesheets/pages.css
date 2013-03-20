@@ -1,0 +1,34 @@
+#about .slide {
+    width: 700px;
+    height: 400px;
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+#about #description {
+    width: 600px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+#about #features {
+    margin: 15px;
+}
+
+#about #partnerships {
+    float: right;
+    display: inline-block;
+}
+
+#about #caption {
+    text-align: right;
+    margin-top: 300px;
+    margin-right: 10px;
+    color: white;
+}
+
+#about #caption a {
+    color: white;
+}

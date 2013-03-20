@@ -41,3 +41,11 @@
     bottom: 116px;
     z-index: 110;
 }
+
+#homeFeed #slides.media .prev {
+    left: -362px;
+}
+
+#homeFeed #slides.media .next {
+    left: 362px;
+}

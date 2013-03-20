@@ -1,0 +1,59 @@
+<em>All metrics are over the past month</em>
+
+<h1>Core Use Metrics</h1>
+
+<%= day_line_graph(@analysis.cache[:vanity]) %>
+
+<h1>Total Users</h1>
+
+<%= day_line_graph(@analysis.cache[:total_users]) %>
+
+<h1>Views</h1>
+
+<%= day_line_graph(@analysis.cache[:views]) %>
+
+<h1>Key Ratios</h1>
+
+<table>
+  <tr>
+    <td>
+      <h1><%= @analysis.cache[:nod_discussion_ratio].to_s.first(4) %></h1>
+      Nods per Discussion ||
+    </td>
+    <td>
+      <h1><%= @analysis.cache[:reply_discussion_ratio].to_s.first(4) %></h1>
+      Replies per Discussion ||
+    </td>
+    <td>
+      <h1><%= @analysis.cache[:action_pageview__ratio].to_s.first(4) %></h1>
+      Actions per Pageview ||
+    </td>
+    <td><h1><%= @analysis.cache[:active_users].count %></h1>
+      Active Users This Month ||
+    </td>
+    <td><h1><%= @analysis.cache[:returning_this_month] %> / <%=  @analysis.cache[:registered_this_month] %></h1>
+      Returning Users / Total Registered This Month
+    </td>
+  </tr>
+</table>
+
+<h1>Histograms</h1>
+<table>
+  <tr>
+    <td>
+     <%=  bar_graph(@analysis.cache[:replies_per_discussion], "Replies Per Comment") %>
+    </td>
+    <td>
+      <%=  bar_graph(@analysis.cache[:nods_per_discussion], "Nods Per Comment") %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%=  bar_graph(@analysis.cache[:visits_per_user], "Visits Per User") %>
+    </td>
+    <td>
+      <%=  bar_graph(@analysis.cache[:discussion_per_user], "Comments/Reactions Per User") %>
+    </td>
+  </tr>
+</table>
+

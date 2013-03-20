@@ -140,10 +140,12 @@ describe User do
     before(:each) do
       @user = create(:user)
       @f = @user.follows.create!(:name => "test", :search_term => "test", :follow_type => "pubmed_search")
+      @paper = create(:paper)
       @group = create(:group)
       @group.category = 'jclub'
       @group.save
       @group.add(@user)
+      @group.discuss(@paper, @user)
       @user.reload
     end
 
@@ -154,7 +156,7 @@ describe User do
       @user.feedhash[0][:name].should == 'test'
       @user.feedhash[0][:css_class].should == @f.css_class
       @user.feedhash[0][:newcount].should == 0
-      @user.feedhash[1][:css_class].should == @group.css_class
+      @user.feedhash[1][:type].should == 'group'
     end
   end
 

@@ -30,7 +30,7 @@ def day_line_graph(array)
     range.each do |day|
       d = [day]
       array.each do |a|
-        y = a[1].select{|coord| coord[0] == day}[0]
+        y = a[1].select{|coord| coord[0].to_date == day.to_date}[0]
         if y.nil?
           d << 0
         else
@@ -57,7 +57,7 @@ def day_line_graph(array)
     series.each do |coord|
       output << "data.addRow(['" + coord[0].strftime("%D") + "'," + coord.drop(1) * "," + "]);\n"
     end
-    output << 
+    output <<
      " // Create and draw the visualization.
        new google.visualization.LineChart(document.getElementById('" + name + "')).
          draw(data, {curveType: \"none\",
@@ -69,6 +69,7 @@ def day_line_graph(array)
       google.setOnLoadCallback(drawVisualization);
     </script>
     <div id=\"" + name + "\" style=\"width: 700px; height: 500px;\"></div>"
+
     output.html_safe
 end
 

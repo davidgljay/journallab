@@ -15,7 +15,7 @@ class Analysis < ActiveRecord::Base
     cache[:reply_discussion_ratio] = make_ratio([Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').map{|c| c.comments.count}.inject{|sum, n| sum + n}, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).map{|c| c.comments.count + c.questions.count}.inject{|sum, n| sum + n}],[Comment.where('created_at > ? AND form = ?', Time.now - 1.month, 'comment').count, Question.where('created_at > ? AND question_id IS NULL', Time.now - 1.month).count])
     cache[:action_pageview__ratio] = make_ratio([Comment.where('created_at > ?', Time.now - 1.month).count, Question.where('created_at > ?', Time.now - 1.month).count, Vote.where('created_at > ?', Time.now - 1.month).count],[Visit.where('created_at > ?', Time.now - 1.month).count])
     cache[:user_count] = User.count
-    cache[:total_users] = [["Users",graph_total_by_day(User.all)]]
+    cache[:total_users] = [["Users",graph_total_by_day(User.all.select{|u| u.created_at > Time.now - 3.months})]]
     cache[:active_users] = Visit.all.select{|v| v.user_id}.select{|v| v.created_at > Time.now - 1.month}.map{|v| v.user_id}.uniq
     cache[:returning_this_month] = cache[:active_users].map{|u| User.find(u)}.select{|user| user.created_at > Time.now - 1.month && user.visits.last.created_at.to_date != user.created_at.to_date}.count
     cache[:registered_this_month] = User.all.select{|u| u.created_at > Time.now - 1. month}.count

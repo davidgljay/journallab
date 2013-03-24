@@ -35,6 +35,7 @@ end
   gem 'heroku'
   gem 'kaminari'
   gem 'rb-readline'
+  gem 'quiet_assets'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby'

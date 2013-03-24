@@ -17,11 +17,11 @@ Redcell::Application.configure do
   #Send mail and raise delivery errors
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.gmail.com',
+    :address => 'smtp.sendgrid.net',
     :port => 587,
     :domain               => 'journallab.org',
-    :user_name            => 'david@journallab.org',
-    :password             => 'stemcellironman',
+    :user_name            => 'davidgljay',
+    :password             => 'sendgridtronbike',
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
   config.action_mailer.perform_deliveries = true

@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Group do
   
+if false   #All of these tests are disabled as the functionality is no longer used.
+           #Keeping them around in case I bring the functionality back
   describe "Class:" do
    before(:each) do
      @class = create(:group)
@@ -79,7 +81,8 @@ describe Group do
        @class.let_through_filter?(@comment, @outsider, @mode).should be_false
     end
    end
- end
+  end
+
 
  describe "Lab:" do
   before(:each) do
@@ -164,7 +167,8 @@ describe Group do
      end
     end
    end
-  end
+ end
+end
 
   describe "adding users" do
 	it "should send an e-mail to the group lead" do

@@ -4,7 +4,7 @@ require 'devise/encryptors/sha2'
 
 Devise.setup do |config|
   # Configure the e-mail address which will be shown in DeviseMailer.
-  config.mailer_sender = "Journal Lab <jay@journallab.com>"
+  config.mailer_sender = "Journal Lab <notice@journallab.org>"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating an user. By default is

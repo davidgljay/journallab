@@ -4,8 +4,11 @@
 
 <%= day_line_graph(@analysis.cache[:vanity]) %>
 
-<h1>Total Users</h1>
+<h1>Users</h1>
 
+<h2>Total: <%= @analysis.cache[:user_count] %></h2>
+
+<h2>Registrations over the past 3 months</h2>
 <%= day_line_graph(@analysis.cache[:total_users]) %>
 
 <h1>Views</h1>

@@ -190,7 +190,7 @@ class Paper < ActiveRecord::Base
   # Opens it as HTML
   # Attempts to do so 10 times if it fails for some reason.
   def open_html(url)
-
+    attempts = 0
     doc = nil
     begin
       doc = Nokogiri::HTML(open(url).read.strip)
@@ -206,6 +206,7 @@ class Paper < ActiveRecord::Base
   # Opens it as XML
   # Attempts to do so 10 times if it fails for some reason.
   def open_xml(url)
+    attempts = 0
     doc = nil
     begin
       doc = Nokogiri::XML(open(url).read.strip)

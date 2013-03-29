@@ -3,6 +3,42 @@
   They will automatically be included in application.css.
 */
 
+
+
+#paperInfo {
+    border: 2px solid #91C859;
+    text-align: center;
+    padding-top: 10px;
+    padding-right: 0px;
+    padding-bottom: 10px;
+    padding-left: 0px;
+    margin: 0px;
+}
+#paperInfo p {
+}
+#paperInfo h1 {
+    font-size: 24px;
+    line-height: 24px;
+    color: #155E3A;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+#paperInfo h2 {
+    font-size: 18px;
+    color: #155E3A;
+}
+#paperInfo h4 {
+    background-color: #9FCF67;
+    color: #FFFFEE;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+}
+#paperInfo h4 a {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
 #citation {
 	margin-left: 10px;
 	margin-right: 10px;
@@ -365,4 +401,53 @@ img.icon {
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+
+/* Search Results, also used for feeds on profile page */
+
+.abstract_short, .abstract_long {
+    line-height: 18px;
+    font-size: 14px;
+}
+
+.search_results {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #8BD2F4;
+    color: #333333;
+    text-align: left;
+    margin-left: 30px;
+}
+
+.search_results2 {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #8BD2F4;
+    color: #333333;
+    padding-top: 2px;
+    padding-right: 0px;
+    padding-bottom: 2px;
+    padding-left: 0px;
+    text-align: left;
+}
+.search_results2 a {
+    text-decoration: none;
+    color: #666666;
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 3px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin: 0px;
+}
+
+
+
+.sr_title   a {
+    color: #63a82a;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 13px;
 }

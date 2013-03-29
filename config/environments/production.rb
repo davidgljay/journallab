@@ -30,7 +30,7 @@ Redcell::Application.configure do
   # just comment this out and Rails will serve the files
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+   config.log_level = :warn
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -48,13 +48,13 @@ Redcell::Application.configure do
 
   #Send mail and raise delivery errors
   config.action_mailer.smtp_settings = {
-    :address => 'smtp.gmail.com',
-    :port => 587,
-    :domain               => 'journallab.org',
-    :user_name            => 'david@journallab.org',
-    :password             => 'stemcellironman',
-    :authentication       => 'plain',
-    :enable_starttls_auto => true  }
+      :address => 'smtp.sendgrid.net',
+      :port => 587,
+      :domain               => 'journallab.org',
+      :user_name            => 'davidgljay',
+      :password             => 'sendgridtronbike',
+      :authentication       => 'plain',
+      }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 

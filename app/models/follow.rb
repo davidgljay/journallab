@@ -30,6 +30,7 @@ class Follow < ActiveRecord::Base
 
 
   def update_feed
+    newfeed = latest_search.nil?
     if search_term
       pubmed_search = Paper.new.search_pubmed(search_term,40).map{|p| [p, p[:latest_activity]]}
       activity_search = Paper.new.search_activity(search_term).map{|p| [p, p[:latest_activity]]}
@@ -38,7 +39,7 @@ class Follow < ActiveRecord::Base
       self.latest_search = latest_comments
     end
     self.save
-    self.user.set_feedhash if self.user
+    self.user.set_feedhash if self.user && newfeed
     self.latest_search
   end
 
@@ -53,8 +54,13 @@ class Follow < ActiveRecord::Base
   #
   #end
 
+  # Updates all feeds
+  # Updates pubmed feeds by searching pubmed
+  #
+
   def update_all_feeds
     Follow.all.select{|f| !f.user.nil? }.each{|f| f.delay.update_feed}
+    Membership.all.each{|m| m.delay.save}
     User.all.each{|u| u.delay.set_feedhash}
   end
 

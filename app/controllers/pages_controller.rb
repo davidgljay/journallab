@@ -101,6 +101,11 @@ class PagesController < ApplicationController
     current_user.delay.set_feedhash if signed_in?
   end
 
+  def recent_activity
+    @title = "Recent Activity"
+    @follow = Follow.find_by_follow_type('public_latest_comments')
+    @numcomments = (Comment.all + Reaction.all + Assertion.all).select{|c| c.created_at > Time.now - 1.month}
+  end
 
   def contact
     @title = "Contact"

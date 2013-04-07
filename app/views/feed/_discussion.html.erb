@@ -1,37 +1,71 @@
-<div class = "tenmargin">
-
-<% if group.current_discussion %>
-
-
-<h4><%= group.desc %></h4>
-<%= render 'papers/paper_menu' %>
-<div align = "center">
-<h2><%= link_to @paper.title, @paper, :style => "font-weight:normal;" %></h2>
-
-	<h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
-	<div><%= render '/authors/author_list', :paper => @paper %></div>
-	<% if @paper.abstract.nil? || @paper.abstract.empty? %>
-		<% if @paper.description %>
-
-  			<h4>Description</h4>
-  			<p><%= @paper.description %></p>
-		</div>
-		<% end %>
-	<% else %>
-		<div align = "left">
- 			<strong>Abstract: </strong><%= @paper.abstract %>
-		</div>
-	<% end %>
-	<br>
-
-  <%= render '/media/display', :paper => @paper %>
+<% if @onfeed %>
+<div id="groupInfo" class = 'round'>
+  <table>
+    <tr>
+      <td>
+        <% if @group.image %>
+            <%= image_tag @group.image.thumb('150x150').url %>
+            <% if current_user.lead_of?(@group) || current_user.admin %>
+                <br>
+                <%= link_to 'Remove Image', "/groups/#{@group.urlname}/image", :method => :delete %>
+            <% end %>
+        <% elsif current_user.lead_of?(@group) || current_user.admin %>
+            <div class='upload_form'>
+              <h3>Upload an icon for this group</h3>
+              <%= form_for @group, :url => "#{@group.urlname}/image", :html => {:multipart => true} do |f| %>
+                  <%= f.file_field :group_image %>
+                  <%= f.hidden_field :id %><br>
+                  <%= f.submit 'Upload' %>
+              <% end %>
+            </div>
+        <% end %>
+      </td>
+      <td valign="top">
+        <h1><%= @group.name %></h1>
+        <%= link_to 'View Past Discussions', '/groups/' + @group.urlname %>
+        <h3><%= @group.desc %></h3>
+        <p>
+          <em>Group <%= pluralize(@leads.count, 'Lead')[2..-1] %>:</em>
+          <%= (@leads.map{|lead| (link_to lead.name, lead) }* ', ').to_s.html_safe %>
+        </p>
+      </td>
+    </tr>
+  </table>
 </div>
 
-<%= render '/papers/overview' %>
-<%= render '/papers/summary' %>
-  <div id = "add_figs_link"><a  class = "small clickme">Add/Remove Figures</a></div>
-  <div id = "add_figs" class = "hideonload">
-	<%= render '/papers/add_figs' %>
-  </div>
+<% end %>
+
+<% if @group.current_discussion %>
+
+    <div id = 'currentDiscussion' >
+      <%= render 'papers/paper_menu' %>
+      <div align = "center">
+        <h2><%= link_to @paper.title, @paper, :style => "font-weight:normal;" %></h2>
+
+        <h3><%= @paper.journal %> | <%= @paper.pubdate.strftime('%B %d, %Y') unless @paper.pubdate == nil %></h3>
+        <div><%= render '/authors/author_list', :paper => @paper %></div>
+        <% if @paper.abstract.nil? || @paper.abstract.empty? %>
+            <% if @paper.description %>
+
+                <h4>Description</h4>
+                <p><%= @paper.description %></p>
+                </div>
+            <% end %>
+        <% else %>
+            <div align = "left">
+              <strong>Abstract: </strong><%= @paper.abstract %>
+            </div>
+        <% end %>
+        <br>
+
+        <%= render '/media/display', :paper => @paper %>
+        </div>
+
+    <%= render '/papers/overview' %>
+    <%= render '/papers/summary' %>
+    <div id = "add_figs_link"><a  class = "small clickme">Add/Remove Figures</a></div>
+    <div id = "add_figs" class = "hideonload">
+      <%= render '/papers/add_figs' %>
+    </div>
 <% end %>
 </div>

@@ -7,7 +7,7 @@
         <h2><%= group.name %></h2>
         <%=  group.desc %>
         <div>
-          <%=  link_to 'Leave Journal Club', "/groups/#{group.id}/leave" %>
+          <%= link_to 'Learn More',"/groups/#{group.urlname}" %> | <%=  link_to 'Leave Journal Club', "/groups/#{group.urlname}/leave" %>
         </div>
 
       </div>
@@ -19,7 +19,7 @@
             <h2><%= group.name %></h2>
             <%=  group.desc %>
             <div>
-              <%=  link_to 'Join Journal Club', "/groups/#{group.id}/join" %>
+              <%= link_to 'Learn More',"/groups/#{group.urlname}" %> | <%=  link_to 'Join Journal Club', "/groups/#{group.urlname}/join" %>
             </div>
           </div>
       <% end %>

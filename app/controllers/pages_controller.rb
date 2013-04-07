@@ -85,6 +85,7 @@ class PagesController < ApplicationController
       @switchto = params[:switchto]
       @switchto_render = "discussion"
       @group = Group.find(@switchto[5..-1].to_i)
+      @leads = @group.leads
       if signed_in?
         @membership = @group.memberships.select{|m| m.user == current_user}[0]
         @membership.visits.create(:user => current_user, :visit_type => 'feed')
@@ -92,7 +93,7 @@ class PagesController < ApplicationController
       end
       @nav_language = @group.shortname
       @paper = @group.current_discussion.paper
-
+      @onfeed = true
       @heatmap = @paper.heatmap
       @heatmap_overview = @paper.heatmap_overview
       @reaction_map = @paper.reaction_map

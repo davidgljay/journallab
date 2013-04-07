@@ -28,7 +28,8 @@ FactoryGirl.define do
   factory :group do
     name  "Test Group"
     desc  "This group is awesome"
-    category "lab"
+    urlname "test"
+    category "jclub"
   end
 		
 

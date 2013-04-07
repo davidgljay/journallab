@@ -190,15 +190,15 @@ class Paper < ActiveRecord::Base
   # Opens it as HTML
   # Attempts to do so 10 times if it fails for some reason.
   def open_html(url)
-    attempts = 0
-    doc = nil
-    begin
+#    attempts = 0
+#    doc = nil
+#    begin
       doc = Nokogiri::HTML(open(url).read.strip)
-    rescue Exception => ex
-      attempts = attempts + 1
-      retry if(attempts < 10)
-    end
-    doc
+#    rescue Exception => ex
+#      attempts = attempts + 1
+#      retry if(attempts < 10)
+#    end
+#    doc
   end
 
 
@@ -206,15 +206,15 @@ class Paper < ActiveRecord::Base
   # Opens it as XML
   # Attempts to do so 10 times if it fails for some reason.
   def open_xml(url)
-    attempts = 0
-    doc = nil
-    begin
+#    attempts = 0
+#    doc = nil
+#    begin
       doc = Nokogiri::XML(open(url).read.strip)
-    rescue Exception => ex
-      attempts = attempts + 1
-      retry if(attempts < 10)
-    end
-    doc
+#    rescue Exception => ex
+#      attempts = attempts + 1                                 n
+#      retry if(attempts < 10)
+#    end
+#    doc
   end
 
   def check_blogs
@@ -250,7 +250,7 @@ class Paper < ActiveRecord::Base
       self.save
     else
       url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
-      data = Nokogiri::XML(open(url))
+      data = open_xml(url)
 
       if data.xpath("/").empty? || data.xpath('//PubmedArticle').nil? || data.xpath('//PubmedArticle').first.nil?
         flash = { :error => "This Pubmed ID is not valid." }

@@ -25,7 +25,7 @@
                     <ul class="dropdown-menu">
                       <% current_user.memberships.select{|m| m.lead}.map{|m| m.group}.each do |group| %>
                           <li>
-                            <%= link_to group.name, "/groups/#{group.id}/discuss/#{@paper.id}"%>
+                            <%= link_to group.name, "/groups/#{group.urlname}/discuss/#{@paper.id}"%>
                           </li>
                       <% end %>
                     </ul>

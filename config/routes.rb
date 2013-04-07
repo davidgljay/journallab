@@ -1,12 +1,15 @@
 Redcell::Application.routes.draw do
 
 
-  resources :groups
-  match '/groups(/:id)/remove(/:u_id)', :to => 'groups#remove'
-  match '/groups(/:id)/discuss(/:paper_id)', :to => 'groups#discuss'
+  match '/groups(/:urlname)/remove(/:u_id)', :to => 'groups#remove'
+  match '/groups(/:urlname)/discuss(/:paper_id)', :to => 'groups#discuss'
   match '/groups/undiscuss(/:paper_id)', :to => 'groups#undiscuss'
-  match '/groups(/:id)/join' , :to => 'groups#join'
-  match '/groups(/:id)/leave' , :to => 'groups#leave'
+  match '/groups(/:urlname)/join' , :to => 'groups#join'
+  match '/groups(/:urlname)/leave' , :to => 'groups#leave'
+  match '/groups(/:urlname)', :to => 'groups#show'
+  match '/groups(/:urlname)/image', :to => 'groups#image_upload', :via => :put
+  match '/groups(/:urlname)/image', :to => 'groups#remove_image', :via => :delete
+
 
   resources :filters
   resources :comments

@@ -1,0 +1,73 @@
+#groupInfo {
+    border: 2px solid #91C859;
+    text-align: left;
+    padding: 10px;
+}
+
+#groupInfo td.groupName {
+    vertical-align: top;
+    width: 85%;
+    padding-left: 15px;
+}
+
+#groupJoin {
+    float: right;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#groupJoin a {
+    color:black;
+    text-decoration: none;
+}
+
+#currentDiscussion {
+
+    padding: 10px;
+}
+
+#slides.discussion {
+height: 230px;
+}
+
+#slides.discussion .slides_container {
+width: 850px;
+height: 205px;
+
+}
+
+#slides.discussion .slides_container div.slide {
+    width: 850px;
+    height: 205px;
+
+}
+
+#slides.discussion ul {
+ padding:0px;
+ -webkit-padding-start: 0px;
+ margin-bottom: 10px;
+}
+
+#slides.discussion .slideshow_pagination {
+left: 753px;
+bottom: 114px;
+}
+
+#slides.discussion a.prev {
+position: relative;
+    top: -126px;
+    left: 25px;
+}
+
+#slides.discussion a.next {
+    position: relative;
+    top: -169px;
+    left: 901px;
+}
+
+#slides.discussion a {
+    color: #000;
+    font-weight: normal;
+}
+

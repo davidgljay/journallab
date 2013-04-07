@@ -31,7 +31,15 @@ def meta_comments
 	meta_comments.flatten!
         meta_comments.sort!{|x,y| x.created_at <=> y.created_at}
 	meta_comments.sort!{|x,y| y.votes.count <=> x.votes.count}
-end 
+end
+
+#Returns the comment with the most nods
+# Ties are broken by recency
+def hottest_comment
+  unless comments.empty?
+    comments.map{|c| [c,c.votes.count]}.sort{|x,y| y[1] <=> x[1]}.first[0]
+  end
+end
 
 def build_figsections(numsections)
    	if numsections == 0
@@ -86,15 +94,5 @@ end
 def inspect
 	"fig" + id.to_s
 end
-
-# Get this to work later
-#def thumbnail_image
-#	fig = ImageList.new('http://localhost:3000' + image.thumb('150x150').url)
-#	mag = ImageList.new('http://localhost:3000/images/' + 'magnifying_glass.png')
-#	mag.gravity=SouthEastGravity
-#	mag_on_fig = fig.composite_layers(mag, Magick::OverCompositeOp)
-#	mag_on_fig.format = 'jpeg'
-#	send_data mag_on_fig.to_blob, :stream => ‘false’, :filename => 'thumb.jpg', :type => 'image/jpeg', :disposition => 'inline'
-#end
 
 end

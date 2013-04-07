@@ -87,7 +87,7 @@ class Mailer < ActionMailer::Base
 	@group = group
 	@recipient = recipient
 	@newuser = newuser
-	@url = group_path(@group, :only_path => false) + '/remove/' + @newuser.id.to_s 
+	@url = root_path(:only_path => false) + '/groups/' + @group.urlname + '/remove/' + @newuser.id.to_s
 	@maillog = Maillog.create!(:purpose => 'group_add_notification', :user => @recipient, :about => @group)
       	mail(:to => to(@recipient), :subject => @newuser.name + " has joined the group " + @group.name )
   end

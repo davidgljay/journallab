@@ -1,3 +1,14 @@
+<strong>
+  Instructors:
+  <% @instructors.each do |i| %>
+      <%= i.lastname %>, <%= i.firstname %>
+      <% unless i == @instructors.last %>
+          |
+      <% end %>
+  <% end %>
+</strong>
+</div>
+<hr>
 <h4>Upcoming Reading:</h4>
 <% @classdates.each do |date| %>
   <% if Time.now < date[1] %>

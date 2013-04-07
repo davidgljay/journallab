@@ -192,6 +192,30 @@ textarea, input [type = 'text'] {
     float: right;
 }
 
+/* Classes related to javascript */
+
+.hideonload {
+    display: none;
+}
+
+.clickme {
+    cursor: pointer;
+}
+
+.nomargin {
+    margin: 0px;
+}
+
+
+.tenmargin {
+    margin: 10px;
+}
+
+.nopadding {
+    padding: 0px;
+}
+
+
 
 /* Quick Style Elements */
 

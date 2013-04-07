@@ -16,7 +16,7 @@
             <div style = "display:inline-block;">
               <%= button_to follow[:name], {:controller => "pages", :action => "feedswitch",  :switchto => follow[:css_class]}, :class => " loadingPrompt plainSubmit clickme ", :remote => true %><%= render '/shared/loading' %>
             </div>
-            <div class = 'feed_remove inline hideonload'>
+            <div class = 'feed_remove hideonload'>
               <%= link_to '/follows/remove/' + follow[:id].to_s, :remote => true do %><icon class = "icon-remove"></icon>
               <% end %>
             </div>

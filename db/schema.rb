@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320053636) do
+ActiveRecord::Schema.define(:version => 20130403033336) do
 
   create_table "analyses", :force => true do |t|
     t.text     "cache"
@@ -194,6 +194,10 @@ ActiveRecord::Schema.define(:version => 20130320053636) do
     t.text     "feed"
     t.text     "most_viewed"
     t.boolean  "public"
+    t.string   "image_name"
+    t.string   "image_uid"
+    t.string   "urlname"
+    t.text     "recent_discussions"
   end
 
   create_table "journals", :force => true do |t|

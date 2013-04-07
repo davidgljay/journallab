@@ -567,28 +567,3 @@ td.comment_body, td.question_body {
     left: 0px;
     z-index: 200;
 }
-/* Classes related to javascript */
-
-.hideonload {
-    display: none;
-}
-
-.clickme {
-    cursor: pointer;
-}
-
-.nomargin {
-    margin: 0px;
-}
-
-.twomargin {
-    margin: 0px;
-}
-
-.tenmargin {
-    margin: 10px;
-}
-
-.nopadding {
-    padding: 0px;
-}

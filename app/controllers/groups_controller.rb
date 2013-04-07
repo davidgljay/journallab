@@ -1,9 +1,31 @@
 class GroupsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show]
   before_filter :is_group_lead, :only => [:remove]
 
   def show
-    @group = Group.find(params[:id])
+    @group = Group.find_by_urlname(params[:urlname])
+
+    if @group.category == "jclub"
+      @title = @group.name
+      @onfeed = false
+      @leads = @group.memberships.select{|m| m.lead}.map{|m| m.user}
+      if signed_in?
+        @group.visits.create(:user => current_user, :visit_type => 'group')
+        @group.save
+      end
+      if @group.current_discussion
+        @paper = @group.current_discussion.paper
+
+        @heatmap = @paper.heatmap
+        @heatmap_overview = @paper.heatmap_overview
+        @reaction_map = @paper.reaction_map
+      end
+      @groups = current_user.groups if signed_in?
+    end
+
+
+    #Show a group page for a class
+    #This is outdated code, keeping it in case it's relevant in the future.
     if @group.category == "class"
       @papers = []
       @classdates = []
@@ -42,7 +64,7 @@ class GroupsController < ApplicationController
   end
 
   def join
-    @group = Group.find(params[:id])
+    @group = Group.find_by_urlname(params[:urlname])
     @user = current_user
     @group.add(@user)
     flash[:success] = "Congratulations! You have joined the discussion group " + @group.name
@@ -50,7 +72,7 @@ class GroupsController < ApplicationController
   end
 
   def leave
-    @group = Group.find(params[:id])
+    @group = Group.find_by_urlname(params[:urlname])
     @user = current_user
     @group.users = @group.users - [@user]
     @group.save
@@ -59,7 +81,7 @@ class GroupsController < ApplicationController
   end
 
   def discuss
-    @group = Group.find(params[:id])
+    @group = Group.find_by_urlname(params[:urlname])
     @user = current_user
     @paper = Paper.find(params[:paper_id])
     if @group.leads.include?(@user)
@@ -78,6 +100,22 @@ class GroupsController < ApplicationController
       flash[:success] = "This paper has been removed from your #{'group'.pluralize(@groups.count)}."
     end
     redirect_to @paper
+  end
+
+  def image_upload
+    group = Group.find_by_urlname(params[:urlname])
+    if params[:group]
+      group.image = params[:group][:group_image]
+      group.save
+    end
+    redirect_to '/groups/' + group.urlname
+  end
+
+  def remove_image
+    group = Group.find_by_urlname(params[:urlname])
+    group.image = nil
+    group.save
+    redirect_to :back
   end
 
   private

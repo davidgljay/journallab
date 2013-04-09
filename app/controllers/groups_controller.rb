@@ -56,7 +56,7 @@ class GroupsController < ApplicationController
   end
 
   def remove
-    @group = Group.find(params[:id])
+    @group = Group.find_by_urlname(params[:urlname])
     @user = User.find(params[:u_id])
     @group.remove(@user)
     flash[:success] = @user.name + " has been removed from " + @group.name
@@ -120,7 +120,7 @@ class GroupsController < ApplicationController
 
   private
   def is_group_lead
-    @group = Group.find(params[:id])
+    @group = Group.find_by_urlname(params[:urlname])
     @group.leads.include?(current_user)
   end
 

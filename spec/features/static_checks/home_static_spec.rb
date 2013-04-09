@@ -37,7 +37,7 @@ describe "Visiting the homepage" do
 	end
 
 	it "should render when the user has groups but no feeds" do
-		@group = Group.create(:name => "Test Group", :category => "jclub")
+		@group = create(:group)
 		@group.add(@user)
 		@group.papers << @paper
 		d = @group.discussions.first
@@ -50,20 +50,27 @@ describe "Visiting the homepage" do
 	end
 
 	it "should render when the user has multiple groups and feeds" do
-		@group = Group.create(:name => "Test Group", :category => "jclub")
-		@group.add(@user)
+		@group = create(:group)
+		@group.make_lead(@user)
+    @group.reload
+    @user.reload
     @group.discuss(@paper, @user)
-		@group2 = @user.groups.create(:name => "Sample Group", :category => "jclub")
+		@group2 = create(:group, :urlname => 'test2')
+    @group2.make_lead(@user)
+    @group2.reload
+    @user.reload
 		@group2.discuss(@paper2, @user)
-    @group3 = @user.groups.create(:name => "Sample Group", :category => "jclub")
+    @group3 = create(:group, :urlname => 'test3')
 		f1 = @user.follows.create!(:search_term => "RNA", :name => "RNA")
     f1.update_feed
 		f1.save
 		f2 = @user.follows.create!(:search_term => "zombies", :name => "zombies")
 		f2.update_feed
     f2.save
+    @user.save
     @user.reload
     @user.set_feedhash
+    @user.reload
 		visit "/"
 		within('body') { page.should have_selector('.group' + @group.id.to_s ) }
     within('body') { page.should have_selector('.group' + @group2.id.to_s ) }

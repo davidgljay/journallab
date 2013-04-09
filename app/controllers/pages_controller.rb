@@ -30,9 +30,13 @@ class PagesController < ApplicationController
           @paper = @jclubs.first.current_discussion.paper
           @jclubs.delay.each do |j|
             j.memberships.select{|m| m.user == current_user}.first.visits.create(:user => current_user, :visit_type => 'feed')			end
+          @onfeed = true
+          @group = @jclubs.first
+          @leads = @group.leads
           @heatmap = @paper.heatmap
           @heatmap_overview = @paper.heatmap_overview
           @reaction_map = @paper.reaction_map
+          @groups = current_user.groups if signed_in?
         end
       end
       @newfollow = current_user.follows.new

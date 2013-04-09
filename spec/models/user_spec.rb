@@ -142,7 +142,6 @@ describe User do
       @f = @user.follows.create!(:name => "test", :search_term => "test", :follow_type => "pubmed_search")
       @paper = create(:paper)
       @group = create(:group)
-      @group.category = 'jclub'
       @group.save
       @group.add(@user)
       @group.discuss(@paper, @user)

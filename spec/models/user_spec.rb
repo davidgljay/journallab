@@ -143,8 +143,11 @@ describe User do
       @paper = create(:paper)
       @group = create(:group)
       @group.save
-      @group.add(@user)
+      @group.make_lead(@user)
+      @user.reload
+      @group.reload
       @group.discuss(@paper, @user)
+      @user.save
       @user.reload
     end
 
@@ -152,6 +155,8 @@ describe User do
       @user.set_feedhash
       @group.users.count.should == 1
       @user.groups.first.category.should == 'jclub'
+      @group.current_discussion.nil?.should be_false
+      @user.feedhash[1].nil?.should be_false
       @user.feedhash[0][:name].should == 'test'
       @user.feedhash[0][:css_class].should == @f.css_class
       @user.feedhash[0][:newcount].should == 0

@@ -120,7 +120,7 @@ class Paper < ActiveRecord::Base
       newpapers << newpaper
       search_results << paper
     end
-    search_results
+    search_results.sort{|x,y| y[:latest_activity] <=> x[:latest_activity] }
   end
 
   def pubmed_search_count(search, date = nil)

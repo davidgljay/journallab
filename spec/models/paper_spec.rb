@@ -108,4 +108,17 @@ describe "pubmed search count" do
 	end
 end
 
+describe "pubmed search" do
+  it "should return an error if pubmed is not responding" do
+    Paper.new.open_html('http://www.8asfkjdsh.net')
+    @error.nil?.should be_true
+  end
+
+  it "should return a site if one can be opened" do
+    @site = Paper.new.open_html('http://www.google.com')
+    @site.nil?.should be_false
+  end
+
+end
+
 end

@@ -89,7 +89,12 @@ class PapersController < ApplicationController
       @paper.lookup_info
     end
     @paper.save
-    redirect_to @paper
+    if @error
+      flash[:error] = @error
+      redirect_to :back
+    else
+      redirect_to @paper
+    end
   end
 
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
@@ -105,22 +110,29 @@ class PapersController < ApplicationController
       end
       # If the search term is not a pubmed ID, look it up.
     elsif search.to_i.to_s != search
-      @search_results = (Paper.new.search_activity(search) + Paper.new.search_pubmed(search, 150)).uniq
-      @history_results = []
-      if signed_in?
-        @history_results = (@search_results & current_user.visited_papers.map{|p| p.to_hash}).first(10)
-        @search_results = @search_results - @history_results
-        @search_results.select{|p| p[:latest_activity].nil?}.each {|p| p[:latest_activity] ||= Time.now - 1.month}
+      @pubmed_results = Paper.new.search_pubmed(search, 150)
+      unless @pubmed_results[0..4] == "Error"
+        @jlab_results = Paper.new.search_activity(search)
+        @search_results = (@jlab_results + @pubmed_results).uniq
+        @history_results = []
+        if signed_in?
+          @history_results = (@search_results & current_user.visited_papers.map{|p| p.to_hash}).first(10)
+          @search_results = @search_results - @history_results
+          @search_results.select{|p| p[:latest_activity].nil?}.each {|p| p[:latest_activity] ||= Time.now - 1.month}
+        end
+        @search_results = Kaminari.paginate_array(@search_results.sort!{|x,y| y[:latest_activity] <=> x[:latest_activity]}).page(params[:page]).per(20)
       end
-      @search_results = Kaminari.paginate_array(@search_results.sort!{|x,y| y[:latest_activity] <=> x[:latest_activity]}).page(params[:page]).per(20)
     end
-    if @paper
-      redirect_to @paper
+    if @pubmed_results[0..4] == "Error"
+       flash[:error] = @pubmed_results
+       redirect_to :back
+    elsif @paper
+        redirect_to @paper
     else
-      respond_to do |format|
-        format.html
-        format.xml
-      end
+        respond_to do |format|
+          format.html
+          format.xml
+        end
     end
   end
 

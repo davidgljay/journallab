@@ -549,21 +549,3 @@ td.comment_body, td.question_body {
     height: 80px;
 }
 
-
-/* Notices */
-
-.flash {
-    font-size: 14px;
-    font-weight: bold;
-    text-align: center;
-    color: white;
-    background-color: #63A82A;
-    margin-right: auto;
-    border-bottom-right-radius: 10px;
-    padding: 3px;
-    width: 500px;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    z-index: 200;
-}

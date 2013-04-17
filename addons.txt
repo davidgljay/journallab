@@ -1,0 +1,9 @@
+=== aloejuice Configured Add-ons
+adminium:petproject
+heroku-postgresql:basic  HEROKU_POSTGRESQL_WHITE
+papertrail:fixa
+pgbackups:auto-month
+scheduler:standard
+sendgrid:starter
+zerigo_dns:basic
+

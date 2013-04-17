@@ -1,6 +1,6 @@
 <table class = "comment discussion">
   <tr >
-    <td class = "<% if comment.comments.count > 0 %> has_reply <% end %> <% if comment.author %> author_comment <% end %> comment_body">
+    <td class = " <% if comment.author %> author_comment <% end %> comment_body">
       <div class = "comment_body <%= 'author_comment_body' if comment.author %>">
       <% if comment.owner != owner %>
 	<h5>Regarding <%= comment.owner.shortname%>:</h5>
@@ -10,14 +10,14 @@
       <%= render 'reactions/comment_reactions', :comment => comment %>
       <div class = 'subMenu'>
         <ul>
-	<% if comment.text.length > 500 || (owner.comments + comment.owner.comments + comment.comments).uniq.count > 1 %>
-         <li class="readmore clickme">
+	<% if comment.text.length > 500 || addtl_comments(owner,comment) > 0 %>
+         <li class="readmore clickme btn-tiny round">
 
              <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
                	<%= hidden_field_tag :owner, owner.class.to_s %>
                	<%= hidden_field_tag :id, owner.id %>
                	<%= hidden_field_tag :mode, @mode %>
-		<%= submit_tag "Read More", :class => 'plainSubmit'%>
+		<%= submit_tag "See "+ pluralize(addtl_comments(owner,comment), "More Comment"), :class => 'plainSubmit'%>
 
              <% end %>
 
@@ -25,10 +25,10 @@
 	<% end %>
 	<% if user_signed_in? %>
 	<% if current_user.certified %>
-         <li class="replylink clickme">
+         <li class="replylink clickme btn">
 	Reply
          </li>
-         <li id = "numvotes_<%= comment.id.to_s %>"><%= render 'votes/vote_form', :candidate => comment %></li>
+         <li id = "numvotes_<%= comment.id.to_s %>" class = "round btn-nod"><%= render 'votes/vote_form', :candidate => comment %></li>
         </ul>
       </div>
       <div> 	      

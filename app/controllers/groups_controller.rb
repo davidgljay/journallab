@@ -76,6 +76,7 @@ class GroupsController < ApplicationController
     @user = current_user
     @group.users = @group.users - [@user]
     @group.save
+    @user.set_feedhash
     flash[:success] = "You have left the discussion group " + @group.name
     redirect_to root_path
   end
@@ -99,6 +100,7 @@ class GroupsController < ApplicationController
       group.undiscuss(@paper)
       flash[:success] = "This paper has been removed from your #{'group'.pluralize(@groups.count)}."
     end
+
     redirect_to @paper
   end
 

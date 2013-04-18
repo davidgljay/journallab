@@ -1,5 +1,6 @@
 class PapersController < ApplicationController
   before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
+  before_filter :authenticate_user!, :only => :build_figs
 
   # GET /papers
   # GET /papers.xml
@@ -155,7 +156,7 @@ class PapersController < ApplicationController
 
   def build_figs
     @paper = Paper.find(params[:id])
-    @paper.build_figs(params[:num])
+    @paper.build_figs(params[:num], current_user)
     @paper.save
     redirect_to @paper
   end

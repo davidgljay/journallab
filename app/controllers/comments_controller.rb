@@ -50,7 +50,6 @@ class CommentsController < ApplicationController
     @paper = @owner.get_paper
     @comment.get_paper = @paper
     @comment.save
-    @comment.delay.feedify
     @paper.add_heat(@owner)
     @heatmap = @paper.heatmap
     if @owner.class == Fig
@@ -58,6 +57,7 @@ class CommentsController < ApplicationController
     else
       @comments = @owner.comments.all
     end
+    @comment.delay.feedify
     respond_to do |format|
       if @comment.save
         #Send an e-mail if the comment is a reply

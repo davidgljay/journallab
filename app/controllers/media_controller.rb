@@ -26,7 +26,7 @@ class MediaController < ApplicationController
   def index
     @title = 'Review Figs and Embedded Content '
     @medias = Media.all.map{|m| {:item => m, :date => m.created_at, :type => 'media', :paper => m.paper} }
-    @figs = Fig.all.select{|f| !f.image.nil?}.map{|f| {:item => f, :date => f.updated_at, :type => 'fig', :paper => f.paper} }
+    @figs = Visit.find_all_by_visit_type('image').map{|v| v.about}.select{|f| !f.image.nil?}.map{|f| {:item => f, :date => f.updated_at, :type => 'fig', :paper => f.paper} }
     @list = Kaminari.paginate_array((@medias + @figs).sort{|x,y| y[:date]<=> x[:date]}).page(params[:page]).per(20)
   end
 

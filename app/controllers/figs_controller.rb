@@ -15,6 +15,7 @@ before_filter :admin_user,   :only => :destroy
       fig.image = params[:fig][:fig_image]
       fig.save
     end
+    current_user.visits.create(:about => fig, :visit_type => 'image')
     redirect_to fig.paper
   end
 

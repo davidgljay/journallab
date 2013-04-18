@@ -112,6 +112,14 @@ class PagesController < ApplicationController
     @numcomments = (Comment.all + Reaction.all + Assertion.all).select{|c| c.created_at > Time.now - 1.month}
   end
 
+  def sitemap
+    @papers = []
+    Paper.all.each do |p|
+      @papers << {:loc => "http://www.journallab.org/papers/#{p.id}", :lastmod => p.latest_activity.to_date.to_s }
+    end
+    render :template => 'pages/sitemap.xml.builder', :formats => [:xml], :handlers => :builder, :layout => false
+  end
+
   def contact
     @title = "Contact"
   end

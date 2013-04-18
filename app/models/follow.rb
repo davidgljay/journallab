@@ -58,7 +58,7 @@ class Follow < ActiveRecord::Base
   # Updates pubmed feeds by searching pubmed
   #
 
-  def update_all_feeds
+  def self.update_all_feeds
     Follow.all.select{|f| !f.user.nil? }.each{|f| f.delay.update_feed}
     Membership.all.each{|m| m.delay.save}
     User.all.each{|u| u.delay.set_feedhash}

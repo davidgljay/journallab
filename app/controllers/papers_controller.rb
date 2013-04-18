@@ -1,5 +1,6 @@
 class PapersController < ApplicationController
   before_filter :admin_user,   :only => [:destroy, :index, :edit, :update]
+  before_filter :authenticate_user!, :only => :build_figs
 
   # GET /papers
   # GET /papers.xml
@@ -123,7 +124,7 @@ class PapersController < ApplicationController
         @search_results = Kaminari.paginate_array(@search_results.sort!{|x,y| y[:latest_activity] <=> x[:latest_activity]}).page(params[:page]).per(20)
       end
     end
-    if @pubmed_results[0..4] == "Error"
+    if @pubmed_results.to_a[0..4] == "Error"
        flash[:error] = @pubmed_results
        redirect_to :back
     elsif @paper
@@ -155,7 +156,7 @@ class PapersController < ApplicationController
 
   def build_figs
     @paper = Paper.find(params[:id])
-    @paper.build_figs(params[:num])
+    @paper.build_figs(params[:num], current_user)
     @paper.save
     redirect_to @paper
   end

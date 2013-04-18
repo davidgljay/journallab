@@ -12,7 +12,7 @@
         <% elsif current_user.lead_of?(@group) || current_user.admin %>
             <div class='upload_form'>
               <h3>Upload an icon for this group</h3>
-              <%= form_for @group, :url => "#{@group.urlname}/image", :html => {:multipart => true} do |f| %>
+              <%= form_for @group, :url => "/groups/#{@group.urlname}/image", :html => {:multipart => true} do |f| %>
                   <%= f.file_field :group_image %>
                   <%= f.hidden_field :id %><br>
                   <%= f.submit 'Upload' %>

@@ -45,9 +45,6 @@ end
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
-# Use unicorn as the app server
-# gem 'unicorn'
-
 # Deploy with Capistrano
 # gem 'capistrano'
 
@@ -66,6 +63,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'selenium-webdriver'
 end
 
 group :redcell do

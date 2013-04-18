@@ -146,7 +146,7 @@ class Paper < ActiveRecord::Base
   def set_interest
     users = []
     Follow.where('user_id IS NOT NULL').each do |f|
-      if (self.title.to_s + ' ' + self.abstract.to_s).downcase.include?(f.search_term.downcase)
+      if (self.title.to_s + ' ' + self.abstract.to_s).downcase.include?(f.search_term.to_s.downcase)
         users << f.user
       end
     end
@@ -155,12 +155,23 @@ class Paper < ActiveRecord::Base
     self.interest
   end
 
-  def set_all_interest
+  # Sets interest metric on all papers
+  # Checks for new papers in feeds if "checkfeeds" is marked as true
+  # Takes a long time, intended to be run with delayed_job
+  def self.set_all_interest(checkfeeds = false)
     follows = Follow.where('user_id IS NOT NULL')
+    if checkfeeds
+      follows.each do |f|
+        f.feed.each do |p|
+          Paper.find_or_create_by_pubmed_id(p[:pubmed_id].to_i)
+        end
+      end
+    end
+
     Paper.all.each do |p|
       users = []
       follows.each do |f|
-        if (p.title.to_s + ' ' + p.abstract.to_s).downcase.include?(f.search_term.downcase)
+        if (p.title.to_s + ' ' + p.abstract.to_s).downcase.include?(f.search_term.to_s.downcase)
           users << f.user
         end
       end
@@ -581,7 +592,10 @@ def short_abstract
   end
 end
 
-def build_figs(numfigs)
+def build_figs(numfigs, user = nil)
+  if user
+    user.visits.create(:about => self, :visit_type => 'buildfig' )
+  end
   newfigs = numfigs.to_i-self.figs.count
   newfigs.to_i
   if newfigs > 0
@@ -592,7 +606,8 @@ def build_figs(numfigs)
   elsif newfigs < 0
     (newfigs * -1).times do
       f = self.figs[-1]
-      if f.comments.empty? && f.image.nil? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.reactions.empty?
+      if f.nil?
+      else f.comments.empty? && f.image.nil? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.reactions.empty?
         f.destroy
       end
       self.reload

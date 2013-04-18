@@ -96,6 +96,12 @@ class Comment < ActiveRecord::Base
         cn = commentnotices.new(:follow_id => f.id)
         cn.before_save #before_save functionality isn't working for some reason?! This is a hack.
         cn.save
+        f.user.set_feedhash
+      end
+    end
+    if !p.groups.empty?
+      p.groups each do |g|
+        g.memberships.each {|m| m.save; u.set_feedhash}
       end
     end
   end

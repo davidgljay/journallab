@@ -394,6 +394,7 @@ class Group < ActiveRecord::Base
       d.starttime = Time.now
       d.user = user
       d.save
+      self.memberships.each {|m| m.delay.save; m.user.delay.set_feedhash}
       self.reload
       self.set_recent_discussions
     end
@@ -403,6 +404,7 @@ class Group < ActiveRecord::Base
     d = self.discussions.select{|d| d.paper == paper}
     if d
       d.each{|disc| disc.destroy}
+      self.memberships.each {|m| m.delay.save; m.user.delay.set_feedhash}
     end
   end
 

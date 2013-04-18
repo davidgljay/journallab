@@ -27,7 +27,7 @@ describe "Signup" do
     fill_in 'user_password', :with => "dogsarethebest"
     fill_in 'user_password_confirmation', :with => "dogsarethebest"
     click_button 'Sign up'
-    page.should have_content("Email can't be blank")
+    page.should have_content("Email is invalid")
   end
 
 end

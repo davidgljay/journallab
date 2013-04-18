@@ -1,5 +1,6 @@
 desc "This task updates feeds"
 
 task :update_feeds => :environment do
-    Follow.last.update_all_feeds
+    Follow.update_all_feeds
+    Paper.delay.set_all_interest(true)
 end

@@ -11,8 +11,8 @@
 
 
   <h3><%= f.label :email %></h3>
-  <%= f.text_field :email %>
-
+  <%= f.text_field :email , :value => "Use a .edu address if you have one.", :onfocus =>  "if(this.value == 'Use a .edu address if you have one.') { this.value = ''; }"%>
+  <div class="small grey">Entering a .edu address will help us verify that you are qualified to post on Journal Lab.</div>
   <h3><%= f.label :password %></h3>
   <p><%= f.password_field :password %></p>
 

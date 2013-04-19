@@ -3,9 +3,8 @@ class Analysis < ActiveRecord::Base
 
   serialize :cache
 
-  before_save :check_cache
 
-  def set_cache
+  def dashboard
     cache = {}
     cache[:vanity] = [["Comments",graph_by_day(Comment.where('created_at > ? AND user_id <> 1 AND user_id <> 2 AND user_id <> 85', Time.now - 1.month))], ["Reactions",graph_by_day(Reaction.where('created_at > ? AND user_id <> 1 AND user_id <> 2 AND user_id <> 85', Time.now - 1.month))], ["Summaries",graph_by_day(Assertion.where('created_at > ? AND user_id <> 1 AND user_id <> 2 AND user_id <> 85', Time.now - 1.month))],["Users", graph_by_day(User.where('created_at > ? ', Time.now - 1.month))],["Custom Feeds", graph_by_day(Follow.where('created_at > ? AND user_id <> 1 AND user_id <> 2 AND user_id <> 85', Time.now - 1.month))]]
     cache[:views] = [["Papers", graph_by_day(Visit.where("created_at > ? AND visit_type = 'paper' AND user_id <> 1 AND user_id <> 2 AND user_id <> 85", Time.now - 1.month))], ["Comments", graph_by_day(Visit.where("created_at > ? AND visit_type = 'comment' AND user_id <> 1 AND user_id <> 2 AND user_id <> 85", Time.now - 1.month))], ["Feeds", graph_by_day(Visit.where("created_at > ? AND visit_type = 'feed' AND user_id <> 1 AND user_id <> 2 AND user_id <> 85", Time.now - 1.month))]]
@@ -23,14 +22,21 @@ class Analysis < ActiveRecord::Base
     cache[:discussion_per_user] = histogram(User.all.map{|u| u.reactions.count + u.comments.count})
     self.cache = cache
     self.save
+    self.cache
   end
 
-  def check_cache
-    if cache.nil?
-      set_cache
+  def journal_analysis
+    papers = Comment.all.map{|c| c.get_paper}.uniq.map{|p| {:paper => p, :journal => p.journal, :count => p.meta_comments.count}}
+    journals = []
+    papers.map{|p| p[:journal]}.uniq.each do |j|
+      i = 0
+      papers.select{|p| p[:journal] == j}.each{|p| i += p[:count]}
+      journals << {:journal => j, :comments => i}
     end
+    self.cache = journals.sort{|x,y| y[:comments] <=> x[:comments]}
+    self.save
+    self.cache
   end
-
 
   #
   # Analytics functions for the dashboard (and eventually for other places.)

@@ -128,9 +128,10 @@ class Follow < ActiveRecord::Base
 
   def self.to_csv(options = {})
     CSV.generate(options) do |csv|
-      csv << ["Random ID", "Feeds"]
+      csv << ["Random ID", "Name", "Email", "Registered", "Last Active", "Feeds"]
       User.all.each_with_index do |user, i|
-        csv << [i, user.name, user.email, user.follows.map{|f| f.name} * ', ']
+        last_active = user.visits.last ? user.visits.last.created_at : nil
+        csv << [i, user.name, user.email, user.created_at.strftime('%D'), last_active, user.follows.map{|f| f.name} * ', ']
       end
     end
   end

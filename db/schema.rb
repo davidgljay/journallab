@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130403033336) do
+ActiveRecord::Schema.define(:version => 20130419011935) do
 
   create_table "analyses", :force => true do |t|
     t.text     "cache"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "description"
   end
 
   create_table "anons", :force => true do |t|

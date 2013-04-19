@@ -1,0 +1,30 @@
+<h1>Journal Analysis</h1>
+<table>
+  <tr>
+    <td><h2>
+      Journal Name
+    </h2></td>
+    <td><h2>
+      Number of Comments
+    </h2></td>
+  </tr>
+  <% @analysis.cache.each do |a| %>
+      <tr style="height: 50px;">
+        <td>
+          <b><%= a[:journal] %></b>
+        </td>
+        <td>
+          <b><%= a[:comments]%></b>
+        </td>
+        <td>
+          <% a[:reactions].each do |r| %>
+
+                <div class='reactionlink badge badge-success inline'>
+                  <%=  r[:name] + ' x' + r[:count].to_s %>
+                </div>
+
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+</table>

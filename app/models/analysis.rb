@@ -26,12 +26,22 @@ class Analysis < ActiveRecord::Base
   end
 
   def journal_analysis
-    papers = Comment.all.map{|c| c.get_paper}.uniq.map{|p| {:paper => p, :journal => p.journal, :count => p.meta_comments.count}}
+    papers = Comment.all.map{|c| c.get_paper}.uniq.map{|p| {:paper => p, :journal => p.journal, :count => p.meta_comments.count, :reactions => p.meta_reactions}}
     journals = []
     papers.map{|p| p[:journal]}.uniq.each do |j|
       i = 0
-      papers.select{|p| p[:journal] == j}.each{|p| i += p[:count]}
-      journals << {:journal => j, :comments => i}
+      reactions = []
+      papers.select{|p| p[:journal] == j}.each do |p|
+        i += p[:count]
+        reactions << p[:reactions]
+      end
+      journal_reactions = []
+      reactions.flatten!.map{|r| r.name}.uniq.each do |r|
+        journal_reactions << {:name => r, :count => reactions.select{|react| react.name == r}.count}
+      end
+      journal_reactions.sort!{|x,y| y[:count] <=> x[:count]}
+
+      journals << {:journal => j, :comments => i, :reactions => journal_reactions.first(3)}
     end
     self.cache = journals.sort{|x,y| y[:comments] <=> x[:comments]}
     self.save

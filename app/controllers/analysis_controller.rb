@@ -7,6 +7,9 @@ class AnalysisController < ApplicationController
 
   end
 
-
+  def journals
+    @title = "Journal Analysis"
+    @analysis = Analysis.find_by_description('journal analysis')
+  end
 
 end

@@ -39,11 +39,12 @@ class FollowsController < ApplicationController
     end
   end
 
-  def index
-    respond_to do |format|
-      format.csv { send_data Follow.to_csv }
-    end
-  end
+  # Get a CSV of users and their follows. Disabling for now.
+  #def index
+  #  respond_to do |format|
+  #    format.csv { send_data Follow.to_csv }
+  #  end
+  #end
 
   private
   def admin_user

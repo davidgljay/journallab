@@ -1,5 +1,6 @@
 class FollowsController < ApplicationController
   before_filter :authenticate_user!, :except => [:viewswitch]
+  before_filter :admin_user, :only => [:index]
 
 
   def create
@@ -36,5 +37,22 @@ class FollowsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def index
+    respond_to do |format|
+      format.csv { send_data Follow.to_csv }
+    end
+  end
+
+  private
+  def admin_user
+    redirect = true
+    if signed_in?
+      if current_user.admin
+        redirect = false
+      end
+    end
+    redirect_to(root_path) if redirect
   end
 end

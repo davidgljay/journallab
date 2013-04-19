@@ -48,6 +48,7 @@ class Analysis < ActiveRecord::Base
     self.cache
   end
 
+
   #
   # Analytics functions for the dashboard (and eventually for other places.)
   #

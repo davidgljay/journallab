@@ -126,5 +126,13 @@ class Follow < ActiveRecord::Base
     follow_array
   end
 
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << ["Random ID", "Feeds"]
+      User.all.each_with_index do |user, i|
+        csv << [i, user.follows.map{|f| f.name} * ', ']
+      end
+    end
+  end
 
 end

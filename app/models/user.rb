@@ -321,7 +321,7 @@ class User < ActiveRecord::Base
       feeds << {:id => f.id, :name => f.name, :newcount => f.newcount, :recent_activity => f.recent_activity.count, :type => 'follow', :css_class => f.css_class}
     end
     self.groups.select{|g| g.category == 'jclub' && g.current_discussion}.each do |g|
-      feeds << {:id => g.id, :name => g.name, :recent_activity => g.newcount(self), :newcount => 0, :type => 'group', :css_class => g.css_class }
+      feeds << {:id => g.id, :name => g.name, :urlname => g.urlname, :recent_activity => g.newcount(self), :newcount => 0, :type => 'group', :css_class => g.css_class }
     end
     self.feedhash = feeds
     self.save

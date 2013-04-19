@@ -51,6 +51,7 @@ class Group < ActiveRecord::Base
       m = self.memberships.find_by_user_id(user.id)
       m.lead = false
       m.save
+      user.set_feedhash
       leads.each do |lead|
         Mailer.group_add_notification(self, lead, user).deliver unless self.id == 8
       end
@@ -93,7 +94,7 @@ class Group < ActiveRecord::Base
   def remove(user)
     if self.users.include?(user)
       self.memberships.find_by_user_id(user.id).destroy
-      user.delay.set_feedhash
+      user.set_feedhash
     end
   end
 

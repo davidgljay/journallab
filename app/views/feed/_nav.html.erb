@@ -17,7 +17,14 @@
               <%= button_to follow[:name], {:controller => "pages", :action => "feedswitch",  :switchto => follow[:css_class]}, :class => " loadingPrompt plainSubmit clickme ", :remote => true %><%= render '/shared/loading' %>
             </div>
             <div class = 'feed_remove hideonload'>
-              <%= link_to '/follows/remove/' + follow[:id].to_s, :remote => true do %><icon class = "icon-remove"></icon>
+              <% if follow[:type] == 'follow' %>
+                  <%= link_to '/follows/remove/' + follow[:id].to_s, :remote => true do %>
+                      <icon class = "icon-remove"></icon>
+                  <% end %>
+              <% elsif follow[:type] == 'group' %>
+                  <%= link_to '/groups/' + follow[:urlname].to_s + '/leave' do %>
+                      <icon class = "icon-remove"></icon>
+                  <% end %>
               <% end %>
             </div>
           </div>

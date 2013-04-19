@@ -130,7 +130,7 @@ class Follow < ActiveRecord::Base
     CSV.generate(options) do |csv|
       csv << ["Random ID", "Feeds"]
       User.all.each_with_index do |user, i|
-        csv << [i, user.follows.map{|f| f.name} * ', ']
+        csv << [i, user.name, user.email, user.follows.map{|f| f.name} * ', ']
       end
     end
   end

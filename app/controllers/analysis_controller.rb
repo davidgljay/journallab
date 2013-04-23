@@ -13,6 +13,11 @@ class AnalysisController < ApplicationController
     @analysis = Analysis.find_by_description('journal analysis')
   end
 
+  def most_discussed
+    @titel = "Most Discussed Papers"
+    @analysis = Analysis.new.most_discussed
+  end
+
   private
   def admin_user
     redirect = true

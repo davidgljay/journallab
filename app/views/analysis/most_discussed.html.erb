@@ -1,0 +1,51 @@
+<h1>Most Discussed Papers</h1>
+<table>
+  <tr>
+    <td><h2>
+      Paper
+    </h2></td>
+    <td><h2>
+      Interest
+    </h2></td>
+    <td><h2>
+      Comments
+    </h2></td>
+    <td><h2>
+      Reactions
+    </h2></td>
+    <td><h2>
+      Figures
+    </h2></td>
+    <td><h2>
+      Summaries
+    </h2></td>
+    <td><h2>
+    Total
+  </h2></td>
+  </tr>
+  <% @analysis.each do |a| %>
+      <tr style="height: 50px;">
+        <td>
+          <b><%= link_to a[:paper].title, a[:paper] %></b>
+        </td>
+        <td>
+          <b><%= a[:paper].interest %></b>
+        </td>
+        <td>
+          <b><%= a[:comments]%></b>
+        </td>
+        <td>
+          <b><%= a[:reactions]%></b>
+        </td>
+        <td>
+          <b><%= a[:figs]%></b>
+        </td>
+        <td>
+          <b><%= a[:summaries]%></b>
+        </td>
+        <td>
+          <b><%= a[:total]%></b>
+        </td>
+      </tr>
+  <% end %>
+</table>

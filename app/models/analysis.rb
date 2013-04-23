@@ -48,6 +48,13 @@ class Analysis < ActiveRecord::Base
     self.cache
   end
 
+  def most_discussed
+    papers = Comment.all.map {|c| c.get_paper}.uniq
+    most_discussed = papers.map{|p| {:paper => p, :comments => p.meta_comments.count, :reactions => p.meta_reactions.count, :figs => p.figs.count, :summaries => p.meta_assertions.count, :total => (p.meta_comments.count + p.meta_reactions.count)}}
+    most_discussed.sort!{|x,y| y[:total] <=> x[:total]}
+    self.cache = most_discussed
+  end
+
 
   #
   # Analytics functions for the dashboard (and eventually for other places.)

@@ -9,7 +9,7 @@
     <% @recent_discussions.to_a.each_with_index do |disc, i| %>
             <div class="<%= 'active' if i == 0 %> item">
               <%= link_to '../papers/' + disc[:paper_id].to_s do %>
-               <div class = 'paperTitle ' style = '<%= 'font-size:16px;' if disc[:title].length > 100 %>' >
+               <div class = 'paperTitle' style = '<%= 'font-size:16px;' if disc[:title].length > 100 %>' >
                     <%= disc[:title] %>
                  </div>
                <div class = 'inline'>
@@ -25,7 +25,7 @@
                    </div>
                    <div >
                       <% unless disc[:hottest_fig_comment].nil? %>
-                          "<%= disc[:hottest_fig_comment].length > 500 ? disc[:hottest_fig_comment].first(500) + '...' : disc[:hottest_fig_comment] %>"
+                          "<%= disc[:hottest_fig_comment]%>"
                       <% end %>
                    </div>
                </div>

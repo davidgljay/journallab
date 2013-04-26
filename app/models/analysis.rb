@@ -69,7 +69,7 @@ class Analysis < ActiveRecord::Base
       if !paper.figs.empty?
         hottest_fig = paper.figs.map{|f| [f,f.heat]}.sort{|x,y| y[1]<=>x[1]}.first[0]
         if !hottest_fig.hottest_comment.nil?
-          hottest_fig_comment = hottest_fig.hottest_comment.text.length > 500 ? hottest_fig.hottest_comment.text.first(500) + '...' : hottest_fig.hottest_comment.text
+          hottest_fig_comment = hottest_fig.hottest_comment.short_text
         else
           hottest_fig_comment = nil
         end

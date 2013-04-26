@@ -70,6 +70,7 @@ class Comment < ActiveRecord::Base
   end
 
   def short_text
+
     if text.length > 500
       text.first(500) + '...'
     else

@@ -67,13 +67,12 @@ Redcell::Application.routes.draw do
 
 
   root :to => 'pages#home'
-  match '/contact',  :to => 'pages#contact'
   match '/about',    :to => 'pages#about'
-  match '/help',     :to => 'pages#help'
   match '/dashboard',    :to => 'analysis#dashboard'
   match '/journals',  :to => 'analysis#journals'
   match '/most_discussed',  :to => 'analysis#most_discussed'
   match '/feedswitch(/:switchto)',	 :to => 'pages#feedswitch'
+  match '/homeswitch', :to => 'pages#homeswitch'
   match '/sitemap.xml', :to => 'pages#sitemap'
 
 

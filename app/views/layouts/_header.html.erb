@@ -27,7 +27,8 @@
           <tbody><tr>
             <td >
               <%= form_tag('/lookup', :method => "get") do  %>
-                  <%= text_field_tag(:search, "Discuss any paper on PubMed.", :onfocus =>  "if(this.value == 'Discuss any paper on PubMed.') { this.value = ''; }", :class => "inputSearch searchreset" ) %> <%= submit_tag "GO", :class => 'btn-tiny btn-warning round', :style => "vertical-align: top; margin-top: 2px;"%></td>
+                  <%= text_field_tag(:search, "Discuss any paper on PubMed.", :onfocus =>  "if(this.value == 'Discuss any paper on PubMed.') { this.value = ''; }", :class => "inputSearch searchreset" ) %>
+                  <%= submit_tag "Search", :class => 'btn-tiny btn-primary round', :style => "vertical-align: top; margin-top: 2px;"%></td>
               <% end %>
               </td>
               </tr>

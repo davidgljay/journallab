@@ -123,6 +123,121 @@ textarea, input [type = 'text'] {
     padding-bottom: 75px;
 }
 
+/* Homepage */
+
+#homepage #headline {
+    font-size:30px;
+    font-color: #000;
+    text-decoration: none;
+    margin: 30px 0 10px 30px;
+}
+
+#homepage #headlineDetail {
+   font-size: 12px;
+   margin-bottom: 20px;
+}
+
+#homepage #homeMenu .nav {
+   border-bottom: 0px;
+   margin: 0px 5px 0 5px;
+}
+
+#homepage #homeMenu .box {
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 333px;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);
+}
+
+
+
+#discussionCarousel .carousel-control,
+#howtoCarousel .carousel-control{
+    top: 50%;
+}
+
+#discussionCarousel .carousel-inner{
+    margin: 40px;
+}
+
+#howtoCarousel .carousel-inner{
+    margin:00px;
+}
+
+#discussionCarousel .carousel-inner .item{
+    width: 460px;
+    height:300px;
+}
+
+#howtoCarousel .carousel-inner .item{
+    height:335px;
+}
+
+#discussionCarousel .carousel-inner .item a {
+    text-decoration: none;
+    color: #000;
+}
+
+#discussionCarousel .paperTitle {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #000;
+}
+
+#homepage h1 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #000;
+}
+
+
+
+#discussionCarousel .paperDiscussion {
+    float: right;
+    margin-top: 20px;
+}
+
+#discussionCarousel .paperDiscussion.wide {
+    width: 95%;
+}
+
+#discussionCarousel .paperDiscussion.narrow {
+    width: 55%;
+}
+
+
+
+#discussionCarousel .paperDiscussion .reactions {
+    border: 0px;
+    margin-bottom: 20px;
+}
+
+#homepage #register {
+    margin-top: 18px;
+    margin-bottom: 10px;
+
+}
+
+#homepage #featureCallouts {
+    text-align: center;
+    margin-bottom: 30px;
+
+}
+
+#homepage #featureCallouts .feature {
+    font-size: 16px;
+    margin-top: 5px;
+    font-weight: bold;
+
+}
+
+
 /* About Page */
 
 #about .slide {
@@ -267,8 +382,9 @@ textarea, input [type = 'text'] {
 }
 
 .round	{
-    border-radius: 10px;
+    border-radius: 5px;
 }
+
 
 /* Lighten Icons */
 

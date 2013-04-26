@@ -1,0 +1,101 @@
+<div id="homepage" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html">
+<div class = 'row'>
+  <div class='span9' id='headline'>
+      Journal Lab ipsum dolor sit amet, consectetur adipiscing elit.
+  </div>
+</div>
+<div class = 'row'>
+  <div class='span7' id ='headlineDetail'>
+    Smaller text in more at tellus tellus, quis vulputate nibh. Nullam blandit semper metus, ac fringilla tortor eleifend a. Sed ipsum massa, lobortis vitae iaculis at, eleifend vitae nisl.
+  </div>
+</div>
+<div class = 'row'>
+  <div class='span6' id='homeMenu'>
+    <ul class="nav nav-tabs">
+      <li id="discussion" class="active">
+        <%= link_to 'Discussion', 'homeswitch?switchto=discussion', :remote => true %>
+      </li>
+      <li id="about"><%= link_to 'About', 'homeswitch?switchto=about', :remote => true %></li>
+      <li id="howto"><%= link_to 'How It Works', 'homeswitch?switchto=howto', :remote => true %></li>
+    </ul>
+
+    <div class="box">
+
+
+    <%= render 'discussion', :recent_discussions => @recent_discussions %>
+
+    </div>
+  </div>
+
+  <div class='span3 text-right grey' id='register'>
+
+    <%= form_for( @newuser, :url => registration_path(@newuser)) do |f| %>
+        <p>First Name<br>
+        <%= f.text_field :firstname %></p>
+
+        <p>Last name<br>
+        <%= f.text_field :lastname %></p>
+
+
+        <p><%= f.label :email %><br>
+        <%= f.text_field :email , :value => "Use a .edu address if you have one.", :onfocus =>  "if(this.value == 'Use a .edu address if you have one.') { this.value = ''; }"%><br>
+        <span class="small grey">This will help us verify that you are qualified to post.</span>
+        </p>
+
+        <p><%= f.label :password %><br>
+        <%= f.password_field :password %></p>
+
+        <p><%= f.label :password_confirmation %></br>
+        <%= f.password_field :password_confirmation %></p>
+
+        <p><%= f.submit "Get Started", :class => 'btn btn-primary' %></p>
+    <% end %>
+  </div>
+</div>
+<div class = 'row' id='featureCallouts'>
+  <div class='span3'>
+    <div class="thumbnail">
+      <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/250px-Tyrion_Lannister_S3.jpg", :class => 'img-circle' %>
+      <div class='feature'>
+        Wittier Search
+      </div>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pellentesque enim nisl. Duis sodales arcu vel quam sodales at sollicitudin dolor blandit. </p>
+      <p>
+        <strong>
+          -Tyrion, Post-Doc
+        </strong>
+      </p>
+    </div>
+  </div>
+  <div class='span3'>
+    <div class="thumbnail">
+      <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/danyface.jpg" , :class => 'img-circle' %>
+      <div class='feature'>
+        Ruthless Discussion
+      </div>
+      <p>"Phasellus fermentum pellentesque ipsum sed adipiscing. Nullam bibendum, lorem eget cursus feugiat, lorem diam pharetra est."      <br>      <br></p>
+
+      <p>
+        <strong>
+          -Danny, Grad Student
+        </strong>
+      </p>
+    </div>
+  </div>
+  <div class='span3'>
+    <div class="thumbnail">
+      <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/aryaface.png", :class => 'img-circle' %>
+      <div class='feature'>
+        Awesome People
+      </div>
+      <p>"Cras ultricies tristique quam eu adipiscing. Proin vitae ligula eu nibh rhoncus ullamcorper vitae id arcu."      <br>      <br></p>
+      <p>
+        <strong>
+          -Arya, Post-Doc
+        </strong>
+      </p>
+    </div>
+  </div>
+</div>
+</div>

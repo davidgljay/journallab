@@ -1,0 +1,3 @@
+$('li').removeClass('active');
+$('#<%= @switchto%>').addClass('active');
+$('.box').html('<%= escape_javascript(render @switchto) %>');

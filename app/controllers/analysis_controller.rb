@@ -4,7 +4,7 @@ class AnalysisController < ApplicationController
   def dashboard
     require 'groups_helper'
     @title = "Dashboard"
-    @analysis = Analysis.first
+    @analysis = Analysis.find_by_description('dashboard')
 
   end
 

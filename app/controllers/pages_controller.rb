@@ -42,6 +42,16 @@ class PagesController < ApplicationController
       @newfollow = current_user.follows.new
       @welcome_screen = false
 
+    else
+      @newuser = User.new
+      @recent_discussions = Analysis.find_by_description('recent_discussions').cache
+    end
+  end
+
+  def homeswitch
+    @switchto = params[:switchto]
+    if @switchto == 'discussion'
+      @recent_discussions = Analysis.find_by_description('recent_discussions').cache
     end
   end
 

@@ -21,6 +21,7 @@ class Analysis < ActiveRecord::Base
     cache[:visits_per_user] = histogram(User.all.map{|u| u.visits.count})
     cache[:discussion_per_user] = histogram(User.all.map{|u| u.reactions.count + u.comments.count})
     self.cache = cache
+    self.description = 'dashboard'
     self.save
     self.cache
   end
@@ -44,6 +45,7 @@ class Analysis < ActiveRecord::Base
       journals << {:journal => j, :comments => i, :reactions => journal_reactions.first(3)}
     end
     self.cache = journals.sort{|x,y| y[:comments] <=> x[:comments]}
+    self.description = 'journal_analysis'
     self.save
     self.cache
   end
@@ -53,6 +55,38 @@ class Analysis < ActiveRecord::Base
     most_discussed = papers.map{|p| {:paper => p, :comments => p.meta_comments.count, :reactions => p.meta_reactions.count, :figs => p.figs.count, :summaries => p.meta_assertions.count, :total => (p.meta_comments.count + p.meta_reactions.count)}}
     most_discussed.sort!{|x,y| y[:total] <=> x[:total]}
     self.cache = most_discussed
+  end
+
+  def recent_discussions
+    papers = Comment.all.map {|c| c.get_paper}.uniq.sort{|x,y| y.latest_activity <=> x.latest_activity}.first(10)
+    recent_discussions = []
+    papers.each do |paper|
+      reactions = []
+       paper.meta_reactions.each do |r|
+        reactions << {:name => r.name, :number => paper.meta_reactions.select{|r2| r2.name == r.name}.count}
+       end
+      reactions.uniq!
+      if !paper.figs.empty?
+        hottest_fig = paper.figs.map{|f| [f,f.heat]}.sort{|x,y| y[1]<=>x[1]}.first[0]
+        if !hottest_fig.hottest_comment.nil?
+          hottest_fig_comment = hottest_fig.hottest_comment.text.length > 500 ? hottest_fig.hottest_comment.text.first(500) + '...' : hottest_fig.hottest_comment.text
+        else
+          hottest_fig_comment = nil
+        end
+        if hottest_fig.image
+          hottest_fig_image = true
+        end
+      else
+        hottest_fig = nil
+        hottest_fig_comment = nil
+        hottest_fig_image = false
+      end
+      recent_discussions << {:paper_id => paper.id, :title => paper.title, :reactions => reactions, :hottest_fig => hottest_fig, :hottest_fig_image? => hottest_fig_image, :hottest_fig_comment => hottest_fig_comment}
+    end
+    self.cache = recent_discussions
+    self.description = 'recent_discussions'
+    self.save
+    self.cache
   end
 
 

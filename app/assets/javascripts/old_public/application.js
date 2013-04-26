@@ -13,11 +13,11 @@ $(document).ready(function(){
 //Feed
 
 
-$(".loadingPrompt").live('click', function(){
+$(".loadingPrompt").on('click', function(){
 	$(this).val("Just a sec..");
 });
 
-$(".feedPlus").live('click', function(){
+$(".feedPlus").on('click', function(){
 	$('div').removeClass('feed_nav_selected');
 	$(this).addClass('feed_nav_selected');
 	$('.homePageFeed').hide();
@@ -28,34 +28,34 @@ $(".feedPlus").live('click', function(){
 
 
 //Search
-$(".searchreset").live('click', function(){
+$(".searchreset").on('click', function(){
 	$(this).css('color', '#000');
 	$(this).css('font-style', 'normal');	
 });
 
 //Overlay Close
-$(".lightbox").find("i.icon-remove").live('click', function(){
+$(".lightbox").find("i.icon-remove").on('click', function(){
 	$(this).parent().hide();
 	$('div.overlay').hide();
 });
 
 //Abstract Expansion
-$("#abstract").live('click', function(){
+$("#abstract").on('click', function(){
     	$("#abstract_short").hide();
     	$("#abstract_long").slideToggle(300);
 });
 
-$(".abstract").live('click', function(){
+$(".abstract").on('click', function(){
 	$(this).parent().parent().find('.abstract_long').slideToggle(300);
 });
 
-$(".list_abstract").live('click', function(){
+$(".list_abstract").on('click', function(){
 	$(this).parent().parent().parent().find('.abstract_long').slideToggle(300);
 });
 
 //Citation expansion
 
-$(".citation_link").live('click', function(){
+$(".citation_link").on('click', function(){
     	$(this).parent().parent().find('.citation').slideToggle(300);
 });
 
@@ -81,20 +81,20 @@ $('a.quick_question').click(function(){
 //Quickform Selection
 
 
-$('.quickform input').live('click', function(){
+$('.quickform input').on('click', function(){
 	$(this).css('color', '#000');
 	$(this).css('font-style', 'normal');
 });
 
 
-$(".quickform form").live('submit', function(){
+$(".quickform form").on('submit', function(){
 	$(this).parent().hide();
 	$(this).parent().next().show();
 });
 
 // Reveal reactions when clicking "Give your reaction"
 
-$(".leave_reaction").live('click', function() {
+$(".leave_reaction").on('click', function() {
 	$(this).hide();
 	$(this).parent().parent().find('h5').toggle();
 	$(this).parent().parent().find('.toggle').css('display', 'inline-block');
@@ -102,24 +102,24 @@ $(".leave_reaction").live('click', function() {
 
 
 //Hide/Show Discussion Map (known as 'overview' in the code)
-  $(".overview_open").live('click', function(){
+  $(".overview_open").on('click', function(){
 	$(this).find('img').toggle();
     	$(this).next().slideToggle(300);
   });
 
 //Share Expansion
-  $(".sharelink").live('click', function(){
+  $(".sharelink").on('click', function(){
     $(this).parent().parent().parent().find("div.sharebox").show();
 
   });
 
-  $("div.share_button_text").live('click', function(){
+  $("div.share_button_text").on('click', function(){
     $(this).parent().find("div.share_button_form").show();
     $('div.overlay').show('');
   });
 
 
-  $('div.share_form').find(':input').live('click', function(){
+  $('div.share_form').find(':input').on('click', function(){
      if( $(this).val() == "Check this out!"){
         $(this).val('');
      }
@@ -135,69 +135,69 @@ $(".leave_reaction").live('click', function() {
 
 
     // Anonymity Lightbox
-    $(".anon_learn_more").live('click', function(){
+    $(".anon_learn_more").on('click', function(){
 
         $(this).parent().next().toggle();
     });
 
 
 //Toggle Figure sections
-   $("div.figtoggle").live('click', function(){
+   $("div.figtoggle").on('click', function(){
      $(this).next().toggle(300);
      $(this).find('img').toggle();
     });
 
 //Reply box expansion
-  $("li.replylink").live('click', function(){
+  $("li.replylink").on('click', function(){
     $("div.answerform").hide("slow");
     $(this).parent().parent().parent().find("div.replyform").slideToggle(300);
     //$(this).html('It works!');
   });
 
 //Answer box expansion
-  $("nav li.answerlink").live('click', function(){
+  $("nav li.answerlink").on('click', function(){
     $("div.replyform").hide("slow");
     $(this).parent().parent().parent().find("div.answerform").slideToggle();
   });
 
 //Image expansion
   
-   $(".summary img.thumbnail").live('click', function(){
+   $(".summary img.thumbnail").on('click', function(){
     $(this).parent().next().find(".fullfig").slideToggle();
     });
 
 
 //Select # of figures and figsections expansion
-    $("div.add_figs_and_sections").live('click', function(){
+    $("div.add_figs_and_sections").on('click', function(){
 	$(this).parent().find('div.numselect').slideToggle();
 	$(this).find('img').toggle();
      });
 
 //Add/Remove figs in a paper
-    $("div#add_figs_link").live('click', function(){
+    $("div#add_figs_link").on('click', function(){
 	$(this).hide(300);
 	$('div#add_figs').show(300);
      });	
 
 //Image upload
-    $(".fig_upload").live('click', function(){
+    $(".fig_upload").on('click', function(){
       $(this).parent().find('div.upload_form').show();
      });
 
 //Click to reveal a form.
-   $(".editme").live('click', function(){
+   $(".editme").on('click', function(){
      $(this).hide();
      $(this).next().css('display', 'inline');
     });
 
 //Show assertion history when editing
-   $('div.latest_assertion.editme, p.method.editme').live('click', function(){
+   $('div.latest_assertion.editme, p.method.editme').on('click', function(){
      $.post($(this).parent().find('form.improvelist').first().attr("action"), $(this).parent().find('form.improvelist').first().serialize(), null, "script");
     });
 
 //Reset assertion forms when clicked.
 
-   $("#assertion_text, #assertion_method_text").live('click', function(){
+   $("#assertion_text, #assertion_method_text").on('click', function(){
      if( $(this).val().substring(0,20) == "What are the authors" || $(this).val() == "Separate methods with commas (e.g. western blot, QPCR, etc.)" || $(this).val() == "What are alternate approaches?" || $(this).val() == "Please provide a brief summary of this paper readable to a scientist outside of this field."  || $(this).val().substring(0,27) == "What are alternate approaches?")
         $(this).val('');
 
@@ -218,12 +218,12 @@ $('body').bind("ajax:error", function(event, data, status, xhr) {
 
 // Dropdown menus
 
-$('.dropdown-toggle').live('click', function(){
+$('.dropdown-toggle').on('click', function(){
 	$(this).next().toggle('300');
 });
 
 // Folder prompt when not signed in
-$('.folderAdd').live('click', function(){
+$('.folderAdd').on('click', function(){
     $(this).next().toggle();
 
 });
@@ -271,7 +271,7 @@ $('.folderAdd').live('click', function(){
       $(this).css('background', 'none')
     });
 
-   $(".deadLink").live('click', function(e){
+   $(".deadLink").on('click', function(e){
 	e.preventDefault();
 	return false;
     });

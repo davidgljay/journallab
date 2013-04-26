@@ -9,7 +9,7 @@
               <%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :id => "profilephoto", :class => "profilePhoto clickme editme" %>
           <% else %>
               <div class='upload_form'>
-                <h3>Upload a profile picture</h3>
+                Upload a profile picture
                 <%= form_for @user, :url => "#{@user.id}/image_upload", :html => {:multipart => true} do |f| %>
                     <%= f.file_field :user_image %>
                     <%= f.hidden_field :id %><br>
@@ -18,7 +18,7 @@
               </div>
           <% end %>
           <div class='upload_form hideonload'>
-            <h3>Upload a new profile picture</h3>
+            Upload a new profile picture
             <%= form_for @user, :url => "#{@user.id}/image_upload", :html => {:multipart => true} do |f| %>
                 <%= f.file_field :user_image %>
                 <%= f.hidden_field :id %><br>
@@ -34,88 +34,101 @@
       <% end %>
     </td><td>
       <h2><%= @user.name %></h2><br>
-      <% if @user == current_user %>
-          <div class = "clickme editme" id="position"><h2><%= @user.position ? @user.position : "Enter your position" %></h2></div>
-          <div class = "hideonload editme_form">
-            <%= form_for @user do |f| %>
-                <%= f.text_field :position %>
-            <% end %>
-            <i>Press enter to save</i>
-          </div><h2>,</h2>
-          <div class = "clickme editme" id="institution"><h2><%= @user.institution ? @user.institution : "Enter your institution" %></h2></div>
-          <div class = "hideonload editme_form">
-            <%= form_for @user do |f| %>
-                <%= f.text_field :institution %>
-            <% end %>
-            <i>Press enter to save</i>
-          </div>      <% else %>
-          <h2><%= @user.position %><%= ', ' + @user.institution if @user.institution %></h2>
-      <% end %><br>
-      <% if @user == current_user %>
-          <div class = "clickme editme" id="specialization"><h3><%= @user.specialization ? "Focus: #{@user.specialization}" : "Enter your research focus" %></h3></div>
-          <div class = "hideonload editme_form">
-            <%= form_for @user do |f| %>
-                <%= f.text_field :specialization %>
-            <% end %>
-            <i>Press enter to save</i>
-          </div>
-      <% elsif @user.specialization %>
-          <h3>Focus: <%= @user.specialization %></h3>
-      <% end %>
 
-      <p><h3>
-      <% if @user == current_user %>
-          <div class = "clickme editme" id="homepage">Edit Homepage Link</div>
-          <div class = "editme_form hideonload">
-            <%= form_for @user do |f| %>
-                <%= f.text_field :homepage %>
-            <% end %>
-            <i>Press enter to save</i>
-          </div>
-          •
-          <div class = "clickme editme" id="cv">Edit CV Link</div>
-          <div class = "editme_form hideonload">
-            <%= form_for @user do |f| %>
-                <%= f.text_field :cv %>
-            <% end %>
-            <i>Press enter to save</i>
-          </div>
-          </h3><p>
-          <div class = "clickme editme inline"><h3 >Change Password</h3></div>
-          <div class = "editme_form hideonload">
-            <%= form_for @user do |f| %>
-                New Password: <%= f.password_field :password %><br>
-                Confirmation: <%= f.password_field :password_confirmation %><br>
-                <%= f.submit 'Change Password' %>
-            <% end %>
-          </div>
-          <div class='inline'>
-            <%=  link_to '/users/' + @user.id.to_s + '/subscriptions' do %>
-                <h3 >Email Settings </h3><% end %>
-          </div>
-      <% else %>
-          <h3><%= link_to "Homepage", @user.homepage if @user.homepage %>
+      <div id="positionInfo">
+        <% if @user == current_user %>
+            <p class = 'small grey'>
+              <em>
+              Click on profile information to change it.
+            </em>
+            </p>
+
+            <div class = "clickme editme <%= 'linklike' if !@user.position %>" id="position"><%= @user.position ? @user.position : "Enter your position" %></div>
+            <div class = "hideonload editme_form">
+              <%= form_for @user do |f| %>
+                  <%= f.text_field :position %>
+              <% end %>
+              <i>Press enter to save</i>
+            </div>,
+            <div class = "clickme editme <%= 'linklike' if !@user.institution %>" id="institution"><%= @user.institution ? @user.institution : "Enter your institution" %></div>
+            <div class = "hideonload editme_form">
+              <%= form_for @user do |f| %>
+                  <%= f.text_field :institution %>
+              <% end %>
+              <i>Press enter to save</i>
+            </div>
+        <% else %>
+            <%= @user.position %><%= ', ' + @user.institution if @user.institution %>
+
+        <% end %>
+      </div>
+      <br>
+        <% if @user == current_user %>
+            <div class = "clickme editme <%= 'linklike' if !@user.specialization %>" id="specialization"><%= @user.specialization ? "Focus: #{@user.specialization}" : "Enter your research focus" %></div>
+            <div class = "hideonload editme_form">
+              <%= form_for @user do |f| %>
+                  <%= f.text_field :specialization %>
+              <% end %>
+              <i>Press enter to save</i>
+            </div>
+        <% elsif @user.specialization %>
+            Focus: <%= @user.specialization %>
+        <% end %>
+
+        <p>
+          <% if @user == current_user %>
+            <div class = "clickme editme linklike" id="homepage">Edit Homepage Link</div>
+            <div class = "editme_form hideonload">
+              <%= form_for @user do |f| %>
+                  <%= f.text_field :homepage %>
+              <% end %>
+              <i>Press enter to save</i>
+            </div>
+            •
+            <div class = "clickme editme linklike" id="cv">Edit CV Link</div>
+            <div class = "editme_form hideonload">
+              <%= form_for @user do |f| %>
+                  <%= f.text_field :cv %>
+              <% end %>
+              <i>Press enter to save</i>
+            </div>
+            <p>
+            <div class = "clickme editme linklike">Change Password</div>
+            <div class = "editme_form hideonload">
+              <%= form_for @user do |f| %>
+                  New Password: <%= f.password_field :password %><br>
+                  Confirmation: <%= f.password_field :password_confirmation %><br>
+                  <%= f.submit 'Change Password' %>
+              <% end %>
+            </div>
+            <div>
+              <%=  link_to '/users/' + @user.id.to_s + '/subscriptions' do %>
+                  Email Settings
+              <% end %>
+            </div>
+        <% else %>
+            <%= link_to "Homepage", @user.homepage if @user.homepage %>
             <%= " • " if @user.cv && @user.homepage %>
-            <%= link_to "CV", @user.cv if @user.cv %></h3></p>
-      <% end %>
+            <%= link_to "CV", @user.cv if @user.cv %></p>
+        <% end %>
 
-      <p>
-        <% if @user.votes_for_me.count > 0 || @user.impact[:users] > 1 %>
-          <br>
-          <h2><%= @user.firstname %>'s Journal Lab Activity:</h2>
-      <% end %>
-      <% if @user.votes_for_me.count > 0 %>
+        <p>
+          <% if @user.votes_for_me.count > 0 || @user.impact[:users] > 1 %>
+              <br>
+              <h2><%= @user.firstname %>'s Journal Lab Activity:</h2>
+          <% end %>
+          <% if @user.votes_for_me.count > 0 %>
 
-          <h3>Has received <%= pluralize(@user.votes_for_me.count,"Nod") %>.</h3>
-          <br>
+              <b>Has received <%= pluralize(@user.votes_for_me.count,"Nod") %>.</b>
+              <br>
 
-      <% end %>
-      <% if @user.impact[:users] > 1 %>
-          <h3> Has been viewed <%= @user.impact[:visits]%> times.</h3>
-          <h3>Has been viewed by <%=  @user.impact[:users]%> members of the research community.</h3>
-      <% end %>
-      </p>
-      </td>
+          <% end %>
+          <% if @user.impact[:users] > 1 %>
+              <p>Has been viewed <%= @user.impact[:visits]%> times.  </p>
+              <p>Has been viewed by <%=  @user.impact[:users]%> members of the research community. </p>
+          <% end %>
+          </p>
+          </td>
     </tr>
     </table>
   </div>

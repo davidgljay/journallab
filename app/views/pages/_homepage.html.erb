@@ -1,4 +1,5 @@
 <div id="homepage" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
      xmlns="http://www.w3.org/1999/html">
   <div class = 'row'>
     <div class = 'offset7 span2'>
@@ -8,21 +9,20 @@
   </div>
   <div class = 'row'>
   <div class='span9' id='headline'>
-      Journal Lab ipsum dolor sit amet, consectetur adipiscing elit.
+    Journal Lab helps you find relevant research that you can trust.
   </div>
 </div>
 
   <div class = 'row'>
-  <div class='span7' id ='headlineDetail'>
-    Smaller text in more at tellus tellus, quis vulputate nibh. Nullam blandit semper metus, ac fringilla tortor eleifend a. Sed ipsum massa, lobortis vitae iaculis at, eleifend vitae nisl.
-  </div>
+  <div class='span8' id ='headlineDetail'>
+    We are a community of scientists who share open summaries and peer review of published literature. With your help, we’re creating a world where everyone from scientists to policymakers to patients can find the research that’s relevant to them, quickly make sense of that research, and see what experts in the field think of it.  </div>
 
 </div>
 <div class = 'row'>
   <div class='span6' id='homeMenu'>
     <ul class="nav nav-tabs">
       <li id="discussion" class="active">
-        <%= link_to 'Discussion', 'homeswitch?switchto=discussion', :remote => true %>
+        <%= link_to 'Recent Discussions', 'homeswitch?switchto=discussion', :remote => true %>
       </li>
       <li id="about"><%= link_to 'About', 'homeswitch?switchto=about', :remote => true %></li>
       <li id="howto"><%= link_to 'How It Works', 'homeswitch?switchto=howto', :remote => true %></li>
@@ -74,12 +74,13 @@
     <div class="thumbnail">
       <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/250px-Tyrion_Lannister_S3.jpg", :class => 'img-circle' %>
       <div class='feature'>
-        Wittier Search
+        One-Up Your PI
       </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer pellentesque enim nisl. Duis sodales arcu vel quam sodales at sollicitudin dolor blandit. </p>
-      <p>
+      <p class='text-left'>“My most recent Journal Lab find led to a mad dash to my PI’s office, followed by 4 high fives. I love this tool.”
+      </p>
+      <p class = 'text-right'>
         <strong>
-          -Tyrion, Post-Doc
+          ~Sky, PhD student
         </strong>
       </p>
     </div>
@@ -88,13 +89,13 @@
     <div class="thumbnail">
       <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/danyface.jpg" , :class => 'img-circle' %>
       <div class='feature'>
-        Ruthless Discussion
+        Boost your impact
       </div>
-      <p>"Phasellus fermentum pellentesque ipsum sed adipiscing. Nullam bibendum, lorem eget cursus feugiat, lorem diam pharetra est."      <br>      <br></p>
+      <p class='text-left'>“Journal Lab has been a great platform for me to feature my videos because it provides a broad user base of scientists that  enjoy learning about unfamiliar fields. I've also found the great feedback and interesting questions that have arisen from Jlab users to be quite exciting!”<br>      <br></p>
 
-      <p>
+      <p class='text-right'>
         <strong>
-          -Danny, Grad Student
+          ~ Florie, founder, Youreka Science
         </strong>
       </p>
     </div>
@@ -103,12 +104,13 @@
     <div class="thumbnail">
       <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/aryaface.png", :class => 'img-circle' %>
       <div class='feature'>
-        Awesome People
+        Transform Journal Club
       </div>
-      <p>"Cras ultricies tristique quam eu adipiscing. Proin vitae ligula eu nibh rhoncus ullamcorper vitae id arcu."      <br>      <br></p>
-      <p>
+      <p class='text-left'>“I use Journal Lab for organizing and archiving the conversations with my labmates about papers. It's great to pose our critiques and questions to the authors.”
+        </p>
+      <p class='text-right'>
         <strong>
-          -Arya, Post-Doc
+          ~ Marie, PhD student
         </strong>
       </p>
     </div>

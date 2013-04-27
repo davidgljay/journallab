@@ -1,14 +1,22 @@
 <div id="homepage" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
      xmlns="http://www.w3.org/1999/html">
-<div class = 'row'>
+  <div class = 'row'>
+    <div class = 'offset7 span2'>
+      <div class='span2'>
+     </div>
+    </div>
+  </div>
+  <div class = 'row'>
   <div class='span9' id='headline'>
       Journal Lab ipsum dolor sit amet, consectetur adipiscing elit.
   </div>
 </div>
-<div class = 'row'>
+
+  <div class = 'row'>
   <div class='span7' id ='headlineDetail'>
     Smaller text in more at tellus tellus, quis vulputate nibh. Nullam blandit semper metus, ac fringilla tortor eleifend a. Sed ipsum massa, lobortis vitae iaculis at, eleifend vitae nisl.
   </div>
+
 </div>
 <div class = 'row'>
   <div class='span6' id='homeMenu'>
@@ -26,7 +34,15 @@
     <%= render 'discussion', :recent_discussions => @recent_discussions %>
 
     </div>
-  </div>
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style ">
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+      <a class="addthis_button_tweet"></a>
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    </div>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-517c1b1d3acebd2e"></script>
+    <!-- AddThis Button END --> </div>
 
   <div class='span3 text-right grey' id='register'>
     <h2>Sign Up Now</h2>
@@ -39,8 +55,8 @@
 
 
         <p><%= f.label :email %><br>
-        <%= f.text_field :email , :value => "Use a .edu address if you have one.", :onfocus =>  "if(this.value == 'Use a .edu address if you have one.') { this.value = ''; }"%><br>
-        <span class="small grey">This will help us verify that you are qualified to post.</span>
+
+        <%= f.text_field :email %><br>
         </p>
 
         <p><%= f.label :password %><br>

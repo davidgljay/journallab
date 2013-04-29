@@ -202,6 +202,15 @@ textarea, input [type = 'text'] {
     color: #000;
 }
 
+#howtoCarousel .carousel-caption {
+    background: #000;
+}
+
+#howtoCarousel .carousel-caption h4 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
 #discussionCarousel .paperTitle {
     margin-bottom: 10px;
     font-size: 20px;

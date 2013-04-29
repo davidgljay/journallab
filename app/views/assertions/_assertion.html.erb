@@ -100,7 +100,7 @@
 </table>
 <% if about.class == Fig %>
     <% unless about.nosections %>
-        <% if about.figsections.empty?  %>
+        <% if about.figsections.empty? && signed_in?  %>
             <%= render '/papers/add_sections', :about => about %>
         <% else %>
             <div class = "figtoggle clickme">

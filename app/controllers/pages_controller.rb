@@ -44,7 +44,8 @@ class PagesController < ApplicationController
 
     else
       @newuser = User.new
-      @recent_discussions = Analysis.find_by_description('recent_discussions').cache
+      a = Analysis.find_by_description('recent_discussions')
+      @recent_discussions = a.nil? ? Analysis.new.recent_discussions : a.cache
     end
   end
 

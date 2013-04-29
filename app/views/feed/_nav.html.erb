@@ -30,13 +30,14 @@
           </div>
         </li>
     <% end %>
-    <% if @welcome_screen %>
+
+    <% if signed_in? %><li><div class = "feed_nav_item feedPlus clickme" >Add/Remove</div></li><% end %>
+    <% if @feedhash.count < 2 %>
         <li>
           <div style="display:inline-block" class="grey">
-            <icon class='icon-arrow-left'></icon><b>Follow Dozens of Search Terms at Once</b>
+            <icon class='icon-arrow-left'></icon><b>Get started by adding terms that you regularly search on PubMed.</b>
           </div>
         </li>
     <% end %>
-    <% if signed_in? %><li><div class = "feed_nav_item feedPlus clickme" >Add/Remove</div></li><% end %>
   </ul>
 </div>

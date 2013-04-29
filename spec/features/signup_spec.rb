@@ -2,8 +2,13 @@ require 'spec_helper'
 
 describe "Signup" do
 
-  it "should create a new user account" do
+  before (:each) do
     Analysis.new.recent_discussions
+  end
+
+
+  it "should create a new user account" do
+
     visit root_path
     click_link 'Sign Up'
     fill_in 'user_firstname', :with => "Andrea"

@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe "Visiting the homepage" do
 
+  before(:each) do
+    Analysis.new.recent_discussions
+  end
+
   describe "when not logged in" do
 
 	it "should render the homepage" do

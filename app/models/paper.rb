@@ -331,7 +331,9 @@ end
       #if doc.css('a.status_icon').text == "Free PMC Article"
       #	pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
       #end
-      self.delay.grab_figs(imagearray)
+      if !imagearray.empty? && !self.figs.empty?
+        self.delay.grab_figs(imagearray) if self.figs.first.image.nil?
+      end
     end
   end
 

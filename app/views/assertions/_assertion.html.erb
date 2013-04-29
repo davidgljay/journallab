@@ -102,7 +102,7 @@
     <% unless about.nosections %>
         <% if about.figsections.empty? && signed_in?  %>
             <%= render '/papers/add_sections', :about => about %>
-        <% else %>
+        <% elsif !about.figsections.empty? %>
             <div class = "figtoggle clickme">
               <img src="/assets/arrow_open_sm.png" alt="open" width="10" height="10"  class = 'hideonload'>
               <img src="/assets/arrow_closed_sm.png" alt="closed" width="10" height="10">

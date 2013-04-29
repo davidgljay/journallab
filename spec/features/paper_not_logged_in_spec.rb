@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Paper not logged in:" do
 
    before(:each) do
+     Analysis.new.recent_discussions
      @user = create(:user)
      @paper = create(:paper)
      @paper.save

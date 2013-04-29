@@ -4,52 +4,53 @@ DatabaseCleaner.strategy = :deletion
 describe "Users" do
   describe "GET /users/1" do
     before(:each) do
-     @user = create(:user)
-     @user.save
-     @paper = create(:paper)
-     @paper.pubdate = Time.now - 5.years
-     @paper.save
-     @paper.buildout([3,3,2,1])
-     @group = create(:group)
-     @group.add(@user)
-     a = @paper.assertions.build(:text => "Test", :method_text => "Test test")
-     a.is_public = true
-     a.user = @user
-     a.save
-     @paper.figs.each do |f|
-       a = f.assertions.build(:text => "Test", :method_text => "Test test")
-       a.is_public = true
-       a.user = @user
-       a.save
-       f.figsections.each do |s|
+      Analysis.new.recent_discussions
+      @user = create(:user)
+      @user.save
+      @paper = create(:paper)
+      @paper.pubdate = Time.now - 5.years
+      @paper.save
+      @paper.buildout([3,3,2,1])
+      @group = create(:group)
+      @group.add(@user)
+      a = @paper.assertions.build(:text => "Test", :method_text => "Test test")
+      a.is_public = true
+      a.user = @user
+      a.save
+      @paper.figs.each do |f|
+        a = f.assertions.build(:text => "Test", :method_text => "Test test")
+        a.is_public = true
+        a.user = @user
+        a.save
+        f.figsections.each do |s|
           a = s.assertions.build(:text => "Test", :method_text => "Test test")
           a.is_public = true
           a.user = @user2
           a.save
-       end
-     end    
-     @comment = @paper.comments.build(:text => "comment")
-     @comment.user = @user
-     @comment.save
-     @question = @paper.questions.build(:text => "comment")
-     @question.user = @user
-     @question.save
-     v = @user.visits.build(:paper => @paper, :count => 1)
-     v.save
-       visit '/users/sign_in'
+        end
+      end
+      @comment = @paper.comments.build(:text => "comment")
+      @comment.user = @user
+      @comment.save
+      @question = @paper.questions.build(:text => "comment")
+      @question.user = @user
+      @question.save
+      v = @user.visits.build(:paper => @paper, :count => 1)
+      v.save
+      visit '/users/sign_in'
       fill_in "user_email", :with => @user.email
       fill_in "user_password", :with => @user.password
       click_button "Sign in"
-     visit '/users/' + @user.id.to_s
-     end
+      visit '/users/' + @user.id.to_s
+    end
 
-     it "should render the user profile", :js => true do
-        page.should have_content(@user.name)
-        find('#position').click
-        fill_in "user[position]", :with => "stuff and things"
-        find('#user_position').native.send_key(:enter)
-	page.should have_content("stuff and things")
-     end
+    it "should render the user profile", :js => true do
+      page.should have_content(@user.name)
+      find('#position').click
+      fill_in "user[position]", :with => "stuff and things"
+      find('#user_position').native.send_key(:enter)
+      page.should have_content("stuff and things")
+    end
   end
 
   describe "signup" do
@@ -69,7 +70,7 @@ describe "Users" do
 
         end
       end
-     end
+    end
     describe "success" do
 
       it "should make a new user" do
@@ -84,6 +85,6 @@ describe "Users" do
           within('div.flash.success') { page.should have_content('Welcome') }
         end
       end
-     end
     end
+  end
 end

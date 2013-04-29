@@ -3,6 +3,10 @@ require 'spec_helper'
 describe PagesController do
   render_views
 
+  before (:each) do
+    Analysis.new.recent_discussions
+  end
+
   describe "GET 'home'" do
      describe "when not signed in" do
     

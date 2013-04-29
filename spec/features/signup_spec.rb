@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Signup" do
 
   it "should create a new user account" do
+    Analysis.new.recent_discussions
     visit root_path
     click_link 'Sign Up'
     fill_in 'user_firstname', :with => "Andrea"

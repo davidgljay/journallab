@@ -3,6 +3,7 @@ DatabaseCleaner.strategy = :deletion
 
 describe "Assertions" do
    before(:each) do
+     Analysis.new.recent_discussions
 	@user = create(:user)
 	@paper = create(:paper)
 	@group = create(:group)

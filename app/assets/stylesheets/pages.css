@@ -135,6 +135,8 @@ textarea, input [type = 'text'] {
 #homepage #headlineDetail {
    font-size: 12px;
    margin-bottom: 20px;
+   margin-top:10px;
+   color: grey;
 }
 
 #homepage #homeMenu .nav {

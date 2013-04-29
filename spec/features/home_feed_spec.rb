@@ -4,6 +4,7 @@ DatabaseCleaner.strategy = :deletion
 describe "Home feeds" do
 
   before(:each) do
+    Analysis.new.recent_discussions
      @user = create(:user)
 	   @follow1 = @user.follows.create(:name => 'lions', :search_term => 'lions')
 	   @follow2 = @user.follows.create(:name => 'tigers', :search_term => 'tigers')

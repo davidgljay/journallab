@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe "LayoutLinks" do
 
+  before (:each) do
+    Analysis.new.recent_discussions
+  end
+
   it "should have a Home page at '/'" do
     visit '/'
     have_xpath("//title", :text => "Home")

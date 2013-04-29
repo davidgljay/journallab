@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "FriendlyForwardings" do
 
   it "should forward to the requested page after signin" do
+    Analysis.new.recent_discussions
     user = create(:user)
     visit '/users/' + user.id.to_s + '/subscriptions'
     # The test automatically follows the redirect to the signin page.

@@ -5,6 +5,7 @@ describe "Searches:" do
 
 #Sign in first
   before(:each) do
+    Analysis.new.recent_discussions
      @user = create(:user)
       visit '/users/sign_in'
       fill_in "user_email", :with => @user.email
@@ -18,7 +19,7 @@ describe "Searches:" do
     it "loads the page for that paper" do
       visit root_path
       fill_in "search", :with => "21228906"
-      click_button 'GO'
+      click_button 'Search'
       within('body') { page.should have_selector('.icon-download') }
     end
   end
@@ -27,7 +28,7 @@ describe "Searches:" do
     it "loads search results" do
      visit root_path
      fill_in "search", :with => "zombies"
-     click_button 'GO'
+     click_button 'Search'
      within('body') { page.should have_content('Search Results') }
      page.should have_content('zombies')
    end

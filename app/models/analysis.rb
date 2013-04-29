@@ -58,7 +58,7 @@ class Analysis < ActiveRecord::Base
   end
 
   def recent_discussions
-    papers = Comment.all.map {|c| c.get_paper}.uniq.sort{|x,y| y.latest_activity <=> x.latest_activity}.first(10)
+    papers = Comment.all.map {|c| c.get_paper}.uniq.select{|p| p.meta_reactions.count > 2}.sort{|x,y| y.latest_activity <=> x.latest_activity}.first(10)
     recent_discussions = []
     papers.each do |paper|
       reactions = []
@@ -66,6 +66,7 @@ class Analysis < ActiveRecord::Base
         reactions << {:name => r.name, :number => paper.meta_reactions.select{|r2| r2.name == r.name}.count}
        end
       reactions.uniq!
+      reactions.sort!{|x,y| y[:number]<=>x[:number]}
       if !paper.figs.empty?
         hottest_fig = paper.figs.map{|f| [f,f.heat]}.sort{|x,y| y[1]<=>x[1]}.first[0]
         if !hottest_fig.hottest_comment.nil?
@@ -81,7 +82,7 @@ class Analysis < ActiveRecord::Base
         hottest_fig_comment = nil
         hottest_fig_image = false
       end
-      recent_discussions << {:paper_id => paper.id, :title => paper.title, :reactions => reactions, :hottest_fig => hottest_fig, :hottest_fig_image? => hottest_fig_image, :hottest_fig_comment => hottest_fig_comment}
+      recent_discussions << {:paper_id => paper.id, :title => paper.title, :reactions => reactions.first(3), :hottest_fig => hottest_fig, :hottest_fig_image? => hottest_fig_image, :hottest_fig_comment => hottest_fig_comment}
     end
     self.cache = recent_discussions
     self.description = 'recent_discussions'

@@ -144,6 +144,15 @@ class PagesController < ApplicationController
   end
 
 
+  #Experiments for A/B Testing
+
+  def var1
+    @newuser = User.new
+    @title = "Home"
+    render 'pages/experiments/var1'
+  end
+
+
 #Takes a 2D array
   def export_data(array, name = "data")
     CSV.open("public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|

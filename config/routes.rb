@@ -67,6 +67,7 @@ Redcell::Application.routes.draw do
 
 
   root :to => 'pages#home'
+  match '/var/1', :to => 'pages#var1'
   match '/about',    :to => 'pages#about'
   match '/dashboard',    :to => 'analysis#dashboard'
   match '/journals',  :to => 'analysis#journals'

@@ -1,0 +1,122 @@
+<div id="homepage" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html">
+  <div class = 'row'>
+    <div class = 'offset7 span2'>
+      <div class='span2'>
+      </div>
+    </div>
+  </div>
+  <div class = 'row'>
+    <div class='span9' id='headline'>
+      <br>
+      Journal Lab helps you find relevant research that you can trust.
+    </div>
+  </div>
+
+  <div class = 'row'>
+    <div class='span8' id ='headlineDetail'>
+      <br>
+  </div>
+  <div class = 'row'>
+    <div class='span6' id='homeMenu'>
+      <ul class="nav nav-tabs">
+        <li id="howto" class="active"><%= link_to 'How It Works', '/homeswitch?switchto=howto', :remote => true %></li>
+        <li id="discussion">
+          <%= link_to 'Recent Discussions', '/homeswitch?switchto=discussion', :remote => true %>
+        </li>
+        <li id="about"><%= link_to 'About', '/homeswitch?switchto=about', :remote => true %></li>
+
+      </ul>
+
+      <div class="box">
+
+
+        <%= render 'howto'%>
+
+      </div>
+      <!-- AddThis Button BEGIN -->
+      <div class="addthis_toolbox addthis_default_style ">
+        <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+        <a class="addthis_button_tweet"></a>
+        <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+      </div>
+      <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+      <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-517c1b1d3acebd2e"></script>
+      <!-- AddThis Button END --> </div>
+
+    <div class='span3 text-right grey' id='register'>
+      <h2>Sign Up Now</h2>
+      <%= form_for( @newuser, :url => registration_path(@newuser)) do |f| %>
+          <p>First Name<br>
+            <%= f.text_field :firstname %></p>
+
+          <p>Last name<br>
+            <%= f.text_field :lastname %></p>
+
+
+          <p><%= f.label :email %><br>
+
+            <%= f.text_field :email %><br>
+          </p>
+
+          <p><%= f.label :password %><br>
+            <%= f.password_field :password %></p>
+
+          <p><%= f.label :password_confirmation %></br>
+            <%= f.password_field :password_confirmation %></p>
+
+          <p><%= f.submit "Get Started", :class => 'btn btn-primary', :onClick => "_gaq.push(['_trackEvent', 'User', 'Registration']);" %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class = 'row' id='featureCallouts'>
+    <div class='span3'>
+      <div class="thumbnail">
+
+        <div class='feature'>
+          One-Up Your PI
+        </div>
+        <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/SKF_photo.JPG", :class => 'img-polaroid' %>
+        <p class='text-left'>“My most recent Journal Lab find led to a mad dash to my PI’s office, followed by 4 high fives. I love this tool.”
+        </p>
+        <p class = 'text-right'>
+          <strong>
+            ~Sky, PhD student
+          </strong>
+        </p>
+      </div>
+    </div>
+    <div class='span3'>
+      <div class="thumbnail">
+
+        <div class='feature'>
+          Boost your impact
+        </div>
+        <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/florie.jpg" , :class => 'img-polaroid' %>
+        <p class='text-left'>“Journal Lab has been a great platform for me to feature my videos because it provides a broad user base of scientists that  enjoy learning about unfamiliar fields. I've also found the great feedback and interesting questions that have arisen from Jlab users to be quite exciting!”<br>      <br></p>
+
+        <p class='text-right'>
+          <strong>
+            ~ Florie, founder, Youreka Science
+          </strong>
+        </p>
+      </div>
+    </div>
+    <div class='span3'>
+      <div class="thumbnail">
+        <div class='feature'>
+          Transform Journal Club
+        </div>
+        <%= image_tag "http://s3.amazonaws.com/j.lab-images/static/marie.jpg", :class => 'img-polaroid' %>
+        <p class='text-left'>“I use Journal Lab for organizing and archiving the conversations with my labmates about papers. It's great to pose our critiques and questions to the authors.”
+        </p>
+        <p class='text-right'>
+          <strong>
+            ~ Marie, PhD student
+          </strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

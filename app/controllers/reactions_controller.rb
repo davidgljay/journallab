@@ -2,23 +2,28 @@ class ReactionsController < ApplicationController
 before_filter :authenticate_user!
 
   def create
-	@reaction = Reaction.new(params[:reaction])
-	@reaction.user = current_user
-	@owner = params[:about_type].constantize.find(params[:about_id])
-	@reaction.about = @owner
-	if @reaction.save
-		@newreaction = true
-		@paper = @reaction.get_paper
-		@paper.add_heat(@owner)
-		@paper.save
-		@reaction_map = @paper.reaction_map
-		@heatmap = @paper.heatmap
-	else
-		@newreaction = false
-	end
-        respond_to do |format|
-		format.js
-	end
+    if params[:reaction][:name].length > 50
+     @error = true
+    else
+      @reaction = Reaction.new(params[:reaction])
+      @reaction.user = current_user
+      @owner = params[:about_type].constantize.find(params[:about_id])
+      @reaction.about = @owner
+      if @reaction.save
+        @newreaction = true
+        @paper = @reaction.get_paper
+        @paper.add_heat(@owner)
+        @paper.save
+        @reaction_map = @paper.reaction_map
+        @heatmap = @paper.heatmap
+      else
+        @newreaction = false
+      end
+    end
+      respond_to do |format|
+        format.js
+      end
+
   end
 
 def quickform

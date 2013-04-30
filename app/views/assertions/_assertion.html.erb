@@ -67,7 +67,11 @@
           <h3><%= link_to "Sign up", new_user_registration_path %> to leave a summary.</h3>
       <% end %>
     </div>
-    <%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at, :anonymous => about.latest_assertion.anonymous if about.latest_assertion %>
+    <% if about.latest_assertion %>
+        <%= render '/shared/user_info', :user => about.latest_assertion.user, :date => about.latest_assertion.updated_at, :anonymous => about.latest_assertion.anonymous if about.latest_assertion %>
+    <% else %>
+        <div class='user_info'></div>
+    <% end %>
     <%= form_tag(:improve_list, :method => "get", :class => "improvelist") do  %>
         <%= hidden_field_tag :owner, about.class.to_s %>
         <%= hidden_field_tag :id, about.id %>
@@ -114,7 +118,7 @@
                     <table style = 'border-spacing: 0px;'><tr><td></td><tr><td class = 'summaryGap heat<%= @heatmap['figsection' + section.id.to_s][1] %>'></td></tr><tr><td></td></tr></table>
                   </td><td>
                     <div class = 'summaryBox heatBox<%= @heatmap['figsection' + section.id.to_s][1] %>' id = 'figsection<%= section.id.to_s %>'>
-                      <table width="95%" border="0" cellspacing="0" cellpadding="5">
+                      <table border="0" cellspacing="0" cellpadding="5">
                         <tbody><tr><td>
                           <%= render '/assertions/assertion', :about => section %>
                         </td></tr></tbody>

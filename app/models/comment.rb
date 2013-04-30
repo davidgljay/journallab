@@ -101,7 +101,7 @@ class Comment < ActiveRecord::Base
       end
     end
     if !p.groups.empty?
-      p.groups each do |g|
+      p.groups.each do |g|
         g.memberships.each {|m| m.save; u.set_feedhash}
       end
     end

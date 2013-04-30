@@ -11,7 +11,7 @@
       <div class = 'subMenu'>
         <ul>
 	<% if comment.text.length > 500 || addtl_comments(owner,comment) > 0 %>
-         <li class="readmore clickme btn-tiny round">
+         <li class="readmore clickme btn">
 
              <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
                	<%= hidden_field_tag :owner, owner.class.to_s %>
@@ -28,7 +28,7 @@
          <li class="replylink clickme btn">
 	Reply
          </li>
-         <li id = "numvotes_<%= comment.id.to_s %>" class = "round btn-nod"><%= render 'votes/vote_form', :candidate => comment %></li>
+         <li id = "numvotes_<%= comment.id.to_s %>" class="nod"><%= render 'votes/vote_form', :candidate => comment %></li>
         </ul>
       </div>
       <div> 	      

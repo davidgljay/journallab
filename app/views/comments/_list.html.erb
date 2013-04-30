@@ -13,10 +13,10 @@
         <ul>
 	<% if user_signed_in? %>
 	<% if current_user.certified %>
-         <li class="replylink clickme">
+         <li class="replylink clickme btn">
 	Reply
          </li>
-         <li id = "numvotes_<%= comment.id.to_s %>"><%= render 'votes/vote_form', :candidate => comment %></li>
+         <li id = "numvotes_<%= comment.id.to_s %>" class="nod"><%= render 'votes/vote_form', :candidate => comment %></li>
         </ul>
       </div>
       <div> 	      

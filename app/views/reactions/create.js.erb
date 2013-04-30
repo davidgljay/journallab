@@ -1,3 +1,9 @@
+<% if @error %>
+]
+     $(header).insertAfter("
+             <div class='flash error'>Please keep reactions under 100 characaters. You will have ample opportunity to expound later.</div>
+             ");
+<% else %>
 <% if @newreaction %>
 	$('<%= @owner.jquery_target %>').find('div.reaction_list').first().html('<%= escape_javascript(
 		render '/reactions/reaction_list', :about => @owner
@@ -11,3 +17,4 @@ $('<%= @owner.jquery_target %>').find('div.comment_form').first().html('<%= esca
 	render 'comments/form', :owner => @owner, :comment => @owner.comments.build,  :reply_to => false, :format => 'comment'
 )%>');
 $('<%= @owner.jquery_target %>').find('div.comment_form').first().show(300);
+<% end %>

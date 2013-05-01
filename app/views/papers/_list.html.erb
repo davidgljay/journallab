@@ -25,8 +25,10 @@
 
       <% end %>
     </div>
-    <%  if (paper[:pubdate] > @latest_visit.to_date) %>
-        <div class = 'newPaper'></div>
+    <% if @latest_visit%>
+        <%  if paper[:pubdate] > @latest_visit %>
+            <div class = 'newPaper'></div>
+        <% end %>
     <% end %>
     <div class = "inline">
       <%= link_to paper[:title], '/pmid/' + paper[:pubmed_id].to_s %>

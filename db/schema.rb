@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130419011935) do
+ActiveRecord::Schema.define(:version => 20130501164604) do
 
   create_table "analyses", :force => true do |t|
     t.text     "cache"
@@ -271,6 +271,8 @@ ActiveRecord::Schema.define(:version => 20130419011935) do
     t.text     "authors"
     t.integer  "interest"
   end
+
+  add_index "papers", ["pubmed_id"], :name => "index_papers_on_pubmed_id"
 
   create_table "questions", :force => true do |t|
     t.text     "text"

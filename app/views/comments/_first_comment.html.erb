@@ -2,44 +2,48 @@
   <tr >
     <td class = " <% if comment.author %> author_comment <% end %> comment_body">
       <div class = "comment_body <%= 'author_comment_body' if comment.author %>">
-      <% if comment.owner != owner %>
-	<h5>Regarding <%= comment.owner.shortname%>:</h5>
-      <% end %> 
-      <%= render 'comments/linktext', :linktext => comment.linktext(comment.short_text) %>
-      <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous, :checkanon => true %>
-      <%= render 'reactions/comment_reactions', :comment => comment %>
-      <div class = 'subMenu'>
-        <ul>
-	<% if comment.text.length > 500 || addtl_comments(owner,comment) > 0 %>
-         <li class="readmore clickme btn">
+        <% if comment.owner != owner %>
+            <h5>Regarding <%= comment.owner.shortname%>:</h5>
+        <% end %>
+        <%= render 'comments/linktext', :linktext => comment.linktext(comment.short_text) %>
+        <%= render 'shared/user_info', :user => comment.user, :date => comment.created_at, :anonymous => comment.anonymous, :checkanon => true %>
+        <%= render 'reactions/comment_reactions', :comment => comment %>
+        <div class = 'subMenu'>
+          <ul>
+            <% if comment.text.length > 500 || addtl_comments(owner,comment) > 0 %>
+                <li class="readmore clickme btn">
 
-             <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
-               	<%= hidden_field_tag :owner, owner.class.to_s %>
-               	<%= hidden_field_tag :id, owner.id %>
-               	<%= hidden_field_tag :mode, @mode %>
-		<%= submit_tag "See "+ pluralize(addtl_comments(owner,comment), "More Comment"), :class => 'plainSubmit'%>
+                  <%= form_tag :comment_list, :method => "get", :class => "commentlist", :remote => true do  %>
+                      <%= hidden_field_tag :owner, owner.class.to_s %>
+                      <%= hidden_field_tag :id, owner.id %>
+                      <%= hidden_field_tag :mode, @mode %>
+                      <% if addtl_comments(owner,comment) > 0 %>
+                          <%= submit_tag "See "+ pluralize(addtl_comments(owner,comment), "More Comment"), :class => 'plainSubmit'%>
+                      <% else %>
+                          <%= submit_tag "See More", :class => 'plainSubmit'%>
 
-             <% end %>
+                      <% end %>
+                   <% end %>
 
-         </li>
-	<% end %>
-	<% if user_signed_in? %>
-	<% if current_user.certified %>
-         <li class="replylink clickme btn">
-	Reply
-         </li>
-         <li id = "numvotes_<%= comment.id.to_s %>" class="nod"><%= render 'votes/vote_form', :candidate => comment %></li>
-        </ul>
-      </div>
-      <div> 	      
-        <div class = "replyform hideonload">
-			<%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply', :owner => comment.owner %>
-        </div>
-		<% end %>
-		<% end %>
+                      </li>
+                  <% end %>
+                  <% if user_signed_in? %>
+                      <% if current_user.certified %>
+                          <li class="replylink clickme btn">
+                            Reply
+                          </li>
+                          <li id = "numvotes_<%= comment.id.to_s %>" class="nod"><%= render 'votes/vote_form', :candidate => comment %></li>
+                          </ul>
+                          </div>
+                          <div>
+                            <div class = "replyform hideonload">
+                              <%= render '/comments/form', :comment => comment.comments.build, :reply_to => comment, :format => 'reply', :owner => comment.owner %>
+                            </div>
+                      <% end %>
+                  <% end %>
 
-      </div>
-      </div>
-    </td>
-  </tr>
-</table>
+                  </div>
+                  </div>
+                  </td>
+                  </tr>
+                  </table>

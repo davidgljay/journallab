@@ -101,6 +101,7 @@ class PapersController < ApplicationController
 #Look up a paper by it's pubmed ID. If it doesn't exist create a new one and get its info from pubmed.
   def lookup
     search = params[:search].strip
+    @title = search
     if signed_in?
       @groups = current_user.groups
     end

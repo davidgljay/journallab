@@ -1,6 +1,6 @@
 class AssertionsController < ApplicationController
-before_filter :authenticate_user!
-before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
+  before_filter :authenticate_user!
+  before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
 
   def list
     @owner = params[:owner].constantize.find(params[:id])
@@ -10,8 +10,8 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @paper = @owner.get_paper
     @group = current_user.get_group
     respond_to do |format|
-        format.js 
-     end
+      format.js
+    end
   end
 
   # POST /assertions/new
@@ -24,8 +24,8 @@ before_filter :authorized_user_or_admin,   :only => [:destroy, :edit, :update]
     @group = current_user.get_group
     respond_to do |format|
       format.js
-   end
-end
+    end
+  end
 
   # GET /assertions/improve/1
   # A method to improve assertions
@@ -33,39 +33,39 @@ end
     @title = "Improve Assertion"
     @oldassertion = Assertion.find(params[:id])
     if @oldassertion.about == 'paper'
-       @paper = @oldassertion.paper
-       @about = "paper"
-       @history = @paper.assertions.all
-       @assertion = @paper.assertions.build
+      @paper = @oldassertion.paper
+      @about = "paper"
+      @history = @paper.assertions.all
+      @assertion = @paper.assertions.build
     elsif @oldassertion.about == 'fig'
-       @fig = @oldassertion.fig
-       @about = "figure"
-       @history = @fig.assertions.all
-       @assertion = @fig.assertions.build
+      @fig = @oldassertion.fig
+      @about = "figure"
+      @history = @fig.assertions.all
+      @assertion = @fig.assertions.build
     elsif @oldassertion.about == 'figsection'
-       @figsection = @oldassertion.figsection
-       @history = @figsection.assertions.all
-       @about = "section"
-       @assertion = @figsection.assertions.build
+      @figsection = @oldassertion.figsection
+      @history = @figsection.assertions.all
+      @about = "section"
+      @assertion = @figsection.assertions.build
     end
-      @history = @history.sort_by{|a| a.votes.count}.reverse
+    @history = @history.sort_by{|a| a.votes.count}.reverse
   end
 
   # GET /assertions/1/edit
   def edit
     @assertion = Assertion.find(params[:id])
     if @assertion.about == 'paper'
-       @paper = @assertion.paper
-       @about = "paper"
-       @history = @paper.assertions.all
+      @paper = @assertion.paper
+      @about = "paper"
+      @history = @paper.assertions.all
     elsif @assertion.about == 'fig'
-       @fig = @assertion.fig
-       @about = "figure"
-       @history = @fig.assertions.all
+      @fig = @assertion.fig
+      @about = "figure"
+      @history = @fig.assertions.all
     elsif @assertion.about == 'figsection'
-       @figsection = @assertion.figsection
-       @history = @figsection.assertions.all
-       @about = "section"
+      @figsection = @assertion.figsection
+      @history = @figsection.assertions.all
+      @about = "section"
     end
   end
 
@@ -73,51 +73,56 @@ end
   # POST /assertions.xml
   def create
     @assertion = Assertion.new(params[:assertion])
-    @assertion.user_id = current_user.id
-    if @assertion.about == "paper"
+      @assertion.user_id = current_user.id
+      if @assertion.about == "paper"
         @assertion.paper = Paper.find(params[:owner_id])
         @paper = @assertion.paper
-    elsif @assertion.about == "fig"
+      elsif @assertion.about == "fig"
         @assertion.fig = Fig.find(params[:owner_id])
         @paper = @assertion.fig.paper
-    elsif @assertion.about == "figsection"
+      elsif @assertion.about == "figsection"
         @assertion.figsection = Figsection.find(params[:owner_id])
         @paper = @assertion.figsection.fig.paper
-    end
-    @mode = params[:assertion][:mode].to_i
-    @assertion.get_paper_id = @paper.id
-  #Check to make sure that something was entered.
-    @assertion.text = @assertion.text.nil? || @assertion.text.include?('What is the core conclusion') || @assertion.text.include?('Please provide a brief summary of this paper readable') ? nil : @assertion.text
-    @assertion.method_text = @assertion.method_text.nil? || @assertion.method_text.include?('Separate methods with commas') ? nil : @assertion.method_text
-    @assertion.is_public = true
-    @assertion.save
-    current_user.get_group.feed_add(@assertion)
+      end
+    if !(@assertion.text.nil? || @assertion.text.include?('What are the authors trying to show in Fig') || @assertion.text.include?('Please provide a brief summary of this paper readable'))
+      @error = false
+      @mode = params[:assertion][:mode].to_i
+      @assertion.get_paper_id = @paper.id
+      #Check to make sure that something was entered.
+      @assertion.text = @assertion.text
+      @assertion.method_text = @assertion.method_text.nil? || @assertion.method_text.include?('Separate methods with commas') ? nil : @assertion.method_text
+      @assertion.is_public = true
+      @assertion.save
+      current_user.get_group.feed_add(@assertion)
 
-  # Add a privacy setting if the user is part of a class that's reading this paper.
-  #  if @group = current_user.groups.last
-  #    if @group.category == "class" && :save
-  #       @group.make_group(@assertion)
-  #       @assertion.is_public = false
-  #    end
-  #  end
+      # Add a privacy setting if the user is part of a class that's reading this paper.
+      #  if @group = current_user.groups.last
+      #    if @group.category == "class" && :save
+      #       @group.make_group(@assertion)
+      #       @assertion.is_public = false
+      #    end
+      #  end
 
-    @owner = @assertion.owner
-    @paper = @owner.get_paper
-    @paper.add_heat(@owner)
-    @heatmap = @paper.heatmap
-    if user_signed_in? && !current_user.groups.empty? 
-      @group = current_user.groups.last
+      @owner = @assertion.owner
+      @paper = @owner.get_paper
+      @paper.add_heat(@owner)
+      @heatmap = @paper.heatmap
+      if user_signed_in? && !current_user.groups.empty?
+        @group = current_user.groups.last
+      else
+        @group = Group.new
+      end
+      @numfig_select = Array.new
+      30.times do |i|
+        @numfig_select << [(i+1).to_s, i+1 ]
+      end
     else
-      @group = Group.new
-    end
-    @numfig_select = Array.new
-    30.times do |i| 
-      @numfig_select << [(i+1).to_s, i+1 ]
+      @error = true
     end
 
     respond_to do |format|
-       format.js
-       format.html { redirect_to(@paper) }
+      format.js
+      format.html { redirect_to(@paper) }
 #      format.xml  { render :xml => @assertion, :status => :created, :location => @assertion }
     end
   end
@@ -132,7 +137,7 @@ end
     @group = current_user.get_group
     respond_to do |format|
       if @assertion.update_attributes(params[:assertion])
-	format.js { render :create }
+        format.js { render :create }
         format.html { redirect_to(@paper)  }
       end
     end
@@ -152,12 +157,12 @@ end
 
   private
 
-    def admin_user
-      redirect_to(root_path) unless current_user.admin?
-    end
+  def admin_user
+    redirect_to(root_path) unless current_user.admin?
+  end
 
   def authorized_user_or_admin
-      @assertion = Assertion.find(params[:id])
-      redirect_to root_path unless current_user == @assertion.user || current_user.admin?
+    @assertion = Assertion.find(params[:id])
+    redirect_to root_path unless current_user == @assertion.user || current_user.admin?
   end
 end

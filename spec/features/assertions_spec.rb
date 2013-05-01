@@ -40,7 +40,7 @@ end
     it "fails if nothing is entered", :js => true do
 	first('#paper' + @paper.id.to_s).first('.latest_assertion').click
 	first('#paper' + @paper.id.to_s).first(:button, "Submit").click
-	within('#paper' + @paper.id.to_s + '.summary') { page.should have_content('Click to enter summary') }
+	within('#paper' + @paper.id.to_s + '.summary') { page.should have_content('Post anonymously') }
     end
 
   end

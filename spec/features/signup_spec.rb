@@ -16,7 +16,7 @@ describe "Signup" do
     fill_in 'user_email', :with => "AndreaTorres@gmail.com"
     fill_in 'user_password', :with => "dogsarethebest"
     fill_in 'user_password_confirmation', :with => "dogsarethebest"
-    click_button 'Sign up'
+    click_button 'Get Started'
     page.should have_content('Sign Out')
     assert !ActionMailer::Base.deliveries.empty?
     email = ActionMailer::Base.deliveries.last
@@ -32,7 +32,7 @@ describe "Signup" do
     fill_in 'user_lastname', :with => "Torres"
     fill_in 'user_password', :with => "dogsarethebest"
     fill_in 'user_password_confirmation', :with => "dogsarethebest"
-    click_button 'Sign up'
+    click_button 'Get Started'
     page.should have_content("Email is invalid")
   end
 

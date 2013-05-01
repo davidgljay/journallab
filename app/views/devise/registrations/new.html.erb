@@ -20,7 +20,7 @@
   <h3><%= f.label :password_confirmation %></h3>
   <p><%= f.password_field :password_confirmation %></p>
 
-  <p><%= f.submit "Sign up" %></p>
+  <p><%= f.submit "Get Started", :class => 'btn btn-primary', :onClick => "_gaq.push(['_trackEvent', 'User', 'Register']);" %></p>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>

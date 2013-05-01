@@ -14,6 +14,5 @@ class Commentnotice < ActiveRecord::Base
   def before_save
     self.paper = comment.get_paper
     self.comment_date = comment.created_at
-    self.follow.update_feed
   end
 end

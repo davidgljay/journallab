@@ -144,7 +144,7 @@ td#profileImage {
 .new_comment_flag {
     display: inline-block;
     font-size: 9px;
-    padding: 2px;
+    padding: 0 2px 0 2px;
     position: relative;
     bottom: 7px;
 }
@@ -320,8 +320,7 @@ input[type = 'text'].new_folder_text {
 
 #listMenu {
     float: right;
-    font-size: 9px;
-    line-height: 12px;
+    font-size: 10px;
     text-align: right;
 }
 

@@ -61,4 +61,17 @@ FactoryGirl.define do
     initial "RJ"
   end
 
+  factory :follow do
+    association :user
+    name "RNA"
+    search_term "RNA"
+    follow_type "follow"
+  end
+
+  factory :reaction do |reaction|
+    name "Solid Science"
+    association :about, factory: :paper
+    association :user
+  end
+
 end

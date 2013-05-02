@@ -164,4 +164,65 @@ describe User do
     end
   end
 
+  describe "orientation" do
+
+    it "should take a user through the orientation process" do
+    @user = create(:user)
+    @user.check_orientation
+    @user.reload
+    @user.orientationhash[:complete].should == 5
+    @user.orientationhash[:step].should == 0
+
+    # Step 1: Create 5 feeds
+    2.times do
+      create(:follow, :user => @user)
+    end
+    @user.check_orientation
+    @user.reload
+    @user.orientationhash[:complete].should == 15
+    @user.orientationhash[:step].should == 0
+    @user.orientationhash[:substep].should == 2
+    3.times do
+      create(:follow, :user => @user)
+    end
+    @user.check_orientation
+    @user.reload
+    @user.orientationhash[:step].should == 1
+
+    #Step 2: Join a Journal Club
+    @group = create(:group)
+    @group.add(@user)
+    @user.check_orientation
+    @user.reload
+    @user.orientationhash[:complete].should == 35
+    @user.orientationhash[:step].should == 2
+
+    #Step 3: Complete your profile
+    @user.image_url = "http://s3.amazonaws.com/j.lab-images/static/florie.jpg"
+    @user.institution = "University of Rocks"
+    @user.position = "Stampisaur"
+    @user.save
+    @user.check_orientation
+    @user.reload
+    @user.orientationhash[:complete].should == 55
+    @user.orientationhash[:step].should == 3
+
+    #Step 4: Enter a comment
+    @paper = create(:paper)
+    @reaction = create(:reaction, :about => @paper, :user => @user)
+    @user.check_orientation
+    @user.reload
+    @user.orientationhash[:complete].should == 75
+    @user.orientationhash[:step].should == 4
+
+    #Step 5: Enter a Summary
+    @summary = create(:assertion, :user => @user)
+    @user.check_orientation
+    @user.reload
+    @user.orientationhash[:complete].should == 100
+    @user.orientationhash[:step].should == 5
+    end
+
+  end
+
 end

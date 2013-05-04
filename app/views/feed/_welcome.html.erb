@@ -1,0 +1,25 @@
+<div id="welcome_feed" class="homePageFeed">
+  <div class="row">
+    <div class="span1" id="userImage">
+      <%= image_tag @user.image.thumb('80x80>').url, :alt => @user.name, :width => "80", :height => "80", :class => 'img-rounded' if @user.image %>
+    </div>
+    <div class="span3" id="userStats">
+      <strong><%= @user.name %></strong>
+      <div class="small grey">
+        <%=  pluralize(@user.reactions.count, "Comments") + ', ' + pluralize(@user.assertions.count, "Summaries") + ', ' + pluralize(@user.votes_for_me.count, "Nods") %>
+      </div>
+    </div>
+    <div class="span2 offset3 small grey text-right" id="progressBar">
+      Setup is <%= @complete %>% Complete
+      <div class="progress">
+        <div class="bar text-right" style="width: <%= @complete%>%;"></div>
+      </div>
+    </div>
+  </div>
+  <div id="welcomeText">
+    Welcome <%= @user.firstname %>!
+    </div>
+    <div class="thumbnail text-left" id="welcomeBox">
+      <%= render '/feed/orientation/step' + @step.to_s %>
+    </div>
+</div>

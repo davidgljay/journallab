@@ -40,9 +40,9 @@
 
   <% if user_signed_in? %>
       <% if @paper.meta_reactions.empty? && @paper.meta_comments.empty? %>
-          <h2>Be the first to discuss this paper. Leave a comment below.</h2>
+          <h2>Be the first to discuss this paper.</h2>
             <% if @paper_interest > 1 %>
-                <h3>If you do, it will appear in <%= @paper_interest %> people's feeds.</h3>
+                <h2>If you do, it will appear in <%= @paper_interest %> people's feeds.</h2>
             <% end %>
       <% end %>
           <% if @paper.figs.empty? %>

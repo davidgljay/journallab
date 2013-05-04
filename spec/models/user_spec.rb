@@ -177,22 +177,21 @@ describe User do
     2.times do
       create(:follow, :user => @user)
     end
-    @user.check_orientation
+    @user.check_orientation.should be_true
     @user.reload
     @user.orientationhash[:complete].should == 15
     @user.orientationhash[:step].should == 0
-    @user.orientationhash[:substep].should == 2
     3.times do
       create(:follow, :user => @user)
     end
-    @user.check_orientation
+    @user.check_orientation.should be_true
     @user.reload
     @user.orientationhash[:step].should == 1
 
     #Step 2: Join a Journal Club
     @group = create(:group)
     @group.add(@user)
-    @user.check_orientation
+    @user.check_orientation.should be_true
     @user.reload
     @user.orientationhash[:complete].should == 35
     @user.orientationhash[:step].should == 2
@@ -202,7 +201,7 @@ describe User do
     @user.institution = "University of Rocks"
     @user.position = "Stampisaur"
     @user.save
-    @user.check_orientation
+    @user.check_orientation.should be_true
     @user.reload
     @user.orientationhash[:complete].should == 55
     @user.orientationhash[:step].should == 3
@@ -221,6 +220,7 @@ describe User do
     @user.reload
     @user.orientationhash[:complete].should == 100
     @user.orientationhash[:step].should == 5
+    @user.check_orientation.should be_false
     end
 
   end

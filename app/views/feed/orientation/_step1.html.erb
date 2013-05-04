@@ -1,0 +1,36 @@
+<div class="step1">
+  <div class="row">
+    <div class="span6">
+      <h2>Now, let's find an interesting discussion...</h2>
+      <ul>
+      <li><strong>Online Journal Clubs</strong> are an easy way to stay up to date with your peers.</li>
+      <li>Discussions include a <strong>figure by figure summary</strong> of the paper being discussed.</li>
+      <li>You can <strong>jump into the discussion</strong> about a particular figure if it seems interesting.</li>
+      <li>We’ll notify you in <div class = "badge badge-important inline">red</div> when there’s new discussion in one of your journal clubs.</li>
+      <li>You can join and leave journal clubs by clicking
+      <div id="feedNav" class="feedPlus feed_nav_item clickme">
+        Add/Remove
+      </div></li>
+      </ul>
+      <strong>Try joining a journal club now:</strong> <em>(you can always leave later)</em>
+      <br>
+      <br>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span6">
+      <% if (Group.all.select{|g| g.public} - @groups).count > 0 %>
+          <% (Group.all.select{|g| g.public} - current_user.groups).each do |group| %>
+              <div class = "well group_select">
+                <h2><%= group.name %></h2>
+                <%=  group.desc %>
+                <div>
+                  <%= link_to 'Learn More',"/groups/#{group.urlname}" %> | <%=  link_to 'Join Journal Club', "/groups/#{group.urlname}/join" %>
+                </div>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
+  </div>

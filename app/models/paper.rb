@@ -161,14 +161,17 @@ class Paper < ActiveRecord::Base
   def self.set_all_interest(checkfeeds = false)
     follows = Follow.where('user_id IS NOT NULL')
     if checkfeeds
-      follows.each do |f|
-        f.feed.each do |p|
-          Paper.find_or_create_by_pubmed_id(p[:pubmed_id].to_i)
+      follows..find_in_batches(:batch_size => 100) do |batch|
+        batch.each do |f|
+          f.feed.each do |p|
+            Paper.find_or_create_by_pubmed_id(p[:pubmed_id].to_i)
+          end
         end
       end
     end
 
-    Paper.all.each do |p|
+    Paper.all.find_in_batches(:batch_size => 100) do |batch|
+      batch.each do |p|
       users = []
       follows.each do |f|
         if (p.title.to_s + ' ' + p.abstract.to_s).downcase.include?(f.search_term.to_s.downcase)
@@ -177,7 +180,9 @@ class Paper < ActiveRecord::Base
       end
       p.interest = users.uniq.count
       p.save
+      end
     end
+    GC.start
   end
 
   def search_activity(search_term)
@@ -211,11 +216,11 @@ class Paper < ActiveRecord::Base
   # Attempts to do so 10 times if it fails for some reason.
   def open_html(url)
     begin
-    Nokogiri::HTML(open(url).read.strip)
+      Nokogiri::HTML(open(url).read.strip)
     rescue Exception => ex
-    @error = "Error: Pubmed is not responding (#{ex})"
+      @error = "Error: Pubmed is not responding (#{ex})"
     end
-end
+  end
 
 
 # Accepts text input of URl
@@ -230,89 +235,89 @@ end
 
   end
 
-def check_blogs
-  url = 'http://www.google.com/search?hl=en&q=%22' + self.title.gsub(/[' ']/, "+").gsub(/['.']/, "+").gsub(/[^0-9A-Za-z]/, '+').delete('"').delete("'") + '%22&tbm=blg&tbs=li:1&output=rss'
-  blogposts = []
-  open_xml.xpath("//item").each do |i|
-    posttitle = i.xpath('title').text.gsub(/<\/?[^>]*>/, "")
-    url = i.xpath('link').text
-    description = i.xpath('description').text.gsub(/<\/?[^>]*>/, "")
-    if (posttitle + ' ' + description).include?(self.title.first(20))
-      blogposts << {:url => url, :title => posttitle, :description => description}
+  def check_blogs
+    url = 'http://www.google.com/search?hl=en&q=%22' + self.title.gsub(/[' ']/, "+").gsub(/['.']/, "+").gsub(/[^0-9A-Za-z]/, '+').delete('"').delete("'") + '%22&tbm=blg&tbs=li:1&output=rss'
+    blogposts = []
+    open_xml.xpath("//item").each do |i|
+      posttitle = i.xpath('title').text.gsub(/<\/?[^>]*>/, "")
+      url = i.xpath('link').text
+      description = i.xpath('description').text.gsub(/<\/?[^>]*>/, "")
+      if (posttitle + ' ' + description).include?(self.title.first(20))
+        blogposts << {:url => url, :title => posttitle, :description => description}
+      end
     end
+    blogposts
   end
-  blogposts
-end
 
 #Check to see if the paper is filled out. If not, set a delayed job to look it up
-def check_info
-  if title.nil?
-    delay.lookup_info
+  def check_info
+    if title.nil?
+      delay.lookup_info
+    end
   end
-end
 
-def lookup_info
-  if Rails.env.test?
-    self.abstract = "The uncanny valley-the unnerving nature of humanlike robots-is an intriguing idea."
-    self.journal = "Cognition"
-    self.pubdate = (Time.now - 1.month)
-    self.title = "Feeling robots and human zombies: Mind perception and the uncanny valley"
-    self.citation = "Gray, Kurt, and Wegner, Daniel M. \"Feeling robots and human zombies: Mind perception and the uncanny valley.\" 125.1 (2012): 125-30. Web."
-    #Check to see if the ID showed up on pubmed, if not return to the homepage.
-    self.authors = [{:firstname=>"Kurt", :lastname=>"Gray", :name=>"Gray, Kurt"}, {:firstname=>"Daniel M", :lastname=>"Wegner", :name=>"Wegner, Daniel M"}]
-    self.save
-  else
-    url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
-    data = open_xml(url)
-    if @error
-      @error
+  def lookup_info
+    if Rails.env.test?
+      self.abstract = "The uncanny valley-the unnerving nature of humanlike robots-is an intriguing idea."
+      self.journal = "Cognition"
+      self.pubdate = (Time.now - 1.month)
+      self.title = "Feeling robots and human zombies: Mind perception and the uncanny valley"
+      self.citation = "Gray, Kurt, and Wegner, Daniel M. \"Feeling robots and human zombies: Mind perception and the uncanny valley.\" 125.1 (2012): 125-30. Web."
+      #Check to see if the ID showed up on pubmed, if not return to the homepage.
+      self.authors = [{:firstname=>"Kurt", :lastname=>"Gray", :name=>"Gray, Kurt"}, {:firstname=>"Daniel M", :lastname=>"Wegner", :name=>"Wegner, Daniel M"}]
+      self.save
     else
-      if data.xpath("/").empty? || data.xpath('//PubmedArticle').nil? || data.xpath('//PubmedArticle').first.nil?
-        flash = { :error => "This Pubmed ID is not valid." }
+      url = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=' + self.pubmed_id.to_s + '&retmode=xml&rettype=abstract'
+      data = open_xml(url)
+      if @error
+        @error
       else
-        article = data.xpath('//PubmedArticle').first
-        self.title = article.xpath('MedlineCitation/Article/ArticleTitle').text
-        self.journal = article.xpath('MedlineCitation/Article/Journal/Title').text
-        day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
-        month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
-        year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
-        volume = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Volume').text
-        issue = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Issue').text
-        pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
-
-        if year != 0
-          month = month == 0 ? 1 : month
-          day = day == 0 ? 1 : day
-
-          self.pubdate = DateTime.new(year, month, day)
-          self.latest_activity = self.pubdate
+        if data.xpath("/").empty? || data.xpath('//PubmedArticle').nil? || data.xpath('//PubmedArticle').first.nil?
+          flash = { :error => "This Pubmed ID is not valid." }
         else
-          self.latest_activity = DateTime.now - 1.month
-        end
-        self.abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
+          article = data.xpath('//PubmedArticle').first
+          self.title = article.xpath('MedlineCitation/Article/ArticleTitle').text
+          self.journal = article.xpath('MedlineCitation/Article/Journal/Title').text
+          day = article.xpath('MedlineCitation/DateCreated/Day').text.to_i
+          month = article.xpath('MedlineCitation/DateCreated/Month').text.to_i
+          year = article.xpath('MedlineCitation/DateCreated/Year').text.to_i
+          volume = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Volume').text
+          issue = article.xpath('MedlineCitation/Article/Journal/JournalIssue/Issue').text
+          pagination = article.xpath('MedlineCitation/Article/Pagination/MedlinePgn').text
 
-        self.authors = []
-        authorlist = article.xpath('MedlineCitation/Article/AuthorList')
-        authorlist.xpath('Author').each do |a|
-          firstname = a.xpath('ForeName').text
-          lastname = a.xpath('LastName').text
-          initials = a.xpath('Initials').text
-          self.authors << {:firstname => firstname, :lastname => lastname, :name => lastname + ', ' + firstname }
-        end
-        if self.authors.count > 3
-          citation_authors = self.authors[0][:lastname] + ', ' + self.authors[1][:lastname] + ", et al."
-        else
-          n = self.authors.length
-          citation_authors = self.authors.empty? ? '' : (self.authors.map{|a| a[:name]}.first(n-1)).join(', ') + ', and ' + self.authors.last[:name] + '.'
-        end
+          if year != 0
+            month = month == 0 ? 1 : month
+            day = day == 0 ? 1 : day
 
-        self.citation = citation_authors + ' "' + self.title + '" ' + self.journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + self.pubdate.year.to_s + '): ' + pagination + '. Web.'
-        self.save
-        count_figs
+            self.pubdate = DateTime.new(year, month, day)
+            self.latest_activity = self.pubdate
+          else
+            self.latest_activity = DateTime.now - 1.month
+          end
+          self.abstract = article.xpath('MedlineCitation/Article/Abstract/AbstractText').text
+
+          self.authors = []
+          authorlist = article.xpath('MedlineCitation/Article/AuthorList')
+          authorlist.xpath('Author').each do |a|
+            firstname = a.xpath('ForeName').text
+            lastname = a.xpath('LastName').text
+            initials = a.xpath('Initials').text
+            self.authors << {:firstname => firstname, :lastname => lastname, :name => lastname + ', ' + firstname }
+          end
+          if self.authors.count > 3
+            citation_authors = self.authors[0][:lastname] + ', ' + self.authors[1][:lastname] + ", et al."
+          else
+            n = self.authors.length
+            citation_authors = self.authors.empty? ? '' : (self.authors.map{|a| a[:name]}.first(n-1)).join(', ') + ', and ' + self.authors.last[:name] + '.'
+          end
+
+          self.citation = citation_authors + ' "' + self.title + '" ' + self.journal + ' ' + volume + (issue ? '.' + issue : '') + ' (' + self.pubdate.year.to_s + '): ' + pagination + '. Web.'
+          self.save
+          count_figs
+        end
       end
     end
   end
-end
 
 
   def count_figs
@@ -337,332 +342,332 @@ end
     end
   end
 
-def grab_figs(imagearray)
-  if self.journal.downcase.include?('plos')
+  def grab_figs(imagearray)
+    if self.journal.downcase.include?('plos')
+      imagearray.count.times do |n|
+        self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
+        self.figs[n].save
+      end
+    end
+  end
+
+#Grab images
+  def grab_images
+    url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s
+    doc = open_html(url)
+    imagearray = []
+    doc.css('img').each do |img|
+      if img.attributes.has_key?("src-large")
+        imagearray << img.attributes["src-large"].to_s
+      end
+    end
+    self.build_figs(imagearray.count)
     imagearray.count.times do |n|
       self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
       self.figs[n].save
     end
   end
-end
-
-#Grab images
-def grab_images
-  url = 'http://www.ncbi.nlm.nih.gov/pubmed/' + self.pubmed_id.to_s
-  doc = open_html(url)
-  imagearray = []
-  doc.css('img').each do |img|
-    if img.attributes.has_key?("src-large")
-      imagearray << img.attributes["src-large"].to_s
-    end
-  end
-  self.build_figs(imagearray.count)
-  imagearray.count.times do |n|
-    self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
-    self.figs[n].save
-  end
-end
 
 #Checks mendeley for open access status
 # Accepts no inputs
-def check_mendeley
-  url = 'http://api.mendeley.com/oapi/documents/details/' + pubmed_id.to_s + '?type=pmid&consumer_key=86e4c2e0add7700c7235b2df97bb4b5a050557337'
-  uri = URI.parse(url)
-  req = Net::HTTP.new(uri.host, uri.port)
-  res = req.request_head(uri.path)
-  if res.code == "200" || res.code == "301"
-    oa = ActiveSupport::JSON.decode(res)
-  else
-    oa = false
+  def check_mendeley
+    url = 'http://api.mendeley.com/oapi/documents/details/' + pubmed_id.to_s + '?type=pmid&consumer_key=86e4c2e0add7700c7235b2df97bb4b5a050557337'
+    uri = URI.parse(url)
+    req = Net::HTTP.new(uri.host, uri.port)
+    res = req.request_head(uri.path)
+    if res.code == "200" || res.code == "301"
+      oa = ActiveSupport::JSON.decode(res)
+    else
+      oa = false
+    end
+    oa
   end
-  oa
-end
 
 # A hash matching months to their respective numbers.
-def monthhash
-  monthhash = {
-      'Jan' => 1,
-      'Feb' => 2,
-      'Mar' => 3,
-      'Apr' => 4,
-      'May' => 5,
-      'Jun' => 6,
-      'July' => 7,
-      'Aug' => 8,
-      'Sep' => 9,
-      'Oct' => 10,
-      'Nov' => 11,
-      'Dec' => 12
-  }
-end
+  def monthhash
+    monthhash = {
+        'Jan' => 1,
+        'Feb' => 2,
+        'Mar' => 3,
+        'Apr' => 4,
+        'May' => 5,
+        'Jun' => 6,
+        'July' => 7,
+        'Aug' => 8,
+        'Sep' => 9,
+        'Oct' => 10,
+        'Nov' => 11,
+        'Dec' => 12
+    }
+  end
 
 #Check to see when the last comment or summary was left on the paper. Used for ranking in search results.
 
-def set_latest_activity
-  activity = (self.meta_comments + self.meta_assertions).map{|p| p.created_at}.compact
-  self.pubdate ||= Time.now - 1.month
-  self.latest_activity = (activity << self.pubdate).max
-end
+  def set_latest_activity
+    activity = (self.meta_comments + self.meta_assertions).map{|p| p.created_at}.compact
+    self.pubdate ||= Time.now - 1.month
+    self.latest_activity = (activity << self.pubdate).max
+  end
 
 #Map reactions to the overall paper and to individual figures and figure sections and store it as a hash text, that way we don't have to run a ton of SQL queries every time the page loads
 
-def set_reaction_map
-  rm = {}
-  rm[self.inspect] = add_reaction_defaults(check_reactions(self))
-  figs.each do |f|
-    rm[f.inspect] = add_reaction_defaults(check_reactions(f))
-    f.figsections.each do |s|
-      rm[s.inspect] = add_reaction_defaults(check_reactions(s))
+  def set_reaction_map
+    rm = {}
+    rm[self.inspect] = add_reaction_defaults(check_reactions(self))
+    figs.each do |f|
+      rm[f.inspect] = add_reaction_defaults(check_reactions(f))
+      f.figsections.each do |s|
+        rm[s.inspect] = add_reaction_defaults(check_reactions(s))
+      end
     end
+    self.reaction_map = rm
+    reaction_map
   end
-  self.reaction_map = rm
-  reaction_map
-end
 
 #Wipe and reset the reaction map
 
-def reset_reaction_map
-  self.reaction_map = nil
-  set_reaction_map
-end
+  def reset_reaction_map
+    self.reaction_map = nil
+    set_reaction_map
+  end
 
 #Check to see what reactions an object has had and record them to the reaction map
 
-def check_reactions(object)
-  if object.class == Fig
-    fig_reactions = []
-    fig_reactions << object.reactions
-    object.figsections.each{|s| fig_reactions << s.reactions}
-    fig_reactions.flatten!
-    fig_reactions.map{|r| [r.name, fig_reactions.select{|r2| r2.name == r.name}.count]}.uniq
-  else
-    object.reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
+  def check_reactions(object)
+    if object.class == Fig
+      fig_reactions = []
+      fig_reactions << object.reactions
+      object.figsections.each{|s| fig_reactions << s.reactions}
+      fig_reactions.flatten!
+      fig_reactions.map{|r| [r.name, fig_reactions.select{|r2| r2.name == r.name}.count]}.uniq
+    else
+      object.reactions.map{|r| [r.name, object.reactions.select{|r2| r2.name == r.name}.count]}.uniq
+    end
   end
-end
 
 
 #Add default reactions. In the future these should live in some central language file.
 
-def add_reaction_defaults(reacts)
-  defaults = Reaction.new.defaults
-  defaults.each {|d| reacts << [d,0] unless reacts.map{|o| o[0]}.include?(d)}
-  reacts
-end
+  def add_reaction_defaults(reacts)
+    defaults = Reaction.new.defaults
+    defaults.each {|d| reacts << [d,0] unless reacts.map{|o| o[0]}.include?(d)}
+    reacts
+  end
 
 #Generate a version of the reaction map w/out the defaults for analysis purposes
 
-def remove_zero_reactions
-  nonzero = {}
-  reaction_map.keys.each do |obj|
-    nonzero[obj] = reaction_map[obj].select{|r| r[1] > 0}
+  def remove_zero_reactions
+    nonzero = {}
+    reaction_map.keys.each do |obj|
+      nonzero[obj] = reaction_map[obj].select{|r| r[1] > 0}
+    end
+    nonzero
   end
-  nonzero
-end
 
 #Map how much discussion is going on in each part of the paper.
-def heatmap
-  if h_map.nil?
-    heatmap = {}
-    figs.each do |fig|
-      heatmap["fig" + fig.id.to_s] = [fig.heat]
-      fig.figsections.each do |s|
-        heatmap["figsection" + s.id.to_s] = [s.heat]
+  def heatmap
+    if h_map.nil?
+      heatmap = {}
+      figs.each do |fig|
+        heatmap["fig" + fig.id.to_s] = [fig.heat]
+        fig.figsections.each do |s|
+          heatmap["figsection" + s.id.to_s] = [s.heat]
+        end
       end
+      heatmap = calc_heat(heatmap)
+      heatmap["paper" + id.to_s] = [heat, [heat, 10].min]
+      self.h_map = heatmap
+      self.save
     end
-    heatmap = calc_heat(heatmap)
-    heatmap["paper" + id.to_s] = [heat, [heat, 10].min]
-    self.h_map = heatmap
-    self.save
+    h_map
   end
-  h_map
-end
 
 #Accepts a hash called "heatmap" of the form 'fig[id]' (text) => # of comments and summaries (int)
 # ie 'fig4432' => 2
 #Calculates the relative heat of each element, with 0 being cool and 10 being warm
 
-def calc_heat(heatmap)
+  def calc_heat(heatmap)
 
-  #Find the maximum number of comments
-  max = heatmap.values.map{|h| h[0]}.max
-  if max == 0 || max == nil
-    max = 1
-  end
-  #Indicate everything else as a percentage
-  heatmap.each do |id, h|
-    if id.first(5) == 'paper'
-      heatmap[id] = [h, [h[0], 10].min]
+    #Find the maximum number of comments
+    max = heatmap.values.map{|h| h[0]}.max
+    if max == 0 || max == nil
+      max = 1
     end
-    h = h[0]
-    h ||= 0
-    float = h.to_f/max * 10
-    heatmap[id] = [h, float.to_i]
-  end
-  heatmap
-end
-
-def add_heat(item)
-  if item.class == Paper
-    h_map[self.inspect][0] = (self.meta_reactions + self.meta_comments).map{|c| c.user}.uniq.count
-    self.save
-  else
-    self.h_map[item.class.to_s.downcase + item.id.to_s][0] += 1
-    self.h_map = calc_heat(self.h_map)
-    self.save
-  end
-end
-
-def heat
-  (self.meta_reactions + self.meta_comments).map{|c| c.user}.uniq.count
-end
-
-def my_heat
-  h_map ? h_map[self.inspect][0] : 0
-end
-
-def percent_summarized
-  figcount = figs.count
-  if figcount > 0
-    meta_assertions.select{|a| a.fig_id}.map{|a| a.fig_id}.uniq.count * 100 / figcount
-  else
-    0
-  end
-end
-
-def heatmap_overview
-  hm = heatmap
-  max_sections = (figs.map{|f| f.figsections.count}).max.to_i
-  overview = [[['Paper', hm['paper' + id.to_s][1], 'paper' + id.to_s]] + [nil] * max_sections]
-  figs.sort{|x,y| x.num <=> y.num}.each do |fig|
-    figrow = [['Fig ' + fig.num.to_s, hm['fig' + fig.id.to_s][1], 'fig' + fig.id.to_s]]
-    #fig.figsections.each do |section|
-    #	figrow << [fig.num.to_s + section.letter, heatmap['figsection' + section.id.to_s][1], 'figsection' + section.id.to_s]
-    #end
-    overview << figrow + [nil] * (max_sections - fig.figsections.count)
-  end
-  overview
-end
-
-def reset_heatmap
-  self.h_map = nil
-  self.save
-  heatmap
-end
-
-
-def latest_assertion
-  assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
-  assert_list.sort!{|x,y| x.votes.count <=> y.votes.count}
-  assert_list.last
-end
-
-
-def meta_latest_assertions
-  asserts = [latest_assertion]
-  figs.each do |f|
-    asserts << f.latest_assertion
-    f.figsections.each do |s|
-      asserts << s.latest_assertion
-    end
-  end
-end
-
-
-def get_paper
-  self
-end
-
-def shortname
-  "the overall paper"
-end
-
-def longname
-  title
-end
-
-def num
-  nil
-end
-
-
-
-def short_abstract
-  unless self.abstract.length < 300
-    short_abstract = self.abstract[0..150] + " ... " + self.abstract[-150...-1] + "."
-  else
-    self.abstract
-  end
-end
-
-def build_figs(numfigs, user = nil)
-  if user
-    user.visits.create(:about => self, :visit_type => 'buildfig' )
-  end
-  newfigs = numfigs.to_i-self.figs.count
-  newfigs.to_i
-  if newfigs > 0
-    newfigs.times do |i|
-      self.figs.create(:num => (self.figs.count+1))
-    end
-    reset_heatmap
-  elsif newfigs < 0
-    (newfigs * -1).times do
-      f = self.figs[-1]
-      if f.nil?
-      else f.comments.empty? && f.image.nil? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.reactions.empty?
-        f.destroy
+    #Indicate everything else as a percentage
+    heatmap.each do |id, h|
+      if id.first(5) == 'paper'
+        heatmap[id] = [h, [h[0], 10].min]
       end
-      self.reload
+      h = h[0]
+      h ||= 0
+      float = h.to_f/max * 10
+      heatmap[id] = [h, float.to_i]
     end
-    reset_heatmap
+    heatmap
   end
-  numfigs
-end
+
+  def add_heat(item)
+    if item.class == Paper
+      h_map[self.inspect][0] = (self.meta_reactions + self.meta_comments).map{|c| c.user}.uniq.count
+      self.save
+    else
+      self.h_map[item.class.to_s.downcase + item.id.to_s][0] += 1
+      self.h_map = calc_heat(self.h_map)
+      self.save
+    end
+  end
+
+  def heat
+    (self.meta_reactions + self.meta_comments).map{|c| c.user}.uniq.count
+  end
+
+  def my_heat
+    h_map ? h_map[self.inspect][0] : 0
+  end
+
+  def percent_summarized
+    figcount = figs.count
+    if figcount > 0
+      meta_assertions.select{|a| a.fig_id}.map{|a| a.fig_id}.uniq.count * 100 / figcount
+    else
+      0
+    end
+  end
+
+  def heatmap_overview
+    hm = heatmap
+    max_sections = (figs.map{|f| f.figsections.count}).max.to_i
+    overview = [[['Paper', hm['paper' + id.to_s][1], 'paper' + id.to_s]] + [nil] * max_sections]
+    figs.sort{|x,y| x.num <=> y.num}.each do |fig|
+      figrow = [['Fig ' + fig.num.to_s, hm['fig' + fig.id.to_s][1], 'fig' + fig.id.to_s]]
+      #fig.figsections.each do |section|
+      #	figrow << [fig.num.to_s + section.letter, heatmap['figsection' + section.id.to_s][1], 'figsection' + section.id.to_s]
+      #end
+      overview << figrow + [nil] * (max_sections - fig.figsections.count)
+    end
+    overview
+  end
+
+  def reset_heatmap
+    self.h_map = nil
+    self.save
+    heatmap
+  end
+
+
+  def latest_assertion
+    assert_list = self.assertions.sort {|x,y| x.created_at <=> y.created_at}
+    assert_list.sort!{|x,y| x.votes.count <=> y.votes.count}
+    assert_list.last
+  end
+
+
+  def meta_latest_assertions
+    asserts = [latest_assertion]
+    figs.each do |f|
+      asserts << f.latest_assertion
+      f.figsections.each do |s|
+        asserts << s.latest_assertion
+      end
+    end
+  end
+
+
+  def get_paper
+    self
+  end
+
+  def shortname
+    "the overall paper"
+  end
+
+  def longname
+    title
+  end
+
+  def num
+    nil
+  end
+
+
+
+  def short_abstract
+    unless self.abstract.length < 300
+      short_abstract = self.abstract[0..150] + " ... " + self.abstract[-150...-1] + "."
+    else
+      self.abstract
+    end
+  end
+
+  def build_figs(numfigs, user = nil)
+    if user
+      user.visits.create(:about => self, :visit_type => 'buildfig' )
+    end
+    newfigs = numfigs.to_i-self.figs.count
+    newfigs.to_i
+    if newfigs > 0
+      newfigs.times do |i|
+        self.figs.create(:num => (self.figs.count+1))
+      end
+      reset_heatmap
+    elsif newfigs < 0
+      (newfigs * -1).times do
+        f = self.figs[-1]
+        if f.nil?
+        else f.comments.empty? && f.image.nil? && f.figsections.empty? && f.questions.empty? && f.assertions.empty? && f.reactions.empty?
+        f.destroy
+        end
+        self.reload
+      end
+      reset_heatmap
+    end
+    numfigs
+  end
 
 # This is a function for quickly building a paper from the console and for testing purposes.
-def buildout(struct)
-  struct.length.times do |i|
-    if i == 0
-      self.build_figs(struct[i])
-    else
-      self.figs[i-1].build_figsections(struct[i])
+  def buildout(struct)
+    struct.length.times do |i|
+      if i == 0
+        self.build_figs(struct[i])
+      else
+        self.figs[i-1].build_figsections(struct[i])
+      end
     end
+    reset_heatmap
+    struct
   end
-  reset_heatmap
-  struct
-end
 
 
 # Return the highest-ranking group that a user is part of which includes this paper.
-def get_group(user)
-  maxfilter = 0
-  bestgroup = nil
-  self.groups.each do |g|
-    if g.users.include?(user) && g.filter_state(self) > maxfilter
-      maxfilter = g.filter_state(self)
-      bestgroup = g
+  def get_group(user)
+    maxfilter = 0
+    bestgroup = nil
+    self.groups.each do |g|
+      if g.users.include?(user) && g.filter_state(self) > maxfilter
+        maxfilter = g.filter_state(self)
+        bestgroup = g
+      end
     end
+    bestgroup
   end
-  bestgroup
-end
 
-def is_public
-  true
-end
+  def is_public
+    true
+  end
 
-def jquery_target
-  '#paper' + id.to_s
-end
+  def jquery_target
+    '#paper' + id.to_s
+  end
 
 #Check to see if the paper is supplementary reading for a given class
 
-def supplementary?(group)
-  if f = self.filters.find_by_group_id(group.id)
-    f.supplementary
-  else
-    false
+  def supplementary?(group)
+    if f = self.filters.find_by_group_id(group.id)
+      f.supplementary
+    else
+      false
+    end
   end
-end
 
 
 end

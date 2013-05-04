@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
 
   serialize :impact
   serialize :feedhash
+  serialize :orientationhash
 
   has_many :assertions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -55,6 +56,7 @@ class User < ActiveRecord::Base
   before_save :set_impact
   before_save :set_certified
   before_save :check_feedhash
+  before_save :default_image
   after_save :create_to_read
   after_save :set_subscriptions
 
@@ -77,6 +79,13 @@ class User < ActiveRecord::Base
 #Some functions for calling names
   def name
     name = firstname.to_s + ' ' + lastname.to_s
+  end
+
+  def default_image
+    if self.image.nil?
+      self.image_url = 'https://s3.amazonaws.com/j.lab-images/static/default-user.png'
+      self.save
+    end
   end
 
 #Commenting out authentication functionality now that I'm switching to Devise.
@@ -331,6 +340,72 @@ class User < ActiveRecord::Base
     if self.feedhash.nil?
       set_feedhash
     end
+  end
+
+=begin
+
+  User Orientation Process
+
+  Step 1: Create 5 Feeds
+  Substeps: 1-5 Feeds
+  Step 2:  Join a Journal Club
+  Substeps: None
+  Step 3: Complete your profile
+  Substeps: Complete profile elements
+  Step 4: Leave a Comment
+  Substeps: None (Slideshow to show process?)
+  Step 5: Create a Summary
+  Substeps: None
+
+=end
+
+  def check_orientation
+    hash = {}
+    oldcomplete = self.orientationhash.nil? ? nil : self.orientationhash[:complete]
+    currentstep = self.orientationhash.nil? ? 0 : self.orientationhash[:step]
+    #Step 1:  Create 5 Feeds
+    if self.follows.count < 5 && currentstep == 0
+      hash[:complete] = self.follows.count * 5 + 5
+      hash[:step] = 0
+    #Step 2: Join a Journal Club
+    elsif self.groups.empty? && currentstep <= 1
+      hash[:complete] = 30
+      hash[:step] = 1
+    #Step 3: Complete your profile
+    elsif (self.institution.nil? || self.position.nil?) && currentstep <= 2
+      hash[:complete] = 35
+      hash[:step] = 2
+    #Step 4: Leave a comment
+    elsif self.reactions.empty? && currentstep <= 3
+      hash[:complete] = 55
+      hash[:step] = 3
+    #Step 5: Create a Summary
+    elsif self.assertions.empty? && currentstep <= 4
+      hash[:complete] = 75
+      hash[:step] = 4
+    #Complete!
+    else
+      hash[:complete] = 100
+      hash[:step] = 5
+    end
+    self.orientationhash = hash
+    self.save
+    oldcomplete != hash[:complete]
+  end
+
+  def self.orientation_msg
+    {
+      5 => "Thanks for registering, to get started....",
+      10 => "You got it! Just 4 more.",
+      15 => "Great, 3 to go.",
+      20 => "You're on fire!",
+      25 => "One more to go! Almost there..",
+      30 => "Great work! Keep creating as many feeds as you like.",
+      35 => "Nice job. Now let's get you ready to post.",
+      55 => "Fantastic, now you're ready to share your insights!",
+      75 => "Commenting is fast! Leave thoughts on a paper as you have them.",
+      100 => "100%, you're all done! Congratulations!"
+    }
   end
 
   def to_csv(options = {})

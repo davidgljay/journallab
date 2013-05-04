@@ -20,9 +20,7 @@ describe "Home feeds" do
   end         
 
   it "should load home feeds and switch between them", :js => true do
-	page.should have_content('lions')
-	page.should have_content('View Abstract')
-	page.should have_content('Add to Folder')
+	page.should have_content('Welcome')
 	click_button 'tigers'
     sleep(3)
 	page.should have_text('tigers')
@@ -32,7 +30,7 @@ describe "Home feeds" do
 	find('.feedPlus').click
   sleep(1)
 	fill_in 'follow_search_term', :with => 'bears'
-	click_button 'Follow'
+	click_button 'Track PubMed'
 	click_button 'bears'
     sleep(2)
 	page.should have_content 'bears'

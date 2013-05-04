@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130501164604) do
+ActiveRecord::Schema.define(:version => 20130502060902) do
 
   create_table "analyses", :force => true do |t|
     t.text     "cache"
@@ -376,6 +376,7 @@ ActiveRecord::Schema.define(:version => 20130501164604) do
     t.datetime "reset_password_sent_at"
     t.string   "impact"
     t.text     "feedhash"
+    t.text     "orientationhash"
   end
 
   create_table "visits", :force => true do |t|

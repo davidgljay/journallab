@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% if @title == 'Home' && !signed_in? %>
+    <% if @title == 'Home' && !signed_in? && Rails.env.production?%>
         <!-- Google Analytics Content Experiment code -->
         <script>
             _udn = 'journallab.org';

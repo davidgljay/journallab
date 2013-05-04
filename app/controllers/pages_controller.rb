@@ -11,7 +11,13 @@ class PagesController < ApplicationController
       @follows  = @user.follows.all
       @user.check_feedhash
       @feedhash = @user.feedhash.to_a
+      if @user.check_orientation
+        flash[:success] = User.orientation_msg[@user.orientationhash[:complete]]
+      end
+      @step = @user.orientationhash[:step]
+      @complete = @user.orientationhash[:complete]
 
+=begin
       #If there is a follow, load that.
       if @follows.count > 0
         @follow = @follows.first
@@ -39,6 +45,7 @@ class PagesController < ApplicationController
           @groups = current_user.groups if signed_in?
         end
       end
+=end
       @newfollow = current_user.follows.new
       @welcome_screen = false
 
@@ -96,7 +103,7 @@ class PagesController < ApplicationController
       @follow.save
       @nav_language = @follow.name
       @groups = current_user.groups if signed_in?
-    else #If rendering a front page discussion
+    elsif params[:switchto].first(5) == "group" #If rendering a front page discussion
       @switchto = params[:switchto]
       @switchto_render = "discussion"
       @group = Group.find(@switchto[5..-1].to_i)
@@ -113,6 +120,16 @@ class PagesController < ApplicationController
       @heatmap_overview = @paper.heatmap_overview
       @reaction_map = @paper.reaction_map
       @groups = current_user.groups if signed_in?
+    else
+      @switchto = params[:switchto]
+      @switchto_render = "welcome"
+      @nav_language = "Welcome"
+      @user = current_user
+      if @user.check_orientation
+        flash[:success] = User.orientation_msg[@user.orientationhash[:complete]]
+      end
+      @step = @user.orientationhash[:step]
+      @complete = @user.orientationhash[:complete]
     end
     current_user.delay.set_feedhash if signed_in?
   end

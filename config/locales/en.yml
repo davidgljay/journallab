@@ -3,3 +3,17 @@
 
 en:
   hello: "Hello world"
+
+  orientation:
+      step0:
+        0feeds: “Thanks for registering, to get started....”
+        1feed: "You got it! Just 4 more."
+        2feeds: "Great, 3 to go."
+        3feeds: "You're on fire!"
+        4feeds: "One more to go! Almost there.."
+      step1: "Great work! Keep creating as many feeds as you like."
+      step2: "Nice job. Now let's get you ready to post."
+      step3: "Fantastic, now you're ready to share your insights!"
+      step4: "Commenting is fast! Leave thoughts on a paper as you have them."
+      step5: "100%, you're all done! Congratulations!"
+

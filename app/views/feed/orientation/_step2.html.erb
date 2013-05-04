@@ -1,0 +1,46 @@
+<h2>Great, let's get you ready to post.</h2>
+
+<ul>
+  <li><strong>Complete your profile</strong> by entering the information below.</li>
+  <li>You can edit your profile by clicking
+    <div class="topNav">
+      <div class="inline">
+        <icon class="icon-user"></icon>
+      </div>
+      Profile
+    </div> on the top menu.
+    </li>
+</ul>
+
+<div id="userInfo" class = 'row'>
+  <div class="span3 ">
+    <%= form_for @user do |f| %>
+        <%= hidden_field_tag :redirect_to_root, true %>
+        <p><%= f.label :position %></p>
+        <p><%= f.text_field :position %></p>
+
+        <p><%= f.label :institution %></p>
+        <p><%= f.text_field :institution %></p>
+
+        <p>Link to your Homepage<em class="small grey"> Optional</em></p>
+        <p><%= f.text_field :homepage %></p>
+
+        <p>Link to your CV <em class="small grey">Optional</em></p>
+        <p><%= f.text_field :cv %></p>
+
+        <p><%= f.submit "Update Profile", :class => 'btn btn-primary' %></p>
+    <% end %>
+  </div>
+  <div class="span3">
+        <%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :id => "profilephoto", :class => "profilePhoto image-round" %>
+        <div class='upload_form'>
+          Upload a profile picture <em class="small grey">Optional</em></p>
+          <%= form_for @user, :url => "#{@user.id}/image_upload", :html => {:multipart => true} do |f| %>
+              <%= f.file_field :user_image %>
+              <%= f.hidden_field :id %><br>
+              <%= f.submit 'Upload' %>
+          <% end %>
+        </div>
+  </div>
+
+</div>

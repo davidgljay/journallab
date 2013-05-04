@@ -23,6 +23,7 @@ class Analysis < ActiveRecord::Base
     self.cache = cache
     self.description = 'dashboard'
     self.save
+    GC.start
     self.cache
   end
 

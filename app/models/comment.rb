@@ -92,12 +92,13 @@ class Comment < ActiveRecord::Base
     p = self.get_paper
     searchtext = (p.title.to_s + ' ' + p.abstract.to_s + ' ' + self.text)
     searchtext ||= ' '
-    Follow.where('user_id IS NOT NULL AND search_term IS NOT NULL').each do |f|
-      if searchtext.downcase.include?(f.search_term.downcase)
-        cn = commentnotices.new(:follow_id => f.id)
-        cn.before_save #before_save functionality isn't working for some reason?! This is a hack.
-        cn.save
-        f.user.set_feedhash
+    Follow.where('user_id IS NOT NULL AND search_term IS NOT NULL').find_in_batches(:batch_size => 100) do |batch|
+      batch.each do |f|
+        if searchtext.downcase.include?(f.search_term.downcase)
+          cn = self.commentnotices.new(:follow_id => f.id)
+          cn.save
+          f.user.set_feedhash
+        end
       end
     end
     if !p.groups.empty?
@@ -105,6 +106,7 @@ class Comment < ActiveRecord::Base
         g.memberships.each {|m| m.save; u.set_feedhash}
       end
     end
+    GC.start
   end
 
   def assign_anon_name

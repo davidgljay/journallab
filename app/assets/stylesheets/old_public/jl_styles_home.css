@@ -41,17 +41,7 @@
 	margin-top: 10px;
 }
 
-#welcomeBox {
-   background: rgb(226, 255, 203);
-	background-color: rgba(226, 255, 203, .85);
-	filter:alpha(opacity=80);
-	margin-left: 124px;
-	top: 300px;
-}
 
-#welcomeBox h3 {
-	color: black;
-}
 
 #group_list h1, #group_list h2{
     color: #00704a;

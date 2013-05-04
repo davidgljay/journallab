@@ -1,5 +1,10 @@
 <div id = "feedNav">
   <ul>
+    <li>
+    <div class="welcome feed_nav_item feed_nav_selected clickme">
+      <%= button_to 'Welcome', {:controller => "pages", :action => "feedswitch",  :switchto => 'welcome'}, :class => " plainSubmit clickme ", :remote => true  %>
+    </div>
+    </li>
     <% @feedhash.each_with_index do |follow, i| %>
         <li>
           <div>
@@ -12,7 +17,7 @@
                 </div>
             <% end %>
           </div>
-          <div class = "feed_nav_item  <%= follow[:type] + ' ' + follow[:css_class] + (i == 0 ? ' feed_nav_selected' : '')%>">
+          <div class = "feed_nav_item  <%= follow[:type] + ' ' + follow[:css_class] %>">
             <div style = "display:inline-block;">
               <%= button_to follow[:name], {:controller => "pages", :action => "feedswitch",  :switchto => follow[:css_class]}, :class => " loadingPrompt plainSubmit clickme ", :remote => true %><%= render '/shared/loading' %>
             </div>

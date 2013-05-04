@@ -101,7 +101,7 @@ textarea, input [type = 'text'] {
     height: 30px;
     float: right;
 }
-#utNav a {
+#utNav a, .topNav {
     font-weight: bold;
     padding-top: 5px;
     padding-right: 20px;
@@ -113,6 +113,15 @@ textarea, input [type = 'text'] {
     float: right;
     line-height: 20px;
 }
+
+#welcome_feed .topNav {
+    float: none;
+    display: inline;
+    font-size: 12px;
+    margin: 0px;
+    padding: 0px;
+}
+
 #header #utNav li {
     list-style-type: none;
 }
@@ -309,6 +318,59 @@ border-bottom: 1px solid #ddd;
     color: white;
 }
 
+/* Welcome Screen */
+
+#welcomeText{
+    margin-top: 20px;
+    font-size: 24px;
+    margin-left: 40px;
+}
+
+#welcomeBox {
+    margin: 10px 40px 0 40px;
+    font-size: 14px;
+    padding: 0px;
+    line-height: 27px;
+    padding: 15px;
+    background-image: linear-gradient(to left , rgb(181, 207, 227)5%, rgb(255, 255, 255) 40%);
+}
+
+#welcomeBox .step0 {
+
+}
+
+#userImage{
+    margin-left: 55px;
+}
+
+#userStats {
+    margin: 5px 0 0 25px;
+}
+
+#userStats strong {
+    font-size: 16px;
+}
+
+#progressBar {
+    padding-left: 42px;
+}
+
+#progressBar .progress {
+    height: 15px;
+    background-image: linear-gradient(to bottom, rgb(226, 226, 226), rgb(248, 248, 248));
+}
+
+#progressBar .bar {
+    float: right;
+}
+
+#step3Carousel .item {
+    height: 350px;
+}
+
+.carousel-caption h4 {
+    font-weight: bold;
+}
 /* Footer */
 
 

@@ -15,7 +15,6 @@ class Devise::RegistrationsController < DeviseController
     resource.email = resource.email.downcase
     if resource.save
       params[:follows].split(',').each{|f| resource.follows << Follow.find(f.to_i)} if params[:follows]
-      Group.find(8).add(resource) unless Group.find_by_id(8).nil? #Adding users to the PLoS group by default
       resource.reload
       resource.set_feedhash
       if resource.active_for_authentication?
@@ -45,7 +44,7 @@ class Devise::RegistrationsController < DeviseController
     self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
     prev_unconfirmed_email = resource.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
 
-    if resource.update_with_password(resource_params)
+    if false #resource.update_with_password(resource_params)
       if is_navigational_format?
         flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
           :update_needs_confirmation : :updated
@@ -56,6 +55,7 @@ class Devise::RegistrationsController < DeviseController
     else
       clean_up_passwords resource
       respond_with resource
+
     end
   end
 

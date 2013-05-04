@@ -95,7 +95,7 @@ before_filter :admin_user,   :only => [:destroy, :index]
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated."
     end
-      redirect_to @user
+      redirect_to :back
   end
 
   def destroy
@@ -114,7 +114,7 @@ before_filter :admin_user,   :only => [:destroy, :index]
     @user = User.find(params[:user][:id])
     @user.image = params[:user][:user_image]
     @user.save
-    redirect_to @user
+    redirect_to :back
   end
 
   #def unsubscribe

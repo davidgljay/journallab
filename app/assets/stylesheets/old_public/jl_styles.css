@@ -47,7 +47,6 @@ td#profileImage {
 
 
 #homeFeed {
-    margin: 0px;
     margin-top: 30px;
     padding-left: 5px;
     padding-right: 5px;
@@ -79,7 +78,7 @@ td#profileImage {
 
 
 
-#feedNav .feed_nav_item {
+ .feed_nav_item {
     display: inline-block;
     text-align: center;
     padding: 5px;
@@ -98,16 +97,17 @@ td#profileImage {
     background-color: #00704a;
 }
 
-#feedNav .feed_nav_item form.button_to input {
+.feed_nav_item form.button_to input {
     font-weight: bold;
 }
 
-#feedNav .feedPlus {
+.feedPlus {
     width: 84px;
     padding: 3px;
     padding-top: 5px;
     font-weight: bold;
     background-color: rgb(14, 51, 77);
+    font-size: 12px;
 }
 
 #feedNav .feed_nav_selected {

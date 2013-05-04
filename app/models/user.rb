@@ -332,7 +332,6 @@ class User < ActiveRecord::Base
       feeds << {:id => g.id, :name => g.name, :urlname => g.urlname, :recent_activity => g.newcount(self), :newcount => 0, :type => 'group', :css_class => g.css_class }
     end
     self.feedhash = feeds
-    self.save
   end
 
   def check_feedhash

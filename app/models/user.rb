@@ -83,8 +83,7 @@ class User < ActiveRecord::Base
 
   def default_image
     if self.image.nil?
-      self.image_url = 'https://s3.amazonaws.com/j.lab-images/static/default-user.png'
-      self.save
+      self.image_url = 'http://s3.amazonaws.com/j.lab-images/static/default-user.png'
     end
   end
 

@@ -371,6 +371,10 @@ border-bottom: 1px solid #ddd;
 .carousel-caption h4 {
     font-weight: bold;
 }
+
+.carousel-caption {
+    background: rgba(0,0,0,0.90);
+}
 /* Footer */
 
 

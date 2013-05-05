@@ -1,23 +1,23 @@
 <div class="row">
-<div id = "homeFeed" class = "feed round span10">
-  <%= render '/feed/nav' %>
-  <%= render '/feed/welcome' %>
+  <div id = "homeFeed" class = "feed round span10">
+    <%= render '/feed/nav' %>
+    <%= render '/feed/welcome' %>
 
-  <% @follows.each_with_index do |follow, i| %>
-      <div id = <%= follow.css_class + "_feed" %> class = "homePageFeed hideonload">
-      </div>
-  <% end %>
-  <% @jclubs.each_with_index do |g, i| %>
-      <div id= '<%= g.inspect + '_feed' %>' class = "homePageFeed hideonload">
-      </div>
-  <% end %>
-  <% if signed_in? %>
-      <div id='follow_form' class = "homePageFeed hideonload">
-        <h2>Follow a Pubmed Search Term:</h2>
-        <%= render '/feed/follow_form' %>
-        <%= render '/groups/group_list' %>
-      </div>
+    <% @follows.each_with_index do |follow, i| %>
+        <div id ='<%= follow.css_class + '_feed' %>' class="homePageFeed hideonload">
+        </div>
+    <% end %>
+    <% @jclubs.each_with_index do |g, i| %>
+        <div id= '<%= g.inspect + '_feed' %>' class = "homePageFeed hideonload">
+        </div>
+    <% end %>
+    <% if signed_in? %>
+        <div id='follow_form' class = "homePageFeed hideonload">
+          <h2>Follow a Pubmed Search Term:</h2>
+          <%= render '/feed/follow_form' %>
+          <%= render '/groups/group_list' %>
+        </div>
 
-  <% end %>
-  </div>
+    <% end %>
+   </div>
 </div>

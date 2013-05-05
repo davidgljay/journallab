@@ -332,6 +332,7 @@ class User < ActiveRecord::Base
       feeds << {:id => g.id, :name => g.name, :urlname => g.urlname, :recent_activity => g.newcount(self), :newcount => 0, :type => 'group', :css_class => g.css_class }
     end
     self.feedhash = feeds
+    self.save
   end
 
   def check_feedhash
@@ -359,7 +360,7 @@ class User < ActiveRecord::Base
 
   def check_orientation
     hash = {}
-    oldcomplete = self.orientationhash.nil? ? nil : self.orientationhash[:complete]
+    oldcomplete = self.orientationhash.nil? ? 0 : self.orientationhash[:complete]
     currentstep = self.orientationhash.nil? ? 0 : self.orientationhash[:step]
     #Step 1:  Create 5 Feeds
     if self.follows.count < 5 && currentstep == 0

@@ -24,7 +24,7 @@ describe "Initial Flow:" do
       fill_in 'user_password_confirmation', :with => 'testing'
       click_button ('Get Started')
       User.find_by_firstname('Sock').should_not be_nil
-
+      page.should have_css('#welcome_feed')
     end
   end
 

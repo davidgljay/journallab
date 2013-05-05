@@ -24,7 +24,7 @@ en:
       send_instructions: 'You will receive a confirmation email in the next few minutes.'
       confirmed: "Your account has been confirmed, nice work!"
     registrations:
-      signed_up: 'Thanks! Your account has been created. Feel free to explore.'
+      signed_up: 'Thanks! Your account has been created.'
       updated: 'You updated your account successfully.'
       destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
       inactive_signed_up: "Great! Before you can log in, you'll need to confirm your e-mail address. Please check your e-mail."

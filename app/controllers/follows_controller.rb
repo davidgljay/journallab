@@ -6,10 +6,11 @@ class FollowsController < ApplicationController
   def create
     follows_string = params[:follow][:search_term]
     follows_array = follows_string.split(",").each{|t| t.strip!}
+    @user = current_user
     follows_array.each do |f|
-      current_user.follows.create(:name => f, :search_term => f)
+      @user.follows.create(:name => f, :search_term => f)
     end
-    current_user.set_feedhash
+    @user.set_feedhash
     redirect_to root_path
   end
 

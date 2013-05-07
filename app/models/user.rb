@@ -361,8 +361,13 @@ class User < ActiveRecord::Base
 
   def check_orientation
     hash = {}
-    oldcomplete = self.orientationhash.nil? ? 0 : self.orientationhash[:complete]
-    currentstep = self.orientationhash.nil? ? 0 : self.orientationhash[:step]
+    if self.orientationhash.nil?
+      oldcomplete = 0
+      currentstep = 0
+    else
+      oldcomplete = self.orientationhash[:complete]
+      currentstep = self.orientationhash[:step]
+    end
     #Step 1:  Create 5 Feeds
     if self.follows.count < 5 && currentstep == 0
       hash[:complete] = self.follows.count * 5 + 5

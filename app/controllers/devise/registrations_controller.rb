@@ -17,6 +17,7 @@ class Devise::RegistrationsController < DeviseController
       params[:follows].split(',').each{|f| resource.follows << Follow.find(f.to_i)} if params[:follows]
       resource.reload
       resource.set_feedhash
+      resource.delay.set_recent_discussions
       if resource.active_for_authentication?
         set_flash_message :notice, :signed_up if is_navigational_format?
         sign_in(resource_name, resource)

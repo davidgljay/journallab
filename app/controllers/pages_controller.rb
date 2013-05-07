@@ -16,6 +16,7 @@ class PagesController < ApplicationController
       end
       @step = @user.orientationhash[:step]
       @complete = @user.orientationhash[:complete]
+      @user.visits.create(:visit_type => 'homefeeds')
 
 =begin
       #If there is a follow, load that.
@@ -53,6 +54,7 @@ class PagesController < ApplicationController
       @newuser = User.new
       a = Analysis.find_by_description('recent_discussions')
       @recent_discussions = a.nil? ? Analysis.new.recent_discussions : a.cache
+      Visit.create(:visit_type => 'homepage')
     end
   end
 

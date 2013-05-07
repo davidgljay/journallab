@@ -1,0 +1,49 @@
+<% unless recent_discussions.to_a.empty? %>
+
+    <div id="bigCarousel" class="carousel slide">
+      <ol class="carousel-indicators">
+        <% recent_discussions.to_a.each_with_index do |disc, i| %>
+
+        <li data-target="#bigCarousel" data-slide-to=""<%= i.to_s %>" <%= 'class="active"' if i == 0 %>></li>
+        <% end %>
+        <li data-target="#bigCarousel" data-slide-to="1"></li>
+        <li data-target="#bigCarousel" data-slide-to="2"></li>
+      </ol>
+      <!-- Carousel items -->
+      <div class="carousel-inner">
+        <% recent_discussions.to_a.each_with_index do |disc, i| %>
+
+            <div class="<%= 'active' if i == 0 %> item">
+              <%= link_to '../papers/' + disc[:paper_id].to_s do %>
+                  <div>
+                    <div class = 'paperTitle' style = '<%= 'font-size:16px;' if disc[:title].length > 100 %>' >
+                      <%= disc[:title] %>
+                    </div>
+                    <div class = 'inline'>
+                      <% if disc[:hottest_fig_image?] %>
+                          <%= image_tag disc[:hottest_fig].image.thumb('200x200').url %>
+                      <% end %>
+                    </div>
+                    <div class="inline paperDiscussion <%= disc[:hottest_fig_image?] ? 'narrow': 'wide' %>">
+                      <div class='reactions'>
+                        <%  disc[:reactions].each do |r| %>
+                            <li class="reactionlink badge badge-success"><%= r[:name] + ' x' + r[:number].to_s %></li>
+                        <% end %>
+                      </div>
+                      <div class='hottest_comment'>
+                        <% unless disc[:hottest_fig_comment].nil? %>
+                            "<%= disc[:hottest_fig_comment]%>"
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+
+        <% end %>
+      </div>
+      <!-- Carousel nav -->
+      <a class="carousel-control left" href="#bigCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#bigCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+<% end %>

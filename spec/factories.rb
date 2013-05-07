@@ -30,6 +30,7 @@ FactoryGirl.define do
     desc  "This group is awesome"
     urlname "test"
     category "jclub"
+    public true
   end
 		
 

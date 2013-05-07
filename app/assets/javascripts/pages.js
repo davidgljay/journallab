@@ -21,6 +21,16 @@ $(function () {
         content: "<p>Separate multiple feeds with commas:</p>" +
             "<p><em>DNA, RNA, Microrna</em></p>"
     });
+    $('#userStatus').popover({
+        html : true,
+        title: "Are You Part of the Research Community?",
+        placement: 'right',
+        trigger: 'focus',
+        content: "<p>You must be a practicing researcher or clinician to post on Journal Lab.</p>" +
+            "<p>If you are a practicing researcher who is not pursuing a PhD, please <a href='mailto:david@journallab.org'>email us</a>.</p>" +
+            "<p>If you are not a practicing researcher or clinician you are still welcome to use Journal Lab to track the latest research and discussion!</p>"
+    });
+
         $('#user_position').typeahead({
         name: 'positions',
         source: ["Faculty","Grad Student","Post-Doc","Principal Investigator", "Help, I'm trapped in a PhD!"]

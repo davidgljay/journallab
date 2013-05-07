@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   serialize :impact
   serialize :feedhash
   serialize :orientationhash
+  serialize :recent_discussions
 
   has_many :assertions, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -375,11 +376,11 @@ class User < ActiveRecord::Base
       hash[:complete] = 35
       hash[:step] = 2
     #Step 4: Leave a comment
-    elsif self.reactions.empty? && currentstep <= 3
+    elsif self.reactions.empty? && currentstep <= 3 && self.certified
       hash[:complete] = 55
       hash[:step] = 3
     #Step 5: Create a Summary
-    elsif self.assertions.empty? && currentstep <= 4
+    elsif self.assertions.empty? && currentstep <= 4 && self.certified
       hash[:complete] = 75
       hash[:step] = 4
     #Complete!
@@ -405,6 +406,28 @@ class User < ActiveRecord::Base
       75 => "Commenting is fast! Leave thoughts on a paper as you have them.",
       100 => "100%, you're all done! Congratulations!"
     }
+  end
+
+  #Collects recent discussions that the user might find interesting for their homepage.
+
+  def set_recent_discussions
+
+    #Collect papers from my feeds.
+    followPapers = self.follows.map{|f| f.commentnotices.map{|c| c.paper}}.flatten
+    groupPapers = self.groups.map{|g| g.papers}.flatten
+    visitedPapers = self.visits.select{|v| v.about_type == 'Paper'}.map{|v| v.about}.select{|p| p.meta_comments.count > 0}
+    relevantDiscussions = [followPapers + visitedPapers + groupPapers].uniq.flatten.sort{|x,y| y.latest_activity<=>x.latest_activity }
+    recent_discussions = Paper.prepSlideshow(relevantDiscussions)
+    if recent_discussions.count < 10 && (a = Analysis.find_by_description('recent_discussions'))
+      recent_discussions += a.cache.to_a
+    end
+    self.recent_discussions = recent_discussions.uniq.first(10)
+    self.save
+
+  end
+
+  def self.set_all_recent_discussions
+     User.all.each{|u| u.delay.set_recent_discussions}
   end
 
   def to_csv(options = {})

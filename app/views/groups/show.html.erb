@@ -1,7 +1,8 @@
-<div id="groupInfo" class = 'round'>
-  <table>
-    <tr>
-      <td>
+<div class ='row'>
+
+  <div id="groupInfo" class = 'well span10'>
+    <div class ="row">
+      <div class='span3'>
         <% if @group.image %>
             <%= image_tag @group.image.thumb('150x150').url %>
             <% if signed_in? && (current_user.lead_of?(@group) || current_user.admin) %>
@@ -18,32 +19,33 @@
               <% end %>
             </div>
         <% end %>
-      </td>
-      <td class = 'groupName'>
-        <div id="groupJoin" class="btn btn-success round" >
-          <% if signed_in? %>
-              <% if current_user.member_of?(@group) %>
-                  <%=  link_to 'Leave Journal Club', '/leave' %>
-              <% else %>
-                  <%=  link_to 'Join Journal Club', '/join' %>
-              <% end %>
-          <% else %>
-              <%=  link_to 'Join Journal Club', new_user_registration_path %>
-          <% end  %>
-        </div>
+      </div>
+      <div class = 'groupName span3'>
         <h1><%= @group.name %></h1>
         <h3><%= @group.desc %></h3>
         <p>
           <em>Group <%= pluralize(@leads.count, 'Lead')[2..-1] %>:</em>
           <%= (@leads.map{|lead| (link_to lead.name, lead) }* ', ').to_s.html_safe %>
         </p>
-      </td>
-    </tr>
-  </table>
+      </div>
+      <div id="groupJoin" class="btn btn-success round span2 offset1" >
+        <% if signed_in? %>
+            <% if current_user.member_of?(@group) %>
+                <%=  link_to 'Leave Journal Club', '/leave' %>
+            <% else %>
+                <%=  link_to 'Join Journal Club', '/join' %>
+            <% end %>
+        <% else %>
+            <%=  link_to 'Join Journal Club', new_user_registration_path %>
+        <% end  %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <% if @group.category == 'jclub' %>
-    <%=  render 'groups/discussion_slideshow', :recent_discussions => @group.recent_discussions %>
+    <h2>Past Discussions:</h2>
+    <%=  render 'shared/discussion_slideshow', :recent_discussions => @group.recent_discussions %>
     <% if @group.current_discussion %>
         <h2>Current Discussion:</h2>
     <% end %>

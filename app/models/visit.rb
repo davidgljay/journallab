@@ -8,10 +8,7 @@ after_initialize :init
 belongs_to :user
 belongs_to :paper
 
-validates :user_id,  :presence => true
 belongs_to :about, :polymorphic => true
-validates :about_id, :presence => true
-validates :about_type, :presence => true
 
   def init
     count ||= 0

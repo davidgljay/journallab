@@ -161,7 +161,7 @@ class Paper < ActiveRecord::Base
   def self.set_all_interest(checkfeeds = false)
     follows = Follow.where('user_id IS NOT NULL')
     if checkfeeds
-      follows..find_in_batches(:batch_size => 100) do |batch|
+      follows.find_in_batches(:batch_size => 100) do |batch|
         batch.each do |f|
           f.feed.each do |p|
             Paper.find_or_create_by_pubmed_id(p[:pubmed_id].to_i)
@@ -172,14 +172,14 @@ class Paper < ActiveRecord::Base
 
     Paper.all.find_in_batches(:batch_size => 100) do |batch|
       batch.each do |p|
-      users = []
-      follows.each do |f|
-        if (p.title.to_s + ' ' + p.abstract.to_s).downcase.include?(f.search_term.to_s.downcase)
-          users << f.user
+        users = []
+        follows.each do |f|
+          if (p.title.to_s + ' ' + p.abstract.to_s).downcase.include?(f.search_term.to_s.downcase)
+            users << f.user
+          end
         end
-      end
-      p.interest = users.uniq.count
-      p.save
+        p.interest = users.uniq.count
+        p.save
       end
     end
     GC.start
@@ -669,5 +669,34 @@ class Paper < ActiveRecord::Base
     end
   end
 
+  #Prepare for presentation in a slideshow
+  def self.prepSlideshow(papers = [])
+    recent_discussions = []
+    papers.each do |paper|
+      reactions = []
+      paper.meta_reactions.each do |r|
+        reactions << {:name => r.name, :number => paper.meta_reactions.select{|r2| r2.name == r.name}.count}
+      end
+      reactions.uniq!
+      reactions.sort!{|x,y| y[:number]<=>x[:number]}
+      if !paper.figs.empty?
+        hottest_fig = paper.figs.map{|f| [f,f.heat]}.sort{|x,y| y[1]<=>x[1]}.first[0]
+        if !hottest_fig.hottest_comment.nil?
+          hottest_fig_comment = hottest_fig.hottest_comment.short_text
+        else
+          hottest_fig_comment = nil
+        end
+        if hottest_fig.image
+          hottest_fig_image = true
+        end
+      else
+        hottest_fig = nil
+        hottest_fig_comment = nil
+        hottest_fig_image = false
+      end
+      recent_discussions << {:paper_id => paper.id, :title => paper.title, :reactions => reactions.first(3), :hottest_fig => hottest_fig, :hottest_fig_image? => hottest_fig_image, :hottest_fig_comment => hottest_fig_comment}
+    end
+    recent_discussions
+  end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130502060902) do
+ActiveRecord::Schema.define(:version => 20130506195258) do
 
   create_table "analyses", :force => true do |t|
     t.text     "cache"
@@ -377,6 +377,7 @@ ActiveRecord::Schema.define(:version => 20130502060902) do
     t.string   "impact"
     t.text     "feedhash"
     t.text     "orientationhash"
+    t.text     "recent_discussions"
   end
 
   create_table "visits", :force => true do |t|

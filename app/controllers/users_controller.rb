@@ -95,6 +95,10 @@ before_filter :admin_user,   :only => [:destroy, :index]
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated."
     end
+      if params[:status] == 'degree' || params[:status] == 'predegree'
+        @user.certified = true
+        @user.save
+      end
       redirect_to :back
   end
 

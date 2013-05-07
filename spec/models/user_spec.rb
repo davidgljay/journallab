@@ -225,4 +225,54 @@ describe User do
 
   end
 
+  describe "relevant discussions" do
+
+    before (:each) do
+      @user = create(:user)
+      @paper1 = create(:paper, :title => 'Zebrafish')
+      @paper2 = create(:paper, :title => 'Zombies')
+      @comment1 = create(:comment, :paper => @paper1)
+      @comment2 = create(:comment, :paper => @paper2)
+      create(:reaction, :about => @paper1)
+      create(:reaction, :about => @paper1)
+      create(:reaction, :about => @paper1)
+      create(:reaction, :about => @paper2)
+      create(:reaction, :about => @paper2)
+      create(:reaction, :about => @paper2)
+    end
+
+    it "should add a discussion from a paper that the user has visited" do
+      @user.visits.create(:about_id => @paper1.id, :about_type => 'Paper', :visit_type => 'paper')
+      @user.save
+      @user.reload
+      @user.set_recent_discussions
+      @user.visits.count.should == 1
+      @user.visits.map{|v| v.about}.first.should == @paper1
+      @user.recent_discussions.map{|p| p[:paper_id]}.should include @paper1.id
+      @user.recent_discussions.map{|p| p[:paper_id]}.should_not include @paper2.id
+    end
+
+    it "should add a discussion from the user's feeds" do
+      @user.follows.create(:search_term => @paper2.title, :name => @paper2.title)
+      @comment2.feedify
+      @user.save
+      @user.reload
+      @user.set_recent_discussions
+      @user.recent_discussions.map{|p| p[:paper_id]}.should include @paper2.id
+      @user.recent_discussions.map{|p| p[:paper_id]}.should_not include @paper1.id
+    end
+
+    it "should add recent_discussions to fill any remaining slots" do
+      Analysis.new.recent_discussions
+      a = Analysis.find_by_description('recent_discussions')
+      a.nil?.should be_false
+      a.cache.count
+      @user.set_recent_discussions
+      @user.recent_discussions.count.should > 0
+      @user.recent_discussions.map{|p| p[:paper_id]}.should include @paper2.id
+      @user.recent_discussions.map{|p| p[:paper_id]}.should include @paper1.id
+    end
+
+  end
+
 end

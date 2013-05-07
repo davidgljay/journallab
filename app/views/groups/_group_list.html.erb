@@ -19,7 +19,7 @@
             <h2><%= group.name %></h2>
             <%=  group.desc %>
             <div>
-              <%= link_to 'Learn More',"/groups/#{group.urlname}" %> | <%=  link_to 'Join Journal Club', "/groups/#{group.urlname}/join" %>
+              <%= link_to 'Learn More',"/groups/#{group.urlname}" %> | <%=  link_to 'Join Journal Club', "/groups/#{group.urlname}/join", :name => 'join' %>
             </div>
           </div>
       <% end %>

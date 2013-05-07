@@ -449,7 +449,7 @@ class Group < ActiveRecord::Base
         hottest_fig = nil
         hottest_fig_comment = nil
       end
-      recent_discussions << {:dission_id => discussion_id, :paper_id => paper_id, :title => title, :reactions => reactions, :hottest_fig => hottest_fig, :hottest_fig_comment => hottest_fig_comment}
+      recent_discussions << {:dission_id => discussion_id, :paper_id => paper_id, :title => title, :reactions => reactions, :hottest_fig => hottest_fig, :hottest_fig_comment => hottest_fig_comment, :hottest_fig_image? => !hottest_fig.image.nil?}
     end
     self.recent_discussions = recent_discussions
     self.save

@@ -22,6 +22,13 @@
         <p><%= f.label :institution %></p>
         <p><%= f.text_field :institution %></p>
 
+        <p>Please select one of the following:</p>
+        <select id="userStatus" name='status'>
+          <option value='degree'>I have a PhD and/or MD</option>
+          <option value='predegree'>I am working towards a PhD or MD</option>
+          <option value='none'>None of the above</option>
+        </select>
+
         <p>Link to your Homepage<em class="small grey"> Optional</em></p>
         <p><%= f.text_field :homepage %></p>
 

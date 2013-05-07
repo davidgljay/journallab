@@ -42,7 +42,7 @@
         <%= image_tag @user.image.thumb('300x300>').url, :alt => @user.name, :width => "300", :height => "300", :id => "profilephoto", :class => "profilePhoto image-round" %>
         <div class='upload_form'>
           Upload a profile picture <em class="small grey">Optional</em></p>
-          <%= form_for @user, :url => "#{@user.id}/image_upload", :html => {:multipart => true} do |f| %>
+          <%= form_for @user, :url => "/users/#{@user.id}/image_upload", :html => {:multipart => true} do |f| %>
               <%= f.file_field :user_image %>
               <%= f.hidden_field :id %><br>
               <%= f.submit 'Upload' %>

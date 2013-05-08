@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   before_filter :admin_user,   :only => [:dashboard]
 
   def home
-    @title = "Home"
+    @title = "Open Peer Review"
     if signed_in?
       @user = current_user
       @jclubs = @user.groups.select{|g| g.category == 'jclub' && !g.current_discussion.nil?}

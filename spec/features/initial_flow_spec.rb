@@ -44,7 +44,7 @@ describe "Initial Flow:" do
       page.should have_css('#step4Carousel')
       create(:assertion, :user => @user)
       visit root_path
-      page.should have_css('#bigCarousefl')
+      page.should have_css('#bigCarousel')
 
 
     end

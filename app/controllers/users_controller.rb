@@ -9,7 +9,7 @@ before_filter :admin_user,   :only => [:destroy, :index]
     @users = Kaminari.paginate_array(User.all.sort{|x,y| y.created_at <=> x.created_at}).page(params[:page]).per(20)
     respond_to do |format|
       format.html
-      format.csv { send_data User.new.to_csv }
+      format.csv { send_data User.to_csv }
     end
   end
 

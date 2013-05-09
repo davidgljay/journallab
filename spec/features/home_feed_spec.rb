@@ -22,7 +22,7 @@ describe "Home feeds" do
   it "should load home feeds and switch between them", :js => true do
 	page.should have_content('Welcome')
 	click_button 'tigers'
-    sleep(3)
+    sleep(4)
 	page.should have_text('tigers')
 	click_button 'peanutjuice'
 	sleep(3)

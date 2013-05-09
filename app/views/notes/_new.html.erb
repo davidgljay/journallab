@@ -1,6 +1,6 @@
 
   <ul class="dropdown-menu">
-  <% folders.each do |folder| %>
+  <% folders.to_a.each do |folder| %>
    <li>
 	<%= form_for(folder.notes.new, :class => "note", :remote => true) do |f| %>
 	       	       	<%= hidden_field_tag :pubmed_id, pubmed_id %>

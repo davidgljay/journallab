@@ -35,6 +35,8 @@ class PapersController < ApplicationController
     if signed_in?
       @groups = current_user.groups
       @groups.delay.each {|g| g.most_viewed_add(@paper); g.save;}
+      @folders = current_user.folders
+
     end
 
     #Prep the selection dropdown for selection the # of figs in the paper.  
@@ -46,7 +48,6 @@ class PapersController < ApplicationController
     #Private and group functionality is being disabled for now, all comments are public.
     #if params[:mode] == "public"
     @mode = 1
-    @folders = current_user.folders
     #else
     #	@mode = 2
     #end

@@ -87,6 +87,9 @@ class PagesController < ApplicationController
   end
 
   def feedswitch
+    if signed_in?
+      @folders = current_user.folders
+    end
     if params[:switchto].first(7) == "follow_"
       @switchto_render = "follow"
       @switchto = params[:switchto]

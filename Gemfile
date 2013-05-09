@@ -38,6 +38,7 @@ end
   gem 'kaminari'
   gem 'rb-readline'
   gem 'quiet_assets'
+  gem 'lograge'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby'

@@ -161,11 +161,6 @@ $('body').bind("ajax:error", function(event, data, status, xhr) {
 });
 
 
-// Dropdown menus
-
-$(document).on('click', '.dropdown-toggle', function(){
-	$(this).next().toggle('300');
-});
 
 // Folder prompt when not signed in
 $(document).on('click', '.folderAdd', function(){

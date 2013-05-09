@@ -4,7 +4,8 @@
       <div id='folder_link' class="dropdown inline">
         <div class = "inline"></div>
         <% if signed_in? %>
-            <%= link_to '/folders/add/' + @paper.pubmed_id.to_s, :id => "folder_list_" + @paper.pubmed_id.to_s, :class => "dropdown-toggle", :remote => true do %>Add to Folder <div class = "inline"><icon class = 'icon-folder-open'></icon></div><% end %>
+            <%= link_to '#', :id => "folder_list_" + @paper.pubmed_id.to_s, :class => "dropdown-toggle", "data-toggle" => "dropdown", :remote => true do %>Add to Folder <div class = "inline"><icon class = 'icon-folder-open'></icon></div><% end %>
+            <%= render 'notes/new', :pubmed_id => @paper.pubmed_id, :folders => @folders %>
         <% else %>
             <font rel="tooltip" title="With an account you will be able to easily add papers to folders for later reading." class = "clickme"><div class = 'linklike'>Add to Folder  <div class = "inline"><icon class = 'icon-folder-open'></icon></div></div></font>
         <% end %>
@@ -21,7 +22,7 @@
                   </div>
               <% else %>
                   <div class="dropdown" id="discussion_link" >
-                    <%=  link_to "Present to Journal Club", "#", :class => "dropdown-toggle deadlink" %>
+                    <%=  link_to "Present to Journal Club", "#", :class => "dropdown-toggle deadlink","data-toggle" => "dropdown" %>
                     <ul class="dropdown-menu">
                       <% current_user.memberships.select{|m| m.lead}.map{|m| m.group}.each do |group| %>
                           <li>

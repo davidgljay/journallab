@@ -19,7 +19,8 @@
  		<div class="dropdown inline">
   			<div class = "inline"></div> 
 			<% if signed_in? %>
-				<%= link_to '/folders/add/' + paper[:pubmed_id].to_s, :id => "folder_list_" + paper[:pubmed_id].to_s, :class => "dropdown-toggle", :remote => true do %>Add to Folder<div class = "inline"><icon class = 'icon-folder-open'></icon></div><% end %>
+               <%= link_to '#', :id => "folder_list_" + paper[:pubmed_id].to_s, :class => "dropdown-toggle", "data-toggle" => "dropdown", :remote => true do %>Add to Folder <div class = "inline"><icon class = 'icon-folder-open'></icon></div><% end %>
+               <%= render 'notes/new', :pubmed_id => paper[:pubmed_id], :folders => @folders%>
 			<% else %>
 				<div class = 'linklike clickme folderAdd'>
                   Add to Folder

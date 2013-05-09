@@ -46,6 +46,7 @@ class PapersController < ApplicationController
     #Private and group functionality is being disabled for now, all comments are public.
     #if params[:mode] == "public"
     @mode = 1
+    @folders = current_user.folders
     #else
     #	@mode = 2
     #end
@@ -104,6 +105,7 @@ class PapersController < ApplicationController
     @title = search
     if signed_in?
       @groups = current_user.groups
+      @folders = current_user.folders
     end
     if search.to_i.to_s == search
       @paper = Paper.find_or_create_by_pubmed_id(search)

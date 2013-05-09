@@ -421,7 +421,7 @@ class User < ActiveRecord::Base
     followPapers = self.follows.map{|f| f.commentnotices.map{|c| c.paper}}.flatten
     groupPapers = self.groups.map{|g| g.papers}.flatten
     visitedPapers = self.visits.select{|v| v.about_type == 'Paper'}.map{|v| v.about}
-    relevantDiscussions = [followPapers + visitedPapers + groupPapers].select{|p| p.meta_reactions > 2}.uniq.flatten.sort{|x,y| y.latest_activity<=>x.latest_activity }
+    relevantDiscussions = [followPapers + visitedPapers + groupPapers].flatten.select{|p| p.meta_reactions > 2}.uniq.flatten.sort{|x,y| y.latest_activity<=>x.latest_activity }
     recent_discussions = Paper.prepSlideshow(relevantDiscussions)
     if recent_discussions.count < 10 && (a = Analysis.find_by_description('recent_discussions'))
       recent_discussions += a.cache.to_a

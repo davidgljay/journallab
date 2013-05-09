@@ -1,5 +1,4 @@
 $('.flash').hide();
-$('.dropdown-menu').hide();
-$('<%= 'a#folder_list_' + @pubmed_id.to_s %>').addClass('deadLink')
+$('.dropdown').removeClass('open');
 $("<div class='flash notice'>Paper saved in <%= @folder.name %> folder.</div>").insertAfter('header');
 $('.flash').delay('5000').fadeOut('slow');

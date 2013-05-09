@@ -428,7 +428,7 @@ class User < ActiveRecord::Base
     end
     self.recent_discussions = recent_discussions.uniq.first(10)
     self.save
-
+    GC.start
   end
 
   def self.set_all_recent_discussions

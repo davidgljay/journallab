@@ -36,7 +36,7 @@ end
   gem 'newrelic_rpm'
   gem 'heroku'
   gem 'kaminari'
-  gem 'rb-readline'
+  gem 'rb-readline', '~> 0.4.2'
   gem 'quiet_assets'
   gem 'lograge'
 

@@ -6,6 +6,7 @@ before_filter :admin_user,   :only => [:destroy, :index]
 
   def index
     @title = "All users"
+    Analysis.find_by_description('users').delay.usercsv
     @users = Kaminari.paginate_array(User.all.sort{|x,y| y.created_at <=> x.created_at}).page(params[:page]).per(20)
     respond_to do |format|
       format.html

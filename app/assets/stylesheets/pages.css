@@ -77,9 +77,6 @@ img {
     margin-top: 55px;
 }
 
-.inputSearch {
-    width: 300px;
-}
 
 .searchreset {
     color: gray;
@@ -156,7 +153,6 @@ textarea, input [type = 'text'] {
 #homepage #homeMenu .box {
     margin-bottom: 10px;
     padding: 10px;
-    height: 333px;
     border: 1px solid #ddd;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -180,7 +176,10 @@ textarea, input [type = 'text'] {
     height: 330px;
 }
 
-
+#discussionCarousel {
+    min-height: 250px;
+    padding: 40px;
+}
 
 #discussionCarousel .carousel-control,
 #howtoCarousel .carousel-control{
@@ -188,22 +187,18 @@ textarea, input [type = 'text'] {
 }
 
 
-#discussionCarousel .carousel-inner{
-    margin: 40px;
-    width: 85%;
-}
 
 #howtoCarousel .carousel-inner{
-    margin:00px;
-}
-
-#discussionCarousel .carousel-inner .item{
-    width: 460px;
-    height:300px;
+    margin:0px;
 }
 
 #howtoCarousel .carousel-inner .item{
     height:335px;
+}
+
+#howtoCarousel img {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .carousel-inner a {
@@ -292,6 +287,12 @@ border-bottom: 1px solid #ddd;
     margin-top: 5px;
     font-weight: bold;
 
+}
+
+/* User Orientation Screens */
+
+#lastSlideTrigger {
+    display: none;
 }
 
 

@@ -3,6 +3,9 @@ class Analysis < ActiveRecord::Base
 
   serialize :cache
 
+  validates :description, :presence => true,
+            :uniqueness => true
+
 
   def dashboard
     cache = {}
@@ -151,6 +154,35 @@ class Analysis < ActiveRecord::Base
       yesterday = t[1]
     end
     total
+  end
+
+  def usercsv
+    csv = []
+    csv << ["Name", "Email", "Registered On", "Latest Visit", "Days Btw Reg and Latest Visit", "Days Logged In This Month", "Total Days Logged In", "Paper Views", "Feed Views", "Number of Feeds", "Comments", "Comments this month", "Reactions", "Reactions this month", "Summaries", "Summaries this month", "Nods Given", "Nods Received"]
+    User.all.each do |user|
+      name = user.name
+      email = user.email
+      registered_on = user.created_at.strftime('%D')
+      last_active = user.visits.last ? user.visits.last.created_at : nil
+      time_since_last = (([user.visits.map{|v| v.created_at}, user.created_at].flatten.max - user.created_at)/86400).to_i
+      logins_this_month = user.visits.select{|v| v.created_at > Time.now - 1.month}.map{|v| v.created_at.to_date}.uniq.count
+      days_logged_in = user.visits.map{|v| v.created_at.to_date}.uniq.count
+      paper_views = user.visits.select{|v| v.about_type == 'Paper'}.count
+      feed_views = user.visits.select{|v| v.about_type == 'Feed'}.count
+      num_feeds = user.follows.count
+      comments = user.comments.count
+      comments_this_month = user.comments.select{|i| i.created_at > Time.now - 1.month}.count
+      reactions = user.reactions.count
+      reactions_this_month = user.reactions.select{|i| i.created_at > Time.now - 1.month}.count
+      summaries = user.assertions.count
+      summaries_this_month = user.assertions.select{|i| i.created_at > Time.now - 1.month}.count
+      nods_given = user.votes.count
+      nods_for_user = user.votes_for_me.count
+      csv << [name, email, registered_on, last_active, time_since_last, logins_this_month, days_logged_in, paper_views, feed_views, num_feeds, comments, comments_this_month, reactions, reactions_this_month, summaries, summaries_this_month, nods_given, nods_for_user ]
+    end
+    self.description = 'users'
+    self.cache = csv
+    self.save
   end
 
   #Histogram

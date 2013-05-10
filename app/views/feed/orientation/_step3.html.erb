@@ -13,6 +13,8 @@
     <li data-target="#step3Carousel" data-slide-to="0" class="active"></li>
     <li data-target="#step3Carousel" data-slide-to="1"></li>
     <li data-target="#step3Carousel" data-slide-to="2"></li>
+    <li data-target="#step3Carousel" data-slide-to="3"></li>
+    <li data-target="#step3Carousel" data-slide-to="4"></li>
   </ol>
   <!-- Carousel items -->
   <div class="carousel-inner">
@@ -55,22 +57,6 @@
         <p>We'll notify everyone tracking this paper on their feeds, so people from your field will be drawn into the discussion.</p>
       </div>
     </div>
-    <div class="item text-center">
-      <br>
-      <h2>Try it out!</h2>
-        What's the last interesting paper that you read?
-        <br>
-      <br>
-      <%= form_tag('/lookup', :method => "get") do  %>
-          <%= text_field_tag(:search, "Discuss any paper on PubMed.", :onfocus =>  "if(this.value == 'Discuss any paper on PubMed.') { this.value = ''; }", :class => "inputSearch searchreset" ) %>
-          <p><%= submit_tag "Search", :class => 'btn-tiny btn-primary round', :style => "vertical-align: top; margin-top: 2px;"%></p>
-      <% end %>
-      <div class="carousel-caption text-left">
-        <h4>Let's leave your first comment!</h4>
-        <p>Once you get the hang of it, commenting takes 15 seconds.</p>
-        <p>Openly sharing your opinions builds your reputation and contributes to a better ecosystem of scientific communication.</p>
-      </div>
-    </div>
 
 
   </div>
@@ -78,4 +64,14 @@
   <a class="carousel-control left" href="#step3Carousel" data-slide="prev">&lsaquo;</a>
   <a class="carousel-control right" href="#step3Carousel" data-slide="next">&rsaquo;</a>
 </div>
+  <div id="lastSlideTrigger" class="span3 text-center well">
+    <h2>Try it out!</h2>
+    Say something about an interesting paper:
+    <br>
+    <br>
+    <%= form_tag('/lookup', :method => "get") do  %>
+        <%= text_field_tag(:search, '', :class => "inputSearch searchreset" ) %>
+        <p><%= submit_tag "Search", :class => 'btn-tiny btn-primary round', :style => "vertical-align: top; margin-top: 2px;"%></p>
+    <% end %>
+  </div>
 </div>

@@ -13,9 +13,9 @@
 <div class="row">
   <div id="step4Carousel" class="carousel slide span5">
     <ol class="carousel-indicators">
-      <li data-target="#step3Carousel" data-slide-to="0" class="active"></li>
-      <li data-target="#step3Carousel" data-slide-to="1"></li>
-      <li data-target="#step3Carousel" data-slide-to="2"></li>
+      <li data-target="#step4Carousel" data-slide-to="0" class="active"></li>
+      <li data-target="#step4Carousel" data-slide-to="1"></li>
+      <li data-target="#step4Carousel" data-slide-to="2"></li>
     </ol>
     <!-- Carousel items -->
     <div class="carousel-inner">
@@ -44,25 +44,20 @@
         </div>
       </div>
 
-      <div class="item text-center">
-        <br>
-        <h2>Try it out!</h2>
-        Summarize one of your papers.
-        <br>
-        <br>
-        <%= form_tag('/lookup', :method => "get") do  %>
-            <%= text_field_tag(:search, "Discuss any paper on PubMed.", :onfocus =>  "if(this.value == 'Discuss any paper on PubMed.') { this.value = ''; }", :class => "inputSearch searchreset" ) %>
-            <p><%= submit_tag "Search", :class => 'btn-tiny btn-primary round', :style => "vertical-align: top; margin-top: 2px;"%></p>
-        <% end %>
-        <div class="carousel-caption text-left">
-          <h4>Summaries Mean More Exposure</h4>
-          <p>They make it easier to find your research and easier to engage with it.</p>
-          <p>Some Journal Labbers even find summarizing a useful way to take notes!</p>
-        </div>
-      </div>
+
     </div>
     <!-- Carousel nav -->
-    <a class="carousel-control left" href="#step3Carousel" data-slide="prev">&lsaquo;</a>
-    <a class="carousel-control right" href="#step3Carousel" data-slide="next">&rsaquo;</a>
+    <a class="carousel-control left" href="#step4Carousel" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#step4Carousel" data-slide="next">&rsaquo;</a>
+  </div>
+  <div id="lastSlideTrigger" class="span3 text-center well">
+    <h2>Try it out!</h2>
+    Summarize one of your papers:
+    <br>
+    <br>
+    <%= form_tag('/lookup', :method => "get") do  %>
+        <%= text_field_tag(:search, '', :class => "inputSearch searchreset" ) %>
+        <p><%= submit_tag "Search", :class => 'btn-tiny btn-primary round', :style => "vertical-align: top; margin-top: 2px;"%></p>
+    <% end %>
   </div>
 </div>

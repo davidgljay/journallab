@@ -249,8 +249,7 @@ textarea, input [type = 'text'] {
 }
 
 #bigCarousel .carousel-inner{
-    height: 250px;
-    width: 725px;
+    min-height: 250px;
     margin-right: 50px;
     padding: 0 75px 0 75px;
 }

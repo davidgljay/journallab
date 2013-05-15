@@ -1,0 +1,68 @@
+<div id="report">
+<div class = "row">
+  <div class="span9" id="headline" style="
+  font-size: 30px; font-color: #000; text-decoration: none; margin: 20px 0 10px 30px;
+  ">
+    Germline Stem Cells in the Postnatal Mammalian Ovary
+  </div>
+</div>
+<div class="row">
+  <div class="span8">
+    <h3>Overview</h3>
+    In 2004 <a href="#">Jonathan Tilly</a> released a paper suggesting that the oocytes in mouse ovaries are being replenished by stem cells. If properly understood, such cells could be harnessed to generate fresh eggs for women with fertility problems, or even achieve a goal Tilly has been pursuing for 25 years: delaying or halting menopause. Numerous other researchers have questioned the validity of these findings, most notably <a href="#">Kevin Eggan</a>, <a href="#">Amy Waggers</a>, and <a href="#">Alan Spradling</a>.</div>
+</div>
+
+<h3>Key Papers</h3>
+<div class="row">
+<% @discussions.each do |disc|%>
+ <div class="span8 thumbnail" style="
+ padding: 15px;
+ margin-bottom: 10px;
+ ">
+
+  <div class = 'paperTitle' style="
+  font-size: 16px;
+  " >
+  <%= link_to disc[:title], '#' %>
+</div>
+<div class ="row">
+
+  <div class="paperDiscussion span6">
+    <div class='reactions'>
+      <%  disc[:reactions].each do |r| %>
+          <li class="reactionlink badge badge-success"><%= r[:name] + ' x' + r[:number].to_s %></li>
+      <% end %>
+    </div>
+    <div class='hottest_comment'>
+      <% unless disc[:hottest_fig_comment].nil? %>
+          "<%= disc[:hottest_fig_comment]%>"
+      <% end %>
+    </div>
+  </div>
+  <div class = 'span2'>
+    <% if disc[:hottest_fig_image?] %>
+        <%= image_tag disc[:hottest_fig].image.thumb('150x150').url %>
+    <% end %>
+  </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="span5">
+      <div style="display:inline-block;">
+      <strong>Participants:</strong>
+      </div>
+      <div style="display:inline-block;">
+        <%=  render 'shared/user_info', :user => User.find(1), :anonymous => false, :date => nil %>
+</div>
+      <div style="display:inline-block;">
+        <%=  render 'shared/user_info', :user => User.find(2), :anonymous => false, :date => nil %>
+    </div>
+      <div style="display:inline-block;">
+      <%=  render 'shared/user_info', :user => User.find(3), :anonymous => false, :date => nil %>
+    </div>
+  </div>
+    </div>
+
+</div>
+  <% end %>
+</div>

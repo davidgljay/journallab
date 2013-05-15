@@ -227,10 +227,21 @@ textarea, input [type = 'text'] {
     color: #000;
 }
 
+#report h3 {
+    font-family: FuturaBT-Heavy, Arial, Helvetica, sans-serif;
+    background-color: #468847;
+    font-weight: normal;
+    margin-bottom: 5px;
+    color: #fff;
+    padding: 5px;
+    line-height: 15px;
+    border-radius: 5px;
+    width: 800px;
+    font-weight: bold;
+}
 
 
  .paperDiscussion {
-    float: right;
     margin-top: 20px;
 }
 

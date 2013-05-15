@@ -174,7 +174,10 @@ class PagesController < ApplicationController
     render 'pages/experiments/var1'
   end
 
-
+  def report
+    @title = "Germline stem cells in the postnatal mammalian ovary"
+    @discussions = Paper.prepSlideshow([Paper.find(510), Paper.find(511)])
+  end
 
 
 #Takes a 2D array

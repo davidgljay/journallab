@@ -75,6 +75,7 @@ Redcell::Application.routes.draw do
   match '/feedswitch(/:switchto)',	 :to => 'pages#feedswitch'
   match '/homeswitch', :to => 'pages#homeswitch'
   match '/sitemap.xml', :to => 'pages#sitemap'
+  match '/report' , :to => 'pages#report'
 
 
 

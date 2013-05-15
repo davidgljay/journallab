@@ -11,12 +11,19 @@
     	<div class = 'small inline' ><em><%= render 'shared/display_date', :date => date %></em></div>
     <% end %>
   <% else %>
-  <a href="<%= user_path(user) %>">
-    <%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" if user.image %>
-    <span class="user_name">
-      <%= user.name %>
-    </span>
-  </a>
+
+    <div style="display:inline-block; vertical-align: top;"><%= image_tag user.image.thumb('20x20>').url, :alt => user.name, :width => "20", :height => "20" if user.image %>
+    </div>
+      <div style="display:inline-block; font-size:10px; line-height: 10px;">
+      <div class="user_name">
+      <a href="<%= user_path(user) %>"><%= user.name %>  </a>
+    </div>
+        <div>
+          <%= user.position %>, <%= user.institution %>
+        </div>
+
+      </div>
+
     <% if date %>
 	    <div class = 'small inline'><em><%= render 'shared/display_date', :date => date %></em></div>
     <% end %>

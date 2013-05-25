@@ -109,7 +109,7 @@
         <% else %>
             <%= link_to "Homepage", @user.homepage if @user.homepage %>
             <%= " • " if @user.cv && @user.homepage %>
-            <%= link_to "CV", @user.cv if @user.cv %></p>
+            <%= link_to "CV", @cvlink if @cvlink %></p>
         <% end %>
 
         <p>

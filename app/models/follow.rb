@@ -41,6 +41,7 @@ class Follow < ActiveRecord::Base
     self.save
     self.user.set_feedhash if self.user && newfeed
     self.latest_search
+    GC.start
   end
 
   #def rehash_feed

@@ -173,12 +173,12 @@ textarea, input [type = 'text'] {
 }
 
 #homepage #featureCallouts .thumbnail {
-    height: 330px;
+    min-height: 330px;
 }
 
 #discussionCarousel {
     min-height: 250px;
-    padding: 40px;
+    padding: 39px;
 }
 
 #discussionCarousel .carousel-control,

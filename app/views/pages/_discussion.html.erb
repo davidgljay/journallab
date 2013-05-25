@@ -12,12 +12,14 @@
                <div class = 'paperTitle' style = '<%= 'font-size:16px;' if disc[:title].length > 100 %>' >
                     <%= disc[:title] %>
                  </div>
-               <div class = 'inline'>
+               <div class = 'row'>
                         <% if disc[:hottest_fig_image?] %>
+                     <div class = 'span2'>
                             <%= image_tag disc[:hottest_fig].image.thumb('200x200').url %>
+                       </div>
+
                         <% end %>
-               </div>
-               <div class="inline paperDiscussion <%= disc[:hottest_fig_image?] ? 'narrow': 'wide' %>">
+               <div class="span3 paperDiscussion <%= disc[:hottest_fig_image?] ? 'narrow': 'wide' %>">
                    <div class='reactions'>
                       <%  disc[:reactions].each do |r| %>
                           <li class="reactionlink badge badge-success"><%= r[:name] + ' x' + r[:number].to_s %></li>
@@ -29,6 +31,7 @@
                       <% end %>
                    </div>
                </div>
+                 </div>
               <% end %>
 
             </div>

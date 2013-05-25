@@ -17,6 +17,10 @@ before_filter :admin_user,   :only => [:destroy, :index]
   def show
    @user = User.find(params[:id])
    @title = @user.name
+   @cvlink = @user.cv
+   unless @cvlink.nil?
+      @cvlink = @cvlink.first(7) == 'http://' ? @cvlink : 'http://' + @cvlink
+   end
    if @user.impact.nil?
       @user.save
    end

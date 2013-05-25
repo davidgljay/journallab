@@ -1,7 +1,7 @@
 	<% if @reaction_map[about.inspect][0][1] > 0 %>
 		<h5>Reactions to <%= about.shortname %>:</h5>
 	<% end %>
-<% if current_user.certified %>
+    <% if safeuser(current_user).certified %>
 	<h5 class = "hideonload">What is your reaction?</h5>
 	<ul class = "nomargin nopadding">
 	<% @reaction_map[about.inspect].each do |r| %>

@@ -121,4 +121,17 @@ describe "pubmed search" do
 
 end
 
+  describe "xml access" do
+    it "should return the paper as XML" do
+      @paper = create(:paper)
+      @paper.buildout([3,2,1,3])
+      @user = create(:user)
+      @comment = @paper.comments.new(:text => 'Lorem ipsum', :anonymous => 'true', :form => 'comment')
+      @comment.user = @user
+      @comment.save
+      @paper.reload
+      @paper.xml_hash[:hascomments].should be_true
+    end
+  end
+
 end

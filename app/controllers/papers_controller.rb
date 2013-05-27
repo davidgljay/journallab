@@ -92,11 +92,16 @@ class PapersController < ApplicationController
       @paper.lookup_info
     end
     @paper.save
+
     if @error
       flash[:error] = @error
       redirect_to :back
     else
-      redirect_to @paper
+      respond_to do |format|
+        format.html  { redirect_to @paper}
+        format.xml   { render :xml => @paper.xml_hash}
+      end
+
     end
   end
 

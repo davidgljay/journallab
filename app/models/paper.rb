@@ -49,6 +49,24 @@ class Paper < ActiveRecord::Base
     { :id => id, :pubmed_id => pubmed_id.to_i, :title => scrub(title), :journal => scrub(journal), :pubdate => pubdate, :abstract => scrub(abstract), :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :citation => scrub(citation), :my_heat => my_heat, :updated_at => updated_at, :created_at => created_at, :percent_summarized => percent_summarized ? percent_summarized : 0, :comments => meta_comments ? meta_comments.count : 0 }
   end
 
+  def xml_hash
+    @comments = self.comments.map{|c| {:text => c.text, :date => c.created_at, :author => (c.anonymous ? c.user.anon_name(self) : c.user.name)}}
+    @reactions = self.reactions.map{|r| {:text => r.name}}
+    @summary = self.latest_assertion.nil? ? nil : self.latest_assertion.text
+    @methods = self.latest_assertion.nil? ? nil : self.latest_assertion.method_text
+    @figs = self.figs.map{|f|
+      {
+      :num => f.num,
+      :image => f.image_url,
+      :summary => f.latest_assertion.nil? ? nil : f.latest_assertion.text,
+      :methods => f.latest_assertion.nil? ? nil : f.latest_assertion.method_text,
+      :comments => f.meta_comments.map{|c| {:text => c.text, :date => c.created_at, :author => (c.anonymous ? c.user.anon_name(self) : c.user.name)}},
+      :reactions => f.reactions.map{|r| {:text => r.name}}
+      }
+    }
+    {:id => id, :pubmed_id => pubmed_id.to_i, :hascomments => (self.meta_comments.count > 0), :title => scrub(title), :journal => scrub(journal), :pubdate => pubdate, :abstract => scrub(abstract), :latest_activity => latest_activity ? latest_activity : set_latest_activity, :authors => authors, :summary => @summary, :methods => @methods, :comments => @comments, :reactions => @reactions, :figs => @figs}
+  end
+
   def scrub(string) #getting wierd intermittent errors from some pubmed into, this should address them.
     string ||= ''
     string.gsub(/['\u2029''\u2028']/,'')
@@ -329,13 +347,10 @@ class Paper < ActiveRecord::Base
       imagearray = []
       doc.css('img').each do |img|
         if img.attributes.has_key?("src-large")
-          imagearray << img.attributes["src-large"].to_s
+          imagearray << {:image => img.attributes["src-large"].to_s, :num => img.attributes["alt"].value[-2..-1].to_i}
         end
       end
       self.build_figs(imagearray.count)
-      #if doc.css('a.status_icon').text == "Free PMC Article"
-      #	pmcid = doc.css('dl.rprtid dd').children[2].text.gsub(/([PMC])/, '')
-      #end
       if !imagearray.empty? && !self.figs.empty?
         self.delay.grab_figs(imagearray) if self.figs.first.image.nil?
       end
@@ -343,12 +358,11 @@ class Paper < ActiveRecord::Base
   end
 
   def grab_figs(imagearray)
-    if self.journal.downcase.include?('plos')
-      imagearray.count.times do |n|
-        self.figs[n].image_url = "http://www.ncbi.nlm.nih.gov/" + imagearray[n]
-        self.figs[n].save
+      imagearray.each do |img|
+        f = self.figs[img[:num] -1]
+        f.image_url = "http://www.ncbi.nlm.nih.gov/" + img[:image]
+        f.save
       end
-    end
   end
 
 #Grab images

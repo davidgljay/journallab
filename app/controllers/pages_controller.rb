@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-  before_filter :admin_user,   :only => [:dashboard]
+  before_filter :admin_user,   :only => [:dashboard, :manual_refresh]
 
   def home
     @title = "Open Peer Review"
@@ -185,6 +185,11 @@ class PagesController < ApplicationController
     CSV.open("public/data/" + name + "_" + Time.now.strftime("%m_%d_%Y_%H:%M:%S") + ".csv", "w") do |csv|
       csv << array
     end
+  end
+
+  def manual_refresh
+    @flash = 'Feeds have been manually refreshed.'
+    Follow.delay.update_all_feeds
   end
 
   private

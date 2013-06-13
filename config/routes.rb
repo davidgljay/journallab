@@ -76,7 +76,7 @@ Redcell::Application.routes.draw do
   match '/homeswitch', :to => 'pages#homeswitch'
   match '/sitemap.xml', :to => 'pages#sitemap'
   match '/report' , :to => 'pages#report'
-
+  match '/manual_refresh', :to => 'pages#manual_refresh'
 
 
 #Session routes

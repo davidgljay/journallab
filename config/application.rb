@@ -49,7 +49,8 @@ module Redcell
 
     # Set default host
     config.action_mailer.default_url_options = { :host => "www.journallab.org" }
-    config.secret_token = '535bea345eb532543ad20709110f0cf6c5adf0676852b33b25baa7238b49e0473da7a1dc953726a3353dac1b4798e4ab4040786ac822fd9303e304acd0207b8b'
+    config.secret_token = ENV['APP_SECRET_TOKEN']
+
 
   end
 end

@@ -22,8 +22,8 @@ Redcell::Application.configure do
     :address => 'smtp.sendgrid.net',
     :port => 587,
     :domain               => 'journallab.org',
-    :user_name            => 'davidgljay',
-    :password             => 'sendgridtronbike',
+    :user_name            => ENV['SENDGRID_LOGIN'],
+    :password             => ENV['SENDGRID_PASS'],
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
   config.action_mailer.perform_deliveries = true

@@ -27,22 +27,24 @@ end
   gem 'dragonfly'
   gem 'rmagick'
   gem  'mini_magick' 
-  gem 'fog'
+  gem 'fog', '1.4.0'
   gem 'delayed_job'
   gem 'delayed_job_active_record'
   gem 'daemons'
+  gem 'unicorn'
   gem 'pg'
+  gem 'newrelic_rpm'
   gem 'heroku'
   gem 'kaminari'
+  gem 'rb-readline', '~> 0.4.2'
+  gem 'quiet_assets'
+  gem 'lograge'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -62,6 +64,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'selenium-webdriver'
 end
 
 group :redcell do

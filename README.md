@@ -12,7 +12,7 @@ The Journal Lab interface is built for academic researchers at a graduate studen
 2. When reading papers, these researchers often have insights about the data being presented.
 3. These insights are generally focused on individual figures rather than on sections of the text or on papers as a whole.
 4. Researchers will record these insights online if the process of doing so is easy, if they receive peer validation for their opinions, and if they bear no risk to their scientific reputation.
-5.Once organized and aggregrated online, these opinions will provide valuable metadata to anyone engaging with scientific research.
+5. Once organized and aggregrated online, these opinions will provide valuable metadata to anyone engaging with scientific research.
 
 
 To this end, the Journal Lab platform provides researchers with:

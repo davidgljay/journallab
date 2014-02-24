@@ -23,17 +23,14 @@
 <div class = 'row'>
   <div class='span6' id='homeMenu'>
     <ul class="nav nav-tabs">
-      <li id="discussion" class="active">
-        <%= link_to 'Recent Discussions', 'homeswitch?switchto=discussion', :remote => true %>
-      </li>
-      <li id="about"><%= link_to 'About', 'homeswitch?switchto=about', :remote => true %></li>
+      <li id="about" class="active"><%= link_to 'About', 'homeswitch?switchto=about', :remote => true %></li>
       <li id="howto"><%= link_to 'How It Works', 'homeswitch?switchto=howto', :remote => true %></li>
     </ul>
 
     <div class="box row">
 
 
-    <%= render 'discussion', :recent_discussions => @recent_discussions %>
+    <%= render 'about' %>
     </div>
       <!-- AddThis Button BEGIN -->
       <div class="addthis_toolbox addthis_default_style ">
